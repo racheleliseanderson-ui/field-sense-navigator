@@ -12,7 +12,7 @@ import {
   type JobId,
 } from "@/lib/intelligence";
 
-type PacketSearch = { job?: JobId };
+type PacketSearch = { job?: JobId | undefined };
 
 export const Route = createFileRoute("/packet/$id")({
   validateSearch: (search: Record<string, unknown>): PacketSearch => {
@@ -174,7 +174,7 @@ function Packet() {
               <div key={l.key} className="grid gap-2 py-4 sm:grid-cols-[10rem_1fr]">
                 <p className="font-display text-sm font-bold tracking-tight">{l.title}</p>
                 <div>
-                  <p className="text-sm leading-relaxed">{l.summary}</p>
+                  <p className="text-sm leading-relaxed">{l.readout}</p>
                   <p className="mt-1.5 text-[0.7rem] uppercase tracking-[0.08em] text-packet-muted">
                     Confidence {l.confidence}% · {l.unknowns.length} residual unknown
                     {l.unknowns.length === 1 ? "" : "s"}

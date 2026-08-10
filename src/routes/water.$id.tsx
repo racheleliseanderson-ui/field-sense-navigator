@@ -179,7 +179,7 @@ function WaterRecord() {
           <div className="mt-14">
             <p className="tick text-brass">Species context</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {d.speciesContext.map((s) => (
+              {d.speciesContext.map((s: string) => (
                 <span
                   key={s}
                   className="border border-hairline px-3 py-1.5 text-xs text-muted-foreground"
