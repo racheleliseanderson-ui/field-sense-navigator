@@ -1,0 +1,139 @@
+import { Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
+import { displayName, humanize, type Destination } from "@/lib/catalog";
+import { readTags, readiness, type Fit } from "@/lib/intelligence";
+import { GradeChip } from "@/components/instrument";
+
+function TypeMark({ type }: { type: string }) {
+  return (
+    <span className="tick text-[0.55rem] text-brass">{type}</span>
+  );
+}
+
+export function WaterCard({
+  destination,
+  fit,
+  rank,
+}: {
+  destination: Destination;
+  fit?: Fit;
+  rank?: number;
+}) {
+  const r = fit?.readiness ?? readiness(destination);
+  const t = readTags(destination);
+  const layerCounts = [
+    { k: "Access", v: destination.publicAccess.length },
+    { k: "Hazards", v: t.hazards.size },
+    { k: "Capacity", v: t.crowd.size },
+    { k: "Rules", v: t.seasonal.size },
+    { k: "Checks", v: destination.directVerification.length },
+  ];
+
+  return (
+    <Link
+      to="/water/$id"
+      params={{ id: destination.id }}
+      className="panel lift group relative block overflow-hidden p-6"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          {typeof rank === "number" && (
+            <span className="data text-xs text-brass">
+              {String(rank).padStart(2, "0")}
+            </span>
+          )}
+          <TypeMark type={destination.waterType} />
+          <span className="data text-[0.65rem] text-muted-foreground">
+            {destination.id}
+          </span>
+        </div>
+        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brass" />
+      </div>
+
+      <h3 className="mt-4 font-display text-xl font-bold leading-tight tracking-tight text-foreground">
+        {displayName(destination)}
+      </h3>
+      <p className="mt-1.5 text-sm text-muted-foreground">
+        {destination.region} · {destination.state}
+      </p>
+
+      <div className="mt-5 flex items-center gap-3">
+        <span className="data text-2xl font-semibold text-foreground">
+          {fit ? fit.score : r.score}
+        </span>
+        <div className="flex-1">
+          <p className="tick text-[0.55rem]">
+            {fit ? "Job fit" : "Field readiness"}
+          </p>
+          <div className="mt-1.5 h-[2px] w-full bg-border/60">
+            <div
+              className="h-full bg-primary"
+              style={{ width: `${fit ? fit.score : r.score}%` }}
+            />
+          </div>
+        </div>
+        <GradeChip grade={r.grade} label={r.band} />
+      </div>
+
+      {fit && (fit.reasons.length > 0 || fit.cautions.length > 0) && (
+        <ul className="mt-4 space-y-1.5">
+          {fit.reasons.slice(0, 2).map((x, i) => (
+            <li key={`r${i}`} className="flex gap-2 text-xs leading-relaxed text-foreground/85">
+              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-clear" />
+              {x}
+            </li>
+          ))}
+          {fit.cautions.slice(0, 2).map((x, i) => (
+            <li key={`c${i}`} className="flex gap-2 text-xs leading-relaxed text-muted-foreground">
+              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-watch" />
+              {x}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {!fit && destination.currentNotices[0] && (
+        <p className="mt-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+          {destination.currentNotices[0]}
+        </p>
+      )}
+
+      <dl className="rule-top mt-5 grid grid-cols-5 gap-1 pt-4">
+        {layerCounts.map((l) => (
+          <div key={l.k}>
+            <dt className="tick text-[0.5rem]">{l.k}</dt>
+            <dd className="data mt-1 text-sm text-foreground/90">{l.v}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <p className="mt-3 text-[0.65rem] text-muted-foreground">
+        {humanize(destination.status)}
+      </p>
+    </Link>
+  );
+}
+
+export function BlockedCard({ fit }: { fit: Fit }) {
+  const d = fit.destination;
+  return (
+    <div className="border border-alert/30 bg-card/50 p-5">
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-display text-base font-bold text-foreground">
+          {displayName(d)}
+        </p>
+        <GradeChip grade="restricted" label="Excluded" />
+      </div>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+        {fit.blocked}
+      </p>
+      <Link
+        to="/water/$id"
+        params={{ id: d.id }}
+        className="tick mt-3 inline-block text-[0.55rem] text-primary hover:text-brass"
+      >
+        Read the record →
+      </Link>
+    </div>
+  );
+}
