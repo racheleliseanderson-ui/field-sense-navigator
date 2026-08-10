@@ -131,9 +131,9 @@ function Plan() {
           alt="Cold river current running past a wet gravel bar at dawn"
           width={1280}
           height={960}
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-45"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-abyss/90 to-background" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-abyss/85 via-abyss/70 to-background" />
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
           <div className="flex items-center gap-4">
             <span className="data text-xs text-brass">STEP 01</span>
