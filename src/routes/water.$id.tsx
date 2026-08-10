@@ -64,6 +64,9 @@ function WaterRecord() {
   const [job, setJob] = useState<JobId | null>(null);
   const [copied, setCopied] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [openLayer, setOpenLayer] = useState<string | null>(
+    layers[0]?.key ?? null,
+  );
   const overdue = reviewOverdue(d);
 
   const downloadPdf = async () => {
@@ -100,32 +103,40 @@ function WaterRecord() {
           className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-abyss/85 via-abyss/70 to-background" />
-        <div className="mx-auto max-w-7xl px-5 pb-14 pt-16 sm:px-8 md:pb-20 md:pt-24">
+        <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-8 sm:pt-16 md:pb-20 md:pt-24">
           <Link to="/explore" className="tick text-primary hover:text-brass">
             ← Catalog
           </Link>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-2 sm:mt-8 sm:gap-3">
             <span className="data text-xs text-brass">{d.id}</span>
             <span className="tick text-[0.55rem]">{d.waterType}</span>
             <GradeChip grade={r.grade} label={r.band} />
             {overdue && <GradeChip grade="restricted" label="Review overdue" />}
           </div>
 
-          <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.2rem,6vw,4.8rem)] font-bold leading-[0.9] tracking-[-0.045em] text-foreground">
+          <h1 className="mt-4 max-w-4xl break-words font-display text-[clamp(1.9rem,7vw,4.8rem)] font-bold leading-[0.95] tracking-[-0.04em] text-foreground sm:mt-5 sm:leading-[0.9]">
             {d.waterbody}
           </h1>
           {d.accessSite && (
-            <p className="mt-3 max-w-2xl font-display text-lg font-semibold tracking-tight text-brass">
+            <p className="mt-3 max-w-2xl font-display text-base font-semibold tracking-tight text-brass sm:text-lg">
               {d.accessSite}
             </p>
           )}
-          <p className="mt-4 text-base text-muted-foreground">
+          <p className="mt-3 text-sm text-muted-foreground sm:mt-4 sm:text-base">
             {d.region} · {d.state}
             {d.county ? ` · ${d.county} County` : ""}
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3" data-print="hide">
+          {/* readiness band — above the fold on a phone */}
+          <div className="panel mt-7 p-5 lg:hidden" data-print="hide">
+            <ReadinessMeter readiness={r} compact />
+          </div>
+
+          <div
+            className="mt-8 hidden flex-wrap gap-3 sm:flex md:mt-10"
+            data-print="hide"
+          >
             <Link
               to="/packet/$id"
               params={{ id: d.id }}
@@ -154,19 +165,30 @@ function WaterRecord() {
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
+
+          <a
+            href={d.officialSourceUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            data-print="hide"
+            className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 border border-hairline bg-abyss/60 px-6 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur sm:hidden"
+          >
+            Official source
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
         </div>
       </section>
 
       {/* readout row */}
       <section className="border-y border-hairline bg-abyss">
-        <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-hairline md:grid-cols-4">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-hairline md:grid-cols-4 md:divide-y-0">
           {([
             { k: "Status", v: humanize(d.status) },
             { k: "Last source check", v: `${daysSince(d.checkedAt)}d ago` },
             { k: "Next review", v: d.nextReviewAt },
             { k: "Boundary", v: "Public destination" },
           ] as Array<{ k: string; v: string }>).map((s) => (
-            <div key={s.k} className="px-5 py-6 sm:px-8">
+            <div key={s.k} className="min-w-0 px-5 py-5 sm:px-8 sm:py-6">
               <dt className="tick text-[0.55rem]">{s.k}</dt>
               <dd className="mt-2 text-sm leading-snug text-foreground">{s.v}</dd>
             </div>
@@ -174,7 +196,7 @@ function WaterRecord() {
         </dl>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.55fr_1fr]">
+      <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
         {/* layers */}
         <div>
           <div className="flex items-center gap-4">
@@ -190,8 +212,15 @@ function WaterRecord() {
           </p>
 
           <div className="mt-8 border-y border-hairline">
-            {layers.map((l, i) => (
-              <LayerPanel key={l.key} layer={l} defaultOpen={i === 0} />
+            {layers.map((l) => (
+              <LayerPanel
+                key={l.key}
+                layer={l}
+                open={openLayer === l.key}
+                onToggle={() =>
+                  setOpenLayer((cur) => (cur === l.key ? null : l.key))
+                }
+              />
             ))}
           </div>
 
@@ -217,7 +246,31 @@ function WaterRecord() {
 
         {/* rail */}
         <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
-          <ReadinessMeter readiness={r} />
+          <div className="panel p-6 lg:p-6">
+            <ReadinessMeter readiness={r} compact />
+            <dl className="mt-6 space-y-4">
+              {r.parts.map((p) => (
+                <div key={p.label}>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="text-sm text-foreground">{p.label}</dt>
+                    <dd className="data text-sm text-muted-foreground">
+                      {p.value}
+                      <span className="opacity-50">/{p.max}</span>
+                    </dd>
+                  </div>
+                  <div className="mt-1.5 h-[2px] w-full bg-border/50">
+                    <div
+                      className="h-full bg-brass"
+                      style={{ width: `${(p.value / p.max) * 100}%` }}
+                    />
+                  </div>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                    {p.note}
+                  </p>
+                </div>
+              ))}
+            </dl>
+          </div>
 
           <div className="panel p-6">
             <p className="tick text-alert">What this score cannot know</p>
@@ -249,7 +302,7 @@ function WaterRecord() {
               id="job"
               value={job ?? ""}
               onChange={(e) => setJob((e.target.value || null) as JobId | null)}
-              className="mt-2 w-full border border-hairline bg-card px-3 py-2.5 text-sm text-foreground outline-none"
+              className="mt-2 min-h-12 w-full border border-hairline bg-card px-3 text-sm text-foreground outline-none"
             >
               <option value="">Not declared</option>
               {JOBS.map((j) => (
@@ -263,7 +316,8 @@ function WaterRecord() {
               <button
                 type="button"
                 onClick={copyHandoff}
-                className="inline-flex items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 py-3 text-xs uppercase tracking-[0.14em] text-brass transition-colors hover:bg-brass/20"
+                aria-live="polite"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass transition-colors hover:bg-brass/20"
               >
                 {copied ? (
                   <>
@@ -279,7 +333,7 @@ function WaterRecord() {
                 to="/packet/$id"
                 params={{ id: d.id }}
                 search={job ? { job } : {}}
-                className="inline-flex items-center justify-center gap-2 border border-hairline px-5 py-3 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
               >
                 <Printer className="h-4 w-4" aria-hidden="true" /> Field packet
               </Link>
@@ -287,7 +341,7 @@ function WaterRecord() {
                 type="button"
                 onClick={downloadPdf}
                 disabled={pdfBusy}
-                className="inline-flex items-center justify-center gap-2 border border-hairline px-5 py-3 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 disabled:opacity-60"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 disabled:opacity-60"
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
                 {pdfBusy ? "Preparing PDF…" : "Download PDF"}
@@ -296,6 +350,45 @@ function WaterRecord() {
           </div>
         </aside>
       </section>
+
+      {/* thumb bar — phones only */}
+      <div
+        data-print="hide"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-hairline bg-abyss/95 backdrop-blur-xl sm:hidden"
+      >
+        <div className="grid grid-cols-3 divide-x divide-hairline">
+          <button
+            type="button"
+            onClick={downloadPdf}
+            disabled={pdfBusy}
+            className="flex min-h-14 flex-col items-center justify-center gap-1 text-[0.6rem] uppercase tracking-[0.12em] text-brass disabled:opacity-60"
+          >
+            <Download className="h-4 w-4" aria-hidden="true" />
+            {pdfBusy ? "Preparing" : "PDF"}
+          </button>
+          <Link
+            to="/packet/$id"
+            params={{ id: d.id }}
+            search={job ? { job } : {}}
+            className="flex min-h-14 flex-col items-center justify-center gap-1 text-[0.6rem] uppercase tracking-[0.12em] text-foreground"
+          >
+            <Printer className="h-4 w-4" aria-hidden="true" />
+            Packet
+          </Link>
+          <button
+            type="button"
+            onClick={copyHandoff}
+            className="flex min-h-14 flex-col items-center justify-center gap-1 text-[0.6rem] uppercase tracking-[0.12em] text-foreground"
+          >
+            {copied ? (
+              <Check className="h-4 w-4 text-clear" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
+            )}
+            {copied ? "Copied" : "Carry"}
+          </button>
+        </div>
+      </div>
 
       <SiteFooter />
     </div>
