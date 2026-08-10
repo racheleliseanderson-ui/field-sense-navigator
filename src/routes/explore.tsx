@@ -15,9 +15,18 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
-import { search, suggest, type Suggestion } from "@/lib/search";
+import {
+  search,
+  suggest,
+  speciesList,
+  ACCESS_FACETS,
+  matchesAccess,
+  matchesSpecies,
+  type Suggestion,
+} from "@/lib/search";
 import { useReveal, useParallax } from "@/lib/motion";
 import { useT } from "@/lib/i18n";
+import { useWatchlist } from "@/lib/watchlist";
 import flatsImg from "@/assets/flats.jpg";
 
 const searchSchema = z.object({
@@ -25,6 +34,11 @@ const searchSchema = z.object({
   state: fallback(z.string(), "").default(""),
   type: fallback(z.string(), "").default(""),
   band: fallback(z.string(), "").default(""),
+  species: fallback(z.string(), "").default(""),
+  access: fallback(z.string(), "").default(""),
+  fresh: fallback(z.number(), 0).default(0),
+  min: fallback(z.number(), 0).default(0),
+  watch: fallback(z.boolean(), false).default(false),
   sort: fallback(z.string(), "readiness").default("readiness"),
 });
 
@@ -38,7 +52,7 @@ export const Route = createFileRoute("/explore")({
       {
         name: "description",
         content:
-          "Search 277 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
+          "Search 318 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
       },
       { property: "og:title", content: "Catalog · Honey Hole Intelligence" },
       {
@@ -103,6 +117,7 @@ function Explore() {
   const t = useT();
   const reveal = useReveal();
   const heroImg = useParallax(0.22);
+  const { ids: watched } = useWatchlist();
 
   const [draft, setDraft] = useState(params.q);
   const [focused, setFocused] = useState(false);
@@ -163,6 +178,11 @@ function Explore() {
         if (params.state && d.state !== params.state) return false;
         if (params.type && d.waterType !== params.type) return false;
         if (params.band && r.band !== params.band) return false;
+        if (params.species && !matchesSpecies(d, params.species)) return false;
+        if (params.access && !matchesAccess(d, params.access)) return false;
+        if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
+        if (params.min > 0 && r.score < params.min) return false;
+        if (params.watch && !watched.includes(d.id)) return false;
         return true;
       });
 
@@ -174,11 +194,35 @@ function Explore() {
         a.d.state.localeCompare(b.d.state) || displayName(a.d).localeCompare(displayName(b.d)),
     };
     return rows.sort(bySort[params.sort] ?? bySort['readiness']!);
-  }, [found, scores, params.state, params.type, params.band, params.sort]);
+  }, [
+    found,
+    scores,
+    watched,
+    params.state,
+    params.type,
+    params.band,
+    params.species,
+    params.access,
+    params.fresh,
+    params.min,
+    params.watch,
+    params.sort,
+  ]);
 
   useEffect(
     () => setCount(PAGE),
-    [params.q, params.state, params.type, params.band, params.sort],
+    [
+      params.q,
+      params.state,
+      params.type,
+      params.band,
+      params.species,
+      params.access,
+      params.fresh,
+      params.min,
+      params.watch,
+      params.sort,
+    ],
   );
 
   const suggestions: Suggestion[] = useMemo(
@@ -187,12 +231,24 @@ function Explore() {
   );
 
   const activeFilters =
-    Number(Boolean(params.state)) + Number(Boolean(params.type)) + Number(Boolean(params.band));
+    Number(Boolean(params.state)) +
+    Number(Boolean(params.type)) +
+    Number(Boolean(params.band)) +
+    Number(Boolean(params.species)) +
+    Number(Boolean(params.access)) +
+    Number(params.fresh > 0) +
+    Number(params.min > 0) +
+    Number(params.watch);
   const anything = Boolean(params.q) || activeFilters > 0;
   const visible: Destination[] = results.slice(0, count).map((x) => x.d);
 
   const clearAll = () =>
-    navigate({ search: { q: "", state: "", type: "", band: "", sort: "readiness" } });
+    navigate({
+      search: {
+        q: "", state: "", type: "", band: "", species: "", access: "",
+        fresh: 0, min: 0, watch: false, sort: "readiness",
+      },
+    });
 
   const filterControls = (
     <>
@@ -248,6 +304,67 @@ function Explore() {
             </option>
           ))}
         </select>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">Access</span>
+        {ACCESS_FACETS.map((a) => (
+          <Chip
+            key={a.id}
+            active={params.access === a.id}
+            onClick={() => set({ access: params.access === a.id ? "" : a.id })}
+          >
+            {a.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">Species</span>
+        <select
+          value={params.species}
+          onChange={(e) => set({ species: e.target.value })}
+          aria-label="Species"
+          className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
+        >
+          <option value="">Any species on record</option>
+          {speciesList.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <span className="tick ml-2 mr-1 text-[0.55rem]">Verified within</span>
+        <select
+          value={String(params.fresh)}
+          onChange={(e) => set({ fresh: Number(e.target.value) })}
+          aria-label="Verified within"
+          className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
+        >
+          <option value="0">Any source date</option>
+          <option value="7">7 days</option>
+          <option value="30">30 days</option>
+          <option value="90">90 days</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <label className="tick text-[0.55rem]" htmlFor="minscore">
+          Minimum readiness
+        </label>
+        <input
+          id="minscore"
+          type="range"
+          min={0}
+          max={90}
+          step={10}
+          value={params.min}
+          onChange={(e) => set({ min: Number(e.target.value) })}
+          className="h-11 w-40 accent-[color:var(--brass,currentColor)]"
+        />
+        <span className="data text-xs text-muted-foreground">
+          {params.min === 0 ? "off" : `${params.min}+`}
+        </span>
+        <Chip active={params.watch} onClick={() => set({ watch: !params.watch })}>
+          Watchlist only
+        </Chip>
       </div>
     </>
   );
@@ -417,20 +534,30 @@ function Explore() {
               ))}
               {(
                 [
-                  ["state", params.state],
-                  ["type", params.type],
-                  ["band", params.band],
-                ] as const
+                  ["state", params.state, params.state],
+                  ["type", params.type, params.type],
+                  ["band", params.band, params.band],
+                  ["species", params.species, params.species],
+                  ["access", params.access, params.access],
+                  ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
+                  ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
+                  ["watch", params.watch, params.watch ? "watchlist only" : ""],
+                ] as Array<[keyof CatalogSearch, string | number | boolean, string]>
               )
                 .filter(([, v]) => Boolean(v))
-                .map(([k, v]) => (
+                .map(([k, , label]) => (
                   <button
                     key={k}
                     type="button"
-                    onClick={() => set({ [k]: "" } as Partial<CatalogSearch>)}
+                    onClick={() =>
+                      set({
+                        [k]:
+                          k === "fresh" || k === "min" ? 0 : k === "watch" ? false : "",
+                      } as Partial<CatalogSearch>)
+                    }
                     className="tap inline-flex min-h-9 items-center gap-2 border border-hairline px-2.5 text-[0.68rem] text-foreground"
                   >
-                    {v}
+                    {label}
                     <X className="h-3 w-3" aria-hidden="true" />
                   </button>
                 ))}

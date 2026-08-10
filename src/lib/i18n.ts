@@ -12,6 +12,7 @@ const es: Dict = {
   "nav.instrument": "Instrumento",
   "nav.plan": "Planear un día",
   "nav.catalog": "Catálogo",
+  "nav.watchlist": "Lista de seguimiento",
   "nav.boundary": "Límites",
   "chrome.publicOnly": "Solo aguas públicas",
   "chrome.failClosed": "Solo aguas públicas · falla cerrado",
@@ -35,8 +36,8 @@ const es: Dict = {
   "footer.fullCatalog": "Catálogo completo",
   "footer.boundaryMethod": "Límites y método",
   "footer.schema": "Esquema 0.4.0",
-  "footer.waters": "277 aguas con nombre",
-  "footer.states": "16 estados",
+  "footer.waters": "318 aguas con nombre",
+  "footer.states": "23 estados",
   "footer.legal":
     "Honey Hole Intelligence — creado para Hook the Horizon. Las fuentes oficiales son autoritativas; la señalización publicada el mismo día prevalece sobre lo impreso aquí.",
   // catalog / search

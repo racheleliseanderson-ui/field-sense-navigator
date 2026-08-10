@@ -285,3 +285,35 @@ export function suggest(query: string, limit = 8): Suggestion[] {
 
   return out.slice(0, limit + 4);
 }
+
+/* ---------- advanced facets ---------- */
+
+/** Canonical access facets a reader can filter on directly. */
+export const ACCESS_FACETS = [
+  { id: "boat launch", label: "Trailer launch" },
+  { id: "hand launch", label: "Hand launch" },
+  { id: "pier", label: "Pier or dock" },
+  { id: "shore", label: "Shore or walk-in" },
+] as const;
+
+/** Species that appear on more than one water, ordered by how widely they occur. */
+export const speciesList: string[] = (() => {
+  const count = new Map<string, number>();
+  for (const d of destinations)
+    for (const s of d.speciesContext) count.set(s, (count.get(s) ?? 0) + 1);
+  return [...count.entries()]
+    .filter(([, n]) => n > 1)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([s]) => s);
+})();
+
+export function matchesAccess(d: Destination, facet: string): boolean {
+  const needles = ACCESS_MATCH[facet] ?? [facet];
+  const blob = norm(d.publicAccess.map((a) => `${a.name} ${a.type}`).join(" "));
+  return needles.some((n) => blob.includes(n));
+}
+
+export function matchesSpecies(d: Destination, species: string): boolean {
+  const target = norm(species);
+  return d.speciesContext.some((s) => norm(s) === target);
+}

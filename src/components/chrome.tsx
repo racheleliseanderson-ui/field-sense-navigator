@@ -9,6 +9,7 @@ const NAV = [
   { to: "/", key: "nav.instrument", label: "Instrument" },
   { to: "/plan", key: "nav.plan", label: "Plan a day" },
   { to: "/explore", key: "nav.catalog", label: "Catalog" },
+  { to: "/watchlist", key: "nav.watchlist", label: "Watchlist" },
   { to: "/boundary", key: "nav.boundary", label: "Boundary" },
 ] as const;
 
@@ -268,8 +269,8 @@ export function SiteFooter() {
           <p className="tick">{t("footer.record", "Record")}</p>
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
             <li>{t("footer.schema", "Schema 0.4.0")}</li>
-            <li>{t("footer.waters", "277 named waters")}</li>
-            <li>{t("footer.states", "16 states")}</li>
+            <li>{t("footer.waters", "318 named waters")}</li>
+            <li>{t("footer.states", "23 states")}</li>
           </ul>
         </div>
       </div>

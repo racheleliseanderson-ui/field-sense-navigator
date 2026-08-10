@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A layered field intelligence instrument for 277 named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.",
+          "A layered field intelligence instrument for 318 named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.",
       },
       { property: "og:title", content: "Honey Hole Intelligence · Public-Waters Field Instrument" },
       {
