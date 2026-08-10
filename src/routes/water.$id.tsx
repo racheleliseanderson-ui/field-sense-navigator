@@ -90,19 +90,20 @@ function WaterRecord() {
   };
 
   return (
-    <div className="min-h-dvh bg-background">
+    <div ref={reveal as React.Ref<HTMLDivElement>} className="page-in min-h-dvh bg-background">
       <SiteHeader />
 
       {/* masthead */}
       <section className="relative isolate overflow-hidden">
         <img
+          ref={heroImg as React.Ref<HTMLImageElement>}
           src={imageFor(d)}
           alt={`Representative water conditions for a ${d.waterType} corridor`}
           width={1280}
           height={960}
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
+          className="parallax image-treated absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-abyss/85 via-abyss/70 to-background" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-abyss/85 via-abyss/70 to-background" />
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-8 sm:pt-16 md:pb-20 md:pt-24">
           <Link to="/explore" className="tick text-primary hover:text-brass">
             ← Catalog
