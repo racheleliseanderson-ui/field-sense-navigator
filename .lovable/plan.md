@@ -1,6 +1,6 @@
-# Deeper Data, Live Conditions, and a Daylight Theme
+# Daylight Theme, PDF Export, Mobile Pass, Deeper Data, More Waters
 
-Four upgrades to Honey Hole Intelligence, staged so each lands complete before the next. The public-waters-only, fail-closed doctrine is unchanged: nothing invented, every claim attributed, every unknown named.
+Five upgrades to Honey Hole Intelligence, staged so each lands complete before the next. The public-waters-only, fail-closed doctrine is unchanged: nothing invented, every claim attributed, every unknown named.
 
 ## 1. Light / dark toggle
 
@@ -11,7 +11,26 @@ Dark instrument stays the signature and the default. Light is a crafted "field d
 - Every signal color (clear / watch / flagged / restricted) gets a separate daylight value so status language stays legible on paper-white.
 - Hero imagery and gradients get daylight treatments rather than being dropped.
 
-## 2. Deeper derived intelligence
+## 2. True PDF export of the Field Packet
+
+Today the packet relies on the browser print dialog. It becomes a real one-click download.
+
+- "Download PDF" button on the packet and on every water record produces a paged, A4/Letter briefing document with cover header, record ID, issue timestamp, checklist, layer digest, hazards, source URL, and the boundary statement.
+- Page breaks respect section boundaries — no checklist split across pages, no orphaned headings.
+- Multi-water export: a shortlist can be exported as one packet with a contents page.
+- Print stylesheet stays as the fallback.
+
+## 3. Mobile compatibility pass
+
+Every route audited at phone width, not just shrunk.
+
+- Header collapses to a compact bar with a slide-in nav and the theme switch reachable one-handed.
+- Explore filters become a bottom sheet instead of a stacked rail; cards go single-column with the readiness meter and status line kept above the fold.
+- Plan a Day becomes a step-by-step flow with a sticky footer action, one decision per screen.
+- Water record layers become an accordion; the packet sheet reflows to phone width and the PDF download replaces the print button.
+- Text rows use the grid + truncate pattern so long waterbody names never clip or collapse.
+
+## 4. Deeper derived intelligence
 
 Richer readouts computed from the catalog already held — no invention, all traceable to the record.
 
@@ -21,35 +40,23 @@ Richer readouts computed from the catalog already held — no invention, all tra
 - Record integrity: verification age, review-overdue state, notice volatility, and source authority, surfaced as a data-quality band on every layer.
 - Every derived value carries its inputs, so a reader can see why a number moved.
 
-## 3. Official live feeds
+## 5. More waters, and views that use them
 
-Real conditions, only where an official station genuinely covers the water.
-
-- USGS Water Services for river and reservoir gauge readings; NOAA/NWS for forecast wind and marine conditions; NOAA Tides & Currents where a marine water has a published station.
-- Every reading is stamped with agency, station ID, observation time, and a direct link to the source. If a station is stale, offline, or absent, the panel says so plainly and readiness falls back to its no-live-data path — it never guesses.
-- Station mapping is added to the catalog record by record; waters without a defensible station stay unmapped and read "no official station covers this water."
-- Live values inform a separate "today" band; they never overwrite the documented record.
-
-## 4. Catalog expansion and cross-cutting views
-
-- Expand beyond the current 277 records with additional public waters from state agency pages, each carrying the same source URL, verification date, notices, and access fields as existing records.
-- New views: a state coverage index, a species finder, side-by-side comparison of up to three waters, and a saved shortlist that feeds straight into Plan a Day and the field packet.
-
-## 5. Changing data
-
-Readouts shift with real context rather than animating for effect.
-
-- Season, month, and time of day reshape what each water leads with — spawning-window notices, ice or heat advisories, legal-hours windows against your time budget.
-- Live station data re-ranks Plan a Day results: wind tolerance checked against forecast wind, flow tolerance against current gauge stage.
-- The field packet prints with an as-of timestamp and the live values captured at print time.
+- Expand beyond the current 277 records with additional public waters pulled from state agency pages, each carrying the same source URL, verification date, notices, access fields, and privacy classification as existing records. Any water that cannot be sourced to an official page is not added.
+- New views: a state coverage index, a species finder, side-by-side comparison of up to three waters, and a saved shortlist that feeds Plan a Day and the PDF export.
+- Season, month, and time of day reshape what each water leads with — spawning-window notices, heat or ice advisories, legal-hours windows against your time budget.
 
 ## Technical notes
 
-- Lovable Cloud gets enabled to hold the expanded catalog, station mappings, and a short-lived cache of agency readings. Live fetches run in server functions so agency endpoints are called server-side and cached, not hit per visitor.
 - Theme is a CSS token layer in `src/styles.css` (`:root` daylight, `.dark` instrument) plus an inline pre-hydration script; components already use semantic tokens, so no color literals need touching.
+- PDF generation runs client-side from the existing packet markup, so no backend is required for it.
 - Derived intelligence extends `src/lib/intelligence.ts` with pure functions and explicit confidence inputs.
-- Live feeds land as typed server functions with per-agency adapters and an availability state machine (`live` / `stale` / `unavailable` / `unmapped`), with no silent fallbacks.
+- The expanded catalog stays a versioned data file unless the record count outgrows it, at which point Lovable Cloud can hold it.
+
+## Not included
+
+Live gauge, flow, tide, weather, and hatch feeds are out of scope for this round — they would need per-water official station mapping. Say the word and they become their own stage.
 
 ## Order of work
 
-Theme first (visible immediately, low risk), then derived intelligence, then live feeds, then catalog expansion and the new views.
+Theme, then PDF export, then the mobile pass, then derived intelligence, then catalog expansion and the new views.
