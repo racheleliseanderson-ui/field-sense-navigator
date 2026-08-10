@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
-import { Play, Square } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { Download, Pause, Play, RotateCcw, Square } from "lucide-react";
 
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { GradeChip } from "@/components/instrument";
 import { destinations, displayName, states } from "@/lib/catalog";
 import { coverage, integrity, type ProbeResult } from "@/lib/pipeline";
+import {
+  downloadText,
+  runToCsv,
+  useRunManager,
+  type RunTarget,
+} from "@/lib/run-manager";
 import { getLiveConditions } from "@/lib/live.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
@@ -33,6 +39,14 @@ export const Route = createFileRoute("/pipeline")({
 });
 
 type Scope = "watchlist" | "compare" | "state" | "sample";
+type StatusFilter = "all" | "matched" | "unmatched" | "error";
+
+const SCOPE_LABEL: Record<Scope, string> = {
+  sample: "Catalog head",
+  state: "One state",
+  watchlist: "Watchlist",
+  compare: "Comparison tray",
+};
 
 function Pipeline() {
   const { ids: watched } = useWatchlist();
@@ -40,10 +54,8 @@ function Pipeline() {
   const [scope, setScope] = useState<Scope>("sample");
   const [state, setState] = useState<string>(states[0] ?? "");
   const [limit, setLimit] = useState(12);
-  const [running, setRunning] = useState(false);
-  const [results, setResults] = useState<ProbeResult[]>([]);
-  const [done, setDone] = useState(0);
-  const stop = useRef(false);
+  const [concurrency, setConcurrency] = useState(3);
+  const [filter, setFilter] = useState<StatusFilter>("all");
 
   const checks = useMemo(() => integrity(), []);
   const rows = useMemo(() => coverage(), []);
@@ -57,48 +69,72 @@ function Pipeline() {
     return destinations.slice(0, limit);
   }, [scope, watched, compared, state, limit]);
 
-  const run = async () => {
-    stop.current = false;
-    setRunning(true);
-    setResults([]);
-    setDone(0);
-    for (const d of pool) {
-      if (stop.current || !d) break;
-      let row: ProbeResult;
-      try {
-        const live = await getLiveConditions({
-          data: { state: d.state, waterbody: d.waterbody },
-        });
-        row = {
-          id: d.id,
-          name: displayName(d),
-          state: d.state,
-          status: live.station ? "matched" : "unmatched",
-          station: live.station ? `${live.station.agency} ${live.station.id}` : null,
-          readings: live.readings.length,
-          note: live.station
-            ? live.station.name
-            : (live.unknowns[0] ?? "No official station publishes under this name."),
-        };
-      } catch {
-        row = {
-          id: d.id,
-          name: displayName(d),
-          state: d.state,
-          status: "error",
-          station: null,
-          readings: 0,
-          note: "The agency feed could not be reached on this run. Treat the water as unmonitored.",
-        };
-      }
-      setResults((prev) => [...prev, row]);
-      setDone((n) => n + 1);
+  const probe = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+    try {
+      const live = await getLiveConditions({
+        data: { state: target.state, waterbody: target.waterbody },
+      });
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: live.station ? "matched" : "unmatched",
+        station: live.station ? `${live.station.agency} ${live.station.id}` : null,
+        readings: live.readings.length,
+        note: live.station
+          ? live.station.name
+          : (live.unknowns[0] ?? "No official station publishes under this name."),
+      };
+    } catch {
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: "error",
+        station: null,
+        readings: 0,
+        note: "The agency feed could not be reached on this run. Treat the water as unmonitored.",
+      };
     }
-    setRunning(false);
+  }, []);
+
+  const run = useRunManager(probe);
+  const scopeLabel = scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope];
+
+  const targets = useMemo<RunTarget[]>(
+    () =>
+      pool
+        .filter((d) => Boolean(d))
+        .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody })),
+    [pool],
+  );
+
+  const startRun = () => void run.start(targets, { concurrency, scope: scopeLabel });
+
+  const retryFailures = () => {
+    const failed = run.results.filter((r) => r.status === "error");
+    const retry = failed
+      .map((r) => destinations.find((d) => d.id === r.id))
+      .filter((d) => Boolean(d))
+      .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody }));
+    if (retry.length > 0)
+      void run.start(retry, { concurrency, scope: `${scopeLabel} · retry`, append: true });
   };
 
-  const matched = results.filter((r) => r.status === "matched").length;
-  const progress = pool.length === 0 ? 0 : Math.round((done / pool.length) * 100);
+  const visible = run.results.filter((r) => filter === "all" || r.status === filter);
+  const progress =
+    run.planned === 0 ? 0 : Math.round((run.counts.probed / run.planned) * 100);
+  const busy = run.state === "running" || run.state === "paused";
+  const statusLine =
+    run.state === "running"
+      ? "Running"
+      : run.state === "paused"
+        ? "Paused — nothing is being probed"
+        : run.state === "stopped"
+          ? `Stopped — ${run.counts.unreached} target(s) never reached`
+          : run.state === "complete"
+            ? "Run complete"
+            : "Idle";
 
   return (
     <div className="min-h-dvh bg-background">
