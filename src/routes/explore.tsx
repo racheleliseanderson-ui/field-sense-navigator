@@ -52,7 +52,7 @@ export const Route = createFileRoute("/explore")({
       {
         name: "description",
         content:
-          "Search 277 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
+          "Search 318 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
       },
       { property: "og:title", content: "Catalog · Honey Hole Intelligence" },
       {
