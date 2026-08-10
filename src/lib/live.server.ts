@@ -204,6 +204,9 @@ export async function readLive(
   if (!forecast) {
     unknowns.push("No National Weather Service forecast was returned for the station location.");
   }
+  unknowns.push(
+    "The station is matched on published water name only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
+  );
   unknowns.push("Agency observations only. Nothing here predicts fish behavior.");
 
   return {
