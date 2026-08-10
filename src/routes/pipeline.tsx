@@ -265,22 +265,47 @@ function Pipeline() {
               ))}
             </select>
           </div>
-          <div className="flex gap-2 md:justify-end">
+          <div>
+            <label className="tick text-[0.55rem]" htmlFor="concurrency">
+              Parallel probes
+            </label>
+            <select
+              id="concurrency"
+              value={concurrency}
+              onChange={(e) => setConcurrency(Number(e.target.value))}
+              disabled={busy}
+              className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground disabled:opacity-50 md:w-32"
+            >
+              {[1, 3, 6].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-wrap gap-2 md:justify-end">
             <button
               type="button"
-              onClick={run}
-              disabled={running || pool.length === 0}
+              onClick={startRun}
+              disabled={busy || targets.length === 0}
               className="tap inline-flex min-h-11 items-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
             >
               <Play className="h-4 w-4" aria-hidden="true" />
-              Run ({pool.length})
+              Run ({targets.length})
             </button>
             <button
               type="button"
-              onClick={() => {
-                stop.current = true;
-              }}
-              disabled={!running}
+              onClick={run.state === "paused" ? run.resume : run.pause}
+              disabled={!busy}
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
+            >
+              <Pause className="h-4 w-4" aria-hidden="true" />
+              {run.state === "paused" ? "Resume" : "Pause"}
+            </button>
+            <button
+              type="button"
+              onClick={run.stop}
+              disabled={!busy}
               className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
             >
               <Square className="h-4 w-4" aria-hidden="true" />
@@ -289,19 +314,76 @@ function Pipeline() {
           </div>
         </div>
 
-        <div className="mt-4" aria-live="polite">
-          <div className="h-[2px] w-full bg-border/60">
+        <div
+          className="mt-4"
+          aria-live="polite"
+          role="status"
+          aria-label="Run progress"
+        >
+          <div
+            className="h-[2px] w-full bg-border/60"
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
             <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
           </div>
           <p className="data mt-2 text-xs text-muted-foreground">
-            {running ? "Running" : done > 0 ? "Run complete" : "Idle"} · {done}/{pool.length} probed ·{" "}
-            {matched} matched to an official station
+            {statusLine} · {run.counts.probed}/{run.planned || targets.length} probed ·{" "}
+            {run.counts.matched} matched · {run.counts.unmatched} unmatched · {run.counts.errors} error
           </p>
         </div>
 
-        {results.length > 0 && (
-          <ul className="mt-6 divide-y divide-hairline border border-hairline">
-            {results.map((r) => (
+        {run.results.length > 0 && (
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            {(["all", "matched", "unmatched", "error"] as StatusFilter[]).map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setFilter(f)}
+                aria-pressed={filter === f}
+                className={`tap min-h-11 border px-4 text-[0.65rem] uppercase tracking-[0.14em] ${
+                  filter === f
+                    ? "border-brass/60 bg-brass/10 text-brass"
+                    : "border-hairline text-muted-foreground hover:border-brass/40"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+            <span className="h-px flex-1 bg-hairline" />
+            <button
+              type="button"
+              onClick={retryFailures}
+              disabled={busy || run.counts.errors === 0}
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
+            >
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+              Re-run failures
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                downloadText(`pipeline-run-${Date.now()}.csv`, runToCsv(run.results))
+              }
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground"
+            >
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              CSV
+            </button>
+          </div>
+        )}
+
+        {run.results.length > 0 && visible.length === 0 && (
+          <p className="mt-6 border border-hairline p-6 text-xs text-muted-foreground">
+            No rows in this run carry that status.
+          </p>
+        )}
+
+        {visible.length > 0 && (
+          <ul className="mt-4 divide-y divide-hairline border border-hairline">
+            {visible.map((r) => (
               <li key={r.id} className="grid gap-2 p-4 md:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="min-w-0">
                   <p className="truncate text-sm text-foreground">{r.name}</p>
@@ -321,6 +403,28 @@ function Pipeline() {
               </li>
             ))}
           </ul>
+        )}
+
+        {run.history.length > 0 && (
+          <div className="mt-8">
+            <h3 className="tick text-[0.55rem]">Run history · last {run.history.length}</h3>
+            <ul className="data mt-3 divide-y divide-hairline border border-hairline text-xs">
+              {run.history.map((h) => (
+                <li
+                  key={h.id}
+                  className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                >
+                  <span className="truncate text-foreground/90">
+                    {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} · {h.outcome}
+                  </span>
+                  <span className="text-muted-foreground sm:text-right">
+                    {h.probed}/{h.planned} probed · {h.matched} matched · {h.errors} error ·{" "}
+                    {(h.durationMs / 1000).toFixed(1)}s
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </section>
 
