@@ -1,6 +1,7 @@
 import type { Grade, IntelLayer, Readiness } from "@/lib/intelligence";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useCountUp } from "@/lib/motion";
 
 const GRADE_TEXT: Record<Grade, string> = {
   clear: "text-clear",
@@ -23,13 +24,31 @@ const GRADE_WORD: Record<Grade, string> = {
   restricted: "Restricted",
 };
 
+/**
+ * A distinct shape per signal so status never depends on hue alone —
+ * circle / triangle / square / diamond, readable under any color vision.
+ */
+const GRADE_SHAPE: Record<Grade, string> = {
+  clear: "rounded-full",
+  watch: "[clip-path:polygon(50%_0,100%_100%,0_100%)]",
+  flagged: "",
+  restricted: "rotate-45",
+};
+
 export function GradeChip({ grade, label }: { grade: Grade; label?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 border border-hairline px-2.5 py-1">
-      <span className={`h-1.5 w-1.5 rounded-full ${GRADE_BG[grade]}`} />
+    <span
+      data-signal={grade}
+      className="inline-flex items-center gap-2 border border-hairline px-2.5 py-1"
+    >
+      <span
+        aria-hidden="true"
+        className={`h-2 w-2 shrink-0 ${GRADE_BG[grade]} ${GRADE_SHAPE[grade]}`}
+      />
       <span className={`tick text-[0.6rem] ${GRADE_TEXT[grade]}`}>
         {label ?? GRADE_WORD[grade]}
       </span>
+      <span className="sr-only">{GRADE_WORD[grade]}</span>
     </span>
   );
 }
@@ -59,15 +78,16 @@ export function ReadinessMeter({
 }) {
   const { score, band, grade, parts } = readiness;
   const dashes = 40;
-  const lit = Math.round((score / 100) * dashes);
+  const [shown, ref] = useCountUp(score);
+  const lit = Math.round((shown / 100) * dashes);
 
   return (
-    <div className={compact ? "" : "panel p-6"}>
+    <div ref={ref as React.Ref<HTMLDivElement>} className={compact ? "" : "panel p-6"}>
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="tick">Field readiness</p>
           <p className="data mt-1 text-5xl font-semibold leading-none text-foreground">
-            {score}
+            {shown}
             <span className="ml-1 text-lg text-muted-foreground">/100</span>
           </p>
         </div>
@@ -78,7 +98,7 @@ export function ReadinessMeter({
         {Array.from({ length: dashes }).map((_, i) => (
           <span
             key={i}
-            className={`h-6 flex-1 ${
+            className={`h-6 flex-1 transition-colors duration-300 ${
               i < lit ? GRADE_BG[grade] : "bg-border/50"
             } ${i < lit ? "opacity-90" : ""}`}
             style={i < lit ? { opacity: 0.35 + (i / dashes) * 0.65 } : undefined}
