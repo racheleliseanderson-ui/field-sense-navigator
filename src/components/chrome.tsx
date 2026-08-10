@@ -270,7 +270,7 @@ export function SiteFooter() {
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
             <li>{t("footer.schema", "Schema 0.4.0")}</li>
             <li>{t("footer.waters", "318 named waters")}</li>
-            <li>{t("footer.states", "16 states")}</li>
+            <li>{t("footer.states", "23 states")}</li>
           </ul>
         </div>
       </div>
