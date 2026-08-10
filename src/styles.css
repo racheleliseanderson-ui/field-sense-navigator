@@ -215,14 +215,22 @@
     pointer-events: none;
     background-image: repeating-linear-gradient(
       to bottom,
-      color-mix(in oklab, black 14%, transparent) 0px,
-      color-mix(in oklab, black 14%, transparent) 1px,
+      color-mix(in oklab, var(--scan-ink) 14%, transparent) 0px,
+      color-mix(in oklab, var(--scan-ink) 14%, transparent) 1px,
       transparent 1px,
       transparent 4px
     );
-    opacity: 0.35;
+    opacity: var(--scan-opacity);
     mix-blend-mode: multiply;
   }
+}
+
+@utility hero-scrim {
+  background-image: var(--hero-scrim);
+}
+
+@utility image-treated {
+  filter: var(--image-treatment);
 }
 
 @utility sheen {
