@@ -534,20 +534,30 @@ function Explore() {
               ))}
               {(
                 [
-                  ["state", params.state],
-                  ["type", params.type],
-                  ["band", params.band],
-                ] as const
+                  ["state", params.state, params.state],
+                  ["type", params.type, params.type],
+                  ["band", params.band, params.band],
+                  ["species", params.species, params.species],
+                  ["access", params.access, params.access],
+                  ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
+                  ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
+                  ["watch", params.watch, params.watch ? "watchlist only" : ""],
+                ] as Array<[keyof CatalogSearch, string | number | boolean, string]>
               )
                 .filter(([, v]) => Boolean(v))
-                .map(([k, v]) => (
+                .map(([k, , label]) => (
                   <button
                     key={k}
                     type="button"
-                    onClick={() => set({ [k]: "" } as Partial<CatalogSearch>)}
+                    onClick={() =>
+                      set({
+                        [k]:
+                          k === "fresh" || k === "min" ? 0 : k === "watch" ? false : "",
+                      } as Partial<CatalogSearch>)
+                    }
                     className="tap inline-flex min-h-9 items-center gap-2 border border-hairline px-2.5 text-[0.68rem] text-foreground"
                   >
-                    {v}
+                    {label}
                     <X className="h-3 w-3" aria-hidden="true" />
                   </button>
                 ))}
