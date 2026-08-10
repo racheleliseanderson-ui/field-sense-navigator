@@ -1,9 +1,33 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Columns3 } from "lucide-react";
 import { displayName, humanize, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
+import { useCompareTray } from "@/lib/compare-tray";
+
+function CompareButton({ id, name }: { id: string; name: string }) {
+  const { has, toggle, full } = useCompareTray();
+  const on = has(id);
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle(id);
+      }}
+      aria-pressed={on}
+      disabled={!on && full}
+      aria-label={on ? `Remove ${name} from the comparison` : `Add ${name} to the comparison`}
+      className={`tap grid h-11 w-11 shrink-0 place-items-center border border-hairline bg-card/80 backdrop-blur transition-colors disabled:opacity-40 ${
+        on ? "border-brass/60 bg-brass/15 text-brass" : "text-muted-foreground hover:text-brass"
+      }`}
+    >
+      <Columns3 className="h-4 w-4" aria-hidden="true" />
+    </button>
+  );
+}
 
 function TypeMark({ type }: { type: string }) {
   return (
@@ -32,17 +56,20 @@ export function WaterCard({
 
   return (
     <div className="relative">
-      <WatchButton
-        id={destination.id}
-        name={displayName(destination)}
-        className="absolute right-3 top-3 z-10 bg-card/80 backdrop-blur"
-      />
+      <div className="absolute right-3 top-3 z-10 flex gap-2">
+        <CompareButton id={destination.id} name={displayName(destination)} />
+        <WatchButton
+          id={destination.id}
+          name={displayName(destination)}
+          className="bg-card/80 backdrop-blur"
+        />
+      </div>
     <Link
       to="/water/$id"
       params={{ id: destination.id }}
       className="panel lift group relative block overflow-hidden p-6"
     >
-      <div className="flex items-start justify-between gap-4 pr-12">
+      <div className="flex items-start justify-between gap-4 pr-[6.5rem]">
         <div className="flex items-center gap-3">
           {typeof rank === "number" && (
             <span className="data text-xs text-brass">
