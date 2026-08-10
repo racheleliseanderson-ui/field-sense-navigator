@@ -140,12 +140,12 @@ function WaterRecord() {
       {/* readout row */}
       <section className="border-y border-hairline bg-abyss">
         <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-hairline md:grid-cols-4">
-          {[
+          {([
             { k: "Status", v: humanize(d.status) },
             { k: "Last source check", v: `${daysSince(d.checkedAt)}d ago` },
             { k: "Next review", v: d.nextReviewAt },
             { k: "Boundary", v: "Public destination" },
-          ].map((s) => (
+          ] as Array<{ k: string; v: string }>).map((s) => (
             <div key={s.k} className="px-5 py-6 sm:px-8">
               <dt className="tick text-[0.55rem]">{s.k}</dt>
               <dd className="mt-2 text-sm leading-snug text-foreground">{s.v}</dd>
