@@ -78,14 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Honey Hole Intelligence — Public-water field instrument" },
+      {
+        name: "description",
+        content:
+          "A fail-closed field intelligence instrument for named public waters: layered readouts, field readiness, job-aware ranking and printable field packets.",
+      },
+      { name: "author", content: "Hook the Horizon" },
+      { property: "og:title", content: "Honey Hole Intelligence" },
+      {
+        property: "og:description",
+        content: "Layered intelligence for named public waters. No private spots, no invented conditions.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
