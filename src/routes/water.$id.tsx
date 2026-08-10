@@ -391,6 +391,7 @@ function WaterRecord() {
       </div>
 
       <SiteFooter />
+      <div className="h-14 sm:hidden" aria-hidden="true" />
     </div>
   );
 }
