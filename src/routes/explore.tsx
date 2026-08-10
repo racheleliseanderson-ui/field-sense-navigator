@@ -305,6 +305,67 @@ function Explore() {
           ))}
         </select>
       </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">Access</span>
+        {ACCESS_FACETS.map((a) => (
+          <Chip
+            key={a.id}
+            active={params.access === a.id}
+            onClick={() => set({ access: params.access === a.id ? "" : a.id })}
+          >
+            {a.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">Species</span>
+        <select
+          value={params.species}
+          onChange={(e) => set({ species: e.target.value })}
+          aria-label="Species"
+          className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
+        >
+          <option value="">Any species on record</option>
+          {speciesList.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <span className="tick ml-2 mr-1 text-[0.55rem]">Verified within</span>
+        <select
+          value={String(params.fresh)}
+          onChange={(e) => set({ fresh: Number(e.target.value) })}
+          aria-label="Verified within"
+          className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
+        >
+          <option value="0">Any source date</option>
+          <option value="7">7 days</option>
+          <option value="30">30 days</option>
+          <option value="90">90 days</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <label className="tick text-[0.55rem]" htmlFor="minscore">
+          Minimum readiness
+        </label>
+        <input
+          id="minscore"
+          type="range"
+          min={0}
+          max={90}
+          step={10}
+          value={params.min}
+          onChange={(e) => set({ min: Number(e.target.value) })}
+          className="h-11 w-40 accent-[color:var(--brass,currentColor)]"
+        />
+        <span className="data text-xs text-muted-foreground">
+          {params.min === 0 ? "off" : `${params.min}+`}
+        </span>
+        <Chip active={params.watch} onClick={() => set({ watch: !params.watch })}>
+          Watchlist only
+        </Chip>
+      </div>
     </>
   );
 
