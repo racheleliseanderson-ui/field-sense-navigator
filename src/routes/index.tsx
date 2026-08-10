@@ -106,7 +106,7 @@ function Home() {
           <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-hairline sm:px-0 md:grid-cols-4">
             {[
               { k: "Named waters", v: destinations.length },
-              { k: "States", v: states.length },
+              { k: "States & provinces", v: states.length },
               { k: "Intelligence layers", v: 5 },
               { k: "Private spots", v: 0 },
             ].map((s) => (
@@ -214,9 +214,9 @@ function Home() {
             catalog, slowly.
           </h3>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/75">
-            {destinations.length} records across {states.length} states, filtered
-            by state, water type and readiness band. Exploration without the
-            spreadsheet.
+            {destinations.length} records across {states.length} states,
+            provinces and territories, filtered by jurisdiction, water type and
+            readiness band. Exploration without the spreadsheet.
           </p>
           <span className="tick mt-6 text-primary">Open the catalog →</span>
         </Link>

@@ -279,8 +279,8 @@ export function SiteFooter() {
           <p className="tick">{t("footer.record", "Record")}</p>
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
             <li>{t("footer.schema", "Schema 0.4.0")}</li>
-            <li>{t("footer.waters", "424 named waters")}</li>
-            <li>{t("footer.states", "50 states")}</li>
+            <li>{t("footer.waters", "456 named waters")}</li>
+            <li>{t("footer.states", "50 states + 13 provinces & territories")}</li>
           </ul>
         </div>
       </div>
