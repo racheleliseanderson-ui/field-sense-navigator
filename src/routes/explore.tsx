@@ -112,7 +112,7 @@ function readRecent(): string[] {
 }
 
 function Explore() {
-  const params = Route.useSearch();
+  const params = Route.useSearch() as CatalogSearch;
   const navigate = useNavigate({ from: "/explore" });
   const t = useT();
   const reveal = useReveal();
