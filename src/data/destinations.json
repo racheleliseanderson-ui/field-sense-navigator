@@ -18467,5 +18467,5021 @@
    "publicLocationIncluded": true,
    "sensitiveLocationIncluded": false
   }
+ },
+ {
+  "id": "HHI-DEST-319",
+  "state": "Georgia",
+  "region": "North Georgia piedmont",
+  "waterbody": "Lake Sidney Lanier",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://georgiawildlife.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Georgia DNR Wildlife Resources Division and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Georgia DNR Wildlife Resources Division regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-320",
+  "state": "Georgia",
+  "region": "North Georgia piedmont",
+  "waterbody": "Lake Allatoona",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://georgiawildlife.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Georgia DNR Wildlife Resources Division and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Georgia DNR Wildlife Resources Division regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-321",
+  "state": "Georgia",
+  "region": "West Georgia",
+  "waterbody": "West Point Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://georgiawildlife.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Georgia DNR Wildlife Resources Division and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Georgia DNR Wildlife Resources Division regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-322",
+  "state": "Georgia",
+  "region": "Southwest Georgia",
+  "waterbody": "Lake Seminole",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://georgiawildlife.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Georgia DNR Wildlife Resources Division and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Georgia DNR Wildlife Resources Division regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-323",
+  "state": "South Carolina",
+  "region": "Midlands",
+  "waterbody": "Lake Murray",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.dnr.sc.gov/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Carolina DNR and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Carolina DNR regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-324",
+  "state": "South Carolina",
+  "region": "Lowcountry",
+  "waterbody": "Santee Cooper Lakes \u2014 Lake Marion",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.dnr.sc.gov/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Blue catfish",
+   "Channel catfish",
+   "Flathead catfish",
+   "White bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Carolina DNR and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Carolina DNR regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-325",
+  "state": "South Carolina",
+  "region": "Upstate",
+  "waterbody": "Lake Hartwell",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.dnr.sc.gov/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Carolina DNR and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Carolina DNR regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-326",
+  "state": "South Carolina",
+  "region": "Blue Ridge escarpment",
+  "waterbody": "Lake Jocassee",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.dnr.sc.gov/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Carolina DNR and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Carolina DNR regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-327",
+  "state": "North Carolina",
+  "region": "Piedmont",
+  "waterbody": "Falls Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.ncwildlife.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Carolina Wildlife Resources Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Carolina Wildlife Resources Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-328",
+  "state": "North Carolina",
+  "region": "Piedmont",
+  "waterbody": "Lake Norman",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.ncwildlife.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Carolina Wildlife Resources Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Carolina Wildlife Resources Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-329",
+  "state": "North Carolina",
+  "region": "Western mountains",
+  "waterbody": "Fontana Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.ncwildlife.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Carolina Wildlife Resources Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Carolina Wildlife Resources Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-330",
+  "state": "North Carolina",
+  "region": "Coastal plain",
+  "waterbody": "Roanoke River",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.ncwildlife.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "American shad",
+   "Blue catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Carolina Wildlife Resources Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Carolina Wildlife Resources Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-331",
+  "state": "Tennessee",
+  "region": "West Tennessee",
+  "waterbody": "Kentucky Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.tn.gov/twra/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Blue catfish",
+   "Channel catfish",
+   "Flathead catfish",
+   "White bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Tennessee Wildlife Resources Agency and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Tennessee Wildlife Resources Agency regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-332",
+  "state": "Tennessee",
+  "region": "Southeast Tennessee",
+  "waterbody": "Chickamauga Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.tn.gov/twra/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Tennessee Wildlife Resources Agency and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Tennessee Wildlife Resources Agency regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-333",
+  "state": "Tennessee",
+  "region": "East Tennessee",
+  "waterbody": "Norris Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.tn.gov/twra/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Tennessee Wildlife Resources Agency and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Tennessee Wildlife Resources Agency regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-334",
+  "state": "Tennessee",
+  "region": "Northeast Tennessee",
+  "waterbody": "Watauga River",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.tn.gov/twra/fishing.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Tennessee Wildlife Resources Agency and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Tennessee Wildlife Resources Agency regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-335",
+  "state": "Kentucky",
+  "region": "South-central Kentucky",
+  "waterbody": "Lake Cumberland",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://fw.ky.gov/Fish/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kentucky Department of Fish and Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kentucky Department of Fish and Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-336",
+  "state": "Kentucky",
+  "region": "South-central Kentucky",
+  "waterbody": "Barren River Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://fw.ky.gov/Fish/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kentucky Department of Fish and Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kentucky Department of Fish and Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-337",
+  "state": "Kentucky",
+  "region": "Central Kentucky",
+  "waterbody": "Green River Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://fw.ky.gov/Fish/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kentucky Department of Fish and Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kentucky Department of Fish and Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-338",
+  "state": "Kentucky",
+  "region": "Ohio River corridor",
+  "waterbody": "Ohio River \u2014 Kentucky frontage",
+  "waterType": "river",
+  "officialSourceUrl": "https://fw.ky.gov/Fish/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Blue catfish",
+   "Channel catfish",
+   "Flathead catfish",
+   "White bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kentucky Department of Fish and Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kentucky Department of Fish and Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-339",
+  "state": "Alabama",
+  "region": "Tennessee Valley",
+  "waterbody": "Lake Guntersville",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.outdooralabama.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alabama Department of Conservation and Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alabama Department of Conservation and Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-340",
+  "state": "Alabama",
+  "region": "East-central Alabama",
+  "waterbody": "Lake Martin",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.outdooralabama.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alabama Department of Conservation and Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alabama Department of Conservation and Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-341",
+  "state": "Alabama",
+  "region": "Tennessee Valley",
+  "waterbody": "Wheeler Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.outdooralabama.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Blue catfish",
+   "Channel catfish",
+   "Flathead catfish",
+   "White bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alabama Department of Conservation and Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alabama Department of Conservation and Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-342",
+  "state": "Alabama",
+  "region": "Northeast Alabama",
+  "waterbody": "Weiss Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.outdooralabama.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alabama Department of Conservation and Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alabama Department of Conservation and Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-343",
+  "state": "Mississippi",
+  "region": "Central Mississippi",
+  "waterbody": "Ross Barnett Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.mdwfp.com/fishing-boating/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Mississippi Department of Wildlife, Fisheries, and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Mississippi Department of Wildlife, Fisheries, and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-344",
+  "state": "Mississippi",
+  "region": "North Mississippi",
+  "waterbody": "Sardis Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.mdwfp.com/fishing-boating/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "White crappie",
+   "Black crappie",
+   "Largemouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Mississippi Department of Wildlife, Fisheries, and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Mississippi Department of Wildlife, Fisheries, and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-345",
+  "state": "Mississippi",
+  "region": "North Mississippi",
+  "waterbody": "Grenada Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.mdwfp.com/fishing-boating/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "White crappie",
+   "Channel catfish",
+   "Largemouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Mississippi Department of Wildlife, Fisheries, and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Mississippi Department of Wildlife, Fisheries, and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-346",
+  "state": "Mississippi",
+  "region": "Northeast Mississippi",
+  "waterbody": "Pickwick Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.mdwfp.com/fishing-boating/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Smallmouth bass",
+   "Catfish",
+   "Largemouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Mississippi Department of Wildlife, Fisheries, and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Mississippi Department of Wildlife, Fisheries, and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-347",
+  "state": "Louisiana",
+  "region": "West-central Louisiana",
+  "waterbody": "Toledo Bend Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Louisiana Department of Wildlife and Fisheries and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Louisiana Department of Wildlife and Fisheries regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-348",
+  "state": "Louisiana",
+  "region": "Northwest Louisiana",
+  "waterbody": "Caddo Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Louisiana Department of Wildlife and Fisheries and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Louisiana Department of Wildlife and Fisheries regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-349",
+  "state": "Louisiana",
+  "region": "Southeast Louisiana",
+  "waterbody": "Lake Pontchartrain",
+  "waterType": "marine",
+  "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Speckled trout",
+   "Red drum",
+   "Flounder"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published public ramps and marina access",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published pier and shore access",
+    "type": "fishing_pier",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Louisiana Department of Wildlife and Fisheries and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Louisiana Department of Wildlife and Fisheries regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-350",
+  "state": "Louisiana",
+  "region": "South-central Louisiana",
+  "waterbody": "Atchafalaya Basin",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Louisiana Department of Wildlife and Fisheries and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Louisiana Department of Wildlife and Fisheries regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-351",
+  "state": "Arkansas",
+  "region": "Ozarks",
+  "waterbody": "Beaver Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.agfc.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arkansas Game and Fish Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arkansas Game and Fish Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-352",
+  "state": "Arkansas",
+  "region": "Ozarks",
+  "waterbody": "Bull Shoals Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.agfc.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arkansas Game and Fish Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arkansas Game and Fish Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-353",
+  "state": "Arkansas",
+  "region": "North Arkansas",
+  "waterbody": "White River below Bull Shoals",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.agfc.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arkansas Game and Fish Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arkansas Game and Fish Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-354",
+  "state": "Arkansas",
+  "region": "Ouachita Mountains",
+  "waterbody": "Lake Ouachita",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.agfc.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arkansas Game and Fish Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arkansas Game and Fish Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-355",
+  "state": "Missouri",
+  "region": "Southwest Missouri",
+  "waterbody": "Table Rock Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://mdc.mo.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Missouri Department of Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Missouri Department of Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-356",
+  "state": "Missouri",
+  "region": "Central Missouri",
+  "waterbody": "Lake of the Ozarks",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://mdc.mo.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Missouri Department of Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Missouri Department of Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-357",
+  "state": "Missouri",
+  "region": "West-central Missouri",
+  "waterbody": "Truman Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://mdc.mo.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Crappie",
+   "Largemouth bass",
+   "Blue catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Missouri Department of Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Missouri Department of Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-358",
+  "state": "Missouri",
+  "region": "Ozark National Scenic Riverways",
+  "waterbody": "Current River",
+  "waterType": "river",
+  "officialSourceUrl": "https://mdc.mo.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Missouri Department of Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Missouri Department of Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-359",
+  "state": "Oklahoma",
+  "region": "Northeast Oklahoma",
+  "waterbody": "Grand Lake o' the Cherokees",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlifedepartment.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Oklahoma Department of Wildlife Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Oklahoma Department of Wildlife Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-360",
+  "state": "Oklahoma",
+  "region": "Southeast Oklahoma",
+  "waterbody": "Broken Bow Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlifedepartment.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Oklahoma Department of Wildlife Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Oklahoma Department of Wildlife Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-361",
+  "state": "Oklahoma",
+  "region": "South-central Oklahoma",
+  "waterbody": "Lake Texoma",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlifedepartment.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Oklahoma Department of Wildlife Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Oklahoma Department of Wildlife Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-362",
+  "state": "Oklahoma",
+  "region": "East-central Oklahoma",
+  "waterbody": "Lake Eufaula",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlifedepartment.com/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Blue catfish",
+   "Channel catfish",
+   "Flathead catfish",
+   "White bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Oklahoma Department of Wildlife Conservation and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Oklahoma Department of Wildlife Conservation regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-363",
+  "state": "Kansas",
+  "region": "Flint Hills",
+  "waterbody": "Milford Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://ksoutdoors.com/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kansas Department of Wildlife and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kansas Department of Wildlife and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-364",
+  "state": "Kansas",
+  "region": "Northeast Kansas",
+  "waterbody": "Clinton Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://ksoutdoors.com/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kansas Department of Wildlife and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kansas Department of Wildlife and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-365",
+  "state": "Kansas",
+  "region": "South-central Kansas",
+  "waterbody": "Cheney Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://ksoutdoors.com/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kansas Department of Wildlife and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kansas Department of Wildlife and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-366",
+  "state": "Kansas",
+  "region": "Smoky Hills",
+  "waterbody": "Wilson Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://ksoutdoors.com/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Walleye",
+   "Smallmouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Kansas Department of Wildlife and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Kansas Department of Wildlife and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-367",
+  "state": "Nebraska",
+  "region": "North Platte valley",
+  "waterbody": "Lake McConaughy",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://outdoornebraska.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nebraska Game and Parks Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nebraska Game and Parks Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-368",
+  "state": "Nebraska",
+  "region": "South-central Nebraska",
+  "waterbody": "Harlan County Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://outdoornebraska.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nebraska Game and Parks Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nebraska Game and Parks Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-369",
+  "state": "Nebraska",
+  "region": "Southeast Nebraska",
+  "waterbody": "Branched Oak Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://outdoornebraska.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nebraska Game and Parks Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nebraska Game and Parks Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-370",
+  "state": "Nebraska",
+  "region": "Sandhills",
+  "waterbody": "Merritt Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://outdoornebraska.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nebraska Game and Parks Commission and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nebraska Game and Parks Commission regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-371",
+  "state": "Iowa",
+  "region": "North-central Iowa",
+  "waterbody": "Clear Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://www.iowadnr.gov/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Iowa Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Iowa Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-372",
+  "state": "Iowa",
+  "region": "Iowa Great Lakes",
+  "waterbody": "Spirit Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://www.iowadnr.gov/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Iowa Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Iowa Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-373",
+  "state": "Iowa",
+  "region": "South-central Iowa",
+  "waterbody": "Rathbun Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.iowadnr.gov/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Crappie",
+   "Walleye",
+   "Channel catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Iowa Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Iowa Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-374",
+  "state": "Iowa",
+  "region": "Eastern Iowa",
+  "waterbody": "Mississippi River Pool 13",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.iowadnr.gov/Fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Iowa Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Iowa Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-375",
+  "state": "South Dakota",
+  "region": "Missouri River",
+  "waterbody": "Lake Oahe",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gfp.sd.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Dakota Game, Fish and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Dakota Game, Fish and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-376",
+  "state": "South Dakota",
+  "region": "Missouri River",
+  "waterbody": "Lake Sharpe",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gfp.sd.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Dakota Game, Fish and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Dakota Game, Fish and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-377",
+  "state": "South Dakota",
+  "region": "Missouri River",
+  "waterbody": "Lake Francis Case",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gfp.sd.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Dakota Game, Fish and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Dakota Game, Fish and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-378",
+  "state": "South Dakota",
+  "region": "Black Hills",
+  "waterbody": "Angostura Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gfp.sd.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by South Dakota Game, Fish and Parks and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current South Dakota Game, Fish and Parks regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-379",
+  "state": "North Dakota",
+  "region": "Missouri River",
+  "waterbody": "Lake Sakakawea",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gf.nd.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Dakota Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Dakota Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-380",
+  "state": "North Dakota",
+  "region": "Northeast North Dakota",
+  "waterbody": "Devils Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://gf.nd.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Dakota Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Dakota Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-381",
+  "state": "North Dakota",
+  "region": "Missouri River",
+  "waterbody": "Lake Oahe \u2014 North Dakota reach",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://gf.nd.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Dakota Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Dakota Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-382",
+  "state": "North Dakota",
+  "region": "Central North Dakota",
+  "waterbody": "Missouri River below Garrison Dam",
+  "waterType": "river",
+  "officialSourceUrl": "https://gf.nd.gov/fishing",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Chinook salmon",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by North Dakota Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current North Dakota Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-383",
+  "state": "Wyoming",
+  "region": "Green River basin",
+  "waterbody": "Flaming Gorge Reservoir \u2014 Wyoming reach",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wgfd.wyo.gov/fishing-boating",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Lake trout",
+   "Rainbow trout",
+   "Smallmouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Wyoming Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Wyoming Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-384",
+  "state": "Wyoming",
+  "region": "Central Wyoming",
+  "waterbody": "North Platte River \u2014 Grey Reef",
+  "waterType": "river",
+  "officialSourceUrl": "https://wgfd.wyo.gov/fishing-boating",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Wyoming Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Wyoming Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-385",
+  "state": "Wyoming",
+  "region": "Wind River basin",
+  "waterbody": "Boysen Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wgfd.wyo.gov/fishing-boating",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Walleye",
+   "Smallmouth bass",
+   "Yellow perch",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Wyoming Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Wyoming Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-386",
+  "state": "Wyoming",
+  "region": "Jackson Hole",
+  "waterbody": "Snake River \u2014 Wyoming reach",
+  "waterType": "river",
+  "officialSourceUrl": "https://wgfd.wyo.gov/fishing-boating",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Snake River cutthroat trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Wyoming Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Wyoming Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-387",
+  "state": "Utah",
+  "region": "Wasatch Range",
+  "waterbody": "Strawberry Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wildlife.utah.gov/fishing-in-utah.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Utah Division of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Utah Division of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-388",
+  "state": "Utah",
+  "region": "Uinta basin",
+  "waterbody": "Flaming Gorge Reservoir \u2014 Utah reach",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wildlife.utah.gov/fishing-in-utah.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Lake trout",
+   "Kokanee salmon",
+   "Rainbow trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Utah Division of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Utah Division of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-389",
+  "state": "Utah",
+  "region": "Wasatch Back",
+  "waterbody": "Jordanelle Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wildlife.utah.gov/fishing-in-utah.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Smallmouth bass",
+   "Brown trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Utah Division of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Utah Division of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-390",
+  "state": "Utah",
+  "region": "Northeast Utah",
+  "waterbody": "Green River below Flaming Gorge",
+  "waterType": "river",
+  "officialSourceUrl": "https://wildlife.utah.gov/fishing-in-utah.html",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Utah Division of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Utah Division of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-391",
+  "state": "Nevada",
+  "region": "Southern Nevada",
+  "waterbody": "Lake Mead",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.ndow.org/fish/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nevada Department of Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nevada Department of Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-392",
+  "state": "Nevada",
+  "region": "Sierra Nevada",
+  "waterbody": "Lake Tahoe \u2014 Nevada shoreline",
+  "waterType": "lake",
+  "officialSourceUrl": "https://www.ndow.org/fish/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Lake trout",
+   "Rainbow trout",
+   "Kokanee salmon"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nevada Department of Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nevada Department of Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-393",
+  "state": "Nevada",
+  "region": "Northwest Nevada",
+  "waterbody": "Pyramid Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://www.ndow.org/fish/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Lahontan cutthroat trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nevada Department of Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nevada Department of Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-394",
+  "state": "Nevada",
+  "region": "Northeast Nevada",
+  "waterbody": "Wild Horse Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.ndow.org/fish/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Yellow perch",
+   "Smallmouth bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Nevada Department of Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Nevada Department of Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-395",
+  "state": "New Mexico",
+  "region": "Rio Grande valley",
+  "waterbody": "Elephant Butte Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlife.state.nm.us/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "White bass",
+   "Largemouth bass",
+   "Walleye"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by New Mexico Department of Game and Fish and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current New Mexico Department of Game and Fish regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-396",
+  "state": "New Mexico",
+  "region": "Northwest New Mexico",
+  "waterbody": "Navajo Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlife.state.nm.us/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Kokanee salmon",
+   "Smallmouth bass",
+   "Northern pike"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by New Mexico Department of Game and Fish and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current New Mexico Department of Game and Fish regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-397",
+  "state": "New Mexico",
+  "region": "Northwest New Mexico",
+  "waterbody": "San Juan River quality waters",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.wildlife.state.nm.us/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by New Mexico Department of Game and Fish and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current New Mexico Department of Game and Fish regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-398",
+  "state": "New Mexico",
+  "region": "North-central New Mexico",
+  "waterbody": "Heron Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.wildlife.state.nm.us/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Kokanee salmon",
+   "Lake trout",
+   "Rainbow trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by New Mexico Department of Game and Fish and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current New Mexico Department of Game and Fish regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-399",
+  "state": "Arizona",
+  "region": "Colorado Plateau",
+  "waterbody": "Lake Powell \u2014 Arizona reach",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.azgfd.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arizona Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arizona Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-400",
+  "state": "Arizona",
+  "region": "Central Arizona",
+  "waterbody": "Roosevelt Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.azgfd.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arizona Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arizona Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-401",
+  "state": "Arizona",
+  "region": "Lower Colorado River",
+  "waterbody": "Lake Havasu",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://www.azgfd.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arizona Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arizona Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-402",
+  "state": "Arizona",
+  "region": "Northern Arizona",
+  "waterbody": "Lees Ferry \u2014 Colorado River",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.azgfd.com/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Rainbow trout",
+   "Brown trout",
+   "Brook trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Arizona Game and Fish Department and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Arizona Game and Fish Department regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-403",
+  "state": "Virginia",
+  "region": "Southwest Virginia",
+  "waterbody": "Smith Mountain Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://dwr.virginia.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Virginia Department of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Virginia Department of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-404",
+  "state": "Virginia",
+  "region": "Central Virginia",
+  "waterbody": "Lake Anna",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://dwr.virginia.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Virginia Department of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Virginia Department of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-405",
+  "state": "Virginia",
+  "region": "Central Virginia",
+  "waterbody": "James River \u2014 Richmond reach",
+  "waterType": "river",
+  "officialSourceUrl": "https://dwr.virginia.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Smallmouth bass",
+   "Blue catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Virginia Department of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Virginia Department of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-406",
+  "state": "Virginia",
+  "region": "Southside Virginia",
+  "waterbody": "Kerr Reservoir (Buggs Island Lake)",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://dwr.virginia.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Largemouth bass",
+   "Spotted bass",
+   "Black crappie"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Virginia Department of Wildlife Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Virginia Department of Wildlife Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-407",
+  "state": "West Virginia",
+  "region": "Southern West Virginia",
+  "waterbody": "Summersville Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wvdnr.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Smallmouth bass",
+   "Walleye",
+   "Rainbow trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by West Virginia Division of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current West Virginia Division of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-408",
+  "state": "West Virginia",
+  "region": "North-central West Virginia",
+  "waterbody": "Cheat Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://wvdnr.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by West Virginia Division of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current West Virginia Division of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-409",
+  "state": "West Virginia",
+  "region": "Southern West Virginia",
+  "waterbody": "New River",
+  "waterType": "river",
+  "officialSourceUrl": "https://wvdnr.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Smallmouth bass",
+   "Muskellunge",
+   "Walleye"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by West Virginia Division of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current West Virginia Division of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-410",
+  "state": "West Virginia",
+  "region": "Central West Virginia",
+  "waterbody": "Stonewall Jackson Lake",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://wvdnr.gov/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by West Virginia Division of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current West Virginia Division of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-411",
+  "state": "Maryland",
+  "region": "Western Maryland",
+  "waterbody": "Deep Creek Lake",
+  "waterType": "lake",
+  "officialSourceUrl": "https://dnr.maryland.gov/fisheries/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Yellow perch",
+   "Smallmouth bass",
+   "Walleye"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Maryland Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Maryland Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-412",
+  "state": "Maryland",
+  "region": "Upper Chesapeake Bay",
+  "waterbody": "Susquehanna Flats",
+  "waterType": "marine",
+  "officialSourceUrl": "https://dnr.maryland.gov/fisheries/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "White perch"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published public ramps and marina access",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published pier and shore access",
+    "type": "fishing_pier",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Maryland Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Maryland Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-413",
+  "state": "Maryland",
+  "region": "Central Maryland",
+  "waterbody": "Liberty Reservoir",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://dnr.maryland.gov/fisheries/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Maryland Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Maryland Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-414",
+  "state": "Maryland",
+  "region": "Southern Maryland",
+  "waterbody": "Potomac River \u2014 tidal reach",
+  "waterType": "river",
+  "officialSourceUrl": "https://dnr.maryland.gov/fisheries/Pages/default.aspx",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Blue catfish",
+   "Striped bass"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Maryland Department of Natural Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Maryland Department of Natural Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-415",
+  "state": "Delaware",
+  "region": "New Castle County",
+  "waterbody": "Lums Pond",
+  "waterType": "lake",
+  "officialSourceUrl": "https://dnrec.delaware.gov/fish-wildlife/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Black crappie",
+   "Channel catfish",
+   "Bluegill"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Delaware Division of Fish and Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Delaware Division of Fish and Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-416",
+  "state": "Delaware",
+  "region": "Sussex County",
+  "waterbody": "Indian River Bay",
+  "waterType": "marine",
+  "officialSourceUrl": "https://dnrec.delaware.gov/fish-wildlife/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Summer flounder",
+   "Striped bass",
+   "Bluefish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published public ramps and marina access",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published pier and shore access",
+    "type": "fishing_pier",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Delaware Division of Fish and Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Delaware Division of Fish and Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-417",
+  "state": "Delaware",
+  "region": "New Castle County",
+  "waterbody": "Delaware River \u2014 Delaware frontage",
+  "waterType": "river",
+  "officialSourceUrl": "https://dnrec.delaware.gov/fish-wildlife/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Striped bass",
+   "Channel catfish",
+   "White perch"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Delaware Division of Fish and Wildlife and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Delaware Division of Fish and Wildlife regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-418",
+  "state": "Alaska",
+  "region": "Kenai Peninsula",
+  "waterbody": "Kenai River",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Sockeye salmon",
+   "Coho salmon",
+   "Rainbow trout"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alaska Department of Fish and Game and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alaska Department of Fish and Game regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-419",
+  "state": "Alaska",
+  "region": "Kenai Peninsula",
+  "waterbody": "Russian River",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Sockeye salmon",
+   "Coho salmon"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alaska Department of Fish and Game and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alaska Department of Fish and Game regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-420",
+  "state": "Alaska",
+  "region": "Anchorage",
+  "waterbody": "Ship Creek",
+  "waterType": "river",
+  "officialSourceUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "King salmon",
+   "Coho salmon"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published river access points and takeouts",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and wade access",
+    "type": "shore_access",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alaska Department of Fish and Game and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alaska Department of Fish and Game regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-421",
+  "state": "Alaska",
+  "region": "Southcentral Alaska",
+  "waterbody": "Resurrection Bay",
+  "waterType": "marine",
+  "officialSourceUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Silver salmon",
+   "Pacific halibut",
+   "Rockfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published public ramps and marina access",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published pier and shore access",
+    "type": "fishing_pier",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Alaska Department of Fish and Game and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Alaska Department of Fish and Game regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-422",
+  "state": "Hawaii",
+  "region": "Oahu",
+  "waterbody": "Wahiawa Public Fishing Area",
+  "waterType": "reservoir",
+  "officialSourceUrl": "https://dlnr.hawaii.gov/dar/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Largemouth bass",
+   "Peacock bass",
+   "Channel catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Hawaii Division of Aquatic Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Hawaii Division of Aquatic Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-423",
+  "state": "Hawaii",
+  "region": "Hawaii Island",
+  "waterbody": "Waiakea Public Fishing Area",
+  "waterType": "lake",
+  "officialSourceUrl": "https://dlnr.hawaii.gov/dar/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Tilapia",
+   "Channel catfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published trailered launches (see agency access list)",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published bank and shoreline frontage",
+    "type": "shore_access",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published hand-launch or carry-in access",
+    "type": "hand_launch",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Hawaii Division of Aquatic Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Hawaii Division of Aquatic Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
+ },
+ {
+  "id": "HHI-DEST-424",
+  "state": "Hawaii",
+  "region": "Oahu",
+  "waterbody": "Kaneohe Bay",
+  "waterType": "marine",
+  "officialSourceUrl": "https://dlnr.hawaii.gov/dar/fishing/",
+  "checkedAt": "2026-08-10T18:00:00-06:00",
+  "nextReviewAt": "2026-09-07",
+  "status": "current_with_same_day_rule_check_required",
+  "speciesContext": [
+   "Bonefish",
+   "Trevally",
+   "Goatfish"
+  ],
+  "publicAccess": [
+   {
+    "name": "Published public ramps and marina access",
+    "type": "boat_launch",
+    "officiallyPublished": true
+   },
+   {
+    "name": "Published pier and shore access",
+    "type": "fishing_pier",
+    "officiallyPublished": true
+   }
+  ],
+  "currentNotices": [
+   "Waterbody- and species-specific regulations are set by Hawaii Division of Aquatic Resources and must be checked for the intended date.",
+   "Seasons, size limits and creel limits change during the year; the published regulation set governs.",
+   "Access site status, closures and fees are published by the managing agency and can change without notice."
+  ],
+  "directVerification": [
+   "Read the current Hawaii Division of Aquatic Resources regulation set for this water before fishing.",
+   "Confirm the intended access site is open, and confirm any launch fee or permit requirement.",
+   "Check for emergency or in-season rule changes issued after the verification date on this record."
+  ],
+  "privacy": {
+   "classification": "public_destination",
+   "publicLocationIncluded": true,
+   "sensitiveLocationIncluded": false
+  }
  }
 ]
