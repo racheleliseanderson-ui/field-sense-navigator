@@ -75,42 +75,48 @@ function Packet() {
       {/* toolbar */}
       <div
         data-print="hide"
-        className="mx-auto mb-8 grid max-w-[54rem] gap-3 px-5 pt-6 print:hidden sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:pt-0"
+        className="sticky top-0 z-40 mb-6 border-b border-hairline bg-abyss/95 backdrop-blur-xl print:hidden sm:static sm:mb-8 sm:border-0 sm:bg-transparent sm:backdrop-blur-none"
       >
-        <Link to="/water/$id" params={{ id: d.id }} className="tick text-primary hover:text-brass">
-          ← Back to record
-        </Link>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={downloadPdf}
-            disabled={pdfBusy}
-            className="inline-flex flex-1 items-center justify-center gap-3 bg-brass px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground disabled:opacity-60 sm:flex-none"
+        <div className="mx-auto flex max-w-[54rem] flex-wrap items-center justify-between gap-3 px-5 py-3 sm:py-0">
+          <Link
+            to="/water/$id"
+            params={{ id: d.id }}
+            className="tick inline-flex min-h-11 items-center text-primary hover:text-brass"
           >
-            <Download className="h-4 w-4" aria-hidden="true" />
-            {pdfBusy ? "Preparing PDF…" : "Download PDF"}
-          </button>
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="inline-flex flex-1 items-center justify-center gap-3 border border-hairline px-6 py-3 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 sm:flex-none"
-          >
-            <Printer className="h-4 w-4" aria-hidden="true" />
-            Print
-          </button>
+            ← Back to record
+          </Link>
+          <div className="flex flex-1 gap-2 sm:flex-none">
+            <button
+              type="button"
+              onClick={downloadPdf}
+              disabled={pdfBusy}
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-3 bg-brass px-6 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground disabled:opacity-60 sm:flex-none"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              {pdfBusy ? "Preparing PDF…" : "Download PDF"}
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="hidden min-h-12 items-center justify-center gap-3 border border-hairline px-6 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 sm:inline-flex"
+            >
+              <Printer className="h-4 w-4" aria-hidden="true" />
+              Print
+            </button>
+          </div>
         </div>
       </div>
 
       {/* sheet */}
-      <article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-10 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
-        <header className="flex flex-wrap items-start justify-between gap-6">
+      <article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
+        <header className="grid gap-4 sm:flex sm:flex-wrap sm:items-start sm:justify-between sm:gap-6">
           <div>
             <p className="packet-tick">Honey Hole Intelligence</p>
-            <h1 className="mt-3 font-display text-[2.6rem] font-bold leading-[0.95] tracking-[-0.04em]">
+            <h1 className="mt-3 font-display text-[clamp(2rem,9vw,2.6rem)] font-bold leading-[0.95] tracking-[-0.04em]">
               Field Packet
             </h1>
           </div>
-          <div className="text-right text-[0.7rem] leading-relaxed text-packet-muted">
+          <div className="text-[0.7rem] leading-relaxed text-packet-muted sm:text-right">
             <p className="data">RECORD {d.id}</p>
             <p>Issued {issued}</p>
             <p>Schema 0.4.0</p>
@@ -120,11 +126,13 @@ function Packet() {
         <Rule />
 
         <section>
-          <h2 className="font-display text-3xl font-bold leading-tight tracking-[-0.035em]">
+          <h2 className="font-display text-[clamp(1.6rem,7vw,1.875rem)] font-bold leading-tight tracking-[-0.035em]">
             {d.waterbody}
           </h2>
           {d.accessSite && (
-            <p className="mt-1 text-lg font-semibold text-packet-muted">{d.accessSite}</p>
+            <p className="mt-1 text-base font-semibold text-packet-muted sm:text-lg">
+              {d.accessSite}
+            </p>
           )}
           <p className="mt-2 text-sm text-packet-muted">
             {d.region}, {d.state}
@@ -165,16 +173,19 @@ function Packet() {
                   <p className="font-display text-sm font-bold uppercase tracking-[0.1em]">
                     {g}
                   </p>
-                  <ul className="mt-3 space-y-2.5">
+                  <ul className="mt-3 divide-y divide-packet-rule/70 sm:divide-y-0">
                     {group.map((i, n) => (
-                      <li key={`${g}-${n}`} className="flex gap-3">
+                      <li
+                        key={`${g}-${n}`}
+                        className="flex min-h-11 items-start gap-3 py-2.5 sm:min-h-0 sm:py-0 sm:pb-2.5"
+                      >
                         <span
                           aria-hidden="true"
-                          className="mt-0.5 h-3.5 w-3.5 shrink-0 border border-packet-ink/60"
+                          className="mt-0.5 h-5 w-5 shrink-0 border border-packet-ink/60 sm:h-3.5 sm:w-3.5"
                         />
-                        <span className="text-sm leading-relaxed">
+                        <span className="min-w-0 text-sm leading-relaxed">
                           {i.text}
-                          <span className="ml-2 text-[0.68rem] uppercase tracking-[0.08em] text-packet-muted">
+                          <span className="ml-2 whitespace-nowrap text-[0.68rem] uppercase tracking-[0.08em] text-packet-muted">
                             {i.source}
                           </span>
                         </span>
@@ -194,7 +205,7 @@ function Packet() {
           <h3 className="packet-tick">Layer digest</h3>
           <div className="mt-5 divide-y divide-packet-rule border-y border-packet-rule">
             {layers.map((l) => (
-              <div key={l.key} className="grid gap-2 py-4 sm:grid-cols-[10rem_1fr]">
+              <div key={l.key} className="grid gap-1.5 py-4 sm:gap-2 sm:grid-cols-[10rem_1fr]">
                 <p className="font-display text-sm font-bold tracking-tight">{l.title}</p>
                 <div>
                   <p className="text-sm leading-relaxed">{l.readout}</p>

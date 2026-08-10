@@ -117,24 +117,33 @@ export function ReadinessMeter({
 export function LayerPanel({
   layer,
   defaultOpen = false,
+  open: controlledOpen,
+  onToggle,
 }: {
   layer: IntelLayer;
   defaultOpen?: boolean;
+  open?: boolean;
+  onToggle?: () => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const toggle = () => {
+    if (onToggle) onToggle();
+    else setUncontrolledOpen((v) => !v);
+  };
 
   return (
     <div className="border-b border-hairline last:border-b-0">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         aria-expanded={open}
-        className="group flex w-full items-start gap-4 py-6 text-left"
+        className="group flex w-full items-start gap-3 py-5 text-left sm:gap-4 sm:py-6"
       >
         <span className="data mt-1 text-xs text-brass">{layer.index}</span>
         <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-center gap-3">
-            <span className="font-display text-lg font-bold tracking-tight text-foreground">
+          <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
               {layer.title}
             </span>
             <GradeChip grade={layer.grade} />
@@ -142,7 +151,7 @@ export function LayerPanel({
           <span className="mt-2 block max-w-2xl text-sm leading-relaxed text-muted-foreground">
             {layer.readout}
           </span>
-          <span className="mt-3 flex max-w-xs items-center gap-3">
+          <span className="mt-3 flex w-full max-w-xs items-center gap-3">
             <span className="tick text-[0.55rem]">Confidence</span>
             <span className="flex-1">
               <ConfidenceBar value={layer.confidence} />
@@ -150,7 +159,7 @@ export function LayerPanel({
           </span>
         </span>
         <ChevronDown
-          className={`mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 ${
+          className={`mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300 ${
             open ? "rotate-180" : ""
           }`}
           aria-hidden="true"
@@ -158,7 +167,7 @@ export function LayerPanel({
       </button>
 
       {open && (
-        <div className="grid gap-8 pb-8 pl-8 md:grid-cols-2">
+        <div className="grid gap-7 pb-8 sm:pl-8 md:grid-cols-2">
           <div>
             <p className="tick">Documented signals</p>
             <ul className="mt-3 space-y-3">
