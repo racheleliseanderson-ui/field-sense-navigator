@@ -108,7 +108,7 @@ function Packet() {
       </div>
 
       {/* sheet */}
-      <article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
+      <main><article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
         <header className="grid gap-4 sm:flex sm:flex-wrap sm:items-start sm:justify-between sm:gap-6">
           <div>
             <p className="packet-tick">Honey Hole Intelligence</p>
@@ -254,7 +254,7 @@ function Packet() {
             be cleared, the correct answer is not to go.
           </p>
         </footer>
-      </article>
+      </article></main>
     </div>
   );
 }
