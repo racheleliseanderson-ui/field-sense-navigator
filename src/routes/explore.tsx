@@ -383,6 +383,7 @@ function Explore() {
   return (
     <div ref={reveal as React.Ref<HTMLDivElement>} className="page-in min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       <section className="relative isolate overflow-hidden border-b border-hairline">
         <img
@@ -711,6 +712,7 @@ function Explore() {
         </div>
       )}
 
+      </main>
       <SiteFooter />
     </div>
   );

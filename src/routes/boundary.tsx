@@ -43,6 +43,7 @@ function BoundaryPage() {
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       <section className="relative overflow-hidden border-b border-hairline">
         <img
@@ -132,6 +133,7 @@ function BoundaryPage() {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );

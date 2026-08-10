@@ -131,6 +131,7 @@ function Plan() {
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       {/* progress rail */}
       <nav
@@ -402,6 +403,7 @@ function Plan() {
         ) : null}
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );

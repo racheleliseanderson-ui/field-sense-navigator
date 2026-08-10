@@ -103,6 +103,7 @@ function Pipeline() {
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       <section className="border-b border-hairline bg-abyss">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:py-16">
@@ -323,6 +324,7 @@ function Pipeline() {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );
