@@ -259,6 +259,28 @@
 
 /* ---------- print: field packet ---------- */
 
+@theme inline {
+  --color-packet: var(--packet);
+  --color-packet-ink: var(--packet-ink);
+  --color-packet-muted: var(--packet-muted);
+  --color-packet-rule: var(--packet-rule);
+}
+
+:root {
+  --packet: oklch(0.972 0.008 85);
+  --packet-ink: oklch(0.22 0.018 262);
+  --packet-muted: oklch(0.5 0.02 258);
+  --packet-rule: oklch(0.86 0.012 262);
+}
+
+@utility packet-tick {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--packet-muted);
+}
+
 @media print {
   @page {
     margin: 14mm 14mm 16mm;
