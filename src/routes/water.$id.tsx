@@ -4,6 +4,8 @@ import { useParallax, useReveal } from "@/lib/motion";
 import { ArrowUpRight, Check, Copy, Download, Printer } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { GradeChip, LayerPanel, ReadinessMeter } from "@/components/instrument";
+import { WatchButton } from "@/components/watch-button";
+import { LiveConditions } from "@/components/live-conditions";
 import {
   destinationById,
   displayName,
@@ -118,6 +120,7 @@ function WaterRecord() {
             <span className="tick text-[0.55rem]">{d.waterType}</span>
             <GradeChip grade={r.grade} label={r.band} />
             {overdue && <GradeChip grade="restricted" label="Review overdue" />}
+            <WatchButton id={d.id} name={displayName(d)} />
           </div>
 
           <h1 className="mt-4 max-w-4xl break-words font-display text-[clamp(1.9rem,7vw,4.8rem)] font-bold leading-[0.95] tracking-[-0.04em] text-foreground sm:mt-5 sm:leading-[0.9]">
@@ -251,6 +254,7 @@ function WaterRecord() {
 
         {/* rail */}
         <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          <LiveConditions destination={d} />
           <div className="panel p-6 lg:p-6">
             <ReadinessMeter readiness={r} compact />
             <dl className="mt-6 space-y-4">
@@ -342,6 +346,7 @@ function WaterRecord() {
               >
                 <Printer className="h-4 w-4" aria-hidden="true" /> Field packet
               </Link>
+              <WatchButton id={d.id} name={displayName(d)} variant="full" />
               <button
                 type="button"
                 onClick={downloadPdf}
