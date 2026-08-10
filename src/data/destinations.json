@@ -24767,5 +24767,1479 @@
       "publicLocationIncluded": true,
       "sensitiveLocationIncluded": false
     }
+  },
+  {
+    "id": "HHI-DEST-457",
+    "state": "British Columbia",
+    "region": "Vancouver Island",
+    "waterbody": "Campbell River (lower reach)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/freshwater-fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Steelhead (catch and release)",
+      "Cutthroat trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Campbell River Estuary shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Big Rock public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Steelhead handling and release rules apply where open."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-458",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Shuswap Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/freshwater-fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Lake trout",
+      "Burbot",
+      "Kokanee"
+    ],
+    "publicAccess": [
+      {
+        "name": "Shuswap Lake Provincial Park day-use shore",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Sicamous public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-459",
+    "state": "British Columbia",
+    "region": "Kootenay",
+    "waterbody": "Kootenay Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/freshwater-fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Gerrard rainbow trout",
+      "Bull trout",
+      "Kokanee"
+    ],
+    "publicAccess": [
+      {
+        "name": "Kokanee Creek Provincial Park launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Balfour public wharf",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Bull trout retention rules vary by reach; verify before keeping fish."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-460",
+    "state": "British Columbia",
+    "region": "Cariboo",
+    "waterbody": "Quesnel Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/freshwater-fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Lake trout",
+      "Bull trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Likely public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Cedar Point Park shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-461",
+    "state": "British Columbia",
+    "region": "North Coast tidal",
+    "waterbody": "Skeena River (Terrace reach)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/freshwater-fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Steelhead (catch and release)"
+    ],
+    "publicAccess": [
+      {
+        "name": "Ferry Island Municipal Park shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Terrace public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-462",
+    "state": "Alberta",
+    "region": "Canadian Rockies",
+    "waterbody": "Lake Minnewanka",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.alberta.ca/alberta-guide-to-sportfishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Lake trout",
+      "Rocky Mountain whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Minnewanka day-use shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Minnewanka boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "National park fishing permit is separate from the provincial licence."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-463",
+    "state": "Alberta",
+    "region": "Central parkland",
+    "waterbody": "Sylvan Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.alberta.ca/alberta-guide-to-sportfishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Northern pike",
+      "Walleye",
+      "Yellow perch",
+      "Lake whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Sylvan Lake Provincial Park pier",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Jarvis Bay boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-464",
+    "state": "Alberta",
+    "region": "Southern Alberta",
+    "waterbody": "Lake Newell",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://www.alberta.ca/alberta-guide-to-sportfishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Lake whitefish",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Kinbrook Island Provincial Park launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Kinbrook day-use shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-465",
+    "state": "Alberta",
+    "region": "Northwest",
+    "waterbody": "Lesser Slave Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.alberta.ca/alberta-guide-to-sportfishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Yellow perch",
+      "Burbot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Slave Lake public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Devonshire Beach shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-466",
+    "state": "Saskatchewan",
+    "region": "Southeast",
+    "waterbody": "Last Mountain Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/fishing-and-hunting/fishing/anglers-guide",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Yellow perch",
+      "Lake whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Rowan's Ravine Provincial Park launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Regina Beach public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-467",
+    "state": "Saskatchewan",
+    "region": "Northeast",
+    "waterbody": "Tobin Lake",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/fishing-and-hunting/fishing/anglers-guide",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Sauger",
+      "Burbot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Tobin Lake public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Nipawin Regional Park shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Trophy-water size limits apply and change between seasons."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-468",
+    "state": "Saskatchewan",
+    "region": "Far north",
+    "waterbody": "Reindeer Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/fishing-and-hunting/fishing/anglers-guide",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Lake trout",
+      "Northern pike",
+      "Arctic grayling",
+      "Walleye"
+    ],
+    "publicAccess": [
+      {
+        "name": "Southend public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-469",
+    "state": "Manitoba",
+    "region": "Parkland",
+    "waterbody": "Lake Manitoba",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.gov.mb.ca/nrnd/fish-wildlife/fish/anglers_guide.html",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Yellow perch",
+      "Freshwater drum"
+    ],
+    "publicAccess": [
+      {
+        "name": "St. Laurent public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Delta Beach shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-470",
+    "state": "Manitoba",
+    "region": "Northern Manitoba",
+    "waterbody": "Lake Winnipegosis",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.gov.mb.ca/nrnd/fish-wildlife/fish/anglers_guide.html",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Lake whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Winnipegosis public wharf",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-471",
+    "state": "Manitoba",
+    "region": "Northern Manitoba",
+    "waterbody": "Nelson River (Kettle reach)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.gov.mb.ca/nrnd/fish-wildlife/fish/anglers_guide.html",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Lake sturgeon (catch and release)"
+    ],
+    "publicAccess": [
+      {
+        "name": "Gillam public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Lake sturgeon is catch-and-release; handling rules apply."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-472",
+    "state": "Ontario",
+    "region": "Eastern Ontario",
+    "waterbody": "St. Lawrence River (Thousand Islands reach)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.ontario.ca/document/ontario-fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Smallmouth bass",
+      "Northern pike",
+      "Muskellunge",
+      "Walleye"
+    ],
+    "publicAccess": [
+      {
+        "name": "Gananoque municipal boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Brockville waterfront shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-473",
+    "state": "Ontario",
+    "region": "Southwestern Ontario",
+    "waterbody": "Lake St. Clair",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.ontario.ca/document/ontario-fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Smallmouth bass",
+      "Largemouth bass",
+      "Muskellunge",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Mitchell's Bay public launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Lighthouse Cove public access",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-474",
+    "state": "Ontario",
+    "region": "Central Ontario",
+    "waterbody": "Georgian Bay (Parry Sound)",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.ontario.ca/document/ontario-fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Lake trout",
+      "Smallmouth bass",
+      "Northern pike",
+      "Whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Parry Sound town dock",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Killbear Provincial Park shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-475",
+    "state": "Ontario",
+    "region": "Northwestern Ontario",
+    "waterbody": "Rainy Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.ontario.ca/document/ontario-fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Smallmouth bass",
+      "Northern pike",
+      "Muskellunge"
+    ],
+    "publicAccess": [
+      {
+        "name": "Fort Frances public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "International boundary water: the far shore is a separate jurisdiction with separate rules."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-476",
+    "state": "Ontario",
+    "region": "Central Ontario",
+    "waterbody": "Kawartha Lakes (Pigeon Lake)",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.ontario.ca/document/ontario-fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Walleye",
+      "Muskellunge",
+      "Black crappie"
+    ],
+    "publicAccess": [
+      {
+        "name": "Bobcaygeon public launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Omemee shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-477",
+    "state": "Quebec",
+    "region": "Abitibi-T\u00e9miscamingue",
+    "waterbody": "Lac T\u00e9miscamingue",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.quebec.ca/en/tourism-and-recreation/sporting-activities/sport-fishing/fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Lake sturgeon (catch and release)",
+      "Smallmouth bass"
+    ],
+    "publicAccess": [
+      {
+        "name": "Ville-Marie public launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-478",
+    "state": "Quebec",
+    "region": "C\u00f4te-Nord",
+    "waterbody": "Rivi\u00e8re Moisie",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.quebec.ca/en/tourism-and-recreation/sporting-activities/sport-fishing/fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Moisie public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Atlantic salmon waters require a separate salmon licence and daily quota tags."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-479",
+    "state": "Quebec",
+    "region": "Bas-Saint-Laurent",
+    "waterbody": "Rivi\u00e8re Rimouski",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.quebec.ca/en/tourism-and-recreation/sporting-activities/sport-fishing/fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Rimouski municipal park shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Atlantic salmon waters require a separate salmon licence and daily quota tags."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-480",
+    "state": "Quebec",
+    "region": "Outaouais",
+    "waterbody": "R\u00e9servoir Baskatong",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://www.quebec.ca/en/tourism-and-recreation/sporting-activities/sport-fishing/fishing-regulations",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Walleye",
+      "Northern pike",
+      "Lake trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Baskatong public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-481",
+    "state": "New Brunswick",
+    "region": "Restigouche watershed",
+    "waterbody": "Restigouche River",
+    "waterType": "river",
+    "officialSourceUrl": "https://www2.gnb.ca/content/gnb/en/departments/erd/natural_resources/content/fish/content/fishing_summary.html",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Kedgwick public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Atlantic salmon angling is fly-only in many reaches; verify method restrictions."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-482",
+    "state": "New Brunswick",
+    "region": "Northumberland Strait",
+    "waterbody": "Grand Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www2.gnb.ca/content/gnb/en/departments/erd/natural_resources/content/fish/content/fishing_summary.html",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Smallmouth bass",
+      "Chain pickerel",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Grand Lake Provincial Park launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-483",
+    "state": "Nova Scotia",
+    "region": "Northumberland Shore",
+    "waterbody": "Margaree River",
+    "waterType": "river",
+    "officialSourceUrl": "https://novascotia.ca/fish/sportfishing/regulations/",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Margaree Forks public pool access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Atlantic salmon is catch-and-release in Nova Scotia rivers; barbless hook rules apply."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-484",
+    "state": "Nova Scotia",
+    "region": "South Shore",
+    "waterbody": "LaHave River",
+    "waterType": "river",
+    "officialSourceUrl": "https://novascotia.ca/fish/sportfishing/regulations/",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Striped bass",
+      "Brook trout",
+      "Smallmouth bass"
+    ],
+    "publicAccess": [
+      {
+        "name": "Bridgewater waterfront shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "LaHave public wharf",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Striped bass retention windows and size slots change in-season."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-485",
+    "state": "Prince Edward Island",
+    "region": "Western PEI",
+    "waterbody": "West River",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.princeedwardisland.ca/en/topic/angling",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Brook trout",
+      "Rainbow trout",
+      "Sea-run trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Cornwall public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-486",
+    "state": "Prince Edward Island",
+    "region": "Northern PEI",
+    "waterbody": "Winter River",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.princeedwardisland.ca/en/topic/angling",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Brook trout",
+      "Rainbow trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Suffolk public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-487",
+    "state": "Newfoundland and Labrador",
+    "region": "Western Newfoundland",
+    "waterbody": "Humber River",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.gov.nl.ca/ffa/licences/recreational-fishing/",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Big Falls Provincial Park access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Atlantic salmon requires a separate licence and tags; retention rules change in-season."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-488",
+    "state": "Newfoundland and Labrador",
+    "region": "Labrador",
+    "waterbody": "Eagle River",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.gov.nl.ca/ffa/licences/recreational-fishing/",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Atlantic salmon",
+      "Brook trout",
+      "Arctic char"
+    ],
+    "publicAccess": [
+      {
+        "name": "Cartwright public wharf",
+        "type": "pier_or_wharf",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-489",
+    "state": "Yukon",
+    "region": "Southern Lakes",
+    "waterbody": "Teslin Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://yukon.ca/en/fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Lake trout",
+      "Northern pike",
+      "Arctic grayling",
+      "Burbot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Teslin public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-490",
+    "state": "Yukon",
+    "region": "Kluane",
+    "waterbody": "Kluane Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://yukon.ca/en/fishing-regulations-summary",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Lake trout",
+      "Arctic grayling",
+      "Round whitefish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Destruction Bay public access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "National park and territorial permits differ; confirm which applies at the access used."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-491",
+    "state": "Northwest Territories",
+    "region": "Dehcho",
+    "waterbody": "Mackenzie River (Fort Simpson reach)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.gov.nt.ca/ecc/en/services/sport-fishing",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Northern pike",
+      "Walleye",
+      "Inconnu",
+      "Arctic grayling"
+    ],
+    "publicAccess": [
+      {
+        "name": "Fort Simpson public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-492",
+    "state": "Northwest Territories",
+    "region": "North Slave",
+    "waterbody": "Prelude Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://www.gov.nt.ca/ecc/en/services/sport-fishing",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Northern pike",
+      "Lake trout",
+      "Arctic grayling"
+    ],
+    "publicAccess": [
+      {
+        "name": "Prelude Lake Territorial Park launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-493",
+    "state": "Nunavut",
+    "region": "Qikiqtaaluk",
+    "waterbody": "Iqaluit area tidal flats",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.gov.nu.ca/en/environment/sport-fishing",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Arctic char"
+    ],
+    "publicAccess": [
+      {
+        "name": "Iqaluit public shoreline access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Char fishing near communities may be subject to community-based management measures."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
+  },
+  {
+    "id": "HHI-DEST-494",
+    "state": "Nunavut",
+    "region": "Kitikmeot",
+    "waterbody": "Freshwater Creek (Cambridge Bay)",
+    "waterType": "river",
+    "officialSourceUrl": "https://www.gov.nu.ca/en/environment/sport-fishing",
+    "checkedAt": "2026-08-10T22:00:00-06:00",
+    "nextReviewAt": "2026-09-07",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Arctic char"
+    ],
+    "publicAccess": [
+      {
+        "name": "Cambridge Bay public shore access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial or territorial licence and any separate federal or tidal licence requirements apply.",
+      "Waterbody- and species-specific limits, sanctuaries and closures must be checked before fishing.",
+      "Community-based quotas and closures may apply in addition to territorial rules."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended launch, wharf, or shore access is open on the date of travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    }
   }
 ]
