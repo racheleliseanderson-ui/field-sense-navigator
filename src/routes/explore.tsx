@@ -28,6 +28,8 @@ const searchSchema = z.object({
   sort: fallback(z.string(), "readiness").default("readiness"),
 });
 
+type CatalogSearch = z.infer<typeof searchSchema>;
+
 export const Route = createFileRoute("/explore")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
@@ -118,8 +120,11 @@ function Explore() {
 
   useEffect(() => setDraft(params.q), [params.q]);
 
-  const set = (patch: Partial<typeof params>) =>
-    navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true });
+  const set = (patch: Partial<CatalogSearch>) =>
+    navigate({
+      search: (prev: CatalogSearch) => ({ ...prev, ...patch }),
+      replace: true,
+    });
 
   const commit = (q: string) => {
     set({ q });
