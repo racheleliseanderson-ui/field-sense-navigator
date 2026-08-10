@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Printer } from "lucide-react";
+import { useState } from "react";
+import { Download, Printer } from "lucide-react";
 import { destinationById, displayName, humanize } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
@@ -51,6 +52,7 @@ function Rule() {
 function Packet() {
   const d = Route.useLoaderData();
   const { job } = Route.useSearch();
+  const [pdfBusy, setPdfBusy] = useState(false);
   const r = readiness(d);
   const layers = buildLayers(d);
   const t = readTags(d);
@@ -58,28 +60,49 @@ function Packet() {
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   const issued = new Date().toISOString().slice(0, 10);
 
+  const downloadPdf = async () => {
+    setPdfBusy(true);
+    try {
+      const { downloadPacketPdf } = await import("@/lib/packet-pdf");
+      downloadPacketPdf(d, job ?? null);
+    } finally {
+      setPdfBusy(false);
+    }
+  };
+
   return (
     <div className="min-h-dvh bg-abyss py-0 print:bg-white print:py-0 md:py-12">
       {/* toolbar */}
       <div
         data-print="hide"
-        className="mx-auto mb-8 flex max-w-[54rem] flex-wrap items-center justify-between gap-4 px-5 print:hidden"
+        className="mx-auto mb-8 grid max-w-[54rem] gap-3 px-5 pt-6 print:hidden sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:pt-0"
       >
         <Link to="/water/$id" params={{ id: d.id }} className="tick text-primary hover:text-brass">
           ← Back to record
         </Link>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-3 bg-brass px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground"
-        >
-          <Printer className="h-4 w-4" aria-hidden="true" />
-          Print / save as PDF
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={downloadPdf}
+            disabled={pdfBusy}
+            className="inline-flex flex-1 items-center justify-center gap-3 bg-brass px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground disabled:opacity-60 sm:flex-none"
+          >
+            <Download className="h-4 w-4" aria-hidden="true" />
+            {pdfBusy ? "Preparing PDF…" : "Download PDF"}
+          </button>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="inline-flex flex-1 items-center justify-center gap-3 border border-hairline px-6 py-3 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 sm:flex-none"
+          >
+            <Printer className="h-4 w-4" aria-hidden="true" />
+            Print
+          </button>
+        </div>
       </div>
 
       {/* sheet */}
-      <article className="packet mx-auto max-w-[54rem] bg-packet px-9 py-12 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
+      <article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-10 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
         <header className="flex flex-wrap items-start justify-between gap-6">
           <div>
             <p className="packet-tick">Honey Hole Intelligence</p>

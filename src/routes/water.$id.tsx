@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowUpRight, Check, Copy, Printer } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Download, Printer } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { GradeChip, LayerPanel, ReadinessMeter } from "@/components/instrument";
 import {
@@ -63,7 +63,18 @@ function WaterRecord() {
   const r = readiness(d);
   const [job, setJob] = useState<JobId | null>(null);
   const [copied, setCopied] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
   const overdue = reviewOverdue(d);
+
+  const downloadPdf = async () => {
+    setPdfBusy(true);
+    try {
+      const { downloadPacketPdf } = await import("@/lib/packet-pdf");
+      downloadPacketPdf(d, job);
+    } finally {
+      setPdfBusy(false);
+    }
+  };
 
   const copyHandoff = async () => {
     try {
@@ -124,6 +135,15 @@ function WaterRecord() {
               <Printer className="h-4 w-4" aria-hidden="true" />
               Build field packet
             </Link>
+            <button
+              type="button"
+              onClick={downloadPdf}
+              disabled={pdfBusy}
+              className="inline-flex items-center gap-2 border border-brass/50 bg-brass/10 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-brass backdrop-blur transition-colors hover:bg-brass/20 disabled:opacity-60"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              {pdfBusy ? "Preparing PDF…" : "Download PDF"}
+            </button>
             <a
               href={d.officialSourceUrl}
               target="_blank"
@@ -263,6 +283,15 @@ function WaterRecord() {
               >
                 <Printer className="h-4 w-4" aria-hidden="true" /> Field packet
               </Link>
+              <button
+                type="button"
+                onClick={downloadPdf}
+                disabled={pdfBusy}
+                className="inline-flex items-center justify-center gap-2 border border-hairline px-5 py-3 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 disabled:opacity-60"
+              >
+                <Download className="h-4 w-4" aria-hidden="true" />
+                {pdfBusy ? "Preparing PDF…" : "Download PDF"}
+              </button>
             </div>
           </div>
         </aside>

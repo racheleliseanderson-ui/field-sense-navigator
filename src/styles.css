@@ -52,6 +52,56 @@
 
 :root {
   --radius: 0.25rem;
+  color-scheme: light;
+
+  /* ---- field daylight: printed-packet paper, navy ink, held brass ---- */
+  --background: oklch(0.968 0.009 85);
+  --abyss: oklch(0.938 0.012 85);
+  --panel: oklch(0.948 0.011 85);
+  --card: oklch(0.99 0.005 85);
+  --foreground: oklch(0.245 0.021 262);
+  --muted-foreground: oklch(0.475 0.022 258);
+  --border: oklch(0.855 0.013 262);
+  --hairline: oklch(0.78 0.016 262 / 70%);
+  --primary: oklch(0.455 0.108 251);
+  --primary-foreground: oklch(0.985 0.005 85);
+  --accent: oklch(0.545 0.088 78);
+  --accent-foreground: oklch(0.985 0.005 85);
+  --ring: oklch(0.455 0.108 251 / 45%);
+  --clear: oklch(0.5 0.108 165);
+  --watch: oklch(0.545 0.11 88);
+  --flagged: oklch(0.545 0.14 55);
+  --alert: oklch(0.505 0.175 30);
+
+  --gradient-abyss: linear-gradient(
+    180deg,
+    oklch(0.938 0.012 85) 0%,
+    oklch(0.968 0.009 85) 55%,
+    oklch(0.985 0.006 85) 100%
+  );
+  --gradient-sheen: linear-gradient(
+    120deg,
+    color-mix(in oklab, var(--primary) 22%, transparent) 0%,
+    transparent 42%,
+    color-mix(in oklab, var(--accent) 16%, transparent) 100%
+  );
+  --shadow-panel: 0 1px 0 0 color-mix(in oklab, white 70%, transparent) inset,
+    0 18px 44px -34px oklch(0.35 0.03 262 / 60%);
+  --shadow-lift: 0 26px 56px -38px oklch(0.35 0.03 262 / 70%),
+    0 0 0 1px color-mix(in oklab, var(--primary) 22%, transparent);
+  --hero-scrim: linear-gradient(
+    180deg,
+    oklch(0.99 0.005 85 / 30%) 0%,
+    oklch(0.968 0.009 85 / 72%) 58%,
+    oklch(0.968 0.009 85 / 96%) 100%
+  );
+  --image-treatment: saturate(0.92) contrast(0.96) brightness(1.04);
+  --scan-ink: oklch(0.3 0.02 262);
+  --scan-opacity: 0.12;
+}
+
+.dark {
+  color-scheme: dark;
   --background: oklch(0.178 0.014 262);
   --abyss: oklch(0.128 0.013 262);
   --panel: oklch(0.232 0.016 260);
@@ -76,20 +126,19 @@
     oklch(0.178 0.014 262) 55%,
     oklch(0.2 0.016 260) 100%
   );
-  --gradient-sheen: linear-gradient(
-    120deg,
-    color-mix(in oklab, var(--primary) 22%, transparent) 0%,
-    transparent 42%,
-    color-mix(in oklab, var(--accent) 16%, transparent) 100%
-  );
   --shadow-panel: 0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset,
     0 22px 60px -32px oklch(0.05 0.02 262);
   --shadow-lift: 0 30px 70px -40px oklch(0.05 0.02 262),
     0 0 0 1px color-mix(in oklab, var(--primary) 18%, transparent);
-}
-
-.dark {
-  color-scheme: dark;
+  --hero-scrim: linear-gradient(
+    180deg,
+    oklch(0.128 0.013 262 / 20%) 0%,
+    oklch(0.128 0.013 262 / 72%) 58%,
+    oklch(0.128 0.013 262 / 96%) 100%
+  );
+  --image-treatment: saturate(1.05) contrast(1.05) brightness(0.94);
+  --scan-ink: black;
+  --scan-opacity: 0.35;
 }
 
 @layer base {
@@ -98,7 +147,6 @@
   }
 
   html {
-    color-scheme: dark;
     scroll-behavior: smooth;
   }
 
@@ -167,14 +215,22 @@
     pointer-events: none;
     background-image: repeating-linear-gradient(
       to bottom,
-      color-mix(in oklab, black 14%, transparent) 0px,
-      color-mix(in oklab, black 14%, transparent) 1px,
+      color-mix(in oklab, var(--scan-ink) 14%, transparent) 0px,
+      color-mix(in oklab, var(--scan-ink) 14%, transparent) 1px,
       transparent 1px,
       transparent 4px
     );
-    opacity: 0.35;
+    opacity: var(--scan-opacity);
     mix-blend-mode: multiply;
   }
+}
+
+@utility hero-scrim {
+  background-image: var(--hero-scrim);
+}
+
+@utility image-treated {
+  filter: var(--image-treatment);
 }
 
 @utility sheen {
