@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoundaryRouteImport } from './routes/boundary'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const BoundaryRoute = BoundaryRouteImport.update({
   id: '/boundary',
   path: '/boundary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExploreRoute = ExploreRouteImport.update({
@@ -56,6 +62,7 @@ const WaterIdRoute = WaterIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
     | '/plan'
     | '/watchlist'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
     | '/plan'
     | '/watchlist'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
     | '/plan'
     | '/watchlist'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoundaryRoute: typeof BoundaryRoute
+  CompareRoute: typeof CompareRoute
   ExploreRoute: typeof ExploreRoute
   PlanRoute: typeof PlanRoute
   WatchlistRoute: typeof WatchlistRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/boundary'
       fullPath: '/boundary'
       preLoaderRoute: typeof BoundaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/explore': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoundaryRoute: BoundaryRoute,
+  CompareRoute: CompareRoute,
   ExploreRoute: ExploreRoute,
   PlanRoute: PlanRoute,
   WatchlistRoute: WatchlistRoute,
