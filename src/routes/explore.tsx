@@ -427,7 +427,7 @@ function Explore() {
                   <button
                     key={k}
                     type="button"
-                    onClick={() => set({ [k]: "" } as Partial<typeof params>)}
+                    onClick={() => set({ [k]: "" } as Partial<CatalogSearch>)}
                     className="tap inline-flex min-h-9 items-center gap-2 border border-hairline px-2.5 text-[0.68rem] text-foreground"
                   >
                     {v}
