@@ -52,6 +52,32 @@ const ACCESS_WORDS: Record<string, string> = {
   bank: "shore", shore: "shore", wade: "shore", wading: "shore",
 };
 
+/**
+ * Catalog access types are agency phrases, not user words. Each canonical
+ * facet lists the published access strings that honestly satisfy it.
+ */
+const ACCESS_MATCH: Record<string, string[]> = {
+  "hand launch": [
+    "hand launch",
+    "small craft",
+    "shore and walk in",
+    "trail access",
+    "float access",
+    "park access",
+    "boat launch",
+    "multiple official access",
+  ],
+  "boat launch": ["boat launch", "boating", "multiple official access", "float access"],
+  pier: ["pier", "dock", "park access", "multiple official access"],
+  shore: [
+    "shore",
+    "walk in",
+    "trail access",
+    "park access",
+    "multiple official access",
+  ],
+};
+
 /** Every distinct species term in the catalog, for facet detection. */
 const speciesTerms = (() => {
   const set = new Set<string>();
@@ -151,7 +177,8 @@ function scoreRow(row: Row, terms: string[], tokens: Token[]): Hit | null {
       if (!row.species.includes(t.value)) return null;
       score += 26; matched.push(t.value);
     } else if (t.kind === "access") {
-      if (!row.access.includes(t.value)) return null;
+      const needles = ACCESS_MATCH[t.value] ?? [t.value];
+      if (!needles.some((n) => row.access.includes(n))) return null;
       score += 22; matched.push(t.value);
     }
   }
