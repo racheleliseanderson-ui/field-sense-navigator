@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { displayName, humanize, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
+import { WatchButton } from "@/components/watch-button";
 
 function TypeMark({ type }: { type: string }) {
   return (
@@ -30,12 +31,18 @@ export function WaterCard({
   ];
 
   return (
+    <div className="relative">
+      <WatchButton
+        id={destination.id}
+        name={displayName(destination)}
+        className="absolute right-3 top-3 z-10 bg-card/80 backdrop-blur"
+      />
     <Link
       to="/water/$id"
       params={{ id: destination.id }}
       className="panel lift group relative block overflow-hidden p-6"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 pr-12">
         <div className="flex items-center gap-3">
           {typeof rank === "number" && (
             <span className="data text-xs text-brass">
@@ -111,6 +118,7 @@ export function WaterCard({
         {humanize(destination.status)}
       </p>
     </Link>
+    </div>
   );
 }
 
