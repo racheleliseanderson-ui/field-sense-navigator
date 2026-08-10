@@ -15,7 +15,15 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
-import { search, suggest, type Suggestion } from "@/lib/search";
+import {
+  search,
+  suggest,
+  speciesList,
+  ACCESS_FACETS,
+  matchesAccess,
+  matchesSpecies,
+  type Suggestion,
+} from "@/lib/search";
 import { useReveal, useParallax } from "@/lib/motion";
 import { useT } from "@/lib/i18n";
 import flatsImg from "@/assets/flats.jpg";
@@ -25,6 +33,11 @@ const searchSchema = z.object({
   state: fallback(z.string(), "").default(""),
   type: fallback(z.string(), "").default(""),
   band: fallback(z.string(), "").default(""),
+  species: fallback(z.string(), "").default(""),
+  access: fallback(z.string(), "").default(""),
+  fresh: fallback(z.number(), 0).default(0),
+  min: fallback(z.number(), 0).default(0),
+  watch: fallback(z.boolean(), false).default(false),
   sort: fallback(z.string(), "readiness").default("readiness"),
 });
 
