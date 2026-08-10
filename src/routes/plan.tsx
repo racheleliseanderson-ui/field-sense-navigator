@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard, BlockedCard } from "@/components/water-card";
 import { EmptyState } from "@/components/instrument";
@@ -103,6 +104,7 @@ function Plan() {
   const [job, setJob] = useState<JobId | null>(null);
   const [c, setC] = useState<Constraints>(DEFAULT_CONSTRAINTS);
   const [shown, setShown] = useState(9);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   const result = useMemo(
     () => (job ? rank(destinations, job, c) : null),
@@ -120,12 +122,50 @@ function Plan() {
       [k]: prev[k].includes(v) ? prev[k].filter((x) => x !== v) : [...prev[k], v],
     }));
 
+  const STEPS = [
+    { n: 1 as const, label: "Job", done: Boolean(job) },
+    { n: 2 as const, label: "Constraints", done: step > 2 },
+    { n: 3 as const, label: "Ranked waters", done: false },
+  ];
+
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
 
+      {/* progress rail */}
+      <nav
+        aria-label="Planning progress"
+        className="sticky top-16 z-30 border-b border-hairline bg-abyss/85 backdrop-blur"
+      >
+        <ol className="mx-auto flex max-w-7xl items-stretch gap-px overflow-x-auto px-5 sm:px-8">
+          {STEPS.map((s) => {
+            const active = step === s.n;
+            const reachable = s.n === 1 || Boolean(job);
+            return (
+              <li key={s.n} className="min-w-0 flex-1">
+                <button
+                  type="button"
+                  disabled={!reachable}
+                  onClick={() => setStep(s.n)}
+                  aria-current={active ? "step" : undefined}
+                  className={`tap flex min-h-12 w-full items-center gap-2 border-b-2 px-3 text-left text-xs uppercase tracking-[0.12em] transition-colors disabled:opacity-40 ${
+                    active
+                      ? "border-brass text-brass"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <span className="data shrink-0">{String(s.n).padStart(2, "0")}</span>
+                  <span className="truncate">{s.label}</span>
+                  {s.done && <Check className="ml-auto h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+
       {/* step 1 */}
-      <section className="relative isolate overflow-hidden border-b border-hairline">
+      <section hidden={step !== 1} className="relative isolate overflow-hidden border-b border-hairline">
         <img
           src={riverImg}
           alt="Cold river current running past a wet gravel bar at dawn"
@@ -160,6 +200,7 @@ function Plan() {
                   onClick={() => {
                     setJob(j.id);
                     setShown(9);
+                    setStep(2);
                   }}
                   aria-pressed={active}
                   className={`group relative px-6 py-7 text-left transition-colors ${
@@ -180,11 +221,21 @@ function Plan() {
               );
             })}
           </div>
+          {job && (
+            <button
+              type="button"
+              onClick={() => setStep(2)}
+              className="tap mt-8 inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass"
+            >
+              Continue to constraints
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          )}
         </div>
       </section>
 
       {/* step 2 */}
-      <section className="border-b border-hairline bg-abyss">
+      <section hidden={step !== 2} className="border-b border-hairline bg-abyss">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
           <div className="flex items-center gap-4">
             <span className="data text-xs text-brass">STEP 02</span>
@@ -240,11 +291,31 @@ function Plan() {
               </div>
             </div>
           </div>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="tap inline-flex min-h-12 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Change the job
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep(3)}
+              disabled={!job}
+              className="tap inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
+            >
+              Rank the waters
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </section>
 
       {/* step 3 */}
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+      <section hidden={step !== 3} className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
         <div className="flex items-center gap-4">
           <span className="data text-xs text-brass">STEP 03</span>
           <span className="h-px flex-1 bg-hairline" />
