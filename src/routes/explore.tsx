@@ -12,6 +12,7 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
+import flatsImg from "@/assets/flats.jpg";
 
 export const Route = createFileRoute("/explore")({
   head: () => ({
@@ -106,8 +107,16 @@ function Explore() {
     <div className="min-h-dvh bg-background">
       <SiteHeader />
 
-      <section className="border-b border-hairline bg-abyss">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
+      <section className="relative isolate overflow-hidden border-b border-hairline">
+        <img
+          src={flatsImg}
+          alt="Open public water under low weather, seen from a shoreline access"
+          width={1280}
+          height={720}
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-abyss via-abyss/85 to-abyss/40" />
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
           <div className="flex items-center gap-4">
             <span className="h-px w-10 bg-brass" />
             <p className="tick text-brass">Catalog</p>
