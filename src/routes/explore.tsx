@@ -26,6 +26,7 @@ import {
 } from "@/lib/search";
 import { useReveal, useParallax } from "@/lib/motion";
 import { useT } from "@/lib/i18n";
+import { useWatchlist } from "@/lib/watchlist";
 import flatsImg from "@/assets/flats.jpg";
 
 const searchSchema = z.object({
@@ -116,6 +117,7 @@ function Explore() {
   const t = useT();
   const reveal = useReveal();
   const heroImg = useParallax(0.22);
+  const { ids: watched } = useWatchlist();
 
   const [draft, setDraft] = useState(params.q);
   const [focused, setFocused] = useState(false);
@@ -176,6 +178,11 @@ function Explore() {
         if (params.state && d.state !== params.state) return false;
         if (params.type && d.waterType !== params.type) return false;
         if (params.band && r.band !== params.band) return false;
+        if (params.species && !matchesSpecies(d, params.species)) return false;
+        if (params.access && !matchesAccess(d, params.access)) return false;
+        if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
+        if (params.min > 0 && r.score < params.min) return false;
+        if (params.watch && !watched.includes(d.id)) return false;
         return true;
       });
 
@@ -187,11 +194,35 @@ function Explore() {
         a.d.state.localeCompare(b.d.state) || displayName(a.d).localeCompare(displayName(b.d)),
     };
     return rows.sort(bySort[params.sort] ?? bySort['readiness']!);
-  }, [found, scores, params.state, params.type, params.band, params.sort]);
+  }, [
+    found,
+    scores,
+    watched,
+    params.state,
+    params.type,
+    params.band,
+    params.species,
+    params.access,
+    params.fresh,
+    params.min,
+    params.watch,
+    params.sort,
+  ]);
 
   useEffect(
     () => setCount(PAGE),
-    [params.q, params.state, params.type, params.band, params.sort],
+    [
+      params.q,
+      params.state,
+      params.type,
+      params.band,
+      params.species,
+      params.access,
+      params.fresh,
+      params.min,
+      params.watch,
+      params.sort,
+    ],
   );
 
   const suggestions: Suggestion[] = useMemo(
@@ -200,12 +231,24 @@ function Explore() {
   );
 
   const activeFilters =
-    Number(Boolean(params.state)) + Number(Boolean(params.type)) + Number(Boolean(params.band));
+    Number(Boolean(params.state)) +
+    Number(Boolean(params.type)) +
+    Number(Boolean(params.band)) +
+    Number(Boolean(params.species)) +
+    Number(Boolean(params.access)) +
+    Number(params.fresh > 0) +
+    Number(params.min > 0) +
+    Number(params.watch);
   const anything = Boolean(params.q) || activeFilters > 0;
   const visible: Destination[] = results.slice(0, count).map((x) => x.d);
 
   const clearAll = () =>
-    navigate({ search: { q: "", state: "", type: "", band: "", sort: "readiness" } });
+    navigate({
+      search: {
+        q: "", state: "", type: "", band: "", species: "", access: "",
+        fresh: 0, min: 0, watch: false, sort: "readiness",
+      },
+    });
 
   const filterControls = (
     <>
