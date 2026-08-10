@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoundaryRouteImport } from './routes/boundary'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as PipelineRouteImport } from './routes/pipeline'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
 import { Route as PacketIdRouteImport } from './routes/packet.$id'
@@ -27,9 +29,19 @@ const BoundaryRoute = BoundaryRouteImport.update({
   path: '/boundary',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PipelineRoute = PipelineRouteImport.update({
+  id: '/pipeline',
+  path: '/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlanRoute = PlanRouteImport.update({
@@ -56,7 +68,9 @@ const WaterIdRoute = WaterIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
   '/packet/$id': typeof PacketIdRoute
@@ -65,7 +79,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
   '/packet/$id': typeof PacketIdRoute
@@ -75,7 +91,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/boundary': typeof BoundaryRoute
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
   '/packet/$id': typeof PacketIdRoute
@@ -86,7 +104,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
+    | '/pipeline'
     | '/plan'
     | '/watchlist'
     | '/packet/$id'
@@ -95,7 +115,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
+    | '/pipeline'
     | '/plan'
     | '/watchlist'
     | '/packet/$id'
@@ -104,7 +126,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/boundary'
+    | '/compare'
     | '/explore'
+    | '/pipeline'
     | '/plan'
     | '/watchlist'
     | '/packet/$id'
@@ -114,7 +138,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoundaryRoute: typeof BoundaryRoute
+  CompareRoute: typeof CompareRoute
   ExploreRoute: typeof ExploreRoute
+  PipelineRoute: typeof PipelineRoute
   PlanRoute: typeof PlanRoute
   WatchlistRoute: typeof WatchlistRoute
   PacketIdRoute: typeof PacketIdRoute
@@ -137,11 +163,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoundaryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore': {
       id: '/explore'
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pipeline': {
+      id: '/pipeline'
+      path: '/pipeline'
+      fullPath: '/pipeline'
+      preLoaderRoute: typeof PipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plan': {
@@ -178,7 +218,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoundaryRoute: BoundaryRoute,
+  CompareRoute: CompareRoute,
   ExploreRoute: ExploreRoute,
+  PipelineRoute: PipelineRoute,
   PlanRoute: PlanRoute,
   WatchlistRoute: WatchlistRoute,
   PacketIdRoute: PacketIdRoute,
@@ -187,13 +229,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

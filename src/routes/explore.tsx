@@ -42,7 +42,18 @@ const searchSchema = z.object({
   sort: fallback(z.string(), "readiness").default("readiness"),
 });
 
-type CatalogSearch = z.infer<typeof searchSchema>;
+interface CatalogSearch {
+  q: string;
+  state: string;
+  type: string;
+  band: string;
+  species: string;
+  access: string;
+  fresh: number;
+  min: number;
+  watch: boolean;
+  sort: string;
+}
 
 export const Route = createFileRoute("/explore")({
   validateSearch: zodValidator(searchSchema),
@@ -112,7 +123,7 @@ function readRecent(): string[] {
 }
 
 function Explore() {
-  const params = Route.useSearch();
+  const params = Route.useSearch() as CatalogSearch;
   const navigate = useNavigate({ from: "/explore" });
   const t = useT();
   const reveal = useReveal();
