@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { useParallax, useReveal } from "@/lib/motion";
 import { ArrowUpRight, Check, Copy, Download, Printer } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { GradeChip, LayerPanel, ReadinessMeter } from "@/components/instrument";
@@ -79,6 +80,9 @@ function WaterRecord() {
     }
   };
 
+  const reveal = useReveal();
+  const heroRef = useParallax(0.2);
+
   const copyHandoff = async () => {
     try {
       await navigator.clipboard.writeText(buildHandoff(d, job, null));
@@ -96,7 +100,7 @@ function WaterRecord() {
       {/* masthead */}
       <section className="relative isolate overflow-hidden">
         <img
-          ref={heroImg as React.Ref<HTMLImageElement>}
+          ref={heroRef as React.Ref<HTMLImageElement>}
           src={imageFor(d)}
           alt={`Representative water conditions for a ${d.waterType} corridor`}
           width={1280}
