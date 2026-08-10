@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
-import { Play, Square } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { Download, Pause, Play, RotateCcw, Square } from "lucide-react";
 
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { GradeChip } from "@/components/instrument";
 import { destinations, displayName, states } from "@/lib/catalog";
 import { coverage, integrity, type ProbeResult } from "@/lib/pipeline";
+import {
+  downloadText,
+  runToCsv,
+  useRunManager,
+  type RunTarget,
+} from "@/lib/run-manager";
 import { getLiveConditions } from "@/lib/live.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
@@ -33,6 +39,14 @@ export const Route = createFileRoute("/pipeline")({
 });
 
 type Scope = "watchlist" | "compare" | "state" | "sample";
+type StatusFilter = "all" | "matched" | "unmatched" | "error";
+
+const SCOPE_LABEL: Record<Scope, string> = {
+  sample: "Catalog head",
+  state: "One state",
+  watchlist: "Watchlist",
+  compare: "Comparison tray",
+};
 
 function Pipeline() {
   const { ids: watched } = useWatchlist();
@@ -40,10 +54,8 @@ function Pipeline() {
   const [scope, setScope] = useState<Scope>("sample");
   const [state, setState] = useState<string>(states[0] ?? "");
   const [limit, setLimit] = useState(12);
-  const [running, setRunning] = useState(false);
-  const [results, setResults] = useState<ProbeResult[]>([]);
-  const [done, setDone] = useState(0);
-  const stop = useRef(false);
+  const [concurrency, setConcurrency] = useState(3);
+  const [filter, setFilter] = useState<StatusFilter>("all");
 
   const checks = useMemo(() => integrity(), []);
   const rows = useMemo(() => coverage(), []);
@@ -57,52 +69,77 @@ function Pipeline() {
     return destinations.slice(0, limit);
   }, [scope, watched, compared, state, limit]);
 
-  const run = async () => {
-    stop.current = false;
-    setRunning(true);
-    setResults([]);
-    setDone(0);
-    for (const d of pool) {
-      if (stop.current || !d) break;
-      let row: ProbeResult;
-      try {
-        const live = await getLiveConditions({
-          data: { state: d.state, waterbody: d.waterbody },
-        });
-        row = {
-          id: d.id,
-          name: displayName(d),
-          state: d.state,
-          status: live.station ? "matched" : "unmatched",
-          station: live.station ? `${live.station.agency} ${live.station.id}` : null,
-          readings: live.readings.length,
-          note: live.station
-            ? live.station.name
-            : (live.unknowns[0] ?? "No official station publishes under this name."),
-        };
-      } catch {
-        row = {
-          id: d.id,
-          name: displayName(d),
-          state: d.state,
-          status: "error",
-          station: null,
-          readings: 0,
-          note: "The agency feed could not be reached on this run. Treat the water as unmonitored.",
-        };
-      }
-      setResults((prev) => [...prev, row]);
-      setDone((n) => n + 1);
+  const probe = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+    try {
+      const live = await getLiveConditions({
+        data: { state: target.state, waterbody: target.waterbody },
+      });
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: live.station ? "matched" : "unmatched",
+        station: live.station ? `${live.station.agency} ${live.station.id}` : null,
+        readings: live.readings.length,
+        note: live.station
+          ? live.station.name
+          : (live.unknowns[0] ?? "No official station publishes under this name."),
+      };
+    } catch {
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: "error",
+        station: null,
+        readings: 0,
+        note: "The agency feed could not be reached on this run. Treat the water as unmonitored.",
+      };
     }
-    setRunning(false);
+  }, []);
+
+  const run = useRunManager(probe);
+  const scopeLabel = scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope];
+
+  const targets = useMemo<RunTarget[]>(
+    () =>
+      pool
+        .filter((d) => Boolean(d))
+        .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody })),
+    [pool],
+  );
+
+  const startRun = () => void run.start(targets, { concurrency, scope: scopeLabel });
+
+  const retryFailures = () => {
+    const failed = run.results.filter((r) => r.status === "error");
+    const retry = failed
+      .map((r) => destinations.find((d) => d.id === r.id))
+      .filter((d) => Boolean(d))
+      .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody }));
+    if (retry.length > 0)
+      void run.start(retry, { concurrency, scope: `${scopeLabel} · retry`, append: true });
   };
 
-  const matched = results.filter((r) => r.status === "matched").length;
-  const progress = pool.length === 0 ? 0 : Math.round((done / pool.length) * 100);
+  const visible = run.results.filter((r) => filter === "all" || r.status === filter);
+  const progress =
+    run.planned === 0 ? 0 : Math.round((run.counts.probed / run.planned) * 100);
+  const busy = run.state === "running" || run.state === "paused";
+  const statusLine =
+    run.state === "running"
+      ? "Running"
+      : run.state === "paused"
+        ? "Paused — nothing is being probed"
+        : run.state === "stopped"
+          ? `Stopped — ${run.counts.unreached} target(s) never reached`
+          : run.state === "complete"
+            ? "Run complete"
+            : "Idle";
 
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       <section className="border-b border-hairline bg-abyss">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:py-16">
@@ -228,22 +265,47 @@ function Pipeline() {
               ))}
             </select>
           </div>
-          <div className="flex gap-2 md:justify-end">
+          <div>
+            <label className="tick text-[0.55rem]" htmlFor="concurrency">
+              Parallel probes
+            </label>
+            <select
+              id="concurrency"
+              value={concurrency}
+              onChange={(e) => setConcurrency(Number(e.target.value))}
+              disabled={busy}
+              className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground disabled:opacity-50 md:w-32"
+            >
+              {[1, 3, 6].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-wrap gap-2 md:justify-end">
             <button
               type="button"
-              onClick={run}
-              disabled={running || pool.length === 0}
+              onClick={startRun}
+              disabled={busy || targets.length === 0}
               className="tap inline-flex min-h-11 items-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
             >
               <Play className="h-4 w-4" aria-hidden="true" />
-              Run ({pool.length})
+              Run ({targets.length})
             </button>
             <button
               type="button"
-              onClick={() => {
-                stop.current = true;
-              }}
-              disabled={!running}
+              onClick={run.state === "paused" ? run.resume : run.pause}
+              disabled={!busy}
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
+            >
+              <Pause className="h-4 w-4" aria-hidden="true" />
+              {run.state === "paused" ? "Resume" : "Pause"}
+            </button>
+            <button
+              type="button"
+              onClick={run.stop}
+              disabled={!busy}
               className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
             >
               <Square className="h-4 w-4" aria-hidden="true" />
@@ -252,19 +314,76 @@ function Pipeline() {
           </div>
         </div>
 
-        <div className="mt-4" aria-live="polite">
-          <div className="h-[2px] w-full bg-border/60">
+        <div
+          className="mt-4"
+          aria-live="polite"
+          role="status"
+          aria-label="Run progress"
+        >
+          <div
+            className="h-[2px] w-full bg-border/60"
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
             <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
           </div>
           <p className="data mt-2 text-xs text-muted-foreground">
-            {running ? "Running" : done > 0 ? "Run complete" : "Idle"} · {done}/{pool.length} probed ·{" "}
-            {matched} matched to an official station
+            {statusLine} · {run.counts.probed}/{run.planned || targets.length} probed ·{" "}
+            {run.counts.matched} matched · {run.counts.unmatched} unmatched · {run.counts.errors} error
           </p>
         </div>
 
-        {results.length > 0 && (
-          <ul className="mt-6 divide-y divide-hairline border border-hairline">
-            {results.map((r) => (
+        {run.results.length > 0 && (
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            {(["all", "matched", "unmatched", "error"] as StatusFilter[]).map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setFilter(f)}
+                aria-pressed={filter === f}
+                className={`tap min-h-11 border px-4 text-[0.65rem] uppercase tracking-[0.14em] ${
+                  filter === f
+                    ? "border-brass/60 bg-brass/10 text-brass"
+                    : "border-hairline text-muted-foreground hover:border-brass/40"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+            <span className="h-px flex-1 bg-hairline" />
+            <button
+              type="button"
+              onClick={retryFailures}
+              disabled={busy || run.counts.errors === 0}
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
+            >
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+              Re-run failures
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                downloadText(`pipeline-run-${Date.now()}.csv`, runToCsv(run.results))
+              }
+              className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground"
+            >
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              CSV
+            </button>
+          </div>
+        )}
+
+        {run.results.length > 0 && visible.length === 0 && (
+          <p className="mt-6 border border-hairline p-6 text-xs text-muted-foreground">
+            No rows in this run carry that status.
+          </p>
+        )}
+
+        {visible.length > 0 && (
+          <ul className="mt-4 divide-y divide-hairline border border-hairline">
+            {visible.map((r) => (
               <li key={r.id} className="grid gap-2 p-4 md:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="min-w-0">
                   <p className="truncate text-sm text-foreground">{r.name}</p>
@@ -284,6 +403,28 @@ function Pipeline() {
               </li>
             ))}
           </ul>
+        )}
+
+        {run.history.length > 0 && (
+          <div className="mt-8">
+            <h3 className="tick text-[0.55rem]">Run history · last {run.history.length}</h3>
+            <ul className="data mt-3 divide-y divide-hairline border border-hairline text-xs">
+              {run.history.map((h) => (
+                <li
+                  key={h.id}
+                  className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                >
+                  <span className="truncate text-foreground/90">
+                    {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} · {h.outcome}
+                  </span>
+                  <span className="text-muted-foreground sm:text-right">
+                    {h.probed}/{h.planned} probed · {h.matched} matched · {h.errors} error ·{" "}
+                    {(h.durationMs / 1000).toFixed(1)}s
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </section>
 
@@ -323,6 +464,7 @@ function Pipeline() {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );

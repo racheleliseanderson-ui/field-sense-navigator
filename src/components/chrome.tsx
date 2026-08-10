@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useTheme, THEMES, type Theme } from "@/lib/theme";
 import { useT } from "@/lib/i18n";
+import { CommandPalette } from "@/components/command-palette";
 
 const NAV = [
   { to: "/", key: "nav.instrument", label: "Instrument" },
@@ -160,6 +161,12 @@ export function SiteHeader() {
       data-print="hide"
       className="sticky top-0 z-40 border-b border-hairline bg-abyss/80 backdrop-blur-xl"
     >
+      <a
+        href="#content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:border focus:border-brass/60 focus:bg-panel focus:px-4 focus:py-2 focus:text-xs focus:uppercase focus:tracking-[0.14em] focus:text-brass"
+      >
+        Skip to content
+      </a>
       <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 sm:px-8 md:flex md:gap-6">
         <Link to="/" className="group flex min-w-0 items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-brass/40 bg-brass/10 text-brass">
@@ -193,6 +200,7 @@ export function SiteHeader() {
             </span>
           </span>
           <ThemeSwitch />
+          <CommandPalette />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

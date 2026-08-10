@@ -51,6 +51,7 @@ function Home() {
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
+      <main id="content">
 
       {/* ---------- HERO: the instrument face ---------- */}
       <section className="relative isolate overflow-hidden">
@@ -294,6 +295,7 @@ function Home() {
         </section>
       )}
 
+      </main>
       <SiteFooter />
     </div>
   );
