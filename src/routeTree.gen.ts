@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoundaryRouteImport } from './routes/boundary'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as PlanRouteImport } from './routes/plan'
+import { Route as PacketIdRouteImport } from './routes/packet.$id'
 import { Route as WaterIdRouteImport } from './routes/water.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const PlanRoute = PlanRouteImport.update({
   path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PacketIdRoute = PacketIdRouteImport.update({
+  id: '/packet/$id',
+  path: '/packet/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WaterIdRoute = WaterIdRouteImport.update({
   id: '/water/$id',
   path: '/water/$id',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/boundary': typeof BoundaryRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
+  '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/boundary': typeof BoundaryRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
+  '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,23 @@ export interface FileRoutesById {
   '/boundary': typeof BoundaryRoute
   '/explore': typeof ExploreRoute
   '/plan': typeof PlanRoute
+  '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/boundary' | '/explore' | '/plan' | '/water/$id'
+  fullPaths:
+    '/' | '/boundary' | '/explore' | '/plan' | '/packet/$id' | '/water/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boundary' | '/explore' | '/plan' | '/water/$id'
-  id: '__root__' | '/' | '/boundary' | '/explore' | '/plan' | '/water/$id'
+  to: '/' | '/boundary' | '/explore' | '/plan' | '/packet/$id' | '/water/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/boundary'
+    | '/explore'
+    | '/plan'
+    | '/packet/$id'
+    | '/water/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +93,7 @@ export interface RootRouteChildren {
   BoundaryRoute: typeof BoundaryRoute
   ExploreRoute: typeof ExploreRoute
   PlanRoute: typeof PlanRoute
+  PacketIdRoute: typeof PacketIdRoute
   WaterIdRoute: typeof WaterIdRoute
 }
 
@@ -109,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/packet/$id': {
+      id: '/packet/$id'
+      path: '/packet/$id'
+      fullPath: '/packet/$id'
+      preLoaderRoute: typeof PacketIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/water/$id': {
       id: '/water/$id'
       path: '/water/$id'
@@ -124,8 +149,19 @@ const rootRouteChildren: RootRouteChildren = {
   BoundaryRoute: BoundaryRoute,
   ExploreRoute: ExploreRoute,
   PlanRoute: PlanRoute,
+  PacketIdRoute: PacketIdRoute,
   WaterIdRoute: WaterIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
