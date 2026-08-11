@@ -8,7 +8,10 @@ import { WaterCard } from "@/components/water-card";
 import { CardSkeleton, EmptyState } from "@/components/instrument";
 import {
   destinations,
-  states,
+  usStates,
+  provinces,
+  jurisdictionOf,
+  isProvince,
   waterTypes,
   daysSince,
   displayName,
@@ -31,6 +34,7 @@ import flatsImg from "@/assets/flats.jpg";
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
+  juris: fallback(z.string(), "").default(""),
   state: fallback(z.string(), "").default(""),
   type: fallback(z.string(), "").default(""),
   band: fallback(z.string(), "").default(""),
@@ -44,6 +48,7 @@ const searchSchema = z.object({
 
 interface CatalogSearch {
   q: string;
+  juris: string;
   state: string;
   type: string;
   band: string;
@@ -186,6 +191,7 @@ function Explore() {
     const rows = found.hits
       .map((h) => ({ d: h.destination, score: h.score, r: scores.get(h.destination.id)! }))
       .filter(({ d, r }) => {
+        if (params.juris && jurisdictionOf(d) !== params.juris) return false;
         if (params.state && d.state !== params.state) return false;
         if (params.type && d.waterType !== params.type) return false;
         if (params.band && r.band !== params.band) return false;
@@ -209,6 +215,7 @@ function Explore() {
     found,
     scores,
     watched,
+    params.juris,
     params.state,
     params.type,
     params.band,
@@ -224,6 +231,7 @@ function Explore() {
     () => setCount(PAGE),
     [
       params.q,
+      params.juris,
       params.state,
       params.type,
       params.band,
@@ -242,6 +250,7 @@ function Explore() {
   );
 
   const activeFilters =
+    Number(Boolean(params.juris)) +
     Number(Boolean(params.state)) +
     Number(Boolean(params.type)) +
     Number(Boolean(params.band)) +
@@ -256,7 +265,7 @@ function Explore() {
   const clearAll = () =>
     navigate({
       search: {
-        q: "", state: "", type: "", band: "", species: "", access: "",
+        q: "", juris: "", state: "", type: "", band: "", species: "", access: "",
         fresh: 0, min: 0, watch: false, sort: "readiness",
       },
     });
