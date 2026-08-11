@@ -297,19 +297,68 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">{t("catalog.state", "State")}</span>
+        <span className="tick mr-1 text-[0.55rem]">
+          {t("catalog.jurisdiction", "Jurisdiction")}
+        </span>
+        {(
+          [
+            { id: "us", label: t("catalog.us", "United States") },
+            { id: "ca", label: t("catalog.ca", "Canada") },
+          ] as const
+        ).map((j) => (
+          <Chip
+            key={j.id}
+            active={params.juris === j.id}
+            onClick={() =>
+              set(
+                params.juris === j.id
+                  ? { juris: "", state: "" }
+                  : {
+                      juris: j.id,
+                      state:
+                        params.state && (isProvince(params.state) ? "ca" : "us") !== j.id
+                          ? ""
+                          : params.state,
+                    },
+              )
+            }
+          >
+            {j.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">
+          {t("catalog.state", "State, province or territory")}
+        </span>
         <select
           value={params.state}
-          onChange={(e) => set({ state: e.target.value })}
-          aria-label={t("catalog.state", "State")}
+          onChange={(e) => {
+            const v = e.target.value;
+            set({ state: v, juris: v ? (isProvince(v) ? "ca" : "us") : params.juris });
+          }}
+          aria-label={t("catalog.state", "State, province or territory")}
           className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
         >
-          <option value="">All states</option>
-          {states.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
+          <option value="">All jurisdictions</option>
+          {params.juris !== "ca" && (
+            <optgroup label="United States">
+              {usStates.map((s: string) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </optgroup>
+          )}
+          {params.juris !== "us" && (
+            <optgroup label="Canada — provinces &amp; territories">
+              {provinces.map((s: string) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </optgroup>
+          )}
         </select>
         <span className="tick ml-2 mr-1 text-[0.55rem]">{t("catalog.sort", "Sort")}</span>
         <select
