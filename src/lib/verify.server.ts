@@ -37,7 +37,13 @@ export async function verifySource(url: string): Promise<SourceVerification> {
         method,
         redirect: "follow",
         signal: ctrl.signal,
-        headers: { "user-agent": "HoneyHoleIntelligence/0.4 (source verification)" },
+        headers: {
+          // Several agency hosts reject unfamiliar agents outright; a browser
+          // string only affects whether we get an answer, never what we report.
+          "user-agent":
+            "Mozilla/5.0 (compatible; HoneyHoleIntelligence/0.4; source verification)",
+          accept: "text/html,application/xhtml+xml",
+        },
       });
     } finally {
       clearTimeout(timer);
@@ -69,7 +75,10 @@ export async function verifySource(url: string): Promise<SourceVerification> {
       httpStatus: res.status,
       finalUrl,
       redirected,
-      note: `Agency host answered ${res.status}. The cited page could not be confirmed.`,
+      note:
+        res.status === 403 || res.status === 429
+          ? `Agency host answered ${res.status} and blocks automated checks. Confirm the page by hand.`
+          : `Agency host answered ${res.status}. The cited page could not be confirmed.`,
     };
   } catch {
     return {
