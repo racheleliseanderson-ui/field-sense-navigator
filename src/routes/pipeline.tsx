@@ -13,6 +13,7 @@ import {
   type RunTarget,
 } from "@/lib/run-manager";
 import { getLiveConditions } from "@/lib/live.functions";
+import { checkSourceUrl } from "@/lib/verify.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
 
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/pipeline")({
 
 type Scope = "watchlist" | "compare" | "state" | "sample";
 type StatusFilter = "all" | "matched" | "unmatched" | "error";
+type Mode = "station" | "source";
 
 const SCOPE_LABEL: Record<Scope, string> = {
   sample: "Catalog head",
@@ -52,6 +54,7 @@ function Pipeline() {
   const { ids: watched } = useWatchlist();
   const { ids: compared } = useCompareTray();
   const [scope, setScope] = useState<Scope>("sample");
+  const [mode, setMode] = useState<Mode>("station");
   const [state, setState] = useState<string>(states[0] ?? "");
   const [limit, setLimit] = useState(12);
   const [concurrency, setConcurrency] = useState(3);
@@ -69,7 +72,7 @@ function Pipeline() {
     return destinations.slice(0, limit);
   }, [scope, watched, compared, state, limit]);
 
-  const probe = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+  const probeStation = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
     try {
       const live = await getLiveConditions({
         data: { state: target.state, waterbody: target.waterbody },
@@ -98,14 +101,49 @@ function Pipeline() {
     }
   }, []);
 
+  const probeSource = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+    try {
+      const v = await checkSourceUrl({ data: { url: target.sourceUrl ?? "" } });
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: v.ok ? (v.redirected ? "unmatched" : "matched") : "error",
+        station: v.httpStatus ? `HTTP ${v.httpStatus}` : "no answer",
+        readings: 0,
+        note: v.note,
+      };
+    } catch {
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: "error",
+        station: null,
+        readings: 0,
+        note: "Source verification could not complete on this run. Treat the citation as unverified.",
+      };
+    }
+  }, []);
+
+  const probe = mode === "source" ? probeSource : probeStation;
   const run = useRunManager(probe);
-  const scopeLabel = scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope];
+  const modeLabel = mode === "source" ? "Source verification" : "Station resolution";
+  const scopeLabel = `${modeLabel} · ${
+    scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope]
+  }`;
 
   const targets = useMemo<RunTarget[]>(
     () =>
       pool
         .filter((d) => Boolean(d))
-        .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody })),
+        .map((d) => ({
+          id: d!.id,
+          name: displayName(d!),
+          state: d!.state,
+          waterbody: d!.waterbody,
+          sourceUrl: d!.officialSourceUrl,
+        })),
     [pool],
   );
 
@@ -116,7 +154,13 @@ function Pipeline() {
     const retry = failed
       .map((r) => destinations.find((d) => d.id === r.id))
       .filter((d) => Boolean(d))
-      .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody }));
+      .map((d) => ({
+        id: d!.id,
+        name: displayName(d!),
+        state: d!.state,
+        waterbody: d!.waterbody,
+        sourceUrl: d!.officialSourceUrl,
+      }));
     if (retry.length > 0)
       void run.start(retry, { concurrency, scope: `${scopeLabel} · retry`, append: true });
   };
