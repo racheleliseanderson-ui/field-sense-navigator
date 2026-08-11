@@ -249,14 +249,30 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Live station resolution
+          Source verification &amp; station resolution
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Each run asks the official station index whether a gauge publishes under the
-          water's own name. No nearby station is substituted for a miss.
+          {mode === "source"
+            ? "Each run reads the agency page the record cites and reports what the host returned. A page that has moved is reported as moved; a host that does not answer leaves the citation unverified."
+            : "Each run asks the official station index whether a gauge publishes under the water's own name. No nearby station is substituted for a miss."}
         </p>
 
-        <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_1fr] md:items-end">
+        <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
+          <div>
+            <label className="tick text-[0.55rem]" htmlFor="mode">
+              Run type
+            </label>
+            <select
+              id="mode"
+              value={mode}
+              onChange={(e) => setMode(e.target.value as Mode)}
+              disabled={busy}
+              className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground disabled:opacity-50 md:w-48"
+            >
+              <option value="station">Station resolution</option>
+              <option value="source">Source verification</option>
+            </select>
+          </div>
           <div>
             <label className="tick text-[0.55rem]" htmlFor="scope">
               Scope
@@ -276,7 +292,7 @@ function Pipeline() {
           {scope === "state" && (
             <div>
               <label className="tick text-[0.55rem]" htmlFor="pipeline-state">
-                State
+                State or province
               </label>
               <select
                 id="pipeline-state"
