@@ -22,6 +22,8 @@ export interface RunTarget {
   name: string;
   state: string;
   waterbody: string;
+  /** Official agency page cited by the record, used by source verification runs. */
+  sourceUrl?: string;
 }
 
 export type Probe = (target: RunTarget) => Promise<ProbeResult>;

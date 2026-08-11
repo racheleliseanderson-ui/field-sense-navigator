@@ -8,7 +8,10 @@ import { WaterCard } from "@/components/water-card";
 import { CardSkeleton, EmptyState } from "@/components/instrument";
 import {
   destinations,
-  states,
+  usStates,
+  provinces,
+  jurisdictionOf,
+  isProvince,
   waterTypes,
   daysSince,
   displayName,
@@ -31,6 +34,7 @@ import flatsImg from "@/assets/flats.jpg";
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
+  juris: fallback(z.string(), "").default(""),
   state: fallback(z.string(), "").default(""),
   type: fallback(z.string(), "").default(""),
   band: fallback(z.string(), "").default(""),
@@ -44,6 +48,7 @@ const searchSchema = z.object({
 
 interface CatalogSearch {
   q: string;
+  juris: string;
   state: string;
   type: string;
   band: string;
@@ -186,6 +191,7 @@ function Explore() {
     const rows = found.hits
       .map((h) => ({ d: h.destination, score: h.score, r: scores.get(h.destination.id)! }))
       .filter(({ d, r }) => {
+        if (params.juris && jurisdictionOf(d) !== params.juris) return false;
         if (params.state && d.state !== params.state) return false;
         if (params.type && d.waterType !== params.type) return false;
         if (params.band && r.band !== params.band) return false;
@@ -209,6 +215,7 @@ function Explore() {
     found,
     scores,
     watched,
+    params.juris,
     params.state,
     params.type,
     params.band,
@@ -224,6 +231,7 @@ function Explore() {
     () => setCount(PAGE),
     [
       params.q,
+      params.juris,
       params.state,
       params.type,
       params.band,
@@ -242,6 +250,7 @@ function Explore() {
   );
 
   const activeFilters =
+    Number(Boolean(params.juris)) +
     Number(Boolean(params.state)) +
     Number(Boolean(params.type)) +
     Number(Boolean(params.band)) +
@@ -256,7 +265,7 @@ function Explore() {
   const clearAll = () =>
     navigate({
       search: {
-        q: "", state: "", type: "", band: "", species: "", access: "",
+        q: "", juris: "", state: "", type: "", band: "", species: "", access: "",
         fresh: 0, min: 0, watch: false, sort: "readiness",
       },
     });
@@ -288,19 +297,68 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">{t("catalog.state", "State")}</span>
+        <span className="tick mr-1 text-[0.55rem]">
+          {t("catalog.jurisdiction", "Jurisdiction")}
+        </span>
+        {(
+          [
+            { id: "us", label: t("catalog.us", "United States") },
+            { id: "ca", label: t("catalog.ca", "Canada") },
+          ] as const
+        ).map((j) => (
+          <Chip
+            key={j.id}
+            active={params.juris === j.id}
+            onClick={() =>
+              set(
+                params.juris === j.id
+                  ? { juris: "", state: "" }
+                  : {
+                      juris: j.id,
+                      state:
+                        params.state && (isProvince(params.state) ? "ca" : "us") !== j.id
+                          ? ""
+                          : params.state,
+                    },
+              )
+            }
+          >
+            {j.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">
+          {t("catalog.state", "State, province or territory")}
+        </span>
         <select
           value={params.state}
-          onChange={(e) => set({ state: e.target.value })}
-          aria-label={t("catalog.state", "State")}
+          onChange={(e) => {
+            const v = e.target.value;
+            set({ state: v, juris: v ? (isProvince(v) ? "ca" : "us") : params.juris });
+          }}
+          aria-label={t("catalog.state", "State, province or territory")}
           className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
         >
-          <option value="">All states</option>
-          {states.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
+          <option value="">All jurisdictions</option>
+          {params.juris !== "ca" && (
+            <optgroup label="United States">
+              {usStates.map((s: string) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </optgroup>
+          )}
+          {params.juris !== "us" && (
+            <optgroup label="Canada — provinces &amp; territories">
+              {provinces.map((s: string) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </optgroup>
+          )}
         </select>
         <span className="tick ml-2 mr-1 text-[0.55rem]">{t("catalog.sort", "Sort")}</span>
         <select
@@ -546,6 +604,7 @@ function Explore() {
               ))}
               {(
                 [
+                  ["juris", params.juris, params.juris === "ca" ? "Canada" : params.juris === "us" ? "United States" : ""],
                   ["state", params.state, params.state],
                   ["type", params.type, params.type],
                   ["band", params.band, params.band],

@@ -1,4 +1,4 @@
-import { destinations, displayName, type Destination } from "@/lib/catalog";
+import { destinations, displayName, isProvince, type Destination } from "@/lib/catalog";
 
 /** Facets a plain-text query can resolve into on its own. */
 export interface Token {
@@ -35,6 +35,16 @@ const STATE_ABBR: Record<string, string> = {
   tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia", wa: "Washington",
   wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
 };
+
+/** Canadian provinces and territories, by postal code. No code collides with a state. */
+const PROVINCE_ABBR: Record<string, string> = {
+  ab: "Alberta", bc: "British Columbia", mb: "Manitoba", nb: "New Brunswick",
+  nl: "Newfoundland and Labrador", nt: "Northwest Territories", ns: "Nova Scotia",
+  nu: "Nunavut", on: "Ontario", pe: "Prince Edward Island", qc: "Quebec",
+  sk: "Saskatchewan", yt: "Yukon",
+};
+
+const REGION_ABBR: Record<string, string> = { ...STATE_ABBR, ...PROVINCE_ABBR };
 
 const TYPE_WORDS: Record<string, string> = {
   lake: "lake", lakes: "lake", lago: "lake",
@@ -137,12 +147,20 @@ export function tokenize(query: string): { tokens: Token[]; rest: string } {
     const w = words[i]!;
     const two = i + 1 < words.length ? `${w} ${words[i + 1]}` : "";
 
-    const stateTwo = two && Object.values(STATE_ABBR).find((s) => norm(s) === two);
+    const three =
+      i + 2 < words.length ? `${w} ${words[i + 1]} ${words[i + 2]}` : "";
+    const stateThree = three && Object.values(REGION_ABBR).find((s) => norm(s) === three);
+    if (stateThree) {
+      tokens.push({ kind: "state", value: stateThree, label: stateThree });
+      i += 2;
+      continue;
+    }
+    const stateTwo = two && Object.values(REGION_ABBR).find((s) => norm(s) === two);
     if (stateTwo) { tokens.push({ kind: "state", value: stateTwo, label: stateTwo }); i++; continue; }
-    const stateOne = Object.values(STATE_ABBR).find((s) => norm(s) === w);
+    const stateOne = Object.values(REGION_ABBR).find((s) => norm(s) === w);
     if (stateOne) { tokens.push({ kind: "state", value: stateOne, label: stateOne }); continue; }
-    if (STATE_ABBR[w] && w.length === 2) {
-      const full = STATE_ABBR[w]!;
+    if (REGION_ABBR[w] && w.length === 2) {
+      const full = REGION_ABBR[w]!;
       tokens.push({ kind: "state", value: full, label: full });
       continue;
     }
@@ -268,7 +286,11 @@ export function suggest(query: string, limit = 8): Suggestion[] {
     if (out.length >= limit + 3) break;
     if (row.state.includes(q) && !seenState.has(row.d.state)) {
       seenState.add(row.d.state);
-      out.push({ kind: "state", label: row.d.state, sub: "State" });
+      out.push({
+        kind: "state",
+        label: row.d.state,
+        sub: isProvince(row.d.state) ? "Province or territory" : "State",
+      });
     }
   }
 

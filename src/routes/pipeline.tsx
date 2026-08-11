@@ -13,6 +13,7 @@ import {
   type RunTarget,
 } from "@/lib/run-manager";
 import { getLiveConditions } from "@/lib/live.functions";
+import { checkSourceUrl } from "@/lib/verify.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
 
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/pipeline")({
 
 type Scope = "watchlist" | "compare" | "state" | "sample";
 type StatusFilter = "all" | "matched" | "unmatched" | "error";
+type Mode = "station" | "source";
 
 const SCOPE_LABEL: Record<Scope, string> = {
   sample: "Catalog head",
@@ -52,6 +54,7 @@ function Pipeline() {
   const { ids: watched } = useWatchlist();
   const { ids: compared } = useCompareTray();
   const [scope, setScope] = useState<Scope>("sample");
+  const [mode, setMode] = useState<Mode>("station");
   const [state, setState] = useState<string>(states[0] ?? "");
   const [limit, setLimit] = useState(12);
   const [concurrency, setConcurrency] = useState(3);
@@ -69,7 +72,7 @@ function Pipeline() {
     return destinations.slice(0, limit);
   }, [scope, watched, compared, state, limit]);
 
-  const probe = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+  const probeStation = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
     try {
       const live = await getLiveConditions({
         data: { state: target.state, waterbody: target.waterbody },
@@ -98,14 +101,49 @@ function Pipeline() {
     }
   }, []);
 
+  const probeSource = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
+    try {
+      const v = await checkSourceUrl({ data: { url: target.sourceUrl ?? "" } });
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: v.ok ? (v.redirected ? "unmatched" : "matched") : "error",
+        station: v.httpStatus ? `HTTP ${v.httpStatus}` : "no answer",
+        readings: 0,
+        note: v.note,
+      };
+    } catch {
+      return {
+        id: target.id,
+        name: target.name,
+        state: target.state,
+        status: "error",
+        station: null,
+        readings: 0,
+        note: "Source verification could not complete on this run. Treat the citation as unverified.",
+      };
+    }
+  }, []);
+
+  const probe = mode === "source" ? probeSource : probeStation;
   const run = useRunManager(probe);
-  const scopeLabel = scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope];
+  const modeLabel = mode === "source" ? "Source verification" : "Station resolution";
+  const scopeLabel = `${modeLabel} · ${
+    scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope]
+  }`;
 
   const targets = useMemo<RunTarget[]>(
     () =>
       pool
         .filter((d) => Boolean(d))
-        .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody })),
+        .map((d) => ({
+          id: d!.id,
+          name: displayName(d!),
+          state: d!.state,
+          waterbody: d!.waterbody,
+          sourceUrl: d!.officialSourceUrl,
+        })),
     [pool],
   );
 
@@ -116,7 +154,13 @@ function Pipeline() {
     const retry = failed
       .map((r) => destinations.find((d) => d.id === r.id))
       .filter((d) => Boolean(d))
-      .map((d) => ({ id: d!.id, name: displayName(d!), state: d!.state, waterbody: d!.waterbody }));
+      .map((d) => ({
+        id: d!.id,
+        name: displayName(d!),
+        state: d!.state,
+        waterbody: d!.waterbody,
+        sourceUrl: d!.officialSourceUrl,
+      }));
     if (retry.length > 0)
       void run.start(retry, { concurrency, scope: `${scopeLabel} · retry`, append: true });
   };
@@ -159,7 +203,7 @@ function Pipeline() {
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { k: "Records", v: destinations.length },
-              { k: "States", v: rows.length },
+              { k: "Jurisdictions", v: rows.length },
               { k: "Checks", v: checks.length },
               { k: "Flagged", v: checks.filter((c) => c.severity === "flagged").length },
             ].map((s) => (
@@ -205,14 +249,30 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Live station resolution
+          Source verification &amp; station resolution
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Each run asks the official station index whether a gauge publishes under the
-          water's own name. No nearby station is substituted for a miss.
+          {mode === "source"
+            ? "Each run reads the agency page the record cites and reports what the host returned. A page that has moved is reported as moved; a host that does not answer leaves the citation unverified."
+            : "Each run asks the official station index whether a gauge publishes under the water's own name. No nearby station is substituted for a miss."}
         </p>
 
-        <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_1fr] md:items-end">
+        <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
+          <div>
+            <label className="tick text-[0.55rem]" htmlFor="mode">
+              Run type
+            </label>
+            <select
+              id="mode"
+              value={mode}
+              onChange={(e) => setMode(e.target.value as Mode)}
+              disabled={busy}
+              className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground disabled:opacity-50 md:w-48"
+            >
+              <option value="station">Station resolution</option>
+              <option value="source">Source verification</option>
+            </select>
+          </div>
           <div>
             <label className="tick text-[0.55rem]" htmlFor="scope">
               Scope
@@ -232,7 +292,7 @@ function Pipeline() {
           {scope === "state" && (
             <div>
               <label className="tick text-[0.55rem]" htmlFor="pipeline-state">
-                State
+                State or province
               </label>
               <select
                 id="pipeline-state"
@@ -331,7 +391,9 @@ function Pipeline() {
           </div>
           <p className="data mt-2 text-xs text-muted-foreground">
             {statusLine} · {run.counts.probed}/{run.planned || targets.length} probed ·{" "}
-            {run.counts.matched} matched · {run.counts.unmatched} unmatched · {run.counts.errors} error
+            {mode === "source"
+              ? `${run.counts.matched} verified · ${run.counts.unmatched} moved · ${run.counts.errors} unverified`
+              : `${run.counts.matched} matched · ${run.counts.unmatched} unmatched · ${run.counts.errors} error`}
           </p>
         </div>
 
@@ -393,11 +455,25 @@ function Pipeline() {
                 </div>
                 <div className="flex items-center gap-3 md:justify-end">
                   <span className="data text-xs text-muted-foreground">
-                    {r.station ?? "no station"} · {r.readings} readings
+                    {mode === "source"
+                      ? (r.station ?? "no answer")
+                      : `${r.station ?? "no station"} · ${r.readings} readings`}
                   </span>
                   <GradeChip
                     grade={r.status === "matched" ? "clear" : r.status === "unmatched" ? "watch" : "flagged"}
-                    label={r.status === "matched" ? "Matched" : r.status === "unmatched" ? "Unmatched" : "Error"}
+                    label={
+                      mode === "source"
+                        ? r.status === "matched"
+                          ? "Verified"
+                          : r.status === "unmatched"
+                            ? "Moved"
+                            : "Unverified"
+                        : r.status === "matched"
+                          ? "Matched"
+                          : r.status === "unmatched"
+                            ? "Unmatched"
+                            : "Error"
+                    }
                   />
                 </div>
               </li>
@@ -430,7 +506,7 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          State coverage
+          Jurisdiction coverage
         </h2>
         <div className="mt-6 overflow-x-auto border border-hairline">
           <table className="w-full min-w-[34rem] border-collapse text-sm">
