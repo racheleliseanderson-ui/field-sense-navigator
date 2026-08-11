@@ -604,6 +604,7 @@ function Explore() {
               ))}
               {(
                 [
+                  ["juris", params.juris, params.juris === "ca" ? "Canada" : params.juris === "us" ? "United States" : ""],
                   ["state", params.state, params.state],
                   ["type", params.type, params.type],
                   ["band", params.band, params.band],
