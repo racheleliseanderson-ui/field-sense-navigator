@@ -203,7 +203,7 @@ function Pipeline() {
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { k: "Records", v: destinations.length },
-              { k: "States", v: rows.length },
+              { k: "Jurisdictions", v: rows.length },
               { k: "Checks", v: checks.length },
               { k: "Flagged", v: checks.filter((c) => c.severity === "flagged").length },
             ].map((s) => (
@@ -506,7 +506,7 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          State coverage
+          Jurisdiction coverage
         </h2>
         <div className="mt-6 overflow-x-auto border border-hairline">
           <table className="w-full min-w-[34rem] border-collapse text-sm">
