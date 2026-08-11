@@ -391,7 +391,9 @@ function Pipeline() {
           </div>
           <p className="data mt-2 text-xs text-muted-foreground">
             {statusLine} · {run.counts.probed}/{run.planned || targets.length} probed ·{" "}
-            {run.counts.matched} matched · {run.counts.unmatched} unmatched · {run.counts.errors} error
+            {mode === "source"
+              ? `${run.counts.matched} verified · ${run.counts.unmatched} moved · ${run.counts.errors} unverified`
+              : `${run.counts.matched} matched · ${run.counts.unmatched} unmatched · ${run.counts.errors} error`}
           </p>
         </div>
 
@@ -453,11 +455,25 @@ function Pipeline() {
                 </div>
                 <div className="flex items-center gap-3 md:justify-end">
                   <span className="data text-xs text-muted-foreground">
-                    {r.station ?? "no station"} · {r.readings} readings
+                    {mode === "source"
+                      ? (r.station ?? "no answer")
+                      : `${r.station ?? "no station"} · ${r.readings} readings`}
                   </span>
                   <GradeChip
                     grade={r.status === "matched" ? "clear" : r.status === "unmatched" ? "watch" : "flagged"}
-                    label={r.status === "matched" ? "Matched" : r.status === "unmatched" ? "Unmatched" : "Error"}
+                    label={
+                      mode === "source"
+                        ? r.status === "matched"
+                          ? "Verified"
+                          : r.status === "unmatched"
+                            ? "Moved"
+                            : "Unverified"
+                        : r.status === "matched"
+                          ? "Matched"
+                          : r.status === "unmatched"
+                            ? "Unmatched"
+                            : "Error"
+                    }
                   />
                 </div>
               </li>
