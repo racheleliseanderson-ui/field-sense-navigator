@@ -36,6 +36,16 @@ const STATE_ABBR: Record<string, string> = {
   wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
 };
 
+/** Canadian provinces and territories, by postal code. No code collides with a state. */
+const PROVINCE_ABBR: Record<string, string> = {
+  ab: "Alberta", bc: "British Columbia", mb: "Manitoba", nb: "New Brunswick",
+  nl: "Newfoundland and Labrador", nt: "Northwest Territories", ns: "Nova Scotia",
+  nu: "Nunavut", on: "Ontario", pe: "Prince Edward Island", qc: "Quebec",
+  sk: "Saskatchewan", yt: "Yukon",
+};
+
+const REGION_ABBR: Record<string, string> = { ...STATE_ABBR, ...PROVINCE_ABBR };
+
 const TYPE_WORDS: Record<string, string> = {
   lake: "lake", lakes: "lake", lago: "lake",
   reservoir: "reservoir", reservoirs: "reservoir", embalse: "reservoir",
