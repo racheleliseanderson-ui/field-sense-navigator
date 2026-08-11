@@ -1,4 +1,4 @@
-import { destinations, displayName, type Destination } from "@/lib/catalog";
+import { destinations, displayName, isProvince, type Destination } from "@/lib/catalog";
 
 /** Facets a plain-text query can resolve into on its own. */
 export interface Token {
@@ -286,7 +286,11 @@ export function suggest(query: string, limit = 8): Suggestion[] {
     if (out.length >= limit + 3) break;
     if (row.state.includes(q) && !seenState.has(row.d.state)) {
       seenState.add(row.d.state);
-      out.push({ kind: "state", label: row.d.state, sub: "State" });
+      out.push({
+        kind: "state",
+        label: row.d.state,
+        sub: isProvince(row.d.state) ? "Province or territory" : "State",
+      });
     }
   }
 
