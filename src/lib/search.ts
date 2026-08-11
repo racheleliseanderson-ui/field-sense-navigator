@@ -147,12 +147,20 @@ export function tokenize(query: string): { tokens: Token[]; rest: string } {
     const w = words[i]!;
     const two = i + 1 < words.length ? `${w} ${words[i + 1]}` : "";
 
-    const stateTwo = two && Object.values(STATE_ABBR).find((s) => norm(s) === two);
+    const three =
+      i + 2 < words.length ? `${w} ${words[i + 1]} ${words[i + 2]}` : "";
+    const stateThree = three && Object.values(REGION_ABBR).find((s) => norm(s) === three);
+    if (stateThree) {
+      tokens.push({ kind: "state", value: stateThree, label: stateThree });
+      i += 2;
+      continue;
+    }
+    const stateTwo = two && Object.values(REGION_ABBR).find((s) => norm(s) === two);
     if (stateTwo) { tokens.push({ kind: "state", value: stateTwo, label: stateTwo }); i++; continue; }
-    const stateOne = Object.values(STATE_ABBR).find((s) => norm(s) === w);
+    const stateOne = Object.values(REGION_ABBR).find((s) => norm(s) === w);
     if (stateOne) { tokens.push({ kind: "state", value: stateOne, label: stateOne }); continue; }
-    if (STATE_ABBR[w] && w.length === 2) {
-      const full = STATE_ABBR[w]!;
+    if (REGION_ABBR[w] && w.length === 2) {
+      const full = REGION_ABBR[w]!;
       tokens.push({ kind: "state", value: full, label: full });
       continue;
     }
