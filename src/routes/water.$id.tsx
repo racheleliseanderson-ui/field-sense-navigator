@@ -44,12 +44,12 @@ export const Route = createFileRoute("/water/$id")({
     const place = loaderData ? `${loaderData.region}, ${loaderData.state}` : "";
     return {
       meta: [
-        { title: `${name} · Honey Hole Intelligence` },
+        { title: `${name} · Field Sense Navigator` },
         {
           name: "description",
           content: `Layered public-waters intelligence for ${name} in ${place}: access and legality, hazards, capacity, regulatory pressure and same-day field checks.`,
         },
-        { property: "og:title", content: `${name} · Honey Hole Intelligence` },
+        { property: "og:title", content: `${name} · Field Sense Navigator` },
         {
           property: "og:description",
           content: `Field readiness, documented signals and residual unknowns for ${name}. Public waters only.`,

@@ -20,13 +20,13 @@ import { useReveal } from "@/lib/motion";
 export const Route = createFileRoute("/compare")({
   head: () => ({
     meta: [
-      { title: "Compare waters · Honey Hole Intelligence" },
+      { title: "Compare waters · Field Sense Navigator" },
       {
         name: "description",
         content:
           "Hold up to four named public waters side by side: readiness, access anatomy, hazard and capacity layers, verification age and the unknowns each record still carries.",
       },
-      { property: "og:title", content: "Compare waters · Honey Hole Intelligence" },
+      { property: "og:title", content: "Compare waters · Field Sense Navigator" },
       {
         property: "og:description",
         content:

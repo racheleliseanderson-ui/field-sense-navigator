@@ -20,13 +20,13 @@ import { useWatchlist } from "@/lib/watchlist";
 export const Route = createFileRoute("/pipeline")({
   head: () => ({
     meta: [
-      { title: "Pipeline console · Honey Hole Intelligence" },
+      { title: "Pipeline console · Field Sense Navigator" },
       {
         name: "description",
         content:
           "Catalog integrity, state coverage and on-demand live-feed resolution for the named public waters held by the instrument.",
       },
-      { property: "og:title", content: "Pipeline console · Honey Hole Intelligence" },
+      { property: "og:title", content: "Pipeline console · Field Sense Navigator" },
       {
         property: "og:description",
         content:

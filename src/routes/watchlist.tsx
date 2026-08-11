@@ -11,13 +11,13 @@ import { readiness } from "@/lib/intelligence";
 export const Route = createFileRoute("/watchlist")({
   head: () => ({
     meta: [
-      { title: "Watchlist · Honey Hole Intelligence" },
+      { title: "Watchlist · Field Sense Navigator" },
       {
         name: "description",
         content:
           "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field packet.",
       },
-      { property: "og:title", content: "Watchlist · Honey Hole Intelligence" },
+      { property: "og:title", content: "Watchlist · Field Sense Navigator" },
       {
         property: "og:description",
         content:

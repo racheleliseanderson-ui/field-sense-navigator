@@ -2,7 +2,7 @@
 
 Improve this existing live application: https://honey-hole-intelligence.vercel.app/
 
-https://github.com/racheleliseanderson-ui/honey-hole-intelligence     Upgrade Honey Hole Intelligence into a high-end field intelligence instrument while strictly preserving the public-waters-only, no-private-spots, fail-closed philosophy.
+https://github.com/racheleliseanderson-ui/honey-hole-intelligence     Upgrade Field Sense Navigator into a high-end field intelligence instrument while strictly preserving the public-waters-only, no-private-spots, fail-closed philosophy.
 
 Intelligence upgrades:
 

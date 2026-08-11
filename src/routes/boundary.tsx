@@ -5,13 +5,13 @@ import rampImg from "@/assets/ramp.jpg";
 export const Route = createFileRoute("/boundary")({
   head: () => ({
     meta: [
-      { title: "Boundary & Method · Honey Hole Intelligence" },
+      { title: "Boundary & Method · Field Sense Navigator" },
       {
         name: "description",
         content:
-          "What Honey Hole Intelligence includes, what it refuses to hold, and how the fail-closed field-check doctrine works for named public waters.",
+          "What Field Sense Navigator includes, what it refuses to hold, and how the fail-closed field-check doctrine works for named public waters.",
       },
-      { property: "og:title", content: "Boundary & Method · Honey Hole Intelligence" },
+      { property: "og:title", content: "Boundary & Method · Field Sense Navigator" },
       {
         property: "og:description",
         content:

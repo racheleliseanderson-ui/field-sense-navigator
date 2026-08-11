@@ -64,13 +64,13 @@ export const Route = createFileRoute("/explore")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
-      { title: "Catalog · Honey Hole Intelligence" },
+      { title: "Catalog · Field Sense Navigator" },
       {
         name: "description",
         content:
           "Search 318 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
       },
-      { property: "og:title", content: "Catalog · Honey Hole Intelligence" },
+      { property: "og:title", content: "Catalog · Field Sense Navigator" },
       {
         property: "og:description",
         content:

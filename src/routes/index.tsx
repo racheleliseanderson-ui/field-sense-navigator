@@ -10,13 +10,13 @@ import flatsImg from "@/assets/flats.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Honey Hole Intelligence · Public-Waters Field Instrument" },
+      { title: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
         name: "description",
         content:
           "A layered field intelligence instrument for 318 named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.",
       },
-      { property: "og:title", content: "Honey Hole Intelligence · Public-Waters Field Instrument" },
+      { property: "og:title", content: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
         property: "og:description",
         content:

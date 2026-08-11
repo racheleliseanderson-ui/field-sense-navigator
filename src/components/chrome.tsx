@@ -174,7 +174,7 @@ export function SiteHeader() {
           </span>
           <span className="min-w-0 leading-none">
             <span className="block truncate font-display text-[0.85rem] font-bold uppercase tracking-[0.18em] text-foreground sm:text-[0.95rem]">
-              Honey Hole
+              Field Sense
             </span>
             <span className="tick mt-1 block text-[0.6rem]">Field intelligence</span>
           </span>
@@ -288,7 +288,7 @@ export function SiteFooter() {
         <p className="mx-auto max-w-7xl px-5 py-5 text-xs text-muted-foreground sm:px-8">
           {t(
             "footer.legal",
-            "Honey Hole Intelligence — built for Hook the Horizon. Official agency sources are authoritative; posted signage on the day wins over anything printed here.",
+            "Field Sense Navigator — built for Hook the Horizon. Official agency sources are authoritative; posted signage on the day wins over anything printed here.",
           )}
         </p>
       </div>

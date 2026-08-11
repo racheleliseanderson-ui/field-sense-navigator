@@ -39,7 +39,7 @@ const es: Dict = {
   "footer.waters": "318 aguas con nombre",
   "footer.states": "23 estados",
   "footer.legal":
-    "Honey Hole Intelligence — creado para Hook the Horizon. Las fuentes oficiales son autoritativas; la señalización publicada el mismo día prevalece sobre lo impreso aquí.",
+    "Field Sense Navigator — creado para Hook the Horizon. Las fuentes oficiales son autoritativas; la señalización publicada el mismo día prevalece sobre lo impreso aquí.",
   // catalog / search
   "catalog.title": "Catálogo",
   "catalog.search": "Buscar aguas, condados, estados, especies",

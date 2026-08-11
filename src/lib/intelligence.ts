@@ -803,7 +803,7 @@ export function buildHandoff(
   const t = readTags(d);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   return [
-    "HONEY HOLE INTELLIGENCE — CARRY FORWARD",
+    "FIELD SENSE NAVIGATOR — CARRY FORWARD",
     `Record: ${d.id} (schema 0.4.0)`,
     `Water: ${d.waterbody}${d.accessSite ? ` — ${d.accessSite}` : ""}`,
     `Place: ${d.region}, ${d.state}${d.county ? ` (${d.county} County)` : ""}`,

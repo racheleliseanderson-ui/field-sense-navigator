@@ -29,7 +29,7 @@ export const Route = createFileRoute("/packet/$id")({
     const name = loaderData ? displayName(loaderData) : "Field packet";
     return {
       meta: [
-        { title: `Field Packet — ${name} · Honey Hole Intelligence` },
+        { title: `Field Packet — ${name} · Field Sense Navigator` },
         {
           name: "description",
           content: `Printable same-day field packet for ${name}: declared job, open verifications, hazard and capacity notes, and standing rules. Public waters only.`,
@@ -111,7 +111,7 @@ function Packet() {
       <main><article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
         <header className="grid gap-4 sm:flex sm:flex-wrap sm:items-start sm:justify-between sm:gap-6">
           <div>
-            <p className="packet-tick">Honey Hole Intelligence</p>
+            <p className="packet-tick">Field Sense Navigator</p>
             <h1 className="mt-3 font-display text-[clamp(2rem,9vw,2.6rem)] font-bold leading-[0.95] tracking-[-0.04em]">
               Field Packet
             </h1>

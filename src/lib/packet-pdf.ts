@@ -43,7 +43,7 @@ function footer(ctx: Ctx) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(...MUTED);
-  doc.text("HONEY HOLE INTELLIGENCE — PUBLIC WATERS ONLY", M, FOOT + 14);
+  doc.text("FIELD SENSE NAVIGATOR — PUBLIC WATERS ONLY", M, FOOT + 14);
   doc.text(`Issued ${ctx.issued}  ·  Page ${ctx.page}`, PAGE_W - M, FOOT + 14, {
     align: "right",
   });
@@ -135,7 +135,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7.5);
   doc.setTextColor(...MUTED);
-  doc.text("HONEY HOLE INTELLIGENCE", M, ctx.y, { charSpace: 1.4 });
+  doc.text("FIELD SENSE NAVIGATOR", M, ctx.y, { charSpace: 1.4 });
   doc.text(`RECORD ${d.id}`, PAGE_W - M, ctx.y, { align: "right" });
   ctx.y += 22;
   doc.setFont("helvetica", "bold");
@@ -257,8 +257,8 @@ export function downloadPacketPdf(d: Destination, job: JobId | null = null) {
   footer(ctx);
   doc.setProperties({
     title: `Field Packet — ${displayName(d)}`,
-    subject: "Honey Hole Intelligence field packet",
-    creator: "Honey Hole Intelligence",
+    subject: "Field Sense Navigator field packet",
+    creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-${fileSafe(displayName(d))}-${issued}.pdf`);
 }
@@ -275,7 +275,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7.5);
   doc.setTextColor(...MUTED);
-  doc.text("HONEY HOLE INTELLIGENCE", M, ctx.y, { charSpace: 1.4 });
+  doc.text("FIELD SENSE NAVIGATOR", M, ctx.y, { charSpace: 1.4 });
   ctx.y += 24;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
@@ -306,7 +306,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   footer(ctx);
   doc.setProperties({
     title: `Shortlist Packet — ${list.length} waters`,
-    creator: "Honey Hole Intelligence",
+    creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-shortlist-${issued}.pdf`);
 }

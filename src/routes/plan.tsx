@@ -20,13 +20,13 @@ import riverImg from "@/assets/river.jpg";
 export const Route = createFileRoute("/plan")({
   head: () => ({
     meta: [
-      { title: "Plan a Day · Honey Hole Intelligence" },
+      { title: "Plan a Day · Field Sense Navigator" },
       {
         name: "description",
         content:
           "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a field packet.",
       },
-      { property: "og:title", content: "Plan a Day · Honey Hole Intelligence" },
+      { property: "og:title", content: "Plan a Day · Field Sense Navigator" },
       {
         property: "og:description",
         content:
