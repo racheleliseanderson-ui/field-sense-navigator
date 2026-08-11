@@ -41,6 +41,38 @@ export const destinationById = (id: string) =>
 
 export const states = [...new Set(destinations.map((d) => d.state))].sort();
 
+/** Canadian provinces and territories held by the catalog, in official order. */
+export const PROVINCES = [
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Northwest Territories",
+  "Nova Scotia",
+  "Nunavut",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Yukon",
+] as const;
+
+const PROVINCE_SET: ReadonlySet<string> = new Set(PROVINCES);
+
+export type Jurisdiction = "us" | "ca";
+
+export const isProvince = (state: string) => PROVINCE_SET.has(state);
+
+export const jurisdictionOf = (d: Destination): Jurisdiction =>
+  isProvince(d.state) ? "ca" : "us";
+
+/** Provinces and territories that actually carry records, sorted. */
+export const provinces = states.filter(isProvince);
+
+/** US states that actually carry records, sorted. */
+export const usStates = states.filter((s) => !isProvince(s));
+
 export const waterTypes: WaterType[] = ["lake", "reservoir", "river", "marine"];
 
 export const humanize = (value: string) =>
