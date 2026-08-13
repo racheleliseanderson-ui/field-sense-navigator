@@ -7,6 +7,14 @@ export interface AccessPoint {
   type: string;
   status?: string;
   officiallyPublished?: boolean;
+  amenities?: string[];
+}
+
+export interface SeasonWindow {
+  label: string;
+  start?: string; // MM-DD or full ISO
+  end?: string;
+  notes?: string;
 }
 
 export interface Destination {
@@ -30,9 +38,20 @@ export interface Destination {
     publicLocationIncluded: boolean;
     sensitiveLocationIncluded: boolean;
   };
+  // Extended schema (null = unknown; never inferred)
+  usgsSiteId?: string | null;
+  noaaCoopsStationId?: string | null;
+  ndbcBuoyId?: string | null;
+  managingAgency?: string | null;
+  officialRegsUrl?: string | null;
+  regsReviewedDate?: string | null;
+  accessReviewedDate?: string | null;
+  lastVerified?: string | null;
+  speciesPresent?: string[] | null;
+  seasonWindows?: SeasonWindow[] | null;
 }
 
-export const SCHEMA_VERSION = "0.4.0";
+export const SCHEMA_VERSION = "0.5.0";
 
 export const destinations = raw as Destination[];
 
@@ -94,4 +113,15 @@ export function daysSince(iso: string, now = new Date()): number {
 export function reviewOverdue(d: Destination, now = new Date()): boolean {
   const due = new Date(d.nextReviewAt).getTime();
   return !Number.isNaN(due) && now.getTime() > due;
+}
+
+/** True when regs or access review dates are older than 90 days (or missing when present in schema). */
+export function reviewDue(d: Destination, now = new Date()): boolean {
+  const maxAge = 90 * 86_400_000;
+  const check = (iso: string | null | undefined) => {
+    if (!iso) return false;
+    const t = new Date(iso).getTime();
+    return !Number.isNaN(t) && now.getTime() - t > maxAge;
+  };
+  return check(d.regsReviewedDate) || check(d.accessReviewedDate);
 }
