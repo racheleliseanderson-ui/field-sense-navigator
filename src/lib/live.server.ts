@@ -394,15 +394,57 @@ export async function readLive(input: {
   };
 
   if (bind.status !== "matched" || !bind.siteId) {
-    return emptyLive(
-      [
-        bind.note,
-        "The scheduled pipeline will not invent a nearby gauge.",
-        "Conditions must be verified in person or through the agency page.",
-      ],
-      bindingMeta,
+    const unknowns = [
+      bind.note,
+      "The scheduled pipeline will not invent a nearby gauge.",
+    ];
+    const snapshot = await loadSnapshot();
+    const snapAge = snapshot
+      ? Math.max(0, Math.round((Date.now() - new Date(snapshot.ingestedAt).getTime()) / 60000))
+      : null;
+    const snapFresh =
+      snapshot &&
+      Number.isFinite(new Date(snapshot.ingestedAt).getTime()) &&
+      Date.now() - new Date(snapshot.ingestedAt).getTime() < SNAPSHOT_STALE_MS;
+
+    let observation: NwsObservation | null = null;
+    if (bind.nwsStationId) {
+      const snapObs = snapshot?.observations?.[bind.nwsStationId];
+      if (snapObs && snapObs.readings.length > 0 && snapFresh) {
+        observation = {
+          stationId: snapObs.stationId,
+          stationName: snapObs.stationName,
+          readings: snapObs.readings,
+        };
+      }
+    }
+    const forecast =
+      bind.lat != null && bind.lon != null
+        ? await nwsForecast(bind.lat, bind.lon).catch(() => null)
+        : null;
+    if (!bind.nwsStationId) {
+      unknowns.push("No official weather observation station is bound to this record.");
+    } else if (!observation) {
+      unknowns.push(
+        `Observation station ${bind.nwsStationId} is bound but returned no current values.`,
+      );
+    }
+    if (!forecast) {
+      unknowns.push("No official forecast was returned for this water's published location.");
+    }
+    unknowns.push("Conditions must be verified in person or through the agency page.");
+    return {
+      station: null,
+      readings: [],
+      forecast,
+      observation,
       closures,
-    );
+      unknowns,
+      fetchedAt,
+      source: "unbound",
+      snapshotAgeMinutes: snapAge,
+      binding: bindingMeta,
+    };
   }
 
   const unknowns: string[] = [];
