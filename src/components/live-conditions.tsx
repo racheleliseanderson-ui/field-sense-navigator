@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Activity, RefreshCw } from "lucide-react";
+import { Activity, RefreshCw, ChevronDown } from "lucide-react";
 import { getLiveConditions } from "@/lib/live.functions";
 import type { Destination } from "@/lib/catalog";
 
@@ -13,6 +14,14 @@ function ago(iso: string) {
   return hrs < 48 ? `${hrs} h ago` : `${Math.round(hrs / 24)} d ago`;
 }
 
+function formatAsOf(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "unknown time";
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  return `${hh}:${mm}`;
+}
+
 function sourceLine(source: string, age: number | null, agency: string | null) {
   if (source === "scheduled-snapshot") {
     return `Scheduled ingest · ${age ?? "?"} min old`;
@@ -23,8 +32,12 @@ function sourceLine(source: string, age: number | null, agency: string | null) {
   return null;
 }
 
-/** Official gauge and forecast readings, or an explicit statement that none exist. */
+/**
+ * Official sensor context. OFF by default — fetch only after explicit opt-in.
+ * Raw attributed observations only. Never a bite or behaviour forecast.
+ */
 export function LiveConditions({ destination }: { destination: Destination }) {
+  const [open, setOpen] = useState(false);
   const call = useServerFn(getLiveConditions);
   const { data, isLoading, isFetching, refetch, isError } = useQuery({
     queryKey: ["live", destination.id],
@@ -36,6 +49,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
           waterbody: destination.waterbody,
         },
       }),
+    enabled: open,
     staleTime: 5 * 60_000,
     retry: 1,
   });
@@ -47,21 +61,41 @@ export function LiveConditions({ destination }: { destination: Destination }) {
           <Activity className="h-4 w-4 text-brass" aria-hidden="true" />
           <p className="tick text-brass">Official readings</p>
         </div>
-        <button
-          type="button"
-          onClick={() => void refetch()}
-          disabled={isFetching}
-          aria-label="Refresh official readings"
-          className="tap grid h-9 w-9 place-items-center text-muted-foreground hover:text-brass disabled:opacity-50"
-        >
-          <RefreshCw
-            className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}
-            aria-hidden="true"
-          />
-        </button>
+        {open && (
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            disabled={isFetching}
+            aria-label="Refresh official readings"
+            className="tap grid h-9 w-9 place-items-center text-muted-foreground hover:text-brass disabled:opacity-50"
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}
+              aria-hidden="true"
+            />
+          </button>
+        )}
       </div>
 
-      {isLoading && (
+      {!open && (
+        <div className="mt-4">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Live gauge, water level and wind readings are available only when you
+            request them. They are raw station observations, never a bite or
+            behaviour forecast.
+          </p>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="mt-4 inline-flex min-h-10 items-center gap-2 border border-hairline px-4 text-xs uppercase tracking-[0.12em] text-foreground hover:border-brass/50"
+          >
+            Show official readings
+            <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
+
+      {open && isLoading && (
         <div className="mt-5 space-y-3" aria-live="polite">
           <div className="shimmer h-3 w-2/3" />
           <div className="shimmer h-3 w-1/2" />
@@ -69,14 +103,14 @@ export function LiveConditions({ destination }: { destination: Destination }) {
         </div>
       )}
 
-      {isError && (
+      {open && isError && (
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
           The official feeds could not be reached. Treat this water as unmonitored
           and verify conditions directly.
         </p>
       )}
 
-      {data && (
+      {open && data && (
         <>
           {data.station ? (
             <p className="mt-4 text-sm leading-relaxed text-foreground">
@@ -109,7 +143,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                     ) : null}
                   </dd>
                   <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
-                    Observed {ago(r.observedAt)}
+                    as of {formatAsOf(r.observedAt)} · {data.station?.id ?? r.label}
                   </p>
                 </div>
               ))}
