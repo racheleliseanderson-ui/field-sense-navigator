@@ -36,6 +36,27 @@
       "siteId": "05OJ021",
       "siteName": "RED RIVER UPSTREAM OF ST. ANDREWS DAM AT LOCKPORT",
       "note": "Pinned to the Lockport reach named on the record."
+    },
+    {
+      "destinationId": "HHI-DEST-495",
+      "agency": "USGS",
+      "siteId": "01408167",
+      "siteName": "Barnegat Bay at Route 528 bridge at Mantoloking NJ",
+      "note": "Pinned to the USGS estuary site that publishes under Barnegat Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-497",
+      "agency": "NOAA-COOPS",
+      "siteId": "8638610",
+      "siteName": "Sewells Point",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes on the lower Chesapeake."
+    },
+    {
+      "destinationId": "HHI-DEST-499",
+      "agency": "NOAA-COOPS",
+      "siteId": "8557380",
+      "siteName": "Lewes",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Delaware Bay at Lewes."
     }
   ]
 }

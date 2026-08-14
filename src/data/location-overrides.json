@@ -172,6 +172,51 @@
       "kind": "override",
       "query": "Wikidata Q2030 Iqaluit",
       "note": "Pinned to Iqaluit on Frobisher Bay, the named tidal-flat area."
+    },
+    {
+      "destinationId": "HHI-DEST-495",
+      "lat": 39.851709,
+      "lon": -74.114113,
+      "name": "Barnegat Bay, Ocean County, New Jersey",
+      "kind": "override",
+      "query": "Wikidata Q2879596 Barnegat Bay",
+      "note": "Pinned to Barnegat Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-496",
+      "lat": 41.9,
+      "lon": -70.3,
+      "name": "Cape Cod Bay, Massachusetts",
+      "kind": "override",
+      "query": "Wikidata Q516993 Cape Cod Bay",
+      "note": "Pinned to Cape Cod Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-497",
+      "lat": 37.248061,
+      "lon": -76.119439,
+      "name": "Chesapeake Bay, Virginia reach",
+      "kind": "override",
+      "query": "Wikidata Q216868 Chesapeake Bay",
+      "note": "Pinned to Chesapeake Bay on the Virginia reach named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-498",
+      "lat": 35.312778,
+      "lon": -75.937222,
+      "name": "Pamlico Sound, North Carolina",
+      "kind": "override",
+      "query": "Wikidata Q2033236 Pamlico Sound",
+      "note": "Pinned to Pamlico Sound, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-499",
+      "lat": 39.1,
+      "lon": -75.2,
+      "name": "Delaware Bay",
+      "kind": "override",
+      "query": "Wikidata Q738808 Delaware Bay",
+      "note": "Pinned to Delaware Bay, the published water."
     }
   ]
 }

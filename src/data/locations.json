@@ -1,14 +1,14 @@
 {
   "schema": "0.6.0",
-  "generatedAt": "2026-08-14T15:28:34.362Z",
+  "generatedAt": "2026-08-14T15:32:12.529Z",
   "doctrine": "Gazetteer lookup of the published water name in its jurisdiction. Not a nearby-gauge substitute. Hydro features preferred. location-overrides.json wins.",
   "stats": {
-    "records": 494,
-    "located": 493,
+    "records": 499,
+    "located": 498,
     "missed": 1,
     "hydro": 375,
     "place": 62,
-    "override": 19,
+    "override": 24,
     "pending": 0
   },
   "records": [
@@ -7421,6 +7421,81 @@
       "featureClass": "waterway",
       "featureType": "stream",
       "note": "Located as a hydro feature under the published name and jurisdiction."
+    },
+    {
+      "destinationId": "HHI-DEST-495",
+      "state": "New Jersey",
+      "waterbody": "Barnegat Bay",
+      "waterType": "marine",
+      "status": "located",
+      "kind": "override",
+      "query": "Wikidata Q2879596 Barnegat Bay",
+      "lat": 39.851709,
+      "lon": -74.114113,
+      "gazetteerName": "Barnegat Bay, Ocean County, New Jersey",
+      "featureClass": "override",
+      "featureType": null,
+      "note": "Pinned to Barnegat Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-496",
+      "state": "Massachusetts",
+      "waterbody": "Cape Cod Bay",
+      "waterType": "marine",
+      "status": "located",
+      "kind": "override",
+      "query": "Wikidata Q516993 Cape Cod Bay",
+      "lat": 41.9,
+      "lon": -70.3,
+      "gazetteerName": "Cape Cod Bay, Massachusetts",
+      "featureClass": "override",
+      "featureType": null,
+      "note": "Pinned to Cape Cod Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-497",
+      "state": "Virginia",
+      "waterbody": "Lower Chesapeake Bay",
+      "waterType": "marine",
+      "status": "located",
+      "kind": "override",
+      "query": "Wikidata Q216868 Chesapeake Bay",
+      "lat": 37.248061,
+      "lon": -76.119439,
+      "gazetteerName": "Chesapeake Bay, Virginia reach",
+      "featureClass": "override",
+      "featureType": null,
+      "note": "Pinned to Chesapeake Bay on the Virginia reach named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-498",
+      "state": "North Carolina",
+      "waterbody": "Pamlico Sound",
+      "waterType": "marine",
+      "status": "located",
+      "kind": "override",
+      "query": "Wikidata Q2033236 Pamlico Sound",
+      "lat": 35.312778,
+      "lon": -75.937222,
+      "gazetteerName": "Pamlico Sound, North Carolina",
+      "featureClass": "override",
+      "featureType": null,
+      "note": "Pinned to Pamlico Sound, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-499",
+      "state": "Delaware",
+      "waterbody": "Delaware Bay",
+      "waterType": "marine",
+      "status": "located",
+      "kind": "override",
+      "query": "Wikidata Q738808 Delaware Bay",
+      "lat": 39.1,
+      "lon": -75.2,
+      "gazetteerName": "Delaware Bay",
+      "featureClass": "override",
+      "featureType": null,
+      "note": "Pinned to Delaware Bay, the published water."
     }
   ]
 }
