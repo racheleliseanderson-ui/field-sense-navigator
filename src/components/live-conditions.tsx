@@ -23,7 +23,7 @@ function sourceLine(source: string, age: number | null, agency: string | null) {
   return null;
 }
 
-/** Official gauge and forecast readings, or an explicit statement that none exist. */
+/** Same four layers on every water: gauge, observation, forecast, agency-page language. */
 export function LiveConditions({ destination }: { destination: Destination }) {
   const call = useServerFn(getLiveConditions);
   const { data, isLoading, isFetching, refetch, isError } = useQuery({
@@ -97,80 +97,99 @@ export function LiveConditions({ destination }: { destination: Destination }) {
             </p>
           )}
 
-          {data.readings.length > 0 && (
-            <dl className="mt-5 space-y-3">
-              {data.readings.map((r) => (
-                <div key={r.label} className="border-l border-brass/50 pl-3">
-                  <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
-                  <dd className="data mt-1 text-lg text-foreground">
-                    {r.value}
-                    {r.unit ? (
-                      <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
-                    ) : null}
-                  </dd>
-                  <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
-                    Observed {ago(r.observedAt)}
-                  </p>
-                </div>
-              ))}
-            </dl>
-          )}
-
-          {data.observation && data.observation.readings.length > 0 && (
-            <div className="mt-5 border-t border-hairline pt-4">
-              <p className="tick text-[0.55rem]">
-                NWS {data.observation.stationId} · {data.observation.stationName}
-              </p>
-              <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                Bound observation station — not a guess, not the ramp unless the
-                names agree.
-              </p>
-              <dl className="mt-3 space-y-2">
-                {data.observation.readings.map((r) => (
-                  <div key={r.label}>
+          <div className="mt-5">
+            <p className="tick text-[0.55rem] text-brass">Gauge</p>
+            {data.readings.length > 0 ? (
+              <dl className="mt-3 space-y-3">
+                {data.readings.map((r) => (
+                  <div key={r.label} className="border-l border-brass/50 pl-3">
                     <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
-                    <dd className="data mt-0.5 text-sm text-foreground">
+                    <dd className="data mt-1 text-lg text-foreground">
                       {r.value}
                       {r.unit ? (
                         <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
                       ) : null}
                     </dd>
+                    <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
+                      Observed {ago(r.observedAt)}
+                    </p>
                   </div>
                 ))}
               </dl>
-            </div>
-          )}
-
-          {data.forecast && (
-            <div className="mt-5 border-t border-hairline pt-4">
-              <p className="tick text-[0.55rem]">
-                NWS {data.forecast.office} · {data.forecast.period}
-              </p>
+            ) : (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                {data.forecast.detail}
+                No official gauge reading on this record. The pipeline will not
+                invent a nearby station.
               </p>
-            </div>
-          )}
+            )}
+          </div>
 
-          {data.closures.status !== "unscanned" && (
-            <div className="mt-5 border-t border-hairline pt-4">
-              <p className="tick text-[0.55rem]">
-                Agency page language
-                {data.closures.scannedAt ? ` · scanned ${ago(data.closures.scannedAt)}` : ""}
-              </p>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                {data.closures.note}
-              </p>
-              {data.closures.hits.map((h) => (
-                <p
-                  key={`${h.term}-${h.snippet}`}
-                  className="mt-2 border-l border-alert/70 pl-3 text-xs leading-relaxed text-foreground"
-                >
-                  “{h.snippet}”
+          <div className="mt-5 border-t border-hairline pt-4">
+            <p className="tick text-[0.55rem]">Weather observation</p>
+            {data.observation && data.observation.readings.length > 0 ? (
+              <>
+                <p className="mt-2 text-sm text-foreground">
+                  NWS {data.observation.stationId} — {data.observation.stationName}
                 </p>
-              ))}
-            </div>
-          )}
+                <p className="mt-1 text-[0.68rem] text-muted-foreground">
+                  Bound observation station for this water's published location.
+                </p>
+                <dl className="mt-3 space-y-2">
+                  {data.observation.readings.map((r) => (
+                    <div key={r.label}>
+                      <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
+                      <dd className="data mt-0.5 text-sm text-foreground">
+                        {r.value}
+                        {r.unit ? (
+                          <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
+                        ) : null}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </>
+            ) : (
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                No official observation station is bound, or the station is silent.
+              </p>
+            )}
+          </div>
+
+          <div className="mt-5 border-t border-hairline pt-4">
+            <p className="tick text-[0.55rem]">Forecast</p>
+            {data.forecast ? (
+              <>
+                <p className="mt-2 tick text-[0.55rem]">
+                  NWS {data.forecast.office} · {data.forecast.period}
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  {data.forecast.detail}
+                </p>
+              </>
+            ) : (
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                No official forecast was returned for this water's published location.
+              </p>
+            )}
+          </div>
+
+          <div className="mt-5 border-t border-hairline pt-4">
+            <p className="tick text-[0.55rem]">
+              Agency page language
+              {data.closures.scannedAt ? ` · scanned ${ago(data.closures.scannedAt)}` : ""}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              {data.closures.note}
+            </p>
+            {data.closures.hits.map((h) => (
+              <p
+                key={`${h.term}-${h.snippet}`}
+                className="mt-2 border-l border-alert/70 pl-3 text-xs leading-relaxed text-foreground"
+              >
+                “{h.snippet}”
+              </p>
+            ))}
+          </div>
 
           <ul className="mt-5 space-y-2">
             {data.unknowns.map((u) => (

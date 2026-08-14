@@ -208,10 +208,11 @@ function Pipeline() {
             knows about itself.
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Integrity is computed from the records, not asserted. Station bindings
-            are resolved on a nightly schedule (USGS, NOAA CO-OPS, Water Survey of
-            Canada). Official readings are ingested every 30 minutes. Agency-page
-            closure language is scanned nightly. Misses stay misses.
+            Station bindings are resolved on a nightly schedule (USGS, NOAA
+            CO-OPS, Water Survey of Canada). Every record is located, given a
+            weather station, scanned for agency-page language, and offered a
+            gauge. Official readings are ingested every 30 minutes. Misses stay
+            misses — they are not omitted.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -234,10 +235,11 @@ function Pipeline() {
           Scheduled pulse
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Bindings are a committed data file. Live numbers come from the last
-          ingest, then a direct agency pull if that snapshot is older than 45
-          minutes. The instrument still will not claim to know the water if the
-          feed is silent.
+          Bindings are a committed data file. Every record is run through the
+          same four live layers — location, gauge, weather observation, agency
+          page language. Live numbers come from the last ingest, then a direct
+          agency pull if that snapshot is older than 45 minutes. A silent feed
+          is a miss, not a skip.
         </p>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
@@ -246,13 +248,15 @@ function Pipeline() {
               <GradeChip grade="clear" label="Nightly" />
             </div>
             <p className="data mt-3 text-sm text-foreground">
-              {bind.matched} matched · {bind.unmatched} unmatched · {bind.unsupported} unsupported
+              {bind.located ?? 0}/{bind.records ?? destinations.length} located · {bind.nwsBound ?? 0} weather stations
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Gauges {bind.matched} matched · {bind.unmatched} unmatched
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               USGS {bind.byAgency?.USGS ?? 0} · NOAA {bind.byAgency?.["NOAA-COOPS"] ?? 0} · WSC{" "}
               {bind.byAgency?.WSC ?? 0}
               {bind.overrides ? ` · ${bind.overrides} pinned` : ""}
-              {bind.nwsBound ? ` · ${bind.nwsBound} NWS obs` : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               Generated {pulse?.bindings.generatedAt

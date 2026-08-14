@@ -291,7 +291,7 @@ async function main() {
   console.error(`wsc   ${wscRows.length} stations`);
 
   const nwsIds = [
-    ...new Set(matched.map((r) => r.nwsStationId).filter(Boolean)),
+    ...new Set(bindings.records.map((r) => r.nwsStationId).filter(Boolean)),
   ];
   const observations = {};
   const nwsResults = await poolMap(nwsIds, 4, async (id) => {

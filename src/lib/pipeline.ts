@@ -2,10 +2,12 @@ import {
   daysSince,
   destinations,
   displayName,
+  isProvince,
   reviewOverdue,
   states,
   type Destination,
 } from "@/lib/catalog";
+import { bindingFor } from "@/lib/bindings";
 import { readiness } from "@/lib/intelligence";
 
 export type Severity = "clear" | "watch" | "flagged";
@@ -113,6 +115,31 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
       total,
       1,
       1,
+    ),
+    check(
+      "located",
+      "Published location resolved",
+      "Every record is sent to the gazetteer under its own name. A miss stays a miss — no neighbor coordinate is substituted.",
+      pool.filter((d) => {
+        const b = bindingFor(d.id);
+        return b == null || b.lat == null || b.lon == null;
+      }),
+      total,
+      10,
+      25,
+    ),
+    check(
+      "weather",
+      "Weather observation station attempted",
+      "US waters with a location are bound to the NWS observation station for that point. Canadian waters print an official miss until an MSC station is pinned. Unlocated waters stay unlocated.",
+      pool.filter((d) => {
+        if (isProvince(d.state)) return false;
+        const b = bindingFor(d.id);
+        return !b?.nwsStationId;
+      }),
+      pool.filter((d) => !isProvince(d.state)).length,
+      10,
+      25,
     ),
   ];
 }

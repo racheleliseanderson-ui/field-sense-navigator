@@ -7,7 +7,8 @@
  *   2. USGS NWIS name match (US waters)
  *   3. NOAA CO-OPS name match (remaining marine / Great Lakes)
  *   4. Water Survey of Canada name match (provinces)
- *   5. NWS observation station bound to the gauge coordinates
+ *   5. Gazetteer location + NWS observation station on EVERY located water
+ *      (not only waters that already have a gauge)
  *
  * Phrase + water-type must align. No nearby substitution.
  * Ambiguous multi-matches stay unmatched so they can be pinned.
@@ -21,6 +22,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const DEST_PATH = resolve(ROOT, "src/data/destinations.json");
 const OVERRIDE_PATH = resolve(ROOT, "src/data/station-overrides.json");
+const LOC_PATH = resolve(ROOT, "src/data/locations.json");
 const OUT_PATH = resolve(ROOT, "src/data/station-bindings.json");
 
 const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
@@ -190,7 +192,7 @@ async function nwsObservationStation(lat, lon) {
 }
 
 async function attachNws(row) {
-  if (row.status !== "matched" || row.lat == null || row.lon == null) return row;
+  if (row.lat == null || row.lon == null) return row;
   const nws = await nwsObservationStation(row.lat, row.lon);
   row.nwsStationId = nws.id;
   row.nwsStationName = nws.name;
@@ -378,6 +380,25 @@ async function main() {
 
   records.sort((a, b) => a.destinationId.localeCompare(b.destinationId));
 
+  let locations = { records: [] };
+  try {
+    locations = JSON.parse(readFileSync(LOC_PATH, "utf8"));
+  } catch {
+    /* locations file optional until the gazetteer pass has run */
+  }
+  const locById = new Map((locations.records ?? []).map((r) => [r.destinationId, r]));
+  for (const row of records) {
+    const loc = locById.get(row.destinationId);
+    if (loc?.status === "located" && loc.lat != null && loc.lon != null) {
+      if (row.lat == null || row.lon == null) {
+        row.lat = loc.lat;
+        row.lon = loc.lon;
+      }
+      row.locationKind = loc.kind;
+      row.locationName = loc.gazetteerName;
+    }
+  }
+
   const noaaById = new Map(noaa.map((s) => [s.id, s]));
   const wscById = new Map(wsc.map((s) => [s.id, s]));
   for (const row of records) {
@@ -394,17 +415,17 @@ async function main() {
     }
   }
 
-  console.error("nws   binding observation stations to matched coordinates");
-  const matchedRows = records.filter((r) => r.status === "matched");
+  console.error("nws   binding observation stations to every located water");
+  const locatedRows = records.filter((r) => r.lat != null && r.lon != null && !PROV_CODE[r.state]);
   let nwsDone = 0;
-  const queue = [...matchedRows];
+  const queue = [...locatedRows];
   async function nwsWorker() {
     while (queue.length) {
       const row = queue.shift();
       if (!row) return;
       await attachNws(row);
       nwsDone += 1;
-      if (nwsDone % 25 === 0) console.error(`nws   ${nwsDone}/${matchedRows.length}`);
+      if (nwsDone % 25 === 0) console.error(`nws   ${nwsDone}/${locatedRows.length}`);
     }
   }
   await Promise.all(Array.from({ length: 6 }, nwsWorker));
@@ -428,6 +449,7 @@ async function main() {
       unsupported: records.filter((r) => r.status === "unsupported").length,
       error: records.filter((r) => r.status === "error").length,
       overrides: records.filter((r) => r.source === "override").length,
+      located: records.filter((r) => r.lat != null && r.lon != null).length,
       nwsBound: records.filter((r) => r.nwsStationId).length,
       byAgency,
     },

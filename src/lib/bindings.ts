@@ -20,6 +20,8 @@ export interface StationBinding {
   source?: BindingSource;
   nwsStationId?: string | null;
   nwsStationName?: string | null;
+  locationKind?: string | null;
+  locationName?: string | null;
 }
 
 export interface BindingsFile {
@@ -35,6 +37,7 @@ export interface BindingsFile {
     error: number;
     overrides?: number;
     nwsBound?: number;
+    located?: number;
     byAgency?: Partial<Record<BindingAgency, number>>;
   };
   records: StationBinding[];
