@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "resolve:stations": "node scripts/resolve-stations.mjs",
+    "resolve:names": "node scripts/name-search-unmatched.mjs",
     "resolve:locations": "node scripts/resolve-locations.mjs",
     "bind:weather": "node scripts/bind-weather.mjs",
     "ingest:live": "node scripts/ingest-live.mjs",
