@@ -1,0 +1,35 @@
+name: Resolve station bindings
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Resolve USGS bindings
+        run: node scripts/resolve-stations.mjs
+      - name: Open PR if bindings changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "data: refresh station bindings from USGS site index"
+          committer: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
+          author: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
+          branch: data/station-bindings
+          title: "Refresh USGS station bindings"
+          body: |
+            Nightly resolve of the 494-water catalog against the USGS site index.
+
+            Fail-closed: name + water-type must align. No nearby station is substituted.
+            Review the diff before merge — this file is what the instrument trusts.
+          labels: data,pipeline

@@ -19,7 +19,13 @@ export function LiveConditions({ destination }: { destination: Destination }) {
   const { data, isLoading, isFetching, refetch, isError } = useQuery({
     queryKey: ["live", destination.id],
     queryFn: () =>
-      call({ data: { state: destination.state, waterbody: destination.waterbody } }),
+      call({
+        data: {
+          id: destination.id,
+          state: destination.state,
+          waterbody: destination.waterbody,
+        },
+      }),
     staleTime: 5 * 60_000,
     retry: 1,
   });
@@ -70,8 +76,15 @@ export function LiveConditions({ destination }: { destination: Destination }) {
             </p>
           ) : (
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              No official station publishes under this waterbody's name. Nothing
-              nearby is substituted.
+              {data.binding.note}
+            </p>
+          )}
+
+          {data.source !== "unbound" && (
+            <p className="mt-2 text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground">
+              {data.source === "scheduled-snapshot"
+                ? `Scheduled ingest · ${data.snapshotAgeMinutes ?? "?"} min old`
+                : "Live USGS pull · binding used"}
             </p>
           )}
 
