@@ -31470,5 +31470,1037 @@
       "bluefish"
     ],
     "seasonWindows": null
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-500",
+    "state": "Alabama",
+    "region": "Mobile Bay",
+    "county": "Mobile / Baldwin",
+    "waterbody": "Mobile Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.outdooralabama.com/fishing/saltwater-fishing",
+    "speciesContext": [
+      "Speckled trout",
+      "Red drum",
+      "Flounder",
+      "Sheepshead",
+      "Spanish mackerel"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and shore access listed by Outdoor Alabama / ADCNR",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Mobile Bay is shared working water — shipping, oil-and-gas, and recreational traffic mix in the ship channel.",
+      "Species limits and in-season closures change; same-day check is required."
+    ],
+    "directVerification": [
+      "Confirm current Alabama saltwater recreational regulations before fishing.",
+      "Verify the selected public ramp or pier is open on the intended date."
+    ],
+    "noaaCoopsStationId": "8735180",
+    "managingAgency": "Alabama Department of Conservation and Natural Resources — Marine Resources Division",
+    "officialRegsUrl": "https://www.outdooralabama.com/fishing/saltwater-fishing",
+    "speciesPresent": [
+      "speckled_trout",
+      "red_drum",
+      "flounder",
+      "sheepshead",
+      "spanish_mackerel"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-501",
+    "state": "Mississippi",
+    "region": "Mississippi Sound",
+    "county": "Harrison / Hancock / Jackson",
+    "waterbody": "Mississippi Sound",
+    "waterType": "marine",
+    "officialSourceUrl": "https://dmr.ms.gov/fishing-information/",
+    "speciesContext": [
+      "Speckled trout",
+      "Red drum",
+      "Flounder",
+      "Sheepshead",
+      "Croaker"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps, harbors, and piers listed by Mississippi DMR",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Sound waters sit behind the barrier islands; Gulf versus sound rules can differ.",
+      "Weather and shoaling change the usable corridors — treat charts as current, not permanent."
+    ],
+    "directVerification": [
+      "Confirm current Mississippi DMR recreational saltwater regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8747437",
+    "managingAgency": "Mississippi Department of Marine Resources",
+    "officialRegsUrl": "https://dmr.ms.gov/fishing-information/",
+    "speciesPresent": [
+      "speckled_trout",
+      "red_drum",
+      "flounder",
+      "sheepshead"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-502",
+    "state": "South Carolina",
+    "region": "Charleston Harbor",
+    "county": "Charleston",
+    "waterbody": "Charleston Harbor",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.dnr.sc.gov/marine.html",
+    "speciesContext": [
+      "Red drum",
+      "Speckled trout",
+      "Flounder",
+      "Sheepshead",
+      "Black drum"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public landings and shore access listed by SCDNR",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Harbor is a working commercial port; shipping traffic has right-of-way.",
+      "Flounder and other inshore seasons are proclamation-driven — same-day check required."
+    ],
+    "directVerification": [
+      "Confirm current South Carolina marine recreational regulations and proclamations.",
+      "Verify the selected public landing is open."
+    ],
+    "noaaCoopsStationId": "8665530",
+    "managingAgency": "South Carolina Department of Natural Resources — Marine Resources Division",
+    "officialRegsUrl": "https://www.dnr.sc.gov/marine.html",
+    "speciesPresent": [
+      "red_drum",
+      "speckled_trout",
+      "flounder",
+      "sheepshead"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-503",
+    "state": "Georgia",
+    "region": "Savannah River approaches / Wassaw Sound",
+    "county": "Chatham",
+    "waterbody": "Wassaw Sound",
+    "waterType": "marine",
+    "officialSourceUrl": "https://coastalgadnr.org/RecreationalFishing",
+    "speciesContext": [
+      "Red drum",
+      "Speckled trout",
+      "Flounder",
+      "Sheepshead",
+      "Whiting"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public landings and shore access listed by Coastal Resources Division",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Wassaw Sound and the Savannah River approaches mix recreation with commercial shipping.",
+      "Georgia inshore seasons and size limits change by proclamation."
+    ],
+    "directVerification": [
+      "Confirm current Georgia Coastal Resources Division recreational fishing rules.",
+      "Verify the selected public landing is open."
+    ],
+    "noaaCoopsStationId": "8670870",
+    "managingAgency": "Georgia Department of Natural Resources — Coastal Resources Division",
+    "officialRegsUrl": "https://coastalgadnr.org/RecreationalFishing",
+    "speciesPresent": [
+      "red_drum",
+      "speckled_trout",
+      "flounder",
+      "sheepshead"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-504",
+    "state": "Connecticut",
+    "region": "Long Island Sound",
+    "county": "New London / New Haven / Fairfield",
+    "waterbody": "Long Island Sound (Connecticut waters)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://portal.ct.gov/DEEP/Fishing/Saltwater/Saltwater-Fishing",
+    "speciesContext": [
+      "Striped bass",
+      "Bluefish",
+      "Scup",
+      "Black sea bass",
+      "Tautog"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps, jetties, and shore access listed by CT DEEP",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Sound regulations are split with New York; confirm you are fishing Connecticut waters.",
+      "Striped bass and tautog rules are frequently revised mid-season."
+    ],
+    "directVerification": [
+      "Confirm current Connecticut DEEP saltwater recreational regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8461490",
+    "managingAgency": "Connecticut Department of Energy and Environmental Protection — Marine Fisheries",
+    "officialRegsUrl": "https://portal.ct.gov/DEEP/Fishing/Saltwater/Saltwater-Fishing",
+    "speciesPresent": [
+      "striped_bass",
+      "bluefish",
+      "scup",
+      "black_sea_bass",
+      "tautog"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-505",
+    "state": "Massachusetts",
+    "region": "Massachusetts Bay",
+    "county": "Suffolk / Norfolk / Plymouth",
+    "waterbody": "Massachusetts Bay (Boston Harbor approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    "speciesContext": [
+      "Striped bass",
+      "Bluefish",
+      "Winter flounder",
+      "Cod",
+      "Haddock"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps, piers, and shore access listed by Mass DMF / DCR",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Harbor approaches mix commercial shipping, ferries, and recreational traffic.",
+      "Groundfish and striped bass rules change; same-day check is required."
+    ],
+    "directVerification": [
+      "Confirm current Massachusetts DMF recreational saltwater regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8443970",
+    "managingAgency": "Massachusetts Division of Marine Fisheries",
+    "officialRegsUrl": "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    "speciesPresent": [
+      "striped_bass",
+      "bluefish",
+      "winter_flounder"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-506",
+    "state": "New York",
+    "region": "New York Harbor",
+    "county": "New York / Kings / Richmond",
+    "waterbody": "New York Harbor (Lower Bay / Battery approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://dec.ny.gov/things-to-do/saltwater-fishing",
+    "speciesContext": [
+      "Striped bass",
+      "Bluefish",
+      "Summer flounder",
+      "Black sea bass",
+      "Tautog"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public piers, parks, and ramps listed by NYSDEC / NYC Parks",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "This is a working harbor. Commercial shipping has right-of-way; treat the channel as industrial water.",
+      "Consumption advisories apply to specified species and sizes in the harbor complex."
+    ],
+    "directVerification": [
+      "Confirm current New York saltwater recreational regulations.",
+      "Verify the selected public pier or ramp is open."
+    ],
+    "noaaCoopsStationId": "8518750",
+    "managingAgency": "New York State Department of Environmental Conservation — Marine Resources",
+    "officialRegsUrl": "https://dec.ny.gov/things-to-do/saltwater-fishing",
+    "speciesPresent": [
+      "striped_bass",
+      "bluefish",
+      "summer_flounder",
+      "black_sea_bass",
+      "tautog"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-507",
+    "state": "New Jersey",
+    "region": "Raritan Bay",
+    "county": "Monmouth / Middlesex",
+    "waterbody": "Raritan Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://dep.nj.gov/njfw/fishing/marine/seasons-and-regulations/",
+    "speciesContext": [
+      "Striped bass",
+      "Summer flounder",
+      "Bluefish",
+      "Weakfish",
+      "Black sea bass"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps, beaches, and jetties listed by NJDEP Fish & Wildlife",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Raritan Bay is shared with New York; confirm which state's waters you are in.",
+      "Fluke, striped bass, and tautog seasons are revised in-season."
+    ],
+    "directVerification": [
+      "Confirm current New Jersey marine recreational seasons and regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8531680",
+    "managingAgency": "NJDEP Fish & Wildlife — Marine Fisheries",
+    "officialRegsUrl": "https://dep.nj.gov/njfw/fishing/marine/seasons-and-regulations/",
+    "speciesPresent": [
+      "striped_bass",
+      "summer_flounder",
+      "bluefish",
+      "weakfish",
+      "black_sea_bass"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-508",
+    "state": "Maryland",
+    "region": "Chesapeake Bay mid-bay",
+    "county": "Anne Arundel",
+    "waterbody": "Chesapeake Bay (Annapolis / Severn River approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://dnr.maryland.gov/fisheries/Pages/regulations/index.aspx",
+    "speciesContext": [
+      "Striped bass",
+      "White perch",
+      "Spot",
+      "Croaker",
+      "Blue catfish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and shore access listed by Maryland DNR",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Chesapeake striped bass seasons, slots, and closures change during the year.",
+      "Recreational and commercial traffic is dense around the Severn and the bay bridges."
+    ],
+    "directVerification": [
+      "Confirm current Maryland DNR tidal recreational fishing regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8575512",
+    "managingAgency": "Maryland Department of Natural Resources — Fishing and Boating Services",
+    "officialRegsUrl": "https://dnr.maryland.gov/fisheries/Pages/regulations/index.aspx",
+    "speciesPresent": [
+      "striped_bass",
+      "white_perch",
+      "spot",
+      "croaker"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-509",
+    "state": "Oregon",
+    "region": "North Coast",
+    "county": "Tillamook",
+    "waterbody": "Tillamook Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://myodfw.com/fishing/marine-zone",
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Dungeness crab",
+      "Surfperch",
+      "Starry flounder"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and jetties listed by ODFW / Port of Garibaldi",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Bar crossings at the Tillamook jetties can close without notice. Treat the bar as a same-day decision.",
+      "Ocean endorsement and in-season salmon/halibut rules apply outside the bay."
+    ],
+    "directVerification": [
+      "Confirm current ODFW Marine Zone regulations and in-season updates.",
+      "Verify the selected public ramp or jetty is open."
+    ],
+    "noaaCoopsStationId": "9437540",
+    "managingAgency": "Oregon Department of Fish and Wildlife — Marine Resources Program",
+    "officialRegsUrl": "https://myodfw.com/fishing/marine-zone",
+    "speciesPresent": [
+      "chinook_salmon",
+      "coho_salmon",
+      "dungeness_crab",
+      "surfperch"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-510",
+    "state": "Oregon",
+    "region": "South Coast",
+    "county": "Coos",
+    "waterbody": "Coos Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://myodfw.com/fishing/marine-zone",
+    "speciesContext": [
+      "Chinook salmon",
+      "Dungeness crab",
+      "Surfperch",
+      "Rockfish",
+      "Lingcod"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and jetties listed by ODFW / Port of Coos Bay",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Coos Bay is a working harbor. The bar at Charleston is its own decision, separate from inside-bay water.",
+      "Bottomfish and salmon rules change in-season."
+    ],
+    "directVerification": [
+      "Confirm current ODFW Marine Zone regulations and in-season updates.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "9432780",
+    "managingAgency": "Oregon Department of Fish and Wildlife — Marine Resources Program",
+    "officialRegsUrl": "https://myodfw.com/fishing/marine-zone",
+    "speciesPresent": [
+      "chinook_salmon",
+      "dungeness_crab",
+      "surfperch",
+      "rockfish",
+      "lingcod"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-511",
+    "state": "Louisiana",
+    "region": "Barataria Basin",
+    "county": "Jefferson / Lafourche / Plaquemines",
+    "waterbody": "Barataria Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+    "speciesContext": [
+      "Speckled trout",
+      "Red drum",
+      "Flounder",
+      "Sheepshead",
+      "Black drum"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public launches listed by Louisiana DWF / parish governments",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Barataria is a working oil-and-gas estuary. Treat platforms, canals, and channels as industrial.",
+      "Speckled trout and other inshore seasons are revised; same-day check required."
+    ],
+    "directVerification": [
+      "Confirm current Louisiana recreational saltwater regulations.",
+      "Verify the selected public launch is open."
+    ],
+    "noaaCoopsStationId": "8761724",
+    "managingAgency": "Louisiana Department of Wildlife and Fisheries",
+    "officialRegsUrl": "https://www.wlf.louisiana.gov/page/fishing",
+    "speciesPresent": [
+      "speckled_trout",
+      "red_drum",
+      "flounder",
+      "sheepshead"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-512",
+    "state": "North Carolina",
+    "region": "Cape Fear",
+    "county": "New Hanover / Brunswick",
+    "waterbody": "Cape Fear River estuary (Wilmington approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.deq.nc.gov/about/divisions/marine-fisheries/rules-proclamations-and-size-and-bag-limits/recreational-size-and-bag-limits",
+    "speciesContext": [
+      "Red drum",
+      "Speckled trout",
+      "Flounder",
+      "Striped bass",
+      "Sheepshead"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and shore access listed by NCDMF / local ports",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Cape Fear mixes inland, joint, and coastal fishing waters — confirm the water classification before you fish.",
+      "Flounder and other species are proclamation-driven."
+    ],
+    "directVerification": [
+      "Confirm current NCDMF recreational size, bag, and proclamation rules.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8658120",
+    "managingAgency": "North Carolina Division of Marine Fisheries",
+    "officialRegsUrl": "https://www.deq.nc.gov/about/divisions/marine-fisheries/rules-proclamations-and-size-and-bag-limits/recreational-size-and-bag-limits",
+    "speciesPresent": [
+      "red_drum",
+      "speckled_trout",
+      "flounder",
+      "striped_bass"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-513",
+    "state": "Virginia",
+    "region": "York River / Mobjack approaches",
+    "county": "York / Gloucester",
+    "waterbody": "York River (Yorktown / Mobjack Bay approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.mrc.virginia.gov/regulations/",
+    "speciesContext": [
+      "Striped bass",
+      "Speckled trout",
+      "Red drum",
+      "Croaker",
+      "Spot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and shore access listed by VMRC / VDGIF partners",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "York River is tidal Chesapeake water. Striped bass and other rules are set by VMRC and change in-season.",
+      "Military and commercial traffic uses the river approaches."
+    ],
+    "directVerification": [
+      "Confirm current Virginia Marine Resources Commission recreational hook-and-line rules.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8637689",
+    "managingAgency": "Virginia Marine Resources Commission",
+    "officialRegsUrl": "https://www.mrc.virginia.gov/regulations/",
+    "speciesPresent": [
+      "striped_bass",
+      "speckled_trout",
+      "red_drum",
+      "croaker"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-514",
+    "state": "Alaska",
+    "region": "Kachemak Bay",
+    "county": "Kenai Peninsula Borough",
+    "waterbody": "Kachemak Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Pacific halibut",
+      "Rockfish",
+      "Lingcod"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public harbors and shore access listed by ADF&G / City of Homer",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Kachemak Bay is inside Cook Inlet sport-fish management. Halibut is federally managed — two rulebooks apply.",
+      "Weather and tide windows close this water faster than most Lower 48 bays."
+    ],
+    "directVerification": [
+      "Confirm current ADF&G sport-fishing regulations for Cook Inlet / North Gulf Coast.",
+      "Confirm IPHC / federal halibut rules if targeting halibut.",
+      "Verify the selected public harbor or access is open."
+    ],
+    "noaaCoopsStationId": "9455500",
+    "managingAgency": "Alaska Department of Fish and Game — Sport Fish Division",
+    "officialRegsUrl": "https://www.adfg.alaska.gov/index.cfm?adfg=fishingSport.main",
+    "speciesPresent": [
+      "chinook_salmon",
+      "coho_salmon",
+      "pacific_halibut",
+      "rockfish",
+      "lingcod"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-515",
+    "state": "Hawaii",
+    "region": "Hilo Bay",
+    "county": "Hawaii",
+    "waterbody": "Hilo Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://dlnr.hawaii.gov/dar/",
+    "speciesContext": [
+      "Papio / ulua",
+      "Āholehole",
+      "Moi",
+      "Bonefish",
+      "Goatfish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public piers, harbors, and shore access listed by DLNR DAR / County of Hawaiʻi",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Hilo Bay is a working commercial harbor. Stay clear of ship traffic and marked channels.",
+      "Bag, size, and gear rules are species-specific and island-specific."
+    ],
+    "directVerification": [
+      "Confirm current Hawaiʻi DLNR Division of Aquatic Resources recreational rules.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "1617760",
+    "managingAgency": "Hawaiʻi DLNR — Division of Aquatic Resources",
+    "officialRegsUrl": "https://dlnr.hawaii.gov/dar/",
+    "speciesPresent": [
+      "papio_ulua",
+      "aholehole",
+      "moi",
+      "bonefish"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-516",
+    "state": "Louisiana",
+    "region": "Calcasieu estuary",
+    "county": "Cameron / Calcasieu",
+    "waterbody": "Calcasieu Lake / Calcasieu Pass",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.wlf.louisiana.gov/page/fishing",
+    "speciesContext": [
+      "Speckled trout",
+      "Red drum",
+      "Flounder",
+      "Black drum",
+      "Sheepshead"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public launches listed by Louisiana DWF / Cameron Parish",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Calcasieu Pass is a working ship channel. Inside-lake and pass conditions are not the same water.",
+      "Inshore seasons and size limits change; same-day check required."
+    ],
+    "directVerification": [
+      "Confirm current Louisiana recreational saltwater regulations.",
+      "Verify the selected public launch is open."
+    ],
+    "noaaCoopsStationId": "8768094",
+    "managingAgency": "Louisiana Department of Wildlife and Fisheries",
+    "officialRegsUrl": "https://www.wlf.louisiana.gov/page/fishing",
+    "speciesPresent": [
+      "speckled_trout",
+      "red_drum",
+      "flounder",
+      "black_drum"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-517",
+    "state": "New Hampshire",
+    "region": "Hampton Harbor / NH coast",
+    "county": "Rockingham",
+    "waterbody": "Hampton Harbor (NH coast approaches)",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.wildlife.nh.gov/fishing-nh",
+    "speciesContext": [
+      "Striped bass",
+      "Bluefish",
+      "Winter flounder",
+      "Mackerel",
+      "Pollock"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps, jetties, and shore access listed by NH Fish and Game",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "This record is the Hampton Harbor / open-coast approaches, not Great Bay (already catalogued separately).",
+      "Federal and state groundfish rules can both apply outside the harbor."
+    ],
+    "directVerification": [
+      "Confirm current New Hampshire saltwater recreational regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8423898",
+    "managingAgency": "New Hampshire Fish and Game Department",
+    "officialRegsUrl": "https://www.wildlife.nh.gov/fishing-nh",
+    "speciesPresent": [
+      "striped_bass",
+      "bluefish",
+      "winter_flounder"
+    ]
+  },
+  {
+    "checkedAt": "2026-08-14T09:00:00-06:00",
+    "nextReviewAt": "2026-11-12",
+    "status": "current_with_same_day_rule_check_required",
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "ndbcBuoyId": null,
+    "seasonWindows": null,
+    "regsReviewedDate": "2026-08-14",
+    "accessReviewedDate": "2026-08-14",
+    "lastVerified": "2026-08-14",
+    "id": "HHI-DEST-518",
+    "state": "Massachusetts",
+    "region": "Buzzards Bay",
+    "county": "Barnstable / Plymouth / Bristol",
+    "waterbody": "Buzzards Bay",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    "speciesContext": [
+      "Striped bass",
+      "Scup",
+      "Black sea bass",
+      "Tautog",
+      "Summer flounder"
+    ],
+    "publicAccess": [
+      {
+        "name": "Published public ramps and shore access listed by Mass DMF / towns",
+        "type": "directory",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Buzzards Bay is not Cape Cod Bay. Different wind, tide, and traffic patterns.",
+      "Black sea bass, scup, and tautog seasons are revised during the year."
+    ],
+    "directVerification": [
+      "Confirm current Massachusetts DMF recreational saltwater regulations.",
+      "Verify the selected public access is open."
+    ],
+    "noaaCoopsStationId": "8447930",
+    "managingAgency": "Massachusetts Division of Marine Fisheries",
+    "officialRegsUrl": "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    "speciesPresent": [
+      "striped_bass",
+      "scup",
+      "black_sea_bass",
+      "tautog",
+      "summer_flounder"
+    ]
   }
 ]
