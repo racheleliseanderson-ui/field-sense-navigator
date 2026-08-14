@@ -39,6 +39,14 @@ export const STOP = new Set([
   "fwp",
   "usfs",
   "nps",
+  "below",
+  "above",
+  "between",
+  "from",
+  "into",
+  "complex",
+  "network",
+  "reach",
 ]);
 
 export const GENERIC_GEO = new Set([
@@ -58,8 +66,10 @@ export const GENERIC = new Set([
   "river",
   "lake",
   "lac",
+  "lk",
   "creek",
   "reservoir",
+  "res",
   "bay",
   "gulf",
   "ocean",
@@ -76,20 +86,37 @@ export const GENERIC = new Set([
   "brook",
   "riviere",
   "slough",
+  "pool",
 ]);
 
 export const TYPE_HINT = {
-  lake: /\blake\b|\blk\b|\blac\b|\bpond\b|\breservoir\b/,
-  reservoir: /\breservoir\b|\blake\b|\blac\b|\bres\b/,
+  lake: /\blake\b|\blk\b|\blac\b|\bpond\b|\breservoir\b|\bres\b/,
+  reservoir: /\breservoir\b|\blake\b|\blk\b|\blac\b|\bres\b/,
   river: /\briver\b|\briviere\b|\brivière\b|\bcreek\b|\bfork\b|\bstream\b|\bcanal\b|\bbrook\b|\bslough\b/,
   marine: /\bbay\b|\binlet\b|\bsound\b|\bharbor\b|\bharbour\b|\bgulf\b|\bocean\b|\btide\b|\blagoon\b|\bpass\b|\bchannel\b|\bstrait\b/,
 };
 
-const MODIFIER = "little|north|south|east|west|big|petite|petit|lower|upper";
+const LAKE_FAMILY = new Set(["lake", "lk", "lac", "pond", "reservoir", "res"]);
+const MARINE_FAMILY = new Set([
+  "bay",
+  "inlet",
+  "sound",
+  "harbor",
+  "harbour",
+  "gulf",
+  "ocean",
+  "lagoon",
+  "pass",
+  "channel",
+  "strait",
+]);
+
+const MODIFIER = "little|north|south|east|west|big|petite|petit|lower|upper|middle";
 
 export const norm = (s) =>
   String(s ?? "")
     .toLowerCase()
+    .replace(/['’]/g, "")
     .replace(/[^a-z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -105,17 +132,18 @@ export function phrases(water) {
   const raw = String(water ?? "");
   const parens = [...raw.matchAll(/\(([^)]*)\)/g)].map((m) => m[1]);
   const main = raw.replace(/\([^)]*\)/g, " ");
-  const bits = [main, ...parens].flatMap((p) => p.split(/[/—–]+/));
+  const bits = [main, ...parens].flatMap((p) => p.split(/[/—–+]+/));
   return [...new Set(bits.map(norm).filter((p) => p.length > 2))];
 }
 
 export function reachTokens(water) {
   const raw = String(water ?? "");
   const parens = [...raw.matchAll(/\(([^)]*)\)/g)].map((m) => m[1]);
+  const dashes = raw.split(/[—–]/).slice(1);
   const out = new Set();
-  for (const p of parens) {
+  for (const p of [...parens, ...dashes]) {
     for (const t of tokens(p)) {
-      if (!GENERIC.has(t) && t !== "reach" && t !== "branch" && t !== "lower" && t !== "upper") {
+      if (!GENERIC.has(t) && !GENERIC_GEO.has(t) && t !== "reach" && t !== "branch") {
         out.add(t);
       }
     }
@@ -129,58 +157,136 @@ export function typeAligned(waterType, stationName) {
   return hint.test(norm(stationName));
 }
 
+function isModifierToken(t) {
+  return new RegExp(`^(?:${MODIFIER})$`).test(t);
+}
+
+/** Station identity is the clause before near/at/above/below. */
+export function stationSubject(station) {
+  const s = norm(station);
+  const cut = s.split(/\b(?:near|at|above|below|nr|by|blw)\b/)[0].trim();
+  return cut || s;
+}
+
+function waterCore(phrase) {
+  const reachCut = phrase.split(/\b(?:below|above|blw|between)\b/)[0].trim();
+  const ofParts = reachCut.split(/\bof the\b/);
+  if (ofParts.length > 1) {
+    const left = tokens(ofParts[0]).filter((t) => !GENERIC.has(t) && !isModifierToken(t));
+    if (left.length >= 1) return ofParts[0].trim();
+  }
+  return reachCut || phrase;
+}
+
 /**
  * Score a station name against a published water name.
  * Returns 0 when the phrase or type cannot be defended.
  */
-/** Station identity is the clause before near/at/above/below. */
-export function stationSubject(station) {
-  const s = norm(station);
-  const cut = s.split(/\b(?:near|at|above|below|nr|by)\b/)[0].trim();
-  return cut || s;
-}
-
-export function nameScore(water, station) {
+export function nameScore(water, station, opts = {}) {
   const s = norm(station);
   const subject = stationSubject(station);
+  const foldedSubject = subject.replace(/ /g, "");
   if (!s) return 0;
   let best = 0;
-  for (const phrase of phrases(water)) {
-    const toks = tokens(phrase);
-    const distinctive = toks.filter((t) => !GENERIC.has(t) && !GENERIC_GEO.has(t));
-    if (distinctive.length === 0) continue;
-    // A match that only lives in the location clause (QUINSAM near CAMPBELL RIVER)
-    // is not this water.
-    if (!distinctive.every((t) => new RegExp(`\\b${t}\\b`).test(subject))) continue;
+  const allPhrases = phrases(water);
+  for (let i = 0; i < allPhrases.length; i += 1) {
+    const phrase = allPhrases[i];
+    const core = waterCore(phrase);
+    const toks = tokens(core);
     const typeWord = toks.find((t) => GENERIC.has(t));
-    if (typeWord && !new RegExp(`\\b${typeWord}\\b`).test(s)) continue;
+    if (i > 0 && !typeWord) continue;
+    const marinePhrase = Boolean(typeWord && MARINE_FAMILY.has(typeWord));
+
+    let distinctive = toks.filter((t) => !GENERIC.has(t));
+    const nonGeo = distinctive.filter((t) => !GENERIC_GEO.has(t));
+    // "Lake Michigan" — the geo word IS the name. Only drop geo tokens
+    // when another distinctive word remains.
+    distinctive = nonGeo.length ? nonGeo : distinctive;
+    if (marinePhrase) {
+      distinctive = distinctive.filter((t) => !isModifierToken(t));
+    }
+    if (distinctive.length === 0) continue;
+
+    const wordHit = distinctive.every((t) => new RegExp(`\\b${t}\\b`).test(subject));
+    const foldedHit = foldedSubject.includes(distinctive.join(""));
+    if (!wordHit && !foldedHit) continue;
+
+    if (typeWord && !opts.relaxType) {
+      const stationHasType = LAKE_FAMILY.has(typeWord)
+        ? [...LAKE_FAMILY].some((w) => new RegExp(`\\b${w}\\b`).test(s))
+        : new RegExp(`\\b${typeWord}\\b`).test(s);
+      if (!stationHasType) continue;
+    }
+
     const head = distinctive[0];
     const stationHasMod = new RegExp(`\\b(?:${MODIFIER})\\s+${head}\\b`).test(subject);
-    const waterHasMod = new RegExp(`\\b(?:${MODIFIER})\\s+${head}\\b`).test(phrase);
+    const waterHasMod = new RegExp(`\\b(?:${MODIFIER})\\s+${head}\\b`).test(core);
     if (stationHasMod && !waterHasMod) continue;
-    const phraseHit = subject.includes(phrase) || s.includes(phrase) ? 0.2 : 0;
+
+    const phraseHit = subject.includes(core) || s.includes(core) || foldedHit ? 0.2 : 0;
     const weighted = Math.min(1, 0.75 + 0.05 * distinctive.length + phraseHit);
     if (weighted > best) best = weighted;
   }
   return best;
 }
 
-export function bestMatches(water, waterType, sites, floor = 0.75) {
+export function bestMatches(water, waterType, sites, floor = 0.75, opts = {}) {
   const hits = [];
   for (const row of sites) {
-    if (waterType && !typeAligned(waterType, row.name)) continue;
-    const score = nameScore(water, row.name);
+    if (waterType && !opts.skipType && !typeAligned(waterType, row.name)) continue;
+    const score = nameScore(water, row.name, opts);
     if (score >= floor) hits.push({ row, score });
   }
   hits.sort((a, b) => b.score - a.score);
   return hits;
 }
 
-/** Pick one hit. Same-water multi-reach is disclosed, not rejected. Different waters never share a phrase. */
+const REACH_NOISE = new Set([
+  "waters",
+  "shoreline",
+  "frontage",
+  "basin",
+  "reach",
+  "western",
+  "eastern",
+  "northern",
+  "southern",
+  "tidal",
+  "utah",
+  "wyoming",
+  "nevada",
+  "arizona",
+  "michigan",
+  "indiana",
+  "illinois",
+  "wisconsin",
+  "minnesota",
+  "ohio",
+  "vermont",
+  "kentucky",
+  "dakota",
+  "california",
+  "oregon",
+  "washington",
+  "colorado",
+  "texas",
+  "florida",
+]);
+
+/** Pick one hit. Prefer the published water name, then a named reach. Same-water multi-reach is disclosed. */
 export function pickUnique(water, hits) {
   if (hits.length === 0) return null;
   const top = hits[0].score;
   let pool = hits.filter((h) => Math.abs(h.score - top) < 0.001);
+  const primary = phrases(water)[0] ?? "";
+  const primaryToks = tokens(waterCore(primary)).filter((t) => !GENERIC.has(t) && !GENERIC_GEO.has(t));
+  if (primaryToks.length && pool.length > 1) {
+    const narrowed = pool.filter((h) => {
+      const sub = stationSubject(h.row.name);
+      return primaryToks.every((t) => new RegExp(`\\b${t}\\b`).test(sub));
+    });
+    if (narrowed.length >= 1) pool = narrowed;
+  }
   const reach = reachTokens(water);
   if (reach.length && pool.length > 1) {
     const narrowed = pool.filter((h) => {
@@ -188,6 +294,27 @@ export function pickUnique(water, hits) {
       return reach.some((t) => new RegExp(`\\b${t}\\b`).test(s));
     });
     if (narrowed.length >= 1) pool = narrowed;
+  }
+  const requiredReach = String(water ?? "")
+    .replace(/\([^)]*\)/g, " ")
+    .split(/[—–]/)
+    .slice(1)
+    .flatMap((p) =>
+      tokens(p).filter(
+        (t) =>
+          !GENERIC.has(t) &&
+          !GENERIC_GEO.has(t) &&
+          !isModifierToken(t) &&
+          !REACH_NOISE.has(t),
+      ),
+    );
+  if (requiredReach.length) {
+    const narrowed = pool.filter((h) => {
+      const s = norm(h.row.name);
+      return requiredReach.some((t) => new RegExp(`\\b${t}\\b`).test(s));
+    });
+    if (narrowed.length >= 1) pool = narrowed;
+    else return null;
   }
   pool.sort((a, b) => String(a.row.id).localeCompare(String(b.row.id)));
   const picked = pool[0];

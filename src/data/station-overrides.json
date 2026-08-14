@@ -1,6 +1,6 @@
 {
   "schema": "0.6.0",
-  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name — never a nearby substitute. Example: to pin Lake Washington to a specific USGS site, add { destinationId: \"HHI-DEST-001\", agency: \"USGS\", siteId: \"12150400\" }.",
+  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name — never a nearby substitute. Example: Barnegat Bay → USGS 01408167 (the estuary site that publishes under Barnegat Bay). Do not pin Lake Washington to 12150400 — that site is the Snoqualmie River at Duvall.",
   "records": [
     {
       "destinationId": "HHI-DEST-010",
