@@ -10,11 +10,123 @@
       "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
     },
     {
+      "destinationId": "HHI-DEST-062",
+      "agency": "USGS",
+      "siteId": "12468000",
+      "siteName": "PARK LAKE NEAR COULEE CITY, WA",
+      "note": "Pinned to the USGS lake site that publishes under Park Lake. The word Park is otherwise treated as catalog noise."
+    },
+    {
+      "destinationId": "HHI-DEST-118",
+      "agency": "USGS",
+      "siteId": "13037500",
+      "siteName": "SNAKE RIVER NR HEISE ID",
+      "note": "Pinned to the Heise mainstem gauge. USGS publishes this reach as Snake River; the catalog names it South Fork Snake (Palisades to the Henry's Fork)."
+    },
+    {
+      "destinationId": "HHI-DEST-124",
+      "agency": "USGS",
+      "siteId": "01040500",
+      "siteName": "MOOSEHEAD LAKE AT EAST OUTLET, ME",
+      "note": "Pinned to the USGS site that publishes at East Outlet on Moosehead Lake."
+    },
+    {
+      "destinationId": "HHI-DEST-146",
+      "agency": "USGS",
+      "siteId": "13037500",
+      "siteName": "SNAKE RIVER NR HEISE ID",
+      "note": "Pinned to the Heise mainstem gauge. USGS publishes this reach as Snake River; the catalog names it South Fork Snake (Palisades to the Henry's Fork)."
+    },
+    {
+      "destinationId": "HHI-DEST-177",
+      "agency": "NOAA-COOPS",
+      "siteId": "8776139",
+      "siteName": "S. Bird Island",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Bird Island on the Upper Laguna Madre."
+    },
+    {
+      "destinationId": "HHI-DEST-183",
+      "agency": "NOAA-COOPS",
+      "siteId": "8779748",
+      "siteName": "South Padre Island CG Station",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under South Padre Island on the Lower Laguna Madre."
+    },
+    {
+      "destinationId": "HHI-DEST-195",
+      "agency": "USGS",
+      "siteId": "08167800",
+      "siteName": "Guadalupe Rv at Sattler, TX",
+      "note": "Pinned to the Sattler gauge immediately below Canyon Dam. Name-match alone also hits Hunt and Kerrville above the dam."
+    },
+    {
       "destinationId": "HHI-DEST-219",
       "agency": "NOAA-COOPS",
       "siteId": "8726607",
       "siteName": "Old Port Tampa",
       "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
+    },
+    {
+      "destinationId": "HHI-DEST-237",
+      "agency": "USGS",
+      "siteId": "02236210",
+      "siteName": "LAKE GEORGE NR SALT SPRINGS, FLA.",
+      "note": "Pinned to the USGS lake site that publishes under Lake George. The catalog types the record as river because it also names the upper St. Johns."
+    },
+    {
+      "destinationId": "HHI-DEST-277",
+      "agency": "NOAA-COOPS",
+      "siteId": "9412110",
+      "siteName": "Port San Luis",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Port San Luis."
+    },
+    {
+      "destinationId": "HHI-DEST-284",
+      "agency": "NOAA-COOPS",
+      "siteId": "9099018",
+      "siteName": "Marquette C.G.",
+      "note": "Pinned to the NOAA CO-OPS Great Lakes station that publishes at Marquette on Lake Superior."
+    },
+    {
+      "destinationId": "HHI-DEST-331",
+      "agency": "USGS",
+      "siteId": "03609000",
+      "siteName": "KENTUCKY LAKE AT GILBERTSVILLE, KY",
+      "note": "Pinned to the USGS lake site that publishes under Kentucky Lake. The dam and this station sit on the Kentucky shore of the same reservoir."
+    },
+    {
+      "destinationId": "HHI-DEST-342",
+      "agency": "USGS",
+      "siteId": "02399499",
+      "siteName": "COOSA RIVER AT WEISS LAKE NEAR LEESBURG, AL",
+      "note": "Pinned to the USGS site that publishes at Weiss Lake. The Coosa impoundment is the lake."
+    },
+    {
+      "destinationId": "HHI-DEST-346",
+      "agency": "USGS",
+      "siteId": "03593000",
+      "siteName": "PICKWICK LAKE",
+      "note": "Pinned to the USGS lake site that publishes under Pickwick Lake. The catalog lists the Mississippi shore of the same reservoir."
+    },
+    {
+      "destinationId": "HHI-DEST-367",
+      "agency": "USGS",
+      "siteId": "06690000",
+      "siteName": "LAKE MC CONAUGHY NEAR KEYSTONE, NEBR.",
+      "note": "Pinned to the USGS lake site. Official spelling is LAKE MC CONAUGHY (space after Mc)."
+    },
+    {
+      "destinationId": "HHI-DEST-421",
+      "agency": "NOAA-COOPS",
+      "siteId": "9455090",
+      "siteName": "Seward",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Seward, at the head of Resurrection Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-424",
+      "agency": "NOAA-COOPS",
+      "siteId": "1612480",
+      "siteName": "Mokuoloe",
+      "note": "Pinned to the NOAA CO-OPS water-level station on Mokuoloe (Coconut Island) in Kaneohe Bay."
     },
     {
       "destinationId": "HHI-DEST-425",
@@ -36,6 +148,34 @@
       "siteId": "05OJ021",
       "siteName": "RED RIVER UPSTREAM OF ST. ANDREWS DAM AT LOCKPORT",
       "note": "Pinned to the Lockport reach named on the record."
+    },
+    {
+      "destinationId": "HHI-DEST-443",
+      "agency": "WSC",
+      "siteId": "01BD008",
+      "siteName": "MATAPEDIA (RIVIERE) PRES DE AMQUI",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Matapédia."
+    },
+    {
+      "destinationId": "HHI-DEST-474",
+      "agency": "WSC",
+      "siteId": "02EA014",
+      "siteName": "LAKE HURON AT PARRY SOUND",
+      "note": "Pinned to the Water Survey of Canada station that publishes at Parry Sound. Georgian Bay is the Lake Huron reach named on the record."
+    },
+    {
+      "destinationId": "HHI-DEST-478",
+      "agency": "WSC",
+      "siteId": "02UC002",
+      "siteName": "MOISIE (RIVIERE) A 5,1 KM EN AMONT DU PONT DU Q.N.S.L.R.",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Moisie."
+    },
+    {
+      "destinationId": "HHI-DEST-479",
+      "agency": "WSC",
+      "siteId": "02QA002",
+      "siteName": "RIMOUSKI (RIVIERE) A 3,7 KM EN AMONT DU PONT-ROUTE 132",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Rimouski."
     },
     {
       "destinationId": "HHI-DEST-495",

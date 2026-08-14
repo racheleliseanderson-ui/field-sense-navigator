@@ -6,6 +6,7 @@
  *   1. Human overrides (station-overrides.json)
  *   2. Catalog-declared usgsSiteId / noaaCoopsStationId
  *   3. USGS NWIS name match (US waters) — stream + lake indexes
+ *   3b. USGS site-name search for remaining unmatched US waters
  *   4. NOAA CO-OPS name match (marine, Great Lakes, named harbors)
  *   5. Water Survey of Canada name match (provinces)
  *   6. Gazetteer location + NWS observation station on EVERY located water
@@ -16,7 +17,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { bestMatches, pickUnique } from "./match.mjs";
+import { bestMatches, pickUnique, searchQueries } from "./match.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -67,6 +68,12 @@ const MARINE_NAME = /\b(bay|inlet|sound|harbor|harbour|gulf|ocean|lagoon|pass|st
 const GREAT_LAKES =
   /\b(lake michigan|lake erie|lake huron|lake superior|lake ontario|lake st\.? ?clair|saginaw bay)\b/i;
 
+/** Same-name official stations exist, but none can be defended as THIS record. */
+const DENY_AUTO = new Set([
+  "HHI-DEST-202", // Guadalupe River State Park ≠ Hunt / Sattler / Gonzales
+  "HHI-DEST-251", // Sacramento–San Joaquin Delta ≠ Sacramento R at Delta, CA
+]);
+
 function emptyRow(d, extra) {
   return {
     destinationId: d.id,
@@ -85,6 +92,40 @@ function emptyRow(d, extra) {
     nwsStationName: extra.nwsStationName ?? null,
     note: extra.note,
   };
+}
+
+async function usgsNameSearch(code, water) {
+  const queries = searchQueries(water);
+  const byId = new Map();
+  for (const q of queries) {
+    const urls = [
+      `https://waterservices.usgs.gov/nwis/site/?format=rdb&stateCd=${code}` +
+        `&siteName=${encodeURIComponent(q)}&siteNameMatchOperator=ANY&siteStatus=all&siteType=ST,LK,ES,OC`,
+      `https://waterservices.usgs.gov/nwis/site/?format=rdb&stateCd=${code}` +
+        `&siteName=${encodeURIComponent(q)}&siteNameMatchOperator=ANY&siteStatus=all`,
+    ];
+    for (const url of urls) {
+      try {
+        const text = await fetchText(url);
+        for (const line of text.split("\n")) {
+          if (!line || line.startsWith("#")) continue;
+          const cols = line.split("\t");
+          if (cols.length < 6 || cols[0] !== "USGS") continue;
+          if (!cols[1] || !cols[2]) continue;
+          byId.set(cols[1], {
+            id: cols[1],
+            name: cols[2],
+            lat: Number(cols[4]),
+            lon: Number(cols[5]),
+          });
+        }
+        break;
+      } catch {
+        /* next */
+      }
+    }
+  }
+  return [...byId.values()];
 }
 
 async function fetchText(url) {
@@ -336,6 +377,16 @@ async function main() {
         continue;
       }
 
+      if (DENY_AUTO.has(d.id)) {
+        records.push(
+          emptyRow(d, {
+            status: "unmatched",
+            note: "Official stations share a common name with this record but publish on a different water or reach. No nearby station is substituted.",
+          }),
+        );
+        continue;
+      }
+
       if (usgsCode && usgsSites.length) {
         const row = matchOrAmbiguous(
           d,
@@ -424,6 +475,34 @@ async function main() {
     }
     console.error(`bind  ${state} ${matched}/${rows.length} matched`);
   }
+
+  const unmatchedUs = records.filter((r) => r.status === "unmatched" && STATE_CODE[r.state]);
+  console.error(`usgs  name-search ${unmatchedUs.length} unmatched US waters`);
+  const destById = new Map(destinations.map((d) => [d.id, d]));
+  let named = 0;
+  const searchQueue = [...unmatchedUs];
+  async function searchWorker() {
+    while (searchQueue.length) {
+      const row = searchQueue.shift();
+      if (!row) return;
+      const d = destById.get(row.destinationId);
+      if (!d || DENY_AUTO.has(d.id)) continue;
+      const sites = await usgsNameSearch(STATE_CODE[row.state], d.waterbody);
+      if (!sites.length) continue;
+      const hit = matchOrAmbiguous(
+        d,
+        sites,
+        "USGS",
+        row.note,
+      );
+      if (hit.status === "matched") {
+        Object.assign(row, hit);
+        named += 1;
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: 4 }, searchWorker));
+  console.error(`usgs  name-search recovered ${named}`);
 
   records.sort((a, b) => a.destinationId.localeCompare(b.destinationId));
 
