@@ -1,6 +1,6 @@
 {
   "schema": "0.6.0",
-  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name — never a nearby substitute. Example: Barnegat Bay → USGS 01408167 (the estuary site that publishes under Barnegat Bay). Do not pin Lake Washington to 12150400 — that site is the Snoqualmie River at Duvall.",
+  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name \u2014 never a nearby substitute. Example: Barnegat Bay \u2192 USGS 01408167 (the estuary site that publishes under Barnegat Bay). Do not pin Lake Washington to 12150400 \u2014 that site is the Snoqualmie River at Duvall.",
   "records": [
     {
       "destinationId": "HHI-DEST-010",
@@ -10,11 +10,29 @@
       "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
     },
     {
+      "destinationId": "HHI-DEST-044",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
+      "lat": 47.61712097,
+      "lon": -119.2993212,
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK)."
+    },
+    {
       "destinationId": "HHI-DEST-062",
       "agency": "USGS",
       "siteId": "12468000",
       "siteName": "PARK LAKE NEAR COULEE CITY, WA",
       "note": "Pinned to the USGS lake site that publishes under Park Lake. The word Park is otherwise treated as catalog noise."
+    },
+    {
+      "destinationId": "HHI-DEST-082",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
+      "lat": 47.61712097,
+      "lon": -119.2993212,
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK)."
     },
     {
       "destinationId": "HHI-DEST-118",
@@ -73,6 +91,33 @@
       "note": "Pinned to the USGS lake site that publishes under Lake George. The catalog types the record as river because it also names the upper St. Johns."
     },
     {
+      "destinationId": "HHI-DEST-261",
+      "agency": "CDEC",
+      "siteId": "PRR",
+      "siteName": "LAKE PERRIS",
+      "lat": 33.858002,
+      "lon": -117.182999,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Lake Perris."
+    },
+    {
+      "destinationId": "HHI-DEST-268",
+      "agency": "CDEC",
+      "siteId": "DMV",
+      "siteName": "DIAMOND VALLEY",
+      "lat": 33.669998,
+      "lon": -117.066002,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Diamond Valley."
+    },
+    {
+      "destinationId": "HHI-DEST-273",
+      "agency": "CDEC",
+      "siteId": "SKN",
+      "siteName": "SKINNER",
+      "lat": 33.583,
+      "lon": -117.071999,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Skinner."
+    },
+    {
       "destinationId": "HHI-DEST-277",
       "agency": "NOAA-COOPS",
       "siteId": "9412110",
@@ -85,6 +130,15 @@
       "siteId": "9099018",
       "siteName": "Marquette C.G.",
       "note": "Pinned to the NOAA CO-OPS Great Lakes station that publishes at Marquette on Lake Superior."
+    },
+    {
+      "destinationId": "HHI-DEST-326",
+      "agency": "USACE",
+      "siteId": "SAS:Jocassee.Stage.Inst.1Hour.0.Rev-SHEF_SAS",
+      "siteName": "JOCASSEE DAM",
+      "lat": 34.96,
+      "lon": -82.9187,
+      "note": "Pinned to the USACE Savannah District CWMS site that publishes under Jocassee."
     },
     {
       "destinationId": "HHI-DEST-331",
@@ -113,6 +167,24 @@
       "siteId": "06690000",
       "siteName": "LAKE MC CONAUGHY NEAR KEYSTONE, NEBR.",
       "note": "Pinned to the USGS lake site. Official spelling is LAKE MC CONAUGHY (space after Mc)."
+    },
+    {
+      "destinationId": "HHI-DEST-383",
+      "agency": "USBR",
+      "siteId": "rise:341",
+      "siteName": "Flaming Gorge Reservoir Dam and Powerplant",
+      "lat": 40.97789,
+      "lon": -109.57304,
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Flaming Gorge Reservoir. The pool is one number; the catalog lists the Wyoming reach separately from the Utah dam gauge."
+    },
+    {
+      "destinationId": "HHI-DEST-401",
+      "agency": "USBR",
+      "siteId": "rise:6128",
+      "siteName": "Lake Havasu Parker Dam and Powerplant",
+      "lat": 34.2964,
+      "lon": -114.1385,
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Lake Havasu at Parker Dam."
     },
     {
       "destinationId": "HHI-DEST-421",
@@ -154,7 +226,7 @@
       "agency": "WSC",
       "siteId": "01BD008",
       "siteName": "MATAPEDIA (RIVIERE) PRES DE AMQUI",
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Matapédia."
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Matap\u00e9dia."
     },
     {
       "destinationId": "HHI-DEST-474",
@@ -168,14 +240,14 @@
       "agency": "WSC",
       "siteId": "02UC002",
       "siteName": "MOISIE (RIVIERE) A 5,1 KM EN AMONT DU PONT DU Q.N.S.L.R.",
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Moisie."
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Moisie."
     },
     {
       "destinationId": "HHI-DEST-479",
       "agency": "WSC",
       "siteId": "02QA002",
       "siteName": "RIMOUSKI (RIVIERE) A 3,7 KM EN AMONT DU PONT-ROUTE 132",
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Rimouski."
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Rimouski."
     },
     {
       "destinationId": "HHI-DEST-495",

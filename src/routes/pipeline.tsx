@@ -26,7 +26,7 @@ export const Route = createFileRoute("/pipeline")({
       {
         name: "description",
         content:
-          "Catalog integrity, scheduled ingest (USGS / NOAA / WSC / NWS), and fail-closed station bindings.",
+          "Catalog integrity, scheduled ingest (USGS / NOAA / WSC / USBR / USACE / CDEC / NWS), and fail-closed station bindings.",
       },
       { property: "og:title", content: "Pipeline console · Field Sense Navigator" },
       {
@@ -209,10 +209,10 @@ function Pipeline() {
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Station bindings are resolved on a nightly schedule (USGS, NOAA
-            CO-OPS, Water Survey of Canada). Every record is located, given a
-            weather station, scanned for agency-page language, and offered a
-            gauge. Official readings are ingested every 30 minutes. Misses stay
-            misses — they are not omitted.
+            CO-OPS, Water Survey of Canada, USBR, USACE, CA DWR CDEC). Every
+            record is located, given a weather station, scanned for agency-page
+            language, and offered a gauge. Official readings are ingested every
+            30 minutes. Misses stay misses — they are not omitted.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -255,7 +255,8 @@ function Pipeline() {
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               USGS {bind.byAgency?.USGS ?? 0} · NOAA {bind.byAgency?.["NOAA-COOPS"] ?? 0} · WSC{" "}
-              {bind.byAgency?.WSC ?? 0}
+              {bind.byAgency?.WSC ?? 0} · USBR {bind.byAgency?.USBR ?? 0} · USACE{" "}
+              {bind.byAgency?.USACE ?? 0} · CDEC {bind.byAgency?.CDEC ?? 0}
               {bind.overrides ? ` · ${bind.overrides} pinned` : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

@@ -581,9 +581,9 @@ async function main() {
   if (queue.length) await Promise.all(Array.from({ length: 6 }, nwsWorker));
 
   const matched = records.filter((r) => r.status === "matched");
-  const byAgency = { USGS: 0, "NOAA-COOPS": 0, WSC: 0 };
+  const byAgency = {};
   for (const r of matched) {
-    if (r.agency && byAgency[r.agency] != null) byAgency[r.agency] += 1;
+    if (r.agency) byAgency[r.agency] = (byAgency[r.agency] ?? 0) + 1;
   }
 
   const payload = {
@@ -611,7 +611,8 @@ async function main() {
   writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`);
   console.error(
     `wrote ${OUT_PATH} · ${payload.stats.matched} matched` +
-      ` (USGS ${byAgency.USGS} · NOAA ${byAgency["NOAA-COOPS"]} · WSC ${byAgency.WSC})` +
+      ` (USGS ${byAgency.USGS ?? 0} · NOAA ${byAgency["NOAA-COOPS"] ?? 0} · WSC ${byAgency.WSC ?? 0}` +
+      ` · USBR ${byAgency.USBR ?? 0} · USACE ${byAgency.USACE ?? 0} · CDEC ${byAgency.CDEC ?? 0})` +
       ` · ${payload.stats.unmatched} unmatched · ${payload.stats.overrides} overrides` +
       ` · ${payload.stats.nwsBound} NWS obs stations`,
   );

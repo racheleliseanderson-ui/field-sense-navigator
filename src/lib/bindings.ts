@@ -1,7 +1,7 @@
 import raw from "@/data/station-bindings.json";
 
 export type BindingStatus = "matched" | "unmatched" | "unsupported" | "error";
-export type BindingAgency = "USGS" | "NOAA-COOPS" | "WSC";
+export type BindingAgency = "USGS" | "NOAA-COOPS" | "WSC" | "USBR" | "USACE" | "CDEC";
 export type BindingSource = "override" | "name-match";
 
 export interface StationBinding {
