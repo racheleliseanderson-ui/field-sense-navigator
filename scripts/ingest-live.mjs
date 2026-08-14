@@ -21,6 +21,9 @@ const USGS_PARAMS = {
   "00065": { label: "Gage height", unit: "ft" },
   "00010": { label: "Water temperature", unit: "°C" },
   "62614": { label: "Lake or reservoir elevation", unit: "ft" },
+  "62615": { label: "Lake or reservoir elevation (NAVD88)", unit: "ft" },
+  "00062": { label: "Reservoir elevation", unit: "ft" },
+  "72020": { label: "Reservoir storage", unit: "ac-ft" },
 };
 const BATCH = 40;
 
@@ -58,7 +61,7 @@ async function usgsBatch(siteIds) {
   const url =
     `https://waterservices.usgs.gov/nwis/iv/?format=json` +
     `&sites=${siteIds.join(",")}` +
-    `&parameterCd=00060,00065,00010,62614&siteStatus=active`;
+    `&parameterCd=00060,00065,00010,62614,62615,00062,72020&siteStatus=active`;
   let lastErr = null;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
     try {

@@ -4,14 +4,14 @@
  *
  * Order of truth:
  *   1. Human overrides (station-overrides.json)
- *   2. USGS NWIS name match (US waters)
- *   3. NOAA CO-OPS name match (remaining marine / Great Lakes)
- *   4. Water Survey of Canada name match (provinces)
- *   5. Gazetteer location + NWS observation station on EVERY located water
- *      (not only waters that already have a gauge)
+ *   2. Catalog-declared usgsSiteId / noaaCoopsStationId
+ *   3. USGS NWIS name match (US waters) — stream + lake indexes
+ *   4. NOAA CO-OPS name match (marine, Great Lakes, named harbors)
+ *   5. Water Survey of Canada name match (provinces)
+ *   6. Gazetteer location + NWS observation station on EVERY located water
  *
  * Phrase + water-type must align. No nearby substitution.
- * Ambiguous multi-matches stay unmatched so they can be pinned.
+ * Same-water multi-reach is disclosed, not rejected.
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -64,6 +64,8 @@ const PROV_CODE = {
 };
 
 const MARINE_NAME = /\b(bay|inlet|sound|harbor|harbour|gulf|ocean|lagoon|pass|strait|pier)\b/i;
+const GREAT_LAKES =
+  /\b(lake michigan|lake erie|lake huron|lake superior|lake ontario|lake st\.? ?clair|saginaw bay)\b/i;
 
 function emptyRow(d, extra) {
   return {
@@ -100,24 +102,35 @@ async function fetchJson(url) {
 }
 
 async function usgsStateSites(code) {
-  const url =
+  const urls = [
     `https://waterservices.usgs.gov/nwis/site/?format=rdb&stateCd=${code}` +
-    `&parameterCd=00060,00065,00010,62614&siteStatus=active&siteType=ST,LK,ES`;
-  const text = await fetchText(url);
-  const rows = [];
-  for (const line of text.split("\n")) {
-    if (!line || line.startsWith("#")) continue;
-    const cols = line.split("\t");
-    if (cols.length < 7 || cols[0] !== "USGS") continue;
-    if (!cols[1] || !cols[2]) continue;
-    rows.push({
-      id: cols[1],
-      name: cols[2],
-      lat: Number(cols[4]),
-      lon: Number(cols[5]),
-    });
+      `&parameterCd=00060,00065,00010,62614,62615,00062,72020&siteStatus=active&siteType=ST,LK,ES,OC`,
+    `https://waterservices.usgs.gov/nwis/site/?format=rdb&stateCd=${code}&siteType=LK&siteStatus=active`,
+  ];
+  const byId = new Map();
+  let lastErr = null;
+  for (const url of urls) {
+    try {
+      const text = await fetchText(url);
+      for (const line of text.split("\n")) {
+        if (!line || line.startsWith("#")) continue;
+        const cols = line.split("\t");
+        if (cols.length < 7 || cols[0] !== "USGS") continue;
+        if (!cols[1] || !cols[2]) continue;
+        if (byId.has(cols[1])) continue;
+        byId.set(cols[1], {
+          id: cols[1],
+          name: cols[2],
+          lat: Number(cols[4]),
+          lon: Number(cols[5]),
+        });
+      }
+    } catch (err) {
+      lastErr = err;
+    }
   }
-  return rows;
+  if (!byId.size && lastErr) throw lastErr;
+  return [...byId.values()];
 }
 
 async function noaaStations() {
@@ -213,8 +226,11 @@ function applyOverride(d, ov) {
   });
 }
 
-function matchOrAmbiguous(d, sites, agency, missNote) {
-  const hits = bestMatches(d.waterbody, d.waterType, sites, MATCH_FLOOR);
+function matchOrAmbiguous(d, sites, agency, missNote, opts = {}) {
+  const hits = bestMatches(d.waterbody, opts.skipType ? null : d.waterType, sites, MATCH_FLOOR, {
+    skipType: Boolean(opts.skipType),
+    relaxType: Boolean(opts.skipType),
+  });
   const picked = pickUnique(d.waterbody, hits);
   if (picked) {
     const extra =
@@ -245,6 +261,24 @@ async function main() {
   const overrideById = new Map(
     (overridesFile.records ?? []).map((r) => [r.destinationId, r]),
   );
+  for (const d of destinations) {
+    if (overrideById.has(d.id)) continue;
+    if (d.usgsSiteId) {
+      overrideById.set(d.id, {
+        agency: "USGS",
+        siteId: String(d.usgsSiteId),
+        siteName: d.usgsSiteId,
+        note: `Pinned from the catalog usgsSiteId (${d.usgsSiteId}).`,
+      });
+    } else if (d.noaaCoopsStationId) {
+      overrideById.set(d.id, {
+        agency: "NOAA-COOPS",
+        siteId: String(d.noaaCoopsStationId),
+        siteName: d.noaaCoopsStationId,
+        note: `Pinned from the catalog noaaCoopsStationId (${d.noaaCoopsStationId}).`,
+      });
+    }
+  }
 
   const byState = new Map();
   for (const d of destinations) {
@@ -325,17 +359,30 @@ async function main() {
       }
 
       const marineCandidate =
-        d.waterType === "marine" || MARINE_NAME.test(d.waterbody);
+        d.waterType === "marine" ||
+        MARINE_NAME.test(d.waterbody) ||
+        GREAT_LAKES.test(d.waterbody);
       if (marineCandidate && noaa.length) {
         const abbr = STATE_ABBR[state];
-        const sites = abbr ? noaa.filter((s) => s.state === abbr) : noaa;
-        const noaaDest = { ...d, waterType: "marine" };
-        const row = matchOrAmbiguous(
-          noaaDest,
-          sites,
+        const great = GREAT_LAKES.test(d.waterbody);
+        const inState = abbr ? noaa.filter((s) => s.state === abbr) : [];
+        const greatSites = great ? noaa.filter((s) => s.greatlakes) : [];
+        let row = matchOrAmbiguous(
+          d,
+          inState,
           "NOAA-COOPS",
           "No NOAA CO-OPS station publishes under this waterbody's name. No nearby tide gauge is substituted.",
+          { skipType: true },
         );
+        if (row.status !== "matched" && greatSites.length) {
+          row = matchOrAmbiguous(
+            d,
+            greatSites,
+            "NOAA-COOPS",
+            "No NOAA CO-OPS station publishes under this waterbody's name. No nearby tide gauge is substituted.",
+            { skipType: true },
+          );
+        }
         if (row.status === "matched") {
           records.push(row);
           matched += 1;
@@ -416,19 +463,43 @@ async function main() {
   }
 
   console.error("nws   binding observation stations to every located water");
+  let priorById = new Map();
+  try {
+    const prior = JSON.parse(readFileSync(OUT_PATH, "utf8"));
+    priorById = new Map((prior.records ?? []).map((r) => [r.destinationId, r]));
+  } catch {
+    /* first resolve */
+  }
   const locatedRows = records.filter((r) => r.lat != null && r.lon != null && !PROV_CODE[r.state]);
+  const needNws = [];
+  for (const row of locatedRows) {
+    const prev = priorById.get(row.destinationId);
+    if (
+      prev?.nwsStationId &&
+      prev.lat != null &&
+      prev.lon != null &&
+      Math.abs(prev.lat - row.lat) < 0.02 &&
+      Math.abs(prev.lon - row.lon) < 0.02
+    ) {
+      row.nwsStationId = prev.nwsStationId;
+      row.nwsStationName = prev.nwsStationName ?? prev.nwsStationId;
+    } else {
+      needNws.push(row);
+    }
+  }
+  console.error(`nws   reuse ${locatedRows.length - needNws.length} · fetch ${needNws.length}`);
   let nwsDone = 0;
-  const queue = [...locatedRows];
+  const queue = [...needNws];
   async function nwsWorker() {
     while (queue.length) {
       const row = queue.shift();
       if (!row) return;
       await attachNws(row);
       nwsDone += 1;
-      if (nwsDone % 25 === 0) console.error(`nws   ${nwsDone}/${locatedRows.length}`);
+      if (nwsDone % 25 === 0) console.error(`nws   ${nwsDone}/${needNws.length}`);
     }
   }
-  await Promise.all(Array.from({ length: 6 }, nwsWorker));
+  if (queue.length) await Promise.all(Array.from({ length: 6 }, nwsWorker));
 
   const matched = records.filter((r) => r.status === "matched");
   const byAgency = { USGS: 0, "NOAA-COOPS": 0, WSC: 0 };
