@@ -378,6 +378,22 @@ async function main() {
 
   records.sort((a, b) => a.destinationId.localeCompare(b.destinationId));
 
+  const noaaById = new Map(noaa.map((s) => [s.id, s]));
+  const wscById = new Map(wsc.map((s) => [s.id, s]));
+  for (const row of records) {
+    if (row.status !== "matched" || (row.lat != null && row.lon != null)) continue;
+    const extra =
+      row.agency === "NOAA-COOPS"
+        ? noaaById.get(row.siteId)
+        : row.agency === "WSC"
+          ? wscById.get(row.siteId)
+          : null;
+    if (extra && Number.isFinite(extra.lat) && Number.isFinite(extra.lon)) {
+      row.lat = extra.lat;
+      row.lon = extra.lon;
+    }
+  }
+
   console.error("nws   binding observation stations to matched coordinates");
   const matchedRows = records.filter((r) => r.status === "matched");
   let nwsDone = 0;
