@@ -148,9 +148,9 @@ async function main() {
   await Promise.all(Array.from({ length: 4 }, worker));
 
   const matched = bindings.records.filter((r) => r.status === "matched");
-  const byAgency = { USGS: 0, "NOAA-COOPS": 0, WSC: 0 };
+  const byAgency = {};
   for (const r of matched) {
-    if (r.agency && byAgency[r.agency] != null) byAgency[r.agency] += 1;
+    if (r.agency) byAgency[r.agency] = (byAgency[r.agency] ?? 0) + 1;
   }
   bindings.stats = {
     ...bindings.stats,

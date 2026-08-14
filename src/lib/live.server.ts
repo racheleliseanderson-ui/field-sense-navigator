@@ -126,9 +126,9 @@ export interface ClosureFile {
 let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: null };
 let closureCache: { at: number; data: ClosureFile | null } = { at: 0, data: null };
 
-async function fetchJson<T>(url: string): Promise<T | null> {
+async function fetchJson<T>(url: string, extraHeaders: Record<string, string> = {}): Promise<T | null> {
   const res = await fetch(url, {
-    headers: { "User-Agent": UA, Accept: "application/json" },
+    headers: { "User-Agent": UA, Accept: "application/json", ...extraHeaders },
   });
   if (!res.ok) return null;
   return (await res.json()) as T;
@@ -274,9 +274,122 @@ async function wscReadings(siteId: string): Promise<Reading[]> {
   return out;
 }
 
+function cdecIso(t?: string) {
+  if (!t) return "";
+  const m = String(t).match(/^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{2})/);
+  if (!m) return t;
+  const pad = (n: string) => n.padStart(2, "0");
+  return `${m[1]}-${pad(m[2])}-${pad(m[3])}T${pad(m[4])}:${m[5]}:00`;
+}
+
+function cdecLatest(
+  rows: Array<{ value?: number | string; obsDate?: string; date?: string; sensorType?: string; units?: string }>,
+) {
+  for (let i = rows.length - 1; i >= 0; i -= 1) {
+    const v = Number(rows[i]?.value);
+    if (Number.isFinite(v) && v !== -9999) {
+      return { value: String(rows[i].value), at: cdecIso(rows[i].obsDate || rows[i].date) };
+    }
+  }
+  return null;
+}
+
+async function cdecReadings(siteId: string): Promise<Reading[]> {
+  const url =
+    `https://cdec.water.ca.gov/dynamicapp/req/JSONDataServlet?Stations=${encodeURIComponent(siteId)}` +
+    `&SensorNums=6,15&dur_code=D&count=5`;
+  const json = await fetchJson<
+    Array<{ value?: number; obsDate?: string; date?: string; sensorType?: string; units?: string; SENSOR_NUM?: number }>
+  >(url);
+  if (!Array.isArray(json)) return [];
+  const elev = cdecLatest(json.filter((r) => r.SENSOR_NUM === 6 || /ELE/i.test(r.sensorType ?? "")));
+  const store = cdecLatest(json.filter((r) => r.SENSOR_NUM === 15 || /STOR/i.test(r.sensorType ?? "")));
+  const out: Reading[] = [];
+  if (elev) out.push({ label: "Reservoir elevation", value: elev.value, unit: "ft", observedAt: elev.at });
+  if (store) out.push({ label: "Reservoir storage", value: store.value, unit: "ac-ft", observedAt: store.at });
+  return out;
+}
+
+async function usbrRiseLatest(itemId: string): Promise<{ value: string; at: string } | null> {
+  const since = new Date(Date.now() - 40 * 86400_000).toISOString().slice(0, 10);
+  const json = await fetchJson<{
+    data?: Array<{ attributes?: { dateTime?: string; result?: number } }>;
+  }>(
+    `https://data.usbr.gov/rise/api/result?filter[itemId]=${encodeURIComponent(itemId)}` +
+      `&filter[dateTime][GT]=${since}&page[size]=5`,
+    { Accept: "application/vnd.api+json" },
+  );
+  const a = json?.data?.[0]?.attributes;
+  if (a?.result == null) return null;
+  return { value: String(a.result), at: a.dateTime ?? "" };
+}
+
+async function usbrHydrometFb(code: string): Promise<{ value: string; at: string } | null> {
+  const now = new Date();
+  const start = new Date(now.getTime() - 16 * 86400_000);
+  const q =
+    `parameter=${encodeURIComponent(code.toUpperCase() + " FB")}` +
+    `&syer=${start.getUTCFullYear()}&smnth=${start.getUTCMonth() + 1}&sdy=${start.getUTCDate()}` +
+    `&eyer=${now.getUTCFullYear()}&emnth=${now.getUTCMonth() + 1}&edy=${now.getUTCDate()}&format=2`;
+  const res = await fetch(`https://www.usbr.gov/pn-bin/webarccsv.pl?${q}`, { headers: { "User-Agent": UA } });
+  if (!res.ok) return null;
+  const text = await res.text();
+  const lines = text.split("\n").map((l) => l.trim()).filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
+  for (let i = lines.length - 1; i >= 0; i -= 1) {
+    const [d, v] = lines[i].split(",");
+    const n = Number(String(v).trim());
+    if (!Number.isFinite(n)) continue;
+    const [mm, dd, yy] = d.split("/");
+    return { value: String(n), at: `${yy}-${mm}-${dd}T00:00:00Z` };
+  }
+  return null;
+}
+
+async function usbrReadings(siteId: string): Promise<Reading[]> {
+  if (siteId.startsWith("rise:")) {
+    const hit = await usbrRiseLatest(siteId.slice(5));
+    return hit
+      ? [{ label: "Reservoir elevation", value: hit.value, unit: "ft", observedAt: hit.at }]
+      : [];
+  }
+  const hit = await usbrHydrometFb(siteId);
+  return hit
+    ? [{ label: "Reservoir elevation", value: hit.value, unit: "ft", observedAt: hit.at }]
+    : [];
+}
+
+async function usaceReadings(siteId: string): Promise<Reading[]> {
+  const [office, name] = siteId.includes(":") ? siteId.split(":") : ["SAS", siteId];
+  const end = new Date();
+  const begin = new Date(end.getTime() - 10 * 86400_000);
+  const url =
+    `https://cwms-data.usace.army.mil/cwms-data/timeseries?office=${encodeURIComponent(office)}` +
+    `&name=${encodeURIComponent(name)}` +
+    `&begin=${begin.toISOString()}&end=${end.toISOString()}&page-size=20`;
+  const json = await fetchJson<{
+    units?: string;
+    values?: Array<[number, number, number]>;
+  }>(url);
+  const vals = json?.values ?? [];
+  if (!vals.length) return [];
+  const last = vals[vals.length - 1];
+  const observedAt = last?.[0] ? new Date(last[0]).toISOString() : "";
+  return [
+    {
+      label: "Reservoir stage",
+      value: Number(last[1]).toFixed(2),
+      unit: json?.units || "ft",
+      observedAt,
+    },
+  ];
+}
+
 async function liveReadings(agency: string | null, siteId: string): Promise<Reading[]> {
   if (agency === "NOAA-COOPS") return noaaReadings(siteId);
   if (agency === "WSC") return wscReadings(siteId);
+  if (agency === "CDEC") return cdecReadings(siteId);
+  if (agency === "USBR") return usbrReadings(siteId);
+  if (agency === "USACE") return usaceReadings(siteId);
   return usgsReadings(siteId);
 }
 

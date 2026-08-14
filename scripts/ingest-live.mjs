@@ -244,11 +244,149 @@ async function nwsObservation(stationId) {
   };
 }
 
+async function cdecStation(siteId, siteName) {
+  try {
+    const url =
+      `https://cdec.water.ca.gov/dynamicapp/req/JSONDataServlet?Stations=${encodeURIComponent(siteId)}` +
+      `&SensorNums=6,15&dur_code=D&count=5`;
+    const res = await fetch(url, { headers: { "User-Agent": UA, Accept: "application/json" } });
+    if (!res.ok) throw new Error(`CDEC ${res.status}`);
+    const json = await res.json();
+    const rows = Array.isArray(json) ? json : [];
+    const pick = (pred) => {
+      const list = rows.filter(pred);
+      for (let i = list.length - 1; i >= 0; i -= 1) {
+        const v = Number(list[i]?.value);
+        if (Number.isFinite(v) && v !== -9999) {
+          const raw = list[i].obsDate || list[i].date || "";
+          const m = String(raw).match(/^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{2})/);
+          const pad = (n) => String(n).padStart(2, "0");
+          const at = m ? `${m[1]}-${pad(m[2])}-${pad(m[3])}T${pad(m[4])}:${m[5]}:00` : raw;
+          return { value: String(list[i].value), at };
+        }
+      }
+      return null;
+    };
+    const readings = [];
+    const elev = pick((r) => r.SENSOR_NUM === 6 || /ELE/i.test(r.sensorType ?? ""));
+    const store = pick((r) => r.SENSOR_NUM === 15 || /STOR/i.test(r.sensorType ?? ""));
+    if (elev) readings.push({ label: "Reservoir elevation", value: elev.value, unit: "ft", observedAt: elev.at });
+    if (store) readings.push({ label: "Reservoir storage", value: store.value, unit: "ac-ft", observedAt: store.at });
+    return emptyStation(siteId, "CDEC", { siteName, readings });
+  } catch (err) {
+    return emptyStation(siteId, "CDEC", { siteName, error: String(err.message ?? err) });
+  }
+}
+
+async function usbrStation(siteId, siteName) {
+  try {
+    const readings = [];
+    if (String(siteId).startsWith("rise:")) {
+      const itemId = String(siteId).slice(5);
+      const since = new Date(Date.now() - 40 * 86400000).toISOString().slice(0, 10);
+      const url =
+        `https://data.usbr.gov/rise/api/result?filter[itemId]=${encodeURIComponent(itemId)}` +
+        `&filter[dateTime][GT]=${since}&page[size]=5`;
+      let lastErr = null;
+      for (let attempt = 1; attempt <= 3; attempt += 1) {
+        try {
+          const res = await fetch(url, {
+            headers: { "User-Agent": UA, Accept: "application/vnd.api+json" },
+            signal: AbortSignal.timeout(45000),
+          });
+          if (!res.ok) throw new Error(`USBR RISE ${res.status}`);
+          const json = await res.json();
+          const a = json.data?.[0]?.attributes;
+          if (a?.result != null) {
+            readings.push({
+              label: "Reservoir elevation",
+              value: String(a.result),
+              unit: "ft",
+              observedAt: a.dateTime ?? "",
+            });
+          }
+          lastErr = null;
+          break;
+        } catch (err) {
+          lastErr = err;
+          await new Promise((r) => setTimeout(r, 1500 * attempt));
+        }
+      }
+      if (lastErr && !readings.length) throw lastErr;
+    } else {
+      const now = new Date();
+      const start = new Date(now.getTime() - 16 * 86400000);
+      const q =
+        `parameter=${encodeURIComponent(String(siteId).toUpperCase() + " FB")}` +
+        `&syer=${start.getUTCFullYear()}&smnth=${start.getUTCMonth() + 1}&sdy=${start.getUTCDate()}` +
+        `&eyer=${now.getUTCFullYear()}&emnth=${now.getUTCMonth() + 1}&edy=${now.getUTCDate()}&format=2`;
+      const res = await fetch(`https://www.usbr.gov/pn-bin/webarccsv.pl?${q}`, {
+        headers: { "User-Agent": UA },
+      });
+      if (!res.ok) throw new Error(`USBR Hydromet ${res.status}`);
+      const text = await res.text();
+      const lines = text.split("\n").map((l) => l.trim()).filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
+      for (let i = lines.length - 1; i >= 0; i -= 1) {
+        const [d, v] = lines[i].split(",");
+        const n = Number(String(v).trim());
+        if (!Number.isFinite(n)) continue;
+        const [mm, dd, yy] = d.split("/");
+        readings.push({
+          label: "Reservoir elevation",
+          value: String(n),
+          unit: "ft",
+          observedAt: `${yy}-${mm}-${dd}T00:00:00Z`,
+        });
+        break;
+      }
+    }
+    return emptyStation(siteId, "USBR", { siteName, readings });
+  } catch (err) {
+    return emptyStation(siteId, "USBR", { siteName, error: String(err.message ?? err) });
+  }
+}
+
+async function usaceStation(siteId, siteName) {
+  try {
+    const [office, name] = String(siteId).includes(":") ? siteId.split(":") : ["SAS", siteId];
+    const end = new Date();
+    const begin = new Date(end.getTime() - 10 * 86400000);
+    const url =
+      `https://cwms-data.usace.army.mil/cwms-data/timeseries?office=${encodeURIComponent(office)}` +
+      `&name=${encodeURIComponent(name)}` +
+      `&begin=${begin.toISOString()}&end=${end.toISOString()}&page-size=50`;
+    const res = await fetch(url, { headers: { "User-Agent": UA, Accept: "application/json" } });
+    if (!res.ok) throw new Error(`USACE ${res.status}`);
+    const json = await res.json();
+    const vals = json.values ?? [];
+    const readings = [];
+    if (vals.length) {
+      const last = vals[vals.length - 1];
+      readings.push({
+        label: "Reservoir stage",
+        value: Number(last[1]).toFixed(2),
+        unit: json.units || "ft",
+        observedAt: last[0] ? new Date(last[0]).toISOString() : "",
+      });
+    }
+    return emptyStation(siteId, "USACE", { siteName, readings });
+  } catch (err) {
+    return emptyStation(siteId, "USACE", { siteName, error: String(err.message ?? err) });
+  }
+}
+
 async function main() {
   const bindings = JSON.parse(readFileSync(BIND_PATH, "utf8"));
   const matched = bindings.records.filter((r) => r.status === "matched" && r.siteId);
   const stations = {};
-  const byAgency = { USGS: { bound: 0, withReadings: 0 }, "NOAA-COOPS": { bound: 0, withReadings: 0 }, WSC: { bound: 0, withReadings: 0 } };
+  const byAgency = {
+    USGS: { bound: 0, withReadings: 0 },
+    "NOAA-COOPS": { bound: 0, withReadings: 0 },
+    WSC: { bound: 0, withReadings: 0 },
+    USBR: { bound: 0, withReadings: 0 },
+    USACE: { bound: 0, withReadings: 0 },
+    CDEC: { bound: 0, withReadings: 0 },
+  };
 
   const usgsIds = [
     ...new Set(matched.filter((r) => r.agency === "USGS").map((r) => r.siteId)),
@@ -261,10 +399,22 @@ async function main() {
   const wscRows = [
     ...new Map(matched.filter((r) => r.agency === "WSC").map((r) => [r.siteId, r])).values(),
   ];
+  const usbrRows = [
+    ...new Map(matched.filter((r) => r.agency === "USBR").map((r) => [r.siteId, r])).values(),
+  ];
+  const usaceRows = [
+    ...new Map(matched.filter((r) => r.agency === "USACE").map((r) => [r.siteId, r])).values(),
+  ];
+  const cdecRows = [
+    ...new Map(matched.filter((r) => r.agency === "CDEC").map((r) => [r.siteId, r])).values(),
+  ];
 
   byAgency.USGS.bound = usgsIds.length;
   byAgency["NOAA-COOPS"].bound = noaaRows.length;
   byAgency.WSC.bound = wscRows.length;
+  byAgency.USBR.bound = usbrRows.length;
+  byAgency.USACE.bound = usaceRows.length;
+  byAgency.CDEC.bound = cdecRows.length;
 
   for (const group of chunk(usgsIds, BATCH)) {
     try {
@@ -292,6 +442,18 @@ async function main() {
   const wscResults = await poolMap(wscRows, 4, (r) => wscStation(r.siteId, r.siteName));
   for (const row of wscResults) stations[row.siteId] = row;
   console.error(`wsc   ${wscRows.length} stations`);
+
+  const usbrResults = await poolMap(usbrRows, 3, (r) => usbrStation(r.siteId, r.siteName));
+  for (const row of usbrResults) stations[row.siteId] = row;
+  console.error(`usbr  ${usbrRows.length} stations`);
+
+  const usaceResults = await poolMap(usaceRows, 3, (r) => usaceStation(r.siteId, r.siteName));
+  for (const row of usaceResults) stations[row.siteId] = row;
+  console.error(`usace ${usaceRows.length} stations`);
+
+  const cdecResults = await poolMap(cdecRows, 3, (r) => cdecStation(r.siteId, r.siteName));
+  for (const row of cdecResults) stations[row.siteId] = row;
+  console.error(`cdec  ${cdecRows.length} stations`);
 
   const nwsIds = [
     ...new Set(bindings.records.map((r) => r.nwsStationId).filter(Boolean)),
@@ -325,7 +487,7 @@ async function main() {
   const payload = {
     schema: "0.6.0",
     ingestedAt: new Date().toISOString(),
-    source: "usgs-nwis-iv+noaa-coops+wsc-geomet+nws-obs",
+    source: "usgs-nwis-iv+noaa-coops+wsc-geomet+usbr-rise+usace-cwms+cdec+nws-obs",
     cadenceMinutes: 30,
     doctrine:
       "Agency observations only. Age is printed. A silent feed is a miss, not a default.",
@@ -349,7 +511,10 @@ async function main() {
       ` · NWS ${nwsWithObs}/${nwsIds.length}` +
       ` · USGS ${byAgency.USGS.withReadings}/${byAgency.USGS.bound}` +
       ` · NOAA ${byAgency["NOAA-COOPS"].withReadings}/${byAgency["NOAA-COOPS"].bound}` +
-      ` · WSC ${byAgency.WSC.withReadings}/${byAgency.WSC.bound}`,
+      ` · WSC ${byAgency.WSC.withReadings}/${byAgency.WSC.bound}` +
+      ` · USBR ${byAgency.USBR.withReadings}/${byAgency.USBR.bound}` +
+      ` · USACE ${byAgency.USACE.withReadings}/${byAgency.USACE.bound}` +
+      ` · CDEC ${byAgency.CDEC.withReadings}/${byAgency.CDEC.bound}`,
   );
 }
 

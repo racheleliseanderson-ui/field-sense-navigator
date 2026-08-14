@@ -1,20 +1,23 @@
 {
   "schema": "0.6.0",
-  "generatedAt": "2026-08-14T20:17:47.625Z",
+  "generatedAt": "2026-08-14T21:00:43.502Z",
   "matchFloor": 0.75,
   "doctrine": "Override file wins. Otherwise name + water-type must align. Ambiguous multi-matches stay unmatched. No nearby-station substitution. Gaps stay gaps.",
   "stats": {
     "records": 518,
-    "matched": 431,
-    "unmatched": 87,
+    "matched": 439,
+    "unmatched": 79,
     "unsupported": 0,
     "error": 0,
-    "overrides": 39,
+    "overrides": 47,
     "located": 517,
     "nwsBound": 444,
     "byAgency": {
       "USGS": 334,
       "NOAA-COOPS": 41,
+      "USBR": 4,
+      "CDEC": 3,
+      "USACE": 1,
       "WSC": 56
     }
   },
@@ -839,17 +842,17 @@
       "state": "Washington",
       "waterbody": "Banks Lake",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
       "lat": 47.7853721,
       "lon": -119.216909,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "K3W7",
       "nwsStationName": "Grand Coulee Dam Airport",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK).",
       "locationKind": "hydro",
       "locationName": "Banks Lake, Coulee City, Grant County, Washington, United States"
     },
@@ -1561,17 +1564,17 @@
       "state": "Washington",
       "waterbody": "Banks Lake",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
       "lat": 47.7853721,
       "lon": -119.216909,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "K3W7",
       "nwsStationName": "Grand Coulee Dam Airport",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK).",
       "locationKind": "hydro",
       "locationName": "Banks Lake, Coulee City, Grant County, Washington, United States"
     },
@@ -1616,7 +1619,7 @@
     {
       "destinationId": "HHI-DEST-085",
       "state": "Idaho",
-      "waterbody": "Lake Coeur d’Alene (public access network)",
+      "waterbody": "Lake Coeur d\u2019Alene (public access network)",
       "waterType": "lake",
       "status": "matched",
       "agency": "USGS",
@@ -1711,7 +1714,7 @@
     {
       "destinationId": "HHI-DEST-090",
       "state": "Oregon",
-      "waterbody": "Deschutes River (public access corridor — select named segments)",
+      "waterbody": "Deschutes River (public access corridor \u2014 select named segments)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2376,7 +2379,7 @@
     {
       "destinationId": "HHI-DEST-125",
       "state": "Montana",
-      "waterbody": "Missouri River (Holter Dam tailwater / Wolf Creek–Craig public FAS corridor)",
+      "waterbody": "Missouri River (Holter Dam tailwater / Wolf Creek\u2013Craig public FAS corridor)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2395,7 +2398,7 @@
     {
       "destinationId": "HHI-DEST-126",
       "state": "Idaho",
-      "waterbody": "Henry's Fork of the Snake River (public access corridor — Box Canyon to lower river)",
+      "waterbody": "Henry's Fork of the Snake River (public access corridor \u2014 Box Canyon to lower river)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2490,7 +2493,7 @@
     {
       "destinationId": "HHI-DEST-131",
       "state": "Idaho",
-      "waterbody": "Clearwater River (public access corridor — Orofino / Hwy 12)",
+      "waterbody": "Clearwater River (public access corridor \u2014 Orofino / Hwy 12)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2509,7 +2512,7 @@
     {
       "destinationId": "HHI-DEST-132",
       "state": "Idaho",
-      "waterbody": "Boise River (public access corridor — Barber Dam to lower urban reaches)",
+      "waterbody": "Boise River (public access corridor \u2014 Barber Dam to lower urban reaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2528,7 +2531,7 @@
     {
       "destinationId": "HHI-DEST-133",
       "state": "Idaho",
-      "waterbody": "St. Joe River (public access corridor — recreational and wild segments)",
+      "waterbody": "St. Joe River (public access corridor \u2014 recreational and wild segments)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2547,7 +2550,7 @@
     {
       "destinationId": "HHI-DEST-134",
       "state": "Washington",
-      "waterbody": "Methow River (public access corridor — Winthrop to Pateros)",
+      "waterbody": "Methow River (public access corridor \u2014 Winthrop to Pateros)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2566,7 +2569,7 @@
     {
       "destinationId": "HHI-DEST-135",
       "state": "Washington",
-      "waterbody": "Skagit River (public access corridor — mainstem and lower estuary approaches)",
+      "waterbody": "Skagit River (public access corridor \u2014 mainstem and lower estuary approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2585,7 +2588,7 @@
     {
       "destinationId": "HHI-DEST-136",
       "state": "Minnesota",
-      "waterbody": "St. Croix River (public access corridor — Taylor's Falls / Stillwater approaches)",
+      "waterbody": "St. Croix River (public access corridor \u2014 Taylor's Falls / Stillwater approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2623,7 +2626,7 @@
     {
       "destinationId": "HHI-DEST-138",
       "state": "Idaho",
-      "waterbody": "North Fork Payette River (public access corridor — Payette Lake to lower canyon)",
+      "waterbody": "North Fork Payette River (public access corridor \u2014 Payette Lake to lower canyon)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2680,7 +2683,7 @@
     {
       "destinationId": "HHI-DEST-141",
       "state": "Montana",
-      "waterbody": "Flathead River (public FAS corridor — Kalispell / Columbia Falls approaches)",
+      "waterbody": "Flathead River (public FAS corridor \u2014 Kalispell / Columbia Falls approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2718,7 +2721,7 @@
     {
       "destinationId": "HHI-DEST-143",
       "state": "Minnesota",
-      "waterbody": "Rum River (public access corridor — state water trail / east-metro reaches)",
+      "waterbody": "Rum River (public access corridor \u2014 state water trail / east-metro reaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2737,7 +2740,7 @@
     {
       "destinationId": "HHI-DEST-144",
       "state": "Montana",
-      "waterbody": "Bitterroot River (public FAS corridor — Lolo to Stevensville approaches)",
+      "waterbody": "Bitterroot River (public FAS corridor \u2014 Lolo to Stevensville approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2756,7 +2759,7 @@
     {
       "destinationId": "HHI-DEST-145",
       "state": "Montana",
-      "waterbody": "Blackfoot River (public FAS corridor — Hwy 200 approaches toward Clark Fork confluence)",
+      "waterbody": "Blackfoot River (public FAS corridor \u2014 Hwy 200 approaches toward Clark Fork confluence)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2775,7 +2778,7 @@
     {
       "destinationId": "HHI-DEST-146",
       "state": "Idaho",
-      "waterbody": "South Fork Snake River (public access corridor — Palisades Dam to Henry's Fork confluence)",
+      "waterbody": "South Fork Snake River (public access corridor \u2014 Palisades Dam to Henry's Fork confluence)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2794,7 +2797,7 @@
     {
       "destinationId": "HHI-DEST-147",
       "state": "Colorado",
-      "waterbody": "Fryingpan River (Gold Medal public corridor — Ruedi Dam to Roaring Fork confluence)",
+      "waterbody": "Fryingpan River (Gold Medal public corridor \u2014 Ruedi Dam to Roaring Fork confluence)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2813,7 +2816,7 @@
     {
       "destinationId": "HHI-DEST-148",
       "state": "Washington",
-      "waterbody": "Spokane River (public access corridor — Riverside State Park and urban redband reaches)",
+      "waterbody": "Spokane River (public access corridor \u2014 Riverside State Park and urban redband reaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2832,7 +2835,7 @@
     {
       "destinationId": "HHI-DEST-149",
       "state": "Minnesota",
-      "waterbody": "Mississippi River Pool 2 (public access corridor — Ford Dam approaches to Hastings)",
+      "waterbody": "Mississippi River Pool 2 (public access corridor \u2014 Ford Dam approaches to Hastings)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2851,7 +2854,7 @@
     {
       "destinationId": "HHI-DEST-150",
       "state": "Montana",
-      "waterbody": "Yellowstone River (public FAS corridor — Paradise Valley / Livingston approaches)",
+      "waterbody": "Yellowstone River (public FAS corridor \u2014 Paradise Valley / Livingston approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2870,7 +2873,7 @@
     {
       "destinationId": "HHI-DEST-151",
       "state": "Montana",
-      "waterbody": "Clark Fork River (public FAS corridor — Missoula west toward Alberton Gorge)",
+      "waterbody": "Clark Fork River (public FAS corridor \u2014 Missoula west toward Alberton Gorge)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2889,7 +2892,7 @@
     {
       "destinationId": "HHI-DEST-152",
       "state": "Idaho",
-      "waterbody": "Lochsa River (public access corridor — Hwy 12 / Lowell to upper wilderness approaches)",
+      "waterbody": "Lochsa River (public access corridor \u2014 Hwy 12 / Lowell to upper wilderness approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2908,7 +2911,7 @@
     {
       "destinationId": "HHI-DEST-153",
       "state": "Colorado",
-      "waterbody": "Blue River (Gold Medal public corridor — Dillon Dam through Silverthorne)",
+      "waterbody": "Blue River (Gold Medal public corridor \u2014 Dillon Dam through Silverthorne)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2927,7 +2930,7 @@
     {
       "destinationId": "HHI-DEST-154",
       "state": "Washington",
-      "waterbody": "Cowlitz River (public access corridor — Barrier Dam / Blue Creek hatchery approaches)",
+      "waterbody": "Cowlitz River (public access corridor \u2014 Barrier Dam / Blue Creek hatchery approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2946,7 +2949,7 @@
     {
       "destinationId": "HHI-DEST-155",
       "state": "Minnesota",
-      "waterbody": "Minnesota River (public state water trail corridor — valley segments toward Mississippi confluence)",
+      "waterbody": "Minnesota River (public state water trail corridor \u2014 valley segments toward Mississippi confluence)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2965,7 +2968,7 @@
     {
       "destinationId": "HHI-DEST-156",
       "state": "Montana",
-      "waterbody": "Gallatin River (public FAS corridor — canyon and lower valley approaches)",
+      "waterbody": "Gallatin River (public FAS corridor \u2014 canyon and lower valley approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -2984,7 +2987,7 @@
     {
       "destinationId": "HHI-DEST-157",
       "state": "Montana",
-      "waterbody": "Madison River (public FAS corridor — Ennis / Varney approaches)",
+      "waterbody": "Madison River (public FAS corridor \u2014 Ennis / Varney approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3003,7 +3006,7 @@
     {
       "destinationId": "HHI-DEST-158",
       "state": "Idaho",
-      "waterbody": "Salmon River (Upper Salmon public corridor — Stanley to North Fork approaches)",
+      "waterbody": "Salmon River (Upper Salmon public corridor \u2014 Stanley to North Fork approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3022,7 +3025,7 @@
     {
       "destinationId": "HHI-DEST-159",
       "state": "Colorado",
-      "waterbody": "Roaring Fork River (Gold Medal public corridor — Basalt to Glenwood Springs)",
+      "waterbody": "Roaring Fork River (Gold Medal public corridor \u2014 Basalt to Glenwood Springs)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3041,7 +3044,7 @@
     {
       "destinationId": "HHI-DEST-160",
       "state": "Washington",
-      "waterbody": "Skykomish River (public access corridor — Index / Gold Bar / Sultan approaches)",
+      "waterbody": "Skykomish River (public access corridor \u2014 Index / Gold Bar / Sultan approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3060,7 +3063,7 @@
     {
       "destinationId": "HHI-DEST-161",
       "state": "Minnesota",
-      "waterbody": "Cannon River (public state water trail corridor — Faribault to Mississippi approaches)",
+      "waterbody": "Cannon River (public state water trail corridor \u2014 Faribault to Mississippi approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3079,7 +3082,7 @@
     {
       "destinationId": "HHI-DEST-162",
       "state": "Montana",
-      "waterbody": "Rock Creek (public FAS corridor — upper Rock Creek toward Clark Fork)",
+      "waterbody": "Rock Creek (public FAS corridor \u2014 upper Rock Creek toward Clark Fork)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3098,7 +3101,7 @@
     {
       "destinationId": "HHI-DEST-163",
       "state": "Idaho",
-      "waterbody": "Selway River (public access corridor — mouth to wilderness approaches)",
+      "waterbody": "Selway River (public access corridor \u2014 mouth to wilderness approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3117,7 +3120,7 @@
     {
       "destinationId": "HHI-DEST-164",
       "state": "Colorado",
-      "waterbody": "Colorado River (Gold Medal public corridor — Canyon Creek / Pumphouse to Rock Creek approaches)",
+      "waterbody": "Colorado River (Gold Medal public corridor \u2014 Canyon Creek / Pumphouse to Rock Creek approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3136,7 +3139,7 @@
     {
       "destinationId": "HHI-DEST-165",
       "state": "Colorado",
-      "waterbody": "Animas River (Gold Medal public corridor — Lightner Creek to Rivera Crossing)",
+      "waterbody": "Animas River (Gold Medal public corridor \u2014 Lightner Creek to Rivera Crossing)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3155,7 +3158,7 @@
     {
       "destinationId": "HHI-DEST-166",
       "state": "Washington",
-      "waterbody": "Stillaguamish River (public access corridor — North Fork / mainstem approaches)",
+      "waterbody": "Stillaguamish River (public access corridor \u2014 North Fork / mainstem approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3174,7 +3177,7 @@
     {
       "destinationId": "HHI-DEST-167",
       "state": "Minnesota",
-      "waterbody": "Crow Wing River (public state water trail corridor — lake chain to Mississippi confluence approaches)",
+      "waterbody": "Crow Wing River (public state water trail corridor \u2014 lake chain to Mississippi confluence approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3193,7 +3196,7 @@
     {
       "destinationId": "HHI-DEST-168",
       "state": "Montana",
-      "waterbody": "Smith River (public FAS corridor — Camp Baker to Eden Bridge permit float system and lower public access)",
+      "waterbody": "Smith River (public FAS corridor \u2014 Camp Baker to Eden Bridge permit float system and lower public access)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3212,7 +3215,7 @@
     {
       "destinationId": "HHI-DEST-169",
       "state": "Idaho",
-      "waterbody": "Snake River (Hells Canyon public corridor — WA/ID border to Hells Canyon Dam)",
+      "waterbody": "Snake River (Hells Canyon public corridor \u2014 WA/ID border to Hells Canyon Dam)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3231,7 +3234,7 @@
     {
       "destinationId": "HHI-DEST-170",
       "state": "Colorado",
-      "waterbody": "Eagle River (Gold Medal public corridor — Gore Creek confluence toward Colorado River)",
+      "waterbody": "Eagle River (Gold Medal public corridor \u2014 Gore Creek confluence toward Colorado River)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3250,7 +3253,7 @@
     {
       "destinationId": "HHI-DEST-171",
       "state": "Washington",
-      "waterbody": "Hoh River (public access corridor — Olympic National Park boundary to lower approaches)",
+      "waterbody": "Hoh River (public access corridor \u2014 Olympic National Park boundary to lower approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3269,7 +3272,7 @@
     {
       "destinationId": "HHI-DEST-172",
       "state": "Minnesota",
-      "waterbody": "Root River (public state water trail corridor — Chatfield / Lanesboro to Mississippi approaches)",
+      "waterbody": "Root River (public state water trail corridor \u2014 Chatfield / Lanesboro to Mississippi approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3288,7 +3291,7 @@
     {
       "destinationId": "HHI-DEST-173",
       "state": "Washington",
-      "waterbody": "Methow River (public access corridor — mouth toward Twisp / Winthrop approaches)",
+      "waterbody": "Methow River (public access corridor \u2014 mouth toward Twisp / Winthrop approaches)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3364,7 +3367,7 @@
     {
       "destinationId": "HHI-DEST-177",
       "state": "Texas",
-      "waterbody": "Upper Laguna Madre (Padre Island National Seashore — Bird Island Basin corridor)",
+      "waterbody": "Upper Laguna Madre (Padre Island National Seashore \u2014 Bird Island Basin corridor)",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -3421,7 +3424,7 @@
     {
       "destinationId": "HHI-DEST-180",
       "state": "Texas",
-      "waterbody": "Sam Rayburn Reservoir (public access corridor — USACE / USFS / TPWD ramps)",
+      "waterbody": "Sam Rayburn Reservoir (public access corridor \u2014 USACE / USFS / TPWD ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3459,7 +3462,7 @@
     {
       "destinationId": "HHI-DEST-182",
       "state": "Texas",
-      "waterbody": "Lake Texoma (Texas side — Eisenhower State Park corridor)",
+      "waterbody": "Lake Texoma (Texas side \u2014 Eisenhower State Park corridor)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3478,7 +3481,7 @@
     {
       "destinationId": "HHI-DEST-183",
       "state": "Texas",
-      "waterbody": "Lower Laguna Madre (South Padre Island — Marisol public boat ramp corridor)",
+      "waterbody": "Lower Laguna Madre (South Padre Island \u2014 Marisol public boat ramp corridor)",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -3573,7 +3576,7 @@
     {
       "destinationId": "HHI-DEST-188",
       "state": "Texas",
-      "waterbody": "Lake Livingston (public access corridor — TPWD / TRA / public ramps)",
+      "waterbody": "Lake Livingston (public access corridor \u2014 TPWD / TRA / public ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3592,7 +3595,7 @@
     {
       "destinationId": "HHI-DEST-189",
       "state": "Texas",
-      "waterbody": "Canyon Lake (public access corridor — USACE / public parks)",
+      "waterbody": "Canyon Lake (public access corridor \u2014 USACE / public parks)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3611,7 +3614,7 @@
     {
       "destinationId": "HHI-DEST-190",
       "state": "Texas",
-      "waterbody": "Lake Conroe (public access corridor — TPWD FM 830 + USFS ramps)",
+      "waterbody": "Lake Conroe (public access corridor \u2014 TPWD FM 830 + USFS ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3630,7 +3633,7 @@
     {
       "destinationId": "HHI-DEST-191",
       "state": "Texas",
-      "waterbody": "Lake Buchanan (public access corridor — Burnet County Park and published public ramps)",
+      "waterbody": "Lake Buchanan (public access corridor \u2014 Burnet County Park and published public ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3706,7 +3709,7 @@
     {
       "destinationId": "HHI-DEST-195",
       "state": "Texas",
-      "waterbody": "Guadalupe River tailwater (public corridor below Canyon Dam — Guadalupe Park and published access)",
+      "waterbody": "Guadalupe River tailwater (public corridor below Canyon Dam \u2014 Guadalupe Park and published access)",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -3763,7 +3766,7 @@
     {
       "destinationId": "HHI-DEST-198",
       "state": "Texas",
-      "waterbody": "Lake Fork (public access corridor — SRA and free public ramps)",
+      "waterbody": "Lake Fork (public access corridor \u2014 SRA and free public ramps)",
       "waterType": "reservoir",
       "status": "unmatched",
       "agency": null,
@@ -3782,7 +3785,7 @@
     {
       "destinationId": "HHI-DEST-199",
       "state": "Texas",
-      "waterbody": "Choke Canyon Reservoir (Choke Canyon State Park — Calliham and South Shore units)",
+      "waterbody": "Choke Canyon Reservoir (Choke Canyon State Park \u2014 Calliham and South Shore units)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3801,7 +3804,7 @@
     {
       "destinationId": "HHI-DEST-200",
       "state": "Texas",
-      "waterbody": "Lake Amistad (Amistad National Recreation Area — NPS public ramps)",
+      "waterbody": "Lake Amistad (Amistad National Recreation Area \u2014 NPS public ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3839,7 +3842,7 @@
     {
       "destinationId": "HHI-DEST-202",
       "state": "Texas",
-      "waterbody": "Guadalupe River State Park (river corridor — distinct from Canyon Dam tailwater)",
+      "waterbody": "Guadalupe River State Park (river corridor \u2014 distinct from Canyon Dam tailwater)",
       "waterType": "river",
       "status": "unmatched",
       "agency": null,
@@ -3896,7 +3899,7 @@
     {
       "destinationId": "HHI-DEST-205",
       "state": "Texas",
-      "waterbody": "Falcon Reservoir (Falcon State Park corridor — Texas side)",
+      "waterbody": "Falcon Reservoir (Falcon State Park corridor \u2014 Texas side)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3915,7 +3918,7 @@
     {
       "destinationId": "HHI-DEST-206",
       "state": "Texas",
-      "waterbody": "Lake Palestine (public access corridor — free public ramps)",
+      "waterbody": "Lake Palestine (public access corridor \u2014 free public ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3934,7 +3937,7 @@
     {
       "destinationId": "HHI-DEST-207",
       "state": "Texas",
-      "waterbody": "Lake Ray Roberts (Ray Roberts Lake State Park — Isle du Bois / Johnson Branch)",
+      "waterbody": "Lake Ray Roberts (Ray Roberts Lake State Park \u2014 Isle du Bois / Johnson Branch)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -3991,7 +3994,7 @@
     {
       "destinationId": "HHI-DEST-210",
       "state": "Texas",
-      "waterbody": "Lake Somerville (Lake Somerville State Park — Nails Creek / Birch Creek units)",
+      "waterbody": "Lake Somerville (Lake Somerville State Park \u2014 Nails Creek / Birch Creek units)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -4048,7 +4051,7 @@
     {
       "destinationId": "HHI-DEST-213",
       "state": "Texas",
-      "waterbody": "Cedar Creek Reservoir (public access corridor — named public ramps)",
+      "waterbody": "Cedar Creek Reservoir (public access corridor \u2014 named public ramps)",
       "waterType": "reservoir",
       "status": "unmatched",
       "agency": null,
@@ -4105,7 +4108,7 @@
     {
       "destinationId": "HHI-DEST-216",
       "state": "Florida",
-      "waterbody": "Lake Okeechobee (public access corridor — county and public ramps)",
+      "waterbody": "Lake Okeechobee (public access corridor \u2014 county and public ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -4276,7 +4279,7 @@
     {
       "destinationId": "HHI-DEST-225",
       "state": "Florida",
-      "waterbody": "Everglades National Park — Flamingo (Florida Bay / Whitewater Bay approaches)",
+      "waterbody": "Everglades National Park \u2014 Flamingo (Florida Bay / Whitewater Bay approaches)",
       "waterType": "marine",
       "status": "unmatched",
       "agency": null,
@@ -4333,7 +4336,7 @@
     {
       "destinationId": "HHI-DEST-228",
       "state": "Florida",
-      "waterbody": "Everglades National Park — Gulf Coast / Everglades City (Ten Thousand Islands)",
+      "waterbody": "Everglades National Park \u2014 Gulf Coast / Everglades City (Ten Thousand Islands)",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -4390,7 +4393,7 @@
     {
       "destinationId": "HHI-DEST-231",
       "state": "Florida",
-      "waterbody": "Canaveral National Seashore — Playalinda Beach corridor",
+      "waterbody": "Canaveral National Seashore \u2014 Playalinda Beach corridor",
       "waterType": "marine",
       "status": "unmatched",
       "agency": null,
@@ -4428,7 +4431,7 @@
     {
       "destinationId": "HHI-DEST-233",
       "state": "Florida",
-      "waterbody": "Lake Tohopekaliga (Toho — public boat ramps)",
+      "waterbody": "Lake Tohopekaliga (Toho \u2014 public boat ramps)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -4770,7 +4773,7 @@
     {
       "destinationId": "HHI-DEST-251",
       "state": "California",
-      "waterbody": "Sacramento–San Joaquin River Delta public corridor",
+      "waterbody": "Sacramento\u2013San Joaquin River Delta public corridor",
       "waterType": "river",
       "status": "unmatched",
       "agency": null,
@@ -4962,17 +4965,17 @@
       "state": "California",
       "waterbody": "Lake Perris State Recreation Area",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "CDEC",
+      "siteId": "PRR",
+      "siteName": "LAKE PERRIS",
       "lat": 33.8706007,
       "lon": -117.1664718,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "KRIV",
       "nwsStationName": "March Air Reserve Base",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Lake Perris.",
       "locationKind": "place",
       "locationName": "Lake Perris State Recreation Area, 17801, Perris, Riverside County, California, 92571, United States"
     },
@@ -4998,7 +5001,7 @@
     {
       "destinationId": "HHI-DEST-263",
       "state": "California",
-      "waterbody": "Trinity Lake (Whiskeytown–Shasta-Trinity National Recreation Area)",
+      "waterbody": "Trinity Lake (Whiskeytown\u2013Shasta-Trinity National Recreation Area)",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -5095,17 +5098,17 @@
       "state": "California",
       "waterbody": "Diamond Valley Lake",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "CDEC",
+      "siteId": "DMV",
+      "siteName": "DIAMOND VALLEY",
       "lat": 33.6798876,
       "lon": -117.0282474,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "KHMT",
       "nwsStationName": "Hemet-Ryan Airport",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Diamond Valley.",
       "locationKind": "hydro",
       "locationName": "Diamond Valley Lake, Winchester, Riverside County, California, United States"
     },
@@ -5190,17 +5193,17 @@
       "state": "California",
       "waterbody": "Lake Skinner (Lake Skinner Recreation Area)",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "CDEC",
+      "siteId": "SKN",
+      "siteName": "SKINNER",
       "lat": 33.5892362,
       "lon": -117.059681,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "SDFRV",
       "nwsStationName": "French Valley",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Skinner.",
       "locationKind": "hydro",
       "locationName": "Lake Skinner, Riverside County, California, United States"
     },
@@ -5321,7 +5324,7 @@
     {
       "destinationId": "HHI-DEST-280",
       "state": "Wisconsin",
-      "waterbody": "Lake Michigan — Milwaukee harbor",
+      "waterbody": "Lake Michigan \u2014 Milwaukee harbor",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -5397,7 +5400,7 @@
     {
       "destinationId": "HHI-DEST-284",
       "state": "Michigan",
-      "waterbody": "Lake Superior — Marquette",
+      "waterbody": "Lake Superior \u2014 Marquette",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -5416,7 +5419,7 @@
     {
       "destinationId": "HHI-DEST-285",
       "state": "Michigan",
-      "waterbody": "Lake Erie — Michigan waters",
+      "waterbody": "Lake Erie \u2014 Michigan waters",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -5511,7 +5514,7 @@
     {
       "destinationId": "HHI-DEST-290",
       "state": "Ohio",
-      "waterbody": "Lake Erie — western basin",
+      "waterbody": "Lake Erie \u2014 western basin",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -5625,7 +5628,7 @@
     {
       "destinationId": "HHI-DEST-296",
       "state": "Illinois",
-      "waterbody": "Lake Michigan — Chicago shoreline",
+      "waterbody": "Lake Michigan \u2014 Chicago shoreline",
       "waterType": "marine",
       "status": "matched",
       "agency": "USGS",
@@ -5701,7 +5704,7 @@
     {
       "destinationId": "HHI-DEST-300",
       "state": "Indiana",
-      "waterbody": "Lake Michigan — Indiana waters",
+      "waterbody": "Lake Michigan \u2014 Indiana waters",
       "waterType": "marine",
       "status": "matched",
       "agency": "NOAA-COOPS",
@@ -5739,7 +5742,7 @@
     {
       "destinationId": "HHI-DEST-302",
       "state": "Vermont",
-      "waterbody": "Lake Champlain — Vermont waters",
+      "waterbody": "Lake Champlain \u2014 Vermont waters",
       "waterType": "lake",
       "status": "matched",
       "agency": "USGS",
@@ -5829,7 +5832,7 @@
       "nwsStationName": "Steven A Bean Municipal Airport",
       "note": "Matched on published name via USGS site search (score 1.00). 2 official stations publish under this name; using 01127850.",
       "locationKind": "place",
-      "locationName": "Connecticut Lakes Headwaters Working Forest, Coös County, New Hampshire, United States"
+      "locationName": "Connecticut Lakes Headwaters Working Forest, Co\u00f6s County, New Hampshire, United States"
     },
     {
       "destinationId": "HHI-DEST-307",
@@ -6157,7 +6160,7 @@
     {
       "destinationId": "HHI-DEST-324",
       "state": "South Carolina",
-      "waterbody": "Santee Cooper Lakes — Lake Marion",
+      "waterbody": "Santee Cooper Lakes \u2014 Lake Marion",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -6197,17 +6200,17 @@
       "state": "South Carolina",
       "waterbody": "Lake Jocassee",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "USACE",
+      "siteId": "SAS:Jocassee.Stage.Inst.1Hour.0.Rev-SHEF_SAS",
+      "siteName": "JOCASSEE DAM",
       "lat": 35.0120203,
       "lon": -82.9098918,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "KLQK",
       "nwsStationName": "Pickens County Airport",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the USACE Savannah District CWMS site that publishes under Jocassee.",
       "locationKind": "hydro",
       "locationName": "Lake Jocassee, Pickens County, South Carolina, United States"
     },
@@ -6423,7 +6426,7 @@
     {
       "destinationId": "HHI-DEST-338",
       "state": "Kentucky",
-      "waterbody": "Ohio River — Kentucky frontage",
+      "waterbody": "Ohio River \u2014 Kentucky frontage",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -7240,7 +7243,7 @@
     {
       "destinationId": "HHI-DEST-381",
       "state": "North Dakota",
-      "waterbody": "Lake Oahe — North Dakota reach",
+      "waterbody": "Lake Oahe \u2014 North Dakota reach",
       "waterType": "reservoir",
       "status": "unmatched",
       "agency": null,
@@ -7278,26 +7281,26 @@
     {
       "destinationId": "HHI-DEST-383",
       "state": "Wyoming",
-      "waterbody": "Flaming Gorge Reservoir — Wyoming reach",
+      "waterbody": "Flaming Gorge Reservoir \u2014 Wyoming reach",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "USBR",
+      "siteId": "rise:341",
+      "siteName": "Flaming Gorge Reservoir Dam and Powerplant",
       "lat": 41.1765475,
       "lon": -109.5338367,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "KCMS",
       "nwsStationName": "I80/US30 - Peru Hill",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Flaming Gorge Reservoir. The pool is one number; the catalog lists the Wyoming reach separately from the Utah dam gauge.",
       "locationKind": "hydro",
       "locationName": "Flaming Gorge Reservoir, Dutch John, Sweetwater County, Wyoming, United States"
     },
     {
       "destinationId": "HHI-DEST-384",
       "state": "Wyoming",
-      "waterbody": "North Platte River — Grey Reef",
+      "waterbody": "North Platte River \u2014 Grey Reef",
       "waterType": "river",
       "status": "unmatched",
       "agency": null,
@@ -7335,7 +7338,7 @@
     {
       "destinationId": "HHI-DEST-386",
       "state": "Wyoming",
-      "waterbody": "Snake River — Wyoming reach",
+      "waterbody": "Snake River \u2014 Wyoming reach",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -7373,7 +7376,7 @@
     {
       "destinationId": "HHI-DEST-388",
       "state": "Utah",
-      "waterbody": "Flaming Gorge Reservoir — Utah reach",
+      "waterbody": "Flaming Gorge Reservoir \u2014 Utah reach",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -7449,7 +7452,7 @@
     {
       "destinationId": "HHI-DEST-392",
       "state": "Nevada",
-      "waterbody": "Lake Tahoe — Nevada shoreline",
+      "waterbody": "Lake Tahoe \u2014 Nevada shoreline",
       "waterType": "lake",
       "status": "matched",
       "agency": "USGS",
@@ -7582,7 +7585,7 @@
     {
       "destinationId": "HHI-DEST-399",
       "state": "Arizona",
-      "waterbody": "Lake Powell — Arizona reach",
+      "waterbody": "Lake Powell \u2014 Arizona reach",
       "waterType": "reservoir",
       "status": "matched",
       "agency": "USGS",
@@ -7622,24 +7625,24 @@
       "state": "Arizona",
       "waterbody": "Lake Havasu",
       "waterType": "reservoir",
-      "status": "unmatched",
-      "agency": null,
-      "siteId": null,
-      "siteName": null,
+      "status": "matched",
+      "agency": "USBR",
+      "siteId": "rise:6128",
+      "siteName": "Lake Havasu Parker Dam and Powerplant",
       "lat": 34.4105067,
       "lon": -114.2908721,
-      "score": 0,
-      "source": "name-match",
+      "score": 1,
+      "source": "override",
       "nwsStationId": "KHII",
       "nwsStationName": "Havasu City Airport",
-      "note": "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Lake Havasu at Parker Dam.",
       "locationKind": "hydro",
       "locationName": "Lake Havasu, Desert Hills, Mohave County, Arizona, United States"
     },
     {
       "destinationId": "HHI-DEST-402",
       "state": "Arizona",
-      "waterbody": "Lees Ferry — Colorado River",
+      "waterbody": "Lees Ferry \u2014 Colorado River",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -7696,7 +7699,7 @@
     {
       "destinationId": "HHI-DEST-405",
       "state": "Virginia",
-      "waterbody": "James River — Richmond reach",
+      "waterbody": "James River \u2014 Richmond reach",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -7867,7 +7870,7 @@
     {
       "destinationId": "HHI-DEST-414",
       "state": "Maryland",
-      "waterbody": "Potomac River — tidal reach",
+      "waterbody": "Potomac River \u2014 tidal reach",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -7924,7 +7927,7 @@
     {
       "destinationId": "HHI-DEST-417",
       "state": "Delaware",
-      "waterbody": "Delaware River — Delaware frontage",
+      "waterbody": "Delaware River \u2014 Delaware frontage",
       "waterType": "river",
       "status": "matched",
       "agency": "USGS",
@@ -8418,7 +8421,7 @@
     {
       "destinationId": "HHI-DEST-443",
       "state": "Quebec",
-      "waterbody": "Matapédia River",
+      "waterbody": "Matap\u00e9dia River",
       "waterType": "river",
       "status": "matched",
       "agency": "WSC",
@@ -8430,9 +8433,9 @@
       "source": "override",
       "nwsStationId": null,
       "nwsStationName": null,
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Matapédia.",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Matap\u00e9dia.",
       "locationKind": "override",
-      "locationName": "Rivière Matapédia, Quebec"
+      "locationName": "Rivi\u00e8re Matap\u00e9dia, Quebec"
     },
     {
       "destinationId": "HHI-DEST-444",
@@ -8470,7 +8473,7 @@
       "nwsStationName": null,
       "note": "Matched on published name (score 1.00). Confirm the reach before trusting the number. 8 official stations publish under this name; using 01AD004. Pin another in station-overrides.json if this is the wrong reach. Other candidates: 01AF002 SAINT JOHN RIVER AT GRAND FALLS; 01AK003 SAINT JOHN RIVER AT FREDERICTON; 01AO002 SAINT JOHN RIVER AT MAUGERVILLE; 01AO011 SAINT JOHN RIVER AT UPPER GAGETOWN.",
       "locationKind": "hydro",
-      "locationName": "Rivière Saint-Jean / Saint John River, Saint-François-de-Madawaska, Paroisse de Saint-François, Haut-Madawaska, Comté de Madawaska, New Brunswick / Nouveau-Brunswick, Canada"
+      "locationName": "Rivi\u00e8re Saint-Jean / Saint John River, Saint-Fran\u00e7ois-de-Madawaska, Paroisse de Saint-Fran\u00e7ois, Haut-Madawaska, Comt\u00e9 de Madawaska, New Brunswick / Nouveau-Brunswick, Canada"
     },
     {
       "destinationId": "HHI-DEST-446",
@@ -8679,7 +8682,7 @@
       "nwsStationName": null,
       "note": "Matched on published name (score 1.00). Confirm the reach before trusting the number.",
       "locationKind": "hydro",
-      "locationName": "Sylvia Grinnell River, ᐃᖃᓗᐃᑦ, ᕿᑭᖅᑖᓗᒃ Qikiqtaaluk Region, ᓄᓇᕗᑦ Nunavut, Canada"
+      "locationName": "Sylvia Grinnell River, \u1403\u1583\u14d7\u1403\u1466, \u157f\u146d\u1585\u1456\u14d7\u1483 Qikiqtaaluk Region, \u14c4\u14c7\u1557\u1466 Nunavut, Canada"
     },
     {
       "destinationId": "HHI-DEST-457",
@@ -9064,7 +9067,7 @@
     {
       "destinationId": "HHI-DEST-477",
       "state": "Quebec",
-      "waterbody": "Lac Témiscamingue",
+      "waterbody": "Lac T\u00e9miscamingue",
       "waterType": "lake",
       "status": "matched",
       "agency": "WSC",
@@ -9078,12 +9081,12 @@
       "nwsStationName": null,
       "note": "Matched on published name (score 1.00). Confirm the reach before trusting the number. 2 official stations publish under this name; using 02JE025. Pin another in station-overrides.json if this is the wrong reach. Other candidates: 02JE026 TEMISCAMINGUE (LAC) A VILLE-MARIE.",
       "locationKind": "override",
-      "locationName": "Lac Témiscamingue, Quebec"
+      "locationName": "Lac T\u00e9miscamingue, Quebec"
     },
     {
       "destinationId": "HHI-DEST-478",
       "state": "Quebec",
-      "waterbody": "Rivière Moisie",
+      "waterbody": "Rivi\u00e8re Moisie",
       "waterType": "river",
       "status": "matched",
       "agency": "WSC",
@@ -9095,14 +9098,14 @@
       "source": "override",
       "nwsStationId": null,
       "nwsStationName": null,
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Moisie.",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Moisie.",
       "locationKind": "override",
-      "locationName": "Rivière Moisie, Quebec"
+      "locationName": "Rivi\u00e8re Moisie, Quebec"
     },
     {
       "destinationId": "HHI-DEST-479",
       "state": "Quebec",
-      "waterbody": "Rivière Rimouski",
+      "waterbody": "Rivi\u00e8re Rimouski",
       "waterType": "river",
       "status": "matched",
       "agency": "WSC",
@@ -9114,14 +9117,14 @@
       "source": "override",
       "nwsStationId": null,
       "nwsStationName": null,
-      "note": "Pinned to the Water Survey of Canada station that publishes under Rivière Rimouski.",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Rimouski.",
       "locationKind": "override",
-      "locationName": "Rivière Rimouski, Quebec"
+      "locationName": "Rivi\u00e8re Rimouski, Quebec"
     },
     {
       "destinationId": "HHI-DEST-480",
       "state": "Quebec",
-      "waterbody": "Réservoir Baskatong",
+      "waterbody": "R\u00e9servoir Baskatong",
       "waterType": "reservoir",
       "status": "unmatched",
       "agency": null,
@@ -9135,7 +9138,7 @@
       "nwsStationName": null,
       "note": "No Water Survey of Canada station publishes under this waterbody's name. No nearby station is substituted.",
       "locationKind": "override",
-      "locationName": "Réservoir Baskatong, Quebec"
+      "locationName": "R\u00e9servoir Baskatong, Quebec"
     },
     {
       "destinationId": "HHI-DEST-481",
@@ -9154,7 +9157,7 @@
       "nwsStationName": null,
       "note": "Matched on published name (score 1.00). Confirm the reach before trusting the number. 2 official stations publish under this name; using 01BC001. Pin another in station-overrides.json if this is the wrong reach. Other candidates: 01BJ007 RESTIGOUCHE RIVER ABOVE RAFTING GROUND BROOK.",
       "locationKind": "hydro",
-      "locationName": "Restigouche River, Avignon, Gaspésie–Îles-de-la-Madeleine, New Brunswick / Nouveau-Brunswick, Canada"
+      "locationName": "Restigouche River, Avignon, Gasp\u00e9sie\u2013\u00celes-de-la-Madeleine, New Brunswick / Nouveau-Brunswick, Canada"
     },
     {
       "destinationId": "HHI-DEST-482",
@@ -9401,7 +9404,7 @@
       "nwsStationName": null,
       "note": "Matched on published name (score 1.00). Confirm the reach before trusting the number.",
       "locationKind": "hydro",
-      "locationName": "Freshwater Creek, Iqaluktuuttiaq (Cambridge Bay), ᕿᑎᕐᒥᐅᑦ Kitikmeot Region, ᓄᓇᕗᑦ Nunavut, Canada"
+      "locationName": "Freshwater Creek, Iqaluktuuttiaq (Cambridge Bay), \u157f\u144e\u1550\u14a5\u1405\u1466 Kitikmeot Region, \u14c4\u14c7\u1557\u1466 Nunavut, Canada"
     },
     {
       "destinationId": "HHI-DEST-495",
