@@ -197,6 +197,83 @@
       "siteId": "8557380",
       "siteName": "Lewes",
       "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Delaware Bay at Lewes."
+    },
+    {
+      "destinationId": "HHI-DEST-500",
+      "agency": "NOAA-COOPS",
+      "siteId": "8737048",
+      "siteName": "Mobile State Docks",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Mobile on Mobile Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-502",
+      "agency": "NOAA-COOPS",
+      "siteId": "8665530",
+      "siteName": "Charleston",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Charleston Harbor."
+    },
+    {
+      "destinationId": "HHI-DEST-505",
+      "agency": "NOAA-COOPS",
+      "siteId": "8443970",
+      "siteName": "Boston",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Boston on Massachusetts Bay / Boston Harbor."
+    },
+    {
+      "destinationId": "HHI-DEST-506",
+      "agency": "NOAA-COOPS",
+      "siteId": "8518750",
+      "siteName": "The Battery",
+      "note": "Pinned to the NOAA CO-OPS water-level station at The Battery, the reach named on the New York Harbor record."
+    },
+    {
+      "destinationId": "HHI-DEST-508",
+      "agency": "NOAA-COOPS",
+      "siteId": "8575512",
+      "siteName": "Annapolis",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Annapolis on the Chesapeake."
+    },
+    {
+      "destinationId": "HHI-DEST-509",
+      "agency": "NOAA-COOPS",
+      "siteId": "9437540",
+      "siteName": "Garibaldi",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Garibaldi, inside Tillamook Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-512",
+      "agency": "NOAA-COOPS",
+      "siteId": "8658120",
+      "siteName": "Wilmington",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Wilmington on the Cape Fear estuary."
+    },
+    {
+      "destinationId": "HHI-DEST-513",
+      "agency": "NOAA-COOPS",
+      "siteId": "8637689",
+      "siteName": "Yorktown USCG Training Center",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Yorktown on the York River."
+    },
+    {
+      "destinationId": "HHI-DEST-514",
+      "agency": "NOAA-COOPS",
+      "siteId": "9455500",
+      "siteName": "Seldovia",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Seldovia on Kachemak Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-515",
+      "agency": "NOAA-COOPS",
+      "siteId": "1617760",
+      "siteName": "Hilo, Hilo Bay, Kuhio Bay",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Hilo Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-516",
+      "agency": "NOAA-COOPS",
+      "siteId": "8768094",
+      "siteName": "Calcasieu Pass",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Calcasieu Pass."
     }
   ]
 }
