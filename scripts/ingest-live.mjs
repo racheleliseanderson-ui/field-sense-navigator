@@ -22,7 +22,7 @@ const USGS_PARAMS = {
   "00010": { label: "Water temperature", unit: "°C" },
   "62614": { label: "Lake or reservoir elevation", unit: "ft" },
 };
-const BATCH = 80;
+const BATCH = 40;
 
 function chunk(arr, size) {
   const out = [];
@@ -59,26 +59,35 @@ async function usgsBatch(siteIds) {
     `https://waterservices.usgs.gov/nwis/iv/?format=json` +
     `&sites=${siteIds.join(",")}` +
     `&parameterCd=00060,00065,00010,62614&siteStatus=active`;
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`USGS IV ${res.status}`);
-  const json = await res.json();
-  const bySite = new Map();
-  for (const ts of json.value?.timeSeries ?? []) {
-    const siteId = ts.sourceInfo?.siteCode?.[0]?.value;
-    const siteName = ts.sourceInfo?.siteName ?? "";
-    const code = ts.variable?.variableCode?.[0]?.value ?? "";
-    const meta = USGS_PARAMS[code];
-    const point = ts.values?.[0]?.value?.slice(-1)[0];
-    if (!siteId || !meta || !point?.value || point.value === "-999999") continue;
-    if (!bySite.has(siteId)) bySite.set(siteId, { siteId, siteName, readings: [] });
-    bySite.get(siteId).readings.push({
-      label: meta.label,
-      value: point.value,
-      unit: meta.unit,
-      observedAt: point.dateTime ?? "",
-    });
+  let lastErr = null;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const res = await fetch(url, { headers: { "User-Agent": UA } });
+      if (!res.ok) throw new Error(`USGS IV ${res.status}`);
+      const json = await res.json();
+      const bySite = new Map();
+      for (const ts of json.value?.timeSeries ?? []) {
+        const siteId = ts.sourceInfo?.siteCode?.[0]?.value;
+        const siteName = ts.sourceInfo?.siteName ?? "";
+        const code = ts.variable?.variableCode?.[0]?.value ?? "";
+        const meta = USGS_PARAMS[code];
+        const point = ts.values?.[0]?.value?.slice(-1)[0];
+        if (!siteId || !meta || !point?.value || point.value === "-999999") continue;
+        if (!bySite.has(siteId)) bySite.set(siteId, { siteId, siteName, readings: [] });
+        bySite.get(siteId).readings.push({
+          label: meta.label,
+          value: point.value,
+          unit: meta.unit,
+          observedAt: point.dateTime ?? "",
+        });
+      }
+      return bySite;
+    } catch (err) {
+      lastErr = err;
+      await new Promise((r) => setTimeout(r, 1500 * attempt));
+    }
   }
-  return bySite;
+  throw lastErr ?? new Error("USGS IV failed");
 }
 
 async function noaaProduct(siteId, product, extra = "") {
