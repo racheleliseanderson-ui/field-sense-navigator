@@ -9,7 +9,9 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "resolve:stations": "node scripts/resolve-stations.mjs",
+    "ingest:live": "node scripts/ingest-live.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -1,25 +1,17 @@
 /**
  * Live official readings.
  *
- * Stations are resolved against the USGS site inventory for the record's
- * state and matched on published water name. Nothing is guessed: if no
- * official station carries a matching name, the record says so.
+ * Stations come from the committed binding file (name-matched, fail-closed).
+ * Readings prefer the scheduled snapshot when it is fresh, then the USGS
+ * instantaneous-values feed for that exact site ID. Nothing is guessed.
  */
 
-const STATE_CODE: Record<string, string> = {
-  Alabama: "al", Alaska: "ak", Arizona: "az", Arkansas: "ar", California: "ca",
-  Colorado: "co", Connecticut: "ct", Delaware: "de", Florida: "fl", Georgia: "ga",
-  Hawaii: "hi", Idaho: "id", Illinois: "il", Indiana: "in", Iowa: "ia",
-  Kansas: "ks", Kentucky: "ky", Louisiana: "la", Maine: "me", Maryland: "md",
-  Massachusetts: "ma", Michigan: "mi", Minnesota: "mn", Mississippi: "ms",
-  Missouri: "mo", Montana: "mt", Nebraska: "ne", Nevada: "nv",
-  "New Hampshire": "nh", "New Jersey": "nj", "New Mexico": "nm", "New York": "ny",
-  "North Carolina": "nc", "North Dakota": "nd", Ohio: "oh", Oklahoma: "ok",
-  Oregon: "or", Pennsylvania: "pa", "Rhode Island": "ri", "South Carolina": "sc",
-  "South Dakota": "sd", Tennessee: "tn", Texas: "tx", Utah: "ut", Vermont: "vt",
-  Virginia: "va", Washington: "wa", "West Virginia": "wv", Wisconsin: "wi",
-  Wyoming: "wy",
-};
+import { bindingFor, bindingsFile, type StationBinding } from "@/lib/bindings";
+
+const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
+const SNAPSHOT_STALE_MS = 45 * 60_000;
+const SNAPSHOT_URL =
+  "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";
 
 export interface Reading {
   label: string;
@@ -40,6 +32,13 @@ export interface LiveConditions {
   forecast: { office: string; period: string; detail: string } | null;
   unknowns: string[];
   fetchedAt: string;
+  source: "scheduled-snapshot" | "usgs-live" | "unbound";
+  snapshotAgeMinutes: number | null;
+  binding: {
+    status: StationBinding["status"] | "missing";
+    generatedAt: string;
+    note: string;
+  };
 }
 
 const PARAMS: Record<string, { label: string; unit: string }> = {
@@ -49,62 +48,76 @@ const PARAMS: Record<string, { label: string; unit: string }> = {
   "62614": { label: "Lake or reservoir elevation", unit: "ft" },
 };
 
-const norm = (s: string) =>
-  s.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
-
-const STOP = new Set([
-  "lake", "river", "reservoir", "bay", "creek", "pond", "the", "of", "north",
-  "south", "east", "west", "upper", "lower", "waters", "state", "park",
-]);
-
-/** Score a USGS station name against the published waterbody name. */
-function nameScore(water: string, station: string): number {
-  const w = norm(water).split(" ").filter((x) => x.length > 2 && !STOP.has(x));
-  if (w.length === 0) return 0;
-  const s = norm(station);
-  let hit = 0;
-  for (const term of w) if (s.includes(term)) hit++;
-  return hit / w.length;
+export interface LiveSnapshot {
+  schema: string;
+  ingestedAt: string;
+  source: string;
+  cadenceMinutes: number;
+  doctrine: string;
+  stats: {
+    boundStations: number;
+    withReadings: number;
+    emptyOrError: number;
+    destinationBindings: number;
+  };
+  stations: Record<
+    string,
+    {
+      siteId: string;
+      siteName: string | null;
+      readings: Reading[];
+      fetchedAt: string;
+      error?: string;
+    }
+  >;
 }
 
-interface SiteRow {
-  id: string;
-  name: string;
-  lat: number;
-  lon: number;
+let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: null };
+
+async function fetchSnapshot(url: string): Promise<LiveSnapshot | null> {
+  const res = await fetch(url, {
+    headers: { "User-Agent": UA, Accept: "application/json" },
+  });
+  if (!res.ok) return null;
+  return (await res.json()) as LiveSnapshot;
 }
 
-async function stateSites(code: string): Promise<SiteRow[]> {
-  const url =
-    `https://waterservices.usgs.gov/nwis/site/?format=rdb&stateCd=${code}` +
-    `&parameterCd=00060,00065,00010,62614&siteStatus=active&siteType=ST,LK,ES`;
-  const res = await fetch(url, { headers: { "User-Agent": "honey-hole-intelligence" } });
-  if (!res.ok) return [];
-  const text = await res.text();
-  const rows: SiteRow[] = [];
-  for (const line of text.split("\n")) {
-    if (!line || line.startsWith("#")) continue;
-    const cols = line.split("\t");
-    if (cols.length < 7 || cols[0] !== "USGS") continue;
-    const lat = Number(cols[4]);
-    const lon = Number(cols[5]);
-    if (!cols[1] || !cols[2]) continue;
-    rows.push({ id: cols[1], name: cols[2], lat, lon });
+async function loadSnapshot(): Promise<LiveSnapshot | null> {
+  const now = Date.now();
+  if (now - snapshotCache.at < 60_000) return snapshotCache.data;
+  const urls = [SNAPSHOT_URL, "/live/snapshot.json"];
+  for (const url of urls) {
+    try {
+      const data = await fetchSnapshot(url);
+      if (data?.ingestedAt && data.stations) {
+        snapshotCache = { at: now, data };
+        return data;
+      }
+    } catch {
+      /* try the next source */
+    }
   }
-  return rows;
+  snapshotCache = { at: now, data: null };
+  return null;
+}
+
+export async function loadSnapshotMeta(): Promise<LiveSnapshot | null> {
+  return loadSnapshot();
 }
 
 async function usgsReadings(siteId: string): Promise<Reading[]> {
   const url =
     `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}` +
     `&parameterCd=00060,00065,00010,62614&siteStatus=active`;
-  const res = await fetch(url, { headers: { "User-Agent": "honey-hole-intelligence" } });
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (!res.ok) return [];
   const json = (await res.json()) as {
-    value?: { timeSeries?: Array<{
-      variable?: { variableCode?: Array<{ value?: string }> };
-      values?: Array<{ value?: Array<{ value?: string; dateTime?: string }> }>;
-    }> };
+    value?: {
+      timeSeries?: Array<{
+        variable?: { variableCode?: Array<{ value?: string }> };
+        values?: Array<{ value?: Array<{ value?: string; dateTime?: string }> }>;
+      }>;
+    };
   };
   const out: Reading[] = [];
   for (const ts of json.value?.timeSeries ?? []) {
@@ -126,7 +139,7 @@ async function nwsForecast(lat: number, lon: number) {
   try {
     const pointRes = await fetch(
       `https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`,
-      { headers: { "User-Agent": "honey-hole-intelligence", Accept: "application/geo+json" } },
+      { headers: { "User-Agent": UA, Accept: "application/geo+json" } },
     );
     if (!pointRes.ok) return null;
     const point = (await pointRes.json()) as {
@@ -135,7 +148,7 @@ async function nwsForecast(lat: number, lon: number) {
     const url = point.properties?.forecast;
     if (!url) return null;
     const fRes = await fetch(url, {
-      headers: { "User-Agent": "honey-hole-intelligence", Accept: "application/geo+json" },
+      headers: { "User-Agent": UA, Accept: "application/geo+json" },
     });
     if (!fRes.ok) return null;
     const f = (await fRes.json()) as {
@@ -153,50 +166,100 @@ async function nwsForecast(lat: number, lon: number) {
   }
 }
 
-export async function readLive(
-  state: string,
-  waterbody: string,
-): Promise<LiveConditions> {
+function emptyLive(
+  unknowns: string[],
+  binding: LiveConditions["binding"],
+): LiveConditions {
+  return {
+    station: null,
+    readings: [],
+    forecast: null,
+    unknowns,
+    fetchedAt: new Date().toISOString(),
+    source: "unbound",
+    snapshotAgeMinutes: null,
+    binding,
+  };
+}
+
+export async function readLive(input: {
+  id?: string;
+  state: string;
+  waterbody: string;
+}): Promise<LiveConditions> {
   const fetchedAt = new Date().toISOString();
-  const unknowns: string[] = [];
-  const code = STATE_CODE[state];
-  if (!code) {
-    return {
-      station: null, readings: [], forecast: null, fetchedAt,
-      unknowns: ["No official station index is available for this state."],
-    };
-  }
+  const bind = input.id
+    ? bindingFor(input.id)
+    : bindingsFile.records.find(
+        (r) => r.state === input.state && r.waterbody === input.waterbody,
+      );
 
-  let sites: SiteRow[] = [];
-  try {
-    sites = await stateSites(code);
-  } catch {
-    return {
-      station: null, readings: [], forecast: null, fetchedAt,
-      unknowns: ["The USGS site index could not be reached. Treat this water as unmonitored for now."],
-    };
-  }
-
-  let best: { row: SiteRow; score: number } | null = null;
-  for (const row of sites) {
-    const score = nameScore(waterbody, row.name);
-    if (score >= 0.75 && (!best || score > best.score)) best = { row, score };
-  }
-
-  if (!best) {
-    return {
-      station: null, readings: [], forecast: null, fetchedAt,
-      unknowns: [
-        "No USGS station publishes under this waterbody's name. No nearby station is substituted.",
+  if (!bind) {
+    return emptyLive(
+      [
+        "This water has no station binding yet. It will be resolved on the next scheduled resolve run.",
         "Conditions must be verified in person or through the agency page.",
       ],
-    };
+      {
+        status: "missing",
+        generatedAt: bindingsFile.generatedAt,
+        note: "No binding row.",
+      },
+    );
   }
 
-  const [readings, forecast] = await Promise.all([
-    usgsReadings(best.row.id).catch(() => [] as Reading[]),
-    nwsForecast(best.row.lat, best.row.lon).catch(() => null),
-  ]);
+  const bindingMeta = {
+    status: bind.status,
+    generatedAt: bindingsFile.generatedAt,
+    note: bind.note,
+  };
+
+  if (bind.status !== "matched" || !bind.siteId) {
+    return emptyLive(
+      [
+        bind.note,
+        "The scheduled pipeline will not invent a nearby gauge.",
+        "Conditions must be verified in person or through the agency page.",
+      ],
+      bindingMeta,
+    );
+  }
+
+  const unknowns: string[] = [];
+  const snapshot = await loadSnapshot();
+  const snapRow = snapshot?.stations[bind.siteId];
+  const snapAge = snapshot
+    ? Math.max(0, Math.round((Date.now() - new Date(snapshot.ingestedAt).getTime()) / 60000))
+    : null;
+  const snapFresh =
+    snapshot &&
+    Number.isFinite(new Date(snapshot.ingestedAt).getTime()) &&
+    Date.now() - new Date(snapshot.ingestedAt).getTime() < SNAPSHOT_STALE_MS &&
+    snapRow &&
+    snapRow.readings.length > 0;
+
+  let readings: Reading[] = [];
+  let source: LiveConditions["source"] = "usgs-live";
+
+  if (snapFresh && snapRow) {
+    readings = snapRow.readings;
+    source = "scheduled-snapshot";
+  } else {
+    readings = await usgsReadings(bind.siteId).catch(() => [] as Reading[]);
+    source = "usgs-live";
+    if (readings.length === 0 && snapRow?.readings.length) {
+      readings = snapRow.readings;
+      source = "scheduled-snapshot";
+      unknowns.push(
+        "The live USGS feed returned no values; showing the last scheduled snapshot instead.",
+      );
+    }
+  }
+
+  const forecast =
+    bind.lat != null && bind.lon != null
+      ? await nwsForecast(bind.lat, bind.lon).catch(() => null)
+      : null;
 
   if (readings.length === 0) {
     unknowns.push("The matched station returned no current values; the feed may be offline.");
@@ -205,15 +268,18 @@ export async function readLive(
     unknowns.push("No National Weather Service forecast was returned for the station location.");
   }
   unknowns.push(
-    "The station is matched on published water name only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
+    "The station is bound on published water name and type only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
   );
   unknowns.push("Agency observations only. Nothing here predicts fish behavior.");
 
   return {
-    station: { id: best.row.id, name: best.row.name, agency: "USGS" },
+    station: { id: bind.siteId, name: bind.siteName ?? bind.siteId, agency: bind.agency ?? "USGS" },
     readings,
     forecast,
     unknowns,
     fetchedAt,
+    source,
+    snapshotAgeMinutes: snapAge,
+    binding: bindingMeta,
   };
 }

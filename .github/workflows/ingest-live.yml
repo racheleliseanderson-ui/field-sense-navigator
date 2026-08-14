@@ -1,0 +1,34 @@
+name: Ingest live USGS readings
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Pull current readings for bound stations
+        run: node scripts/ingest-live.mjs
+      - name: Publish snapshot to live-snapshot branch
+        run: |
+          set -eu
+          git config user.email "Rachel.Elise.Anderson@gmail.com"
+          git config user.name "Rachel Elise Anderson"
+          mkdir -p /tmp/live-snap
+          cp public/live/snapshot.json /tmp/live-snap/snapshot.json
+          git fetch origin live-snapshot || true
+          git checkout --orphan live-snapshot-tmp
+          git rm -rf --quiet . || true
+          cp /tmp/live-snap/snapshot.json snapshot.json
+          git add snapshot.json
+          git commit -m "ingest: USGS IV snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --force origin HEAD:live-snapshot

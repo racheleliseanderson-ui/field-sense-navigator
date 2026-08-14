@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Download, Pause, Play, RotateCcw, Square } from "lucide-react";
 
 import { SiteHeader, SiteFooter } from "@/components/chrome";
@@ -12,10 +13,11 @@ import {
   useRunManager,
   type RunTarget,
 } from "@/lib/run-manager";
-import { getLiveConditions } from "@/lib/live.functions";
+import { getLiveConditions, getPipelinePulse } from "@/lib/live.functions";
 import { checkSourceUrl } from "@/lib/verify.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
+import { bindingsFile } from "@/lib/bindings";
 
 export const Route = createFileRoute("/pipeline")({
   head: () => ({
@@ -24,13 +26,13 @@ export const Route = createFileRoute("/pipeline")({
       {
         name: "description",
         content:
-          "Catalog integrity, state coverage and on-demand live-feed resolution for the named public waters held by the instrument.",
+          "Catalog integrity, scheduled live ingest, and official station bindings for the named public waters held by the instrument.",
       },
       { property: "og:title", content: "Pipeline console · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Run integrity checks and official station resolution against the catalog, and read the failures rather than hide them.",
+          "Scheduled USGS ingest and fail-closed station bindings. Misses are printed as plainly as hits.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -62,6 +64,12 @@ function Pipeline() {
 
   const checks = useMemo(() => integrity(), []);
   const rows = useMemo(() => coverage(), []);
+  const pulseFn = getPipelinePulse;
+  const { data: pulse } = useQuery({
+    queryKey: ["pipeline-pulse"],
+    queryFn: () => pulseFn(),
+    staleTime: 60_000,
+  });
 
   const pool = useMemo(() => {
     const byId = (list: string[]) =>
@@ -75,7 +83,7 @@ function Pipeline() {
   const probeStation = useCallback(async (target: RunTarget): Promise<ProbeResult> => {
     try {
       const live = await getLiveConditions({
-        data: { state: target.state, waterbody: target.waterbody },
+        data: { id: target.id, state: target.state, waterbody: target.waterbody },
       });
       return {
         id: target.id,
@@ -180,6 +188,9 @@ function Pipeline() {
             ? "Run complete"
             : "Idle";
 
+  const bind = pulse?.bindings ?? bindingsFile.stats;
+  const ingest = pulse?.ingest;
+
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
@@ -197,8 +208,9 @@ function Pipeline() {
             knows about itself.
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Integrity is computed from the records, not asserted. Station resolution runs
-            on demand against official feeds, and reports the misses as plainly as the hits.
+            Integrity is computed from the records, not asserted. Station bindings
+            are resolved on a nightly schedule. USGS readings are ingested every
+            30 minutes. Misses stay misses.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -217,6 +229,53 @@ function Pipeline() {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+        <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
+          Scheduled pulse
+        </h2>
+        <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
+          Bindings are a committed data file. Live numbers come from the last
+          ingest, then a direct USGS pull if that snapshot is older than 45 minutes.
+          The instrument still will not claim to know the water if the feed is silent.
+        </p>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          <li className="panel p-5">
+            <div className="flex items-start justify-between gap-3">
+              <p className="font-display text-base font-bold text-foreground">Station bindings</p>
+              <GradeChip grade="clear" label="Nightly" />
+            </div>
+            <p className="data mt-3 text-sm text-foreground">
+              {bind.matched} matched · {bind.unmatched} unmatched · {bind.unsupported} unsupported
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Generated {pulse?.bindings.generatedAt
+                ? new Date(pulse.bindings.generatedAt).toUTCString()
+                : new Date(bindingsFile.generatedAt).toUTCString()}
+              . Name and water-type must both align. No nearby gauge is substituted.
+            </p>
+          </li>
+          <li className="panel p-5">
+            <div className="flex items-start justify-between gap-3">
+              <p className="font-display text-base font-bold text-foreground">USGS ingest</p>
+              <GradeChip
+                grade={!ingest || ingest.stale ? "watch" : "clear"}
+                label={!ingest ? "Waiting" : ingest.stale ? "Stale" : "Current"}
+              />
+            </div>
+            <p className="data mt-3 text-sm text-foreground">
+              {ingest
+                ? `${ingest.withReadings}/${ingest.boundStations} stations with readings`
+                : "Snapshot not published yet"}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              {ingest?.ingestedAt
+                ? `Last ingest ${ingest.ageMinutes} min ago · cadence ${ingest.cadenceMinutes} min`
+                : "The 30-minute Action has not published a snapshot to the live-snapshot branch yet."}
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
           Catalog integrity
         </h2>
@@ -249,12 +308,12 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Source verification &amp; station resolution
+          Source verification & station resolution
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
           {mode === "source"
             ? "Each run reads the agency page the record cites and reports what the host returned. A page that has moved is reported as moved; a host that does not answer leaves the citation unverified."
-            : "Each run asks the official station index whether a gauge publishes under the water's own name. No nearby station is substituted for a miss."}
+            : "Manual probes still work. The scheduled binding file is what the instrument uses on every water record — this console is for spot-checks, not the clock."}
         </p>
 
         <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
