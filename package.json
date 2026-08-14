@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "resolve:stations": "node scripts/resolve-stations.mjs",
-    "ingest:live": "node scripts/ingest-live.mjs"
+    "ingest:live": "node scripts/ingest-live.mjs",
+    "scan:closures": "node scripts/scan-closures.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

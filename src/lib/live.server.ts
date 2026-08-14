@@ -1,9 +1,10 @@
 /**
  * Live official readings.
  *
- * Stations come from the committed binding file (name-matched, fail-closed).
- * Readings prefer the scheduled snapshot when it is fresh, then the USGS
- * instantaneous-values feed for that exact site ID. Nothing is guessed.
+ * Stations come from the committed binding file (override, then name-match).
+ * Readings prefer the scheduled snapshot when it is fresh, then a live pull
+ * from the bound agency. NWS observations use the station stored on the
+ * binding. Closures are agency-page language, not a determination.
  */
 
 import { bindingFor, bindingsFile, type StationBinding } from "@/lib/bindings";
@@ -12,6 +13,8 @@ const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
 const SNAPSHOT_STALE_MS = 45 * 60_000;
 const SNAPSHOT_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";
+const CLOSURES_URL =
+  "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/closures.json";
 
 export interface Reading {
   label: string;
@@ -26,18 +29,39 @@ export interface Station {
   agency: string;
 }
 
+export interface NwsObservation {
+  stationId: string;
+  stationName: string;
+  readings: Reading[];
+}
+
+export interface ClosureHit {
+  term: string;
+  snippet: string;
+}
+
+export interface ClosureScan {
+  status: "hit" | "none" | "unreachable" | "unscanned";
+  note: string;
+  hits: ClosureHit[];
+  scannedAt: string | null;
+}
+
 export interface LiveConditions {
   station: Station | null;
   readings: Reading[];
   forecast: { office: string; period: string; detail: string } | null;
+  observation: NwsObservation | null;
+  closures: ClosureScan;
   unknowns: string[];
   fetchedAt: string;
-  source: "scheduled-snapshot" | "usgs-live" | "unbound";
+  source: "scheduled-snapshot" | "agency-live" | "unbound";
   snapshotAgeMinutes: number | null;
   binding: {
     status: StationBinding["status"] | "missing";
     generatedAt: string;
     note: string;
+    source?: StationBinding["source"];
   };
 }
 
@@ -59,12 +83,26 @@ export interface LiveSnapshot {
     withReadings: number;
     emptyOrError: number;
     destinationBindings: number;
+    byAgency?: Record<string, { bound: number; withReadings: number }>;
+    nwsStations?: number;
+    nwsWithObs?: number;
   };
   stations: Record<
     string,
     {
       siteId: string;
+      agency?: string;
       siteName: string | null;
+      readings: Reading[];
+      fetchedAt: string;
+      error?: string;
+    }
+  >;
+  observations?: Record<
+    string,
+    {
+      stationId: string;
+      stationName: string;
       readings: Reading[];
       fetchedAt: string;
       error?: string;
@@ -72,23 +110,36 @@ export interface LiveSnapshot {
   >;
 }
 
-let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: null };
+export interface ClosureFile {
+  scannedAt: string;
+  stats: { scanned: number; hit: number; none: number; unreachable: number };
+  records: Record<
+    string,
+    {
+      status: "hit" | "none" | "unreachable";
+      note: string;
+      hits: ClosureHit[];
+    }
+  >;
+}
 
-async function fetchSnapshot(url: string): Promise<LiveSnapshot | null> {
+let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: null };
+let closureCache: { at: number; data: ClosureFile | null } = { at: 0, data: null };
+
+async function fetchJson<T>(url: string): Promise<T | null> {
   const res = await fetch(url, {
     headers: { "User-Agent": UA, Accept: "application/json" },
   });
   if (!res.ok) return null;
-  return (await res.json()) as LiveSnapshot;
+  return (await res.json()) as T;
 }
 
 async function loadSnapshot(): Promise<LiveSnapshot | null> {
   const now = Date.now();
   if (now - snapshotCache.at < 60_000) return snapshotCache.data;
-  const urls = [SNAPSHOT_URL, "/live/snapshot.json"];
-  for (const url of urls) {
+  for (const url of [SNAPSHOT_URL, "/live/snapshot.json"]) {
     try {
-      const data = await fetchSnapshot(url);
+      const data = await fetchJson<LiveSnapshot>(url);
       if (data?.ingestedAt && data.stations) {
         snapshotCache = { at: now, data };
         return data;
@@ -101,8 +152,30 @@ async function loadSnapshot(): Promise<LiveSnapshot | null> {
   return null;
 }
 
+async function loadClosures(): Promise<ClosureFile | null> {
+  const now = Date.now();
+  if (now - closureCache.at < 60_000) return closureCache.data;
+  for (const url of [CLOSURES_URL, "/live/closures.json"]) {
+    try {
+      const data = await fetchJson<ClosureFile>(url);
+      if (data?.scannedAt && data.records) {
+        closureCache = { at: now, data };
+        return data;
+      }
+    } catch {
+      /* try next */
+    }
+  }
+  closureCache = { at: now, data: null };
+  return null;
+}
+
 export async function loadSnapshotMeta(): Promise<LiveSnapshot | null> {
   return loadSnapshot();
+}
+
+export async function loadClosureMeta(): Promise<ClosureFile | null> {
+  return loadClosures();
 }
 
 async function usgsReadings(siteId: string): Promise<Reading[]> {
@@ -133,6 +206,78 @@ async function usgsReadings(siteId: string): Promise<Reading[]> {
     });
   }
   return out;
+}
+
+function noaaIso(t?: string) {
+  if (!t) return "";
+  return t.includes("T") ? t : `${t.replace(" ", "T")}Z`;
+}
+
+async function noaaReadings(siteId: string): Promise<Reading[]> {
+  const out: Reading[] = [];
+  const base =
+    `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter` +
+    `?date=latest&station=${siteId}&time_zone=gmt&units=english` +
+    `&application=HookTheHorizon&format=json`;
+  const level = await fetchJson<{ data?: Array<{ v?: string; t?: string }> }>(
+    `${base}&product=water_level&datum=MLLW`,
+  );
+  if (level?.data?.[0]?.v) {
+    out.push({
+      label: "Water level (MLLW)",
+      value: level.data[0].v,
+      unit: "ft",
+      observedAt: noaaIso(level.data[0].t),
+    });
+  }
+  const wind = await fetchJson<{
+    data?: Array<{ s?: string; dr?: string; t?: string }>;
+  }>(`${base}&product=wind`);
+  if (wind?.data?.[0]?.s) {
+    const dir = wind.data[0].dr ? ` ${wind.data[0].dr}` : "";
+    out.push({
+      label: "Wind",
+      value: `${Number(wind.data[0].s).toFixed(1)}${dir}`,
+      unit: "mph",
+      observedAt: noaaIso(wind.data[0].t),
+    });
+  }
+  return out;
+}
+
+async function wscReadings(siteId: string): Promise<Reading[]> {
+  const json = await fetchJson<{
+    features?: Array<{
+      properties?: { DISCHARGE?: number; LEVEL?: number; DATETIME?: string };
+    }>;
+  }>(
+    `https://api.weather.gc.ca/collections/hydrometric-realtime/items?f=json&limit=1&STATION_NUMBER=${encodeURIComponent(siteId)}&sortby=-DATETIME`,
+  );
+  const p = json?.features?.[0]?.properties;
+  const out: Reading[] = [];
+  if (p?.DISCHARGE != null) {
+    out.push({
+      label: "Discharge",
+      value: String(p.DISCHARGE),
+      unit: "m³/s",
+      observedAt: p.DATETIME ?? "",
+    });
+  }
+  if (p?.LEVEL != null) {
+    out.push({
+      label: "Water level",
+      value: String(p.LEVEL),
+      unit: "m",
+      observedAt: p.DATETIME ?? "",
+    });
+  }
+  return out;
+}
+
+async function liveReadings(agency: string | null, siteId: string): Promise<Reading[]> {
+  if (agency === "NOAA-COOPS") return noaaReadings(siteId);
+  if (agency === "WSC") return wscReadings(siteId);
+  return usgsReadings(siteId);
 }
 
 async function nwsForecast(lat: number, lon: number) {
@@ -169,16 +314,45 @@ async function nwsForecast(lat: number, lon: number) {
 function emptyLive(
   unknowns: string[],
   binding: LiveConditions["binding"],
+  closures: ClosureScan,
 ): LiveConditions {
   return {
     station: null,
     readings: [],
     forecast: null,
+    observation: null,
+    closures,
     unknowns,
     fetchedAt: new Date().toISOString(),
     source: "unbound",
     snapshotAgeMinutes: null,
     binding,
+  };
+}
+
+function closureFor(id: string | undefined, file: ClosureFile | null): ClosureScan {
+  if (!id || !file) {
+    return {
+      status: "unscanned",
+      note: "Agency-page closure language has not been scanned yet.",
+      hits: [],
+      scannedAt: file?.scannedAt ?? null,
+    };
+  }
+  const row = file.records[id];
+  if (!row) {
+    return {
+      status: "unscanned",
+      note: "This water was not in the last closure scan.",
+      hits: [],
+      scannedAt: file.scannedAt,
+    };
+  }
+  return {
+    status: row.status,
+    note: row.note,
+    hits: row.hits ?? [],
+    scannedAt: file.scannedAt,
   };
 }
 
@@ -194,6 +368,9 @@ export async function readLive(input: {
         (r) => r.state === input.state && r.waterbody === input.waterbody,
       );
 
+  const closuresFile = await loadClosures();
+  const closures = closureFor(input.id ?? bind?.destinationId, closuresFile);
+
   if (!bind) {
     return emptyLive(
       [
@@ -205,6 +382,7 @@ export async function readLive(input: {
         generatedAt: bindingsFile.generatedAt,
         note: "No binding row.",
       },
+      closures,
     );
   }
 
@@ -212,6 +390,7 @@ export async function readLive(input: {
     status: bind.status,
     generatedAt: bindingsFile.generatedAt,
     note: bind.note,
+    source: bind.source,
   };
 
   if (bind.status !== "matched" || !bind.siteId) {
@@ -222,6 +401,7 @@ export async function readLive(input: {
         "Conditions must be verified in person or through the agency page.",
       ],
       bindingMeta,
+      closures,
     );
   }
 
@@ -239,20 +419,32 @@ export async function readLive(input: {
     snapRow.readings.length > 0;
 
   let readings: Reading[] = [];
-  let source: LiveConditions["source"] = "usgs-live";
+  let source: LiveConditions["source"] = "agency-live";
 
   if (snapFresh && snapRow) {
     readings = snapRow.readings;
     source = "scheduled-snapshot";
   } else {
-    readings = await usgsReadings(bind.siteId).catch(() => [] as Reading[]);
-    source = "usgs-live";
+    readings = await liveReadings(bind.agency, bind.siteId).catch(() => [] as Reading[]);
+    source = "agency-live";
     if (readings.length === 0 && snapRow?.readings.length) {
       readings = snapRow.readings;
       source = "scheduled-snapshot";
       unknowns.push(
-        "The live USGS feed returned no values; showing the last scheduled snapshot instead.",
+        "The live agency feed returned no values; showing the last scheduled snapshot instead.",
       );
+    }
+  }
+
+  let observation: NwsObservation | null = null;
+  if (bind.nwsStationId) {
+    const snapObs = snapshot?.observations?.[bind.nwsStationId];
+    if (snapObs && snapObs.readings.length > 0 && snapFresh) {
+      observation = {
+        stationId: snapObs.stationId,
+        stationName: snapObs.stationName,
+        readings: snapObs.readings,
+      };
     }
   }
 
@@ -264,18 +456,34 @@ export async function readLive(input: {
   if (readings.length === 0) {
     unknowns.push("The matched station returned no current values; the feed may be offline.");
   }
+  if (bind.nwsStationId && !observation) {
+    unknowns.push(
+      `NWS observation station ${bind.nwsStationId} is bound but returned no current values.`,
+    );
+  }
+  if (!bind.nwsStationId) {
+    unknowns.push("No NWS observation station is bound to this record.");
+  }
   if (!forecast) {
     unknowns.push("No National Weather Service forecast was returned for the station location.");
   }
   unknowns.push(
-    "The station is bound on published water name and type only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
+    bind.source === "override"
+      ? "This station was pinned in the override file. Confirm the reach before trusting the number."
+      : "The station is bound on published water name and type only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
   );
   unknowns.push("Agency observations only. Nothing here predicts fish behavior.");
 
   return {
-    station: { id: bind.siteId, name: bind.siteName ?? bind.siteId, agency: bind.agency ?? "USGS" },
+    station: {
+      id: bind.siteId,
+      name: bind.siteName ?? bind.siteId,
+      agency: bind.agency ?? "USGS",
+    },
     readings,
     forecast,
+    observation,
+    closures,
     unknowns,
     fetchedAt,
     source,

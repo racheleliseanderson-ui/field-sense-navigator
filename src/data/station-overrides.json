@@ -1,0 +1,41 @@
+{
+  "schema": "0.6.0",
+  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name — never a nearby substitute. Example: to pin Lake Washington to a specific USGS site, add { destinationId: \"HHI-DEST-001\", agency: \"USGS\", siteId: \"12150400\" }.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-010",
+      "agency": "NOAA-COOPS",
+      "siteId": "8726607",
+      "siteName": "Old Port Tampa",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
+    },
+    {
+      "destinationId": "HHI-DEST-219",
+      "agency": "NOAA-COOPS",
+      "siteId": "8726607",
+      "siteName": "Old Port Tampa",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
+    },
+    {
+      "destinationId": "HHI-DEST-425",
+      "agency": "WSC",
+      "siteId": "08MF005",
+      "siteName": "FRASER RIVER AT HOPE",
+      "note": "Pinned to the Hope mainstem gauge. Name-match alone also hits Fort Fraser tributaries."
+    },
+    {
+      "destinationId": "HHI-DEST-430",
+      "agency": "WSC",
+      "siteId": "05BH004",
+      "siteName": "BOW RIVER AT CALGARY",
+      "note": "Pinned to the Calgary mainstem gauge. LITTLE BOW is a different river."
+    },
+    {
+      "destinationId": "HHI-DEST-435",
+      "agency": "WSC",
+      "siteId": "05OJ021",
+      "siteName": "RED RIVER UPSTREAM OF ST. ANDREWS DAM AT LOCKPORT",
+      "note": "Pinned to the Lockport reach named on the record."
+    }
+  ]
+}

@@ -17,19 +17,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Resolve USGS bindings
+      - name: Resolve USGS / NOAA / WSC bindings
         run: node scripts/resolve-stations.mjs
       - name: Open PR if bindings changed
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: "data: refresh station bindings from USGS site index"
+          commit-message: "data: refresh station bindings from official indexes"
           committer: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
           author: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
           branch: data/station-bindings
-          title: "Refresh USGS station bindings"
+          title: "Refresh multi-agency station bindings"
           body: |
-            Nightly resolve of the 494-water catalog against the USGS site index.
+            Nightly resolve of the 494-water catalog.
 
-            Fail-closed: name + water-type must align. No nearby station is substituted.
+            Order: station-overrides.json, then USGS, then NOAA CO-OPS (marine),
+            then Water Survey of Canada (provinces). NWS observation stations are
+            bound to the gauge coordinates — not guessed at read time.
+
+            Fail-closed: name + water-type must align. Ambiguous multi-matches
+            stay unmatched so they can be pinned. No nearby station is substituted.
             Review the diff before merge — this file is what the instrument trusts.
           labels: data,pipeline

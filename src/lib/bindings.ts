@@ -1,6 +1,8 @@
 import raw from "@/data/station-bindings.json";
 
 export type BindingStatus = "matched" | "unmatched" | "unsupported" | "error";
+export type BindingAgency = "USGS" | "NOAA-COOPS" | "WSC";
+export type BindingSource = "override" | "name-match";
 
 export interface StationBinding {
   destinationId: string;
@@ -10,11 +12,14 @@ export interface StationBinding {
   status: BindingStatus;
   siteId: string | null;
   siteName: string | null;
-  agency: string | null;
+  agency: BindingAgency | string | null;
   lat: number | null;
   lon: number | null;
   score: number;
   note: string;
+  source?: BindingSource;
+  nwsStationId?: string | null;
+  nwsStationName?: string | null;
 }
 
 export interface BindingsFile {
@@ -28,6 +33,9 @@ export interface BindingsFile {
     unmatched: number;
     unsupported: number;
     error: number;
+    overrides?: number;
+    nwsBound?: number;
+    byAgency?: Partial<Record<BindingAgency, number>>;
   };
   records: StationBinding[];
 }
