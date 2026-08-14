@@ -13,6 +13,16 @@ function ago(iso: string) {
   return hrs < 48 ? `${hrs} h ago` : `${Math.round(hrs / 24)} d ago`;
 }
 
+function sourceLine(source: string, age: number | null, agency: string | null) {
+  if (source === "scheduled-snapshot") {
+    return `Scheduled ingest · ${age ?? "?"} min old`;
+  }
+  if (source === "agency-live") {
+    return `Live ${agency ?? "agency"} pull · binding used`;
+  }
+  return null;
+}
+
 /** Official gauge and forecast readings, or an explicit statement that none exist. */
 export function LiveConditions({ destination }: { destination: Destination }) {
   const call = useServerFn(getLiveConditions);
@@ -73,6 +83,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
               {data.station.agency} station{" "}
               <span className="data text-brass">{data.station.id}</span> —{" "}
               {data.station.name}
+              {data.binding.source === "override" ? " · pinned" : ""}
             </p>
           ) : (
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -82,9 +93,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
           {data.source !== "unbound" && (
             <p className="mt-2 text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground">
-              {data.source === "scheduled-snapshot"
-                ? `Scheduled ingest · ${data.snapshotAgeMinutes ?? "?"} min old`
-                : "Live USGS pull · binding used"}
+              {sourceLine(data.source, data.snapshotAgeMinutes, data.station?.agency)}
             </p>
           )}
 
@@ -95,7 +104,9 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                   <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
                   <dd className="data mt-1 text-lg text-foreground">
                     {r.value}
-                    <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
+                    {r.unit ? (
+                      <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
+                    ) : null}
                   </dd>
                   <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
                     Observed {ago(r.observedAt)}
@@ -103,6 +114,31 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                 </div>
               ))}
             </dl>
+          )}
+
+          {data.observation && data.observation.readings.length > 0 && (
+            <div className="mt-5 border-t border-hairline pt-4">
+              <p className="tick text-[0.55rem]">
+                NWS {data.observation.stationId} · {data.observation.stationName}
+              </p>
+              <p className="mt-1 text-[0.68rem] text-muted-foreground">
+                Bound observation station — not a guess, not the ramp unless the
+                names agree.
+              </p>
+              <dl className="mt-3 space-y-2">
+                {data.observation.readings.map((r) => (
+                  <div key={r.label}>
+                    <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
+                    <dd className="data mt-0.5 text-sm text-foreground">
+                      {r.value}
+                      {r.unit ? (
+                        <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
+                      ) : null}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           )}
 
           {data.forecast && (
@@ -113,6 +149,26 @@ export function LiveConditions({ destination }: { destination: Destination }) {
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 {data.forecast.detail}
               </p>
+            </div>
+          )}
+
+          {data.closures.status !== "unscanned" && (
+            <div className="mt-5 border-t border-hairline pt-4">
+              <p className="tick text-[0.55rem]">
+                Agency page language
+                {data.closures.scannedAt ? ` · scanned ${ago(data.closures.scannedAt)}` : ""}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {data.closures.note}
+              </p>
+              {data.closures.hits.map((h) => (
+                <p
+                  key={`${h.term}-${h.snippet}`}
+                  className="mt-2 border-l border-alert/70 pl-3 text-xs leading-relaxed text-foreground"
+                >
+                  “{h.snippet}”
+                </p>
+              ))}
             </div>
           )}
 

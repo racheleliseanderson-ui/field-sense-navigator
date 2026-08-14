@@ -26,7 +26,7 @@ export const Route = createFileRoute("/pipeline")({
       {
         name: "description",
         content:
-          "Catalog integrity, scheduled live ingest, and official station bindings for the named public waters held by the instrument.",
+          "Catalog integrity, scheduled ingest (USGS / NOAA / WSC / NWS), and fail-closed station bindings.",
       },
       { property: "og:title", content: "Pipeline console · Field Sense Navigator" },
       {
@@ -209,8 +209,9 @@ function Pipeline() {
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Integrity is computed from the records, not asserted. Station bindings
-            are resolved on a nightly schedule. USGS readings are ingested every
-            30 minutes. Misses stay misses.
+            are resolved on a nightly schedule (USGS, NOAA CO-OPS, Water Survey of
+            Canada). Official readings are ingested every 30 minutes. Agency-page
+            closure language is scanned nightly. Misses stay misses.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -234,8 +235,9 @@ function Pipeline() {
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
           Bindings are a committed data file. Live numbers come from the last
-          ingest, then a direct USGS pull if that snapshot is older than 45 minutes.
-          The instrument still will not claim to know the water if the feed is silent.
+          ingest, then a direct agency pull if that snapshot is older than 45
+          minutes. The instrument still will not claim to know the water if the
+          feed is silent.
         </p>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
@@ -247,15 +249,22 @@ function Pipeline() {
               {bind.matched} matched · {bind.unmatched} unmatched · {bind.unsupported} unsupported
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              USGS {bind.byAgency?.USGS ?? 0} · NOAA {bind.byAgency?.["NOAA-COOPS"] ?? 0} · WSC{" "}
+              {bind.byAgency?.WSC ?? 0}
+              {bind.overrides ? ` · ${bind.overrides} pinned` : ""}
+              {bind.nwsBound ? ` · ${bind.nwsBound} NWS obs` : ""}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               Generated {pulse?.bindings.generatedAt
                 ? new Date(pulse.bindings.generatedAt).toUTCString()
                 : new Date(bindingsFile.generatedAt).toUTCString()}
-              . Name and water-type must both align. No nearby gauge is substituted.
+              . Override file wins. Name and water-type must both align. No nearby
+              gauge is substituted.
             </p>
           </li>
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
-              <p className="font-display text-base font-bold text-foreground">USGS ingest</p>
+              <p className="font-display text-base font-bold text-foreground">Scheduled ingest</p>
               <GradeChip
                 grade={!ingest || ingest.stale ? "watch" : "clear"}
                 label={!ingest ? "Waiting" : ingest.stale ? "Stale" : "Current"}
@@ -263,13 +272,37 @@ function Pipeline() {
             </div>
             <p className="data mt-3 text-sm text-foreground">
               {ingest
-                ? `${ingest.withReadings}/${ingest.boundStations} stations with readings`
+                ? `${ingest.withReadings}/${ingest.boundStations} gauges with readings`
                 : "Snapshot not published yet"}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              NWS observations {ingest?.nwsWithObs ?? 0}/{ingest?.nwsStations ?? 0}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               {ingest?.ingestedAt
                 ? `Last ingest ${ingest.ageMinutes} min ago · cadence ${ingest.cadenceMinutes} min`
                 : "The 30-minute Action has not published a snapshot to the live-snapshot branch yet."}
+            </p>
+          </li>
+          <li className="panel p-5 md:col-span-2">
+            <div className="flex items-start justify-between gap-3">
+              <p className="font-display text-base font-bold text-foreground">
+                Agency-page closure language
+              </p>
+              <GradeChip
+                grade={!pulse?.closures || pulse.closures.stale ? "watch" : "clear"}
+                label={!pulse?.closures?.scannedAt ? "Waiting" : pulse.closures.stale ? "Stale" : "Current"}
+              />
+            </div>
+            <p className="data mt-3 text-sm text-foreground">
+              {pulse?.closures
+                ? `${pulse.closures.hit} pages with closure language · ${pulse.closures.none} none · ${pulse.closures.unreachable} unread`
+                : "Scan not published yet"}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              {pulse?.closures?.scannedAt
+                ? `Last scan ${pulse.closures.scanAgeMinutes} min ago · nightly. A hit is language on the agency page, not a determination that the water is closed.`
+                : "The nightly scan has not published closures.json yet."}
             </p>
           </li>
         </ul>

@@ -1,4 +1,4 @@
-name: Ingest live USGS readings
+name: Ingest live official readings
 
 on:
   schedule:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Pull current readings for bound stations
+      - name: Pull USGS, NOAA CO-OPS, WSC, and NWS observations
         run: node scripts/ingest-live.mjs
       - name: Publish snapshot to live-snapshot branch
         run: |
@@ -26,9 +26,14 @@ jobs:
           mkdir -p /tmp/live-snap
           cp public/live/snapshot.json /tmp/live-snap/snapshot.json
           git fetch origin live-snapshot || true
+          git show origin/live-snapshot:closures.json >/tmp/live-snap/closures.json || true
           git checkout --orphan live-snapshot-tmp
           git rm -rf --quiet . || true
           cp /tmp/live-snap/snapshot.json snapshot.json
           git add snapshot.json
-          git commit -m "ingest: USGS IV snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          if [ -f /tmp/live-snap/closures.json ]; then
+            cp /tmp/live-snap/closures.json closures.json
+            git add closures.json
+          fi
+          git commit -m "ingest: official readings $(date -u +%Y-%m-%dT%H:%MZ)"
           git push --force origin HEAD:live-snapshot
