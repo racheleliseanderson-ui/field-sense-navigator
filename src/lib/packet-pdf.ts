@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 
-import { displayName, humanize, type Destination } from "@/lib/catalog";
+import { displayName, humanize, reviewOverdue, type Destination } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -161,12 +161,24 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
     { size: 9, color: MUTED },
   );
 
+  const overdue = reviewOverdue(d);
+  if (overdue) {
+    ctx.y += 8;
+    paragraph(
+      ctx,
+      `Review overdue since ${d.nextReviewAt}. Re-read the official source before you treat this packet as current.`,
+      { style: "bold", size: 9.5 },
+    );
+  }
+
   ctx.y += 8;
   const cols: Array<[string, string]> = [
     ["Declared job", jobLabel],
     ["Field readiness", `${r.score}/100`],
     ["Band", r.band],
-    ["Last source check", d.checkedAt.slice(0, 10)],
+    overdue
+      ? ["Review overdue", `Due ${d.nextReviewAt}`]
+      : ["Last source check", d.checkedAt.slice(0, 10)],
   ];
   need(ctx, 34);
   const colW = CONTENT_W / cols.length;

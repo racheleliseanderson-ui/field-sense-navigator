@@ -5,9 +5,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard } from "@/components/water-card";
-import { CardSkeleton, EmptyState } from "@/components/instrument";
+import { EmptyState } from "@/components/instrument";
 import {
   destinations,
+  NAMED_WATER_COUNT,
   usStates,
   provinces,
   jurisdictionOf,
@@ -68,7 +69,7 @@ export const Route = createFileRoute("/explore")({
       {
         name: "description",
         content:
-          "Search 318 named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.",
+          `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.`,
       },
       { property: "og:title", content: "Catalog · Field Sense Navigator" },
       {
@@ -139,14 +140,11 @@ function Explore() {
   const [focused, setFocused] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [count, setCount] = useState(PAGE);
-  const [settling, setSettling] = useState(true);
   const [recent, setRecent] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const id = setTimeout(() => setSettling(false), 420);
     setRecent(readRecent());
-    return () => clearTimeout(id);
   }, []);
 
   useEffect(() => setDraft(params.q), [params.q]);
@@ -463,7 +461,7 @@ function Explore() {
             data-reveal
             style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
           >
-            {destinations.length} named public waters,
+            {NAMED_WATER_COUNT} named public waters,
             <br />
             read one at a time.
           </h1>
@@ -664,13 +662,7 @@ function Explore() {
       </div>
 
       <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12">
-        {settling ? (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <CardSkeleton key={i} />
-            ))}
-          </div>
-        ) : results.length === 0 ? (
+        {results.length === 0 ? (
           <EmptyState
             title={t("catalog.noMatch", "No record matches that read")}
             body={
@@ -708,14 +700,8 @@ function Explore() {
         ) : (
           <>
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {visible.map((d, i) => (
-                <div
-                  key={d.id}
-                  data-reveal
-                  style={{ "--reveal-delay": `${Math.min(i, 8) * 55}ms` } as React.CSSProperties}
-                >
-                  <WaterCard destination={d} />
-                </div>
+              {visible.map((d) => (
+                <WaterCard key={d.id} destination={d} />
               ))}
             </div>
             {count < results.length && (
@@ -729,6 +715,27 @@ function Explore() {
                 </button>
               </div>
             )}
+            <nav aria-label="Full catalog index" className="mt-16 border-t border-hairline pt-10">
+              <p className="tick text-brass">Full catalog index</p>
+              <p className="mt-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
+                Every named water on this read, as a link. The cards above are a
+                page of the same list.
+              </p>
+              <ul className="mt-6 columns-1 gap-x-10 sm:columns-2 lg:columns-3">
+                {results.map(({ d }) => (
+                  <li key={`idx-${d.id}`} className="break-inside-avoid py-1">
+                    <Link
+                      to="/water/$id"
+                      params={{ id: d.id }}
+                      className="text-sm text-foreground hover:text-brass"
+                    >
+                      {displayName(d)}
+                      <span className="text-muted-foreground"> · {d.state}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </>
         )}
       </section>

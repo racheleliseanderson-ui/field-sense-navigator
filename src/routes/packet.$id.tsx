@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
-import { destinationById, displayName, humanize } from "@/lib/catalog";
+import { destinationById, displayName, humanize, reviewOverdue } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -59,6 +59,7 @@ function Packet() {
   const items = buildChecklist(d, job ?? null, job ? DEFAULT_CONSTRAINTS : null);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   const issued = new Date().toISOString().slice(0, 10);
+  const overdue = reviewOverdue(d);
 
   const downloadPdf = async () => {
     setPdfBusy(true);
@@ -119,7 +120,6 @@ function Packet() {
           <div className="text-[0.7rem] leading-relaxed text-packet-muted sm:text-right">
             <p className="data">RECORD {d.id}</p>
             <p>Issued {issued}</p>
-            <p>Schema 0.4.0</p>
           </div>
         </header>
 
@@ -139,12 +139,22 @@ function Packet() {
             {d.county ? ` · ${d.county} County` : ""} · {d.waterType}
           </p>
 
+          {overdue && (
+            <p className="mt-5 border border-packet-ink/40 px-3 py-2 text-sm font-medium leading-relaxed">
+              Review overdue since {d.nextReviewAt}. Re-read the official source
+              before you treat this packet as current.
+            </p>
+          )}
+
           <dl className="mt-7 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             {[
               ["Declared job", jobLabel],
               ["Field readiness", `${r.score}/100`],
               ["Band", r.band],
-              ["Last source check", d.checkedAt.slice(0, 10)],
+              [
+                overdue ? "Review overdue" : "Last source check",
+                overdue ? `Due ${d.nextReviewAt}` : d.checkedAt.slice(0, 10),
+              ],
             ].map(([k, v]) => (
               <div key={k}>
                 <dt className="packet-tick">{k}</dt>

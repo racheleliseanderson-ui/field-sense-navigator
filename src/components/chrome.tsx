@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Anchor, Check, Contrast, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { NAMED_WATER_COUNT, provinces, usStates } from "@/lib/catalog";
 import { useTheme, THEMES, type Theme } from "@/lib/theme";
 import { useT } from "@/lib/i18n";
 import { CommandPalette } from "@/components/command-palette";
@@ -278,9 +279,13 @@ export function SiteFooter() {
         <div>
           <p className="tick">{t("footer.record", "Record")}</p>
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>{t("footer.schema", "Schema 0.4.0")}</li>
-            <li>{t("footer.waters", "494 named waters")}</li>
-            <li>{t("footer.states", "50 states + 13 provinces & territories")}</li>
+            <li>
+              {NAMED_WATER_COUNT} {t("footer.watersUnit", "named waters")}
+            </li>
+            <li>
+              {usStates.length} {t("footer.statesUnit", "states")} +{" "}
+              {provinces.length} {t("footer.provincesUnit", "provinces & territories")}
+            </li>
           </ul>
         </div>
       </div>

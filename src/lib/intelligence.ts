@@ -161,7 +161,7 @@ function confidenceLabel(pct: number): IntelLayer["confidenceLabel"] {
 
 function freshnessBonus(d: Destination): number {
   const age = daysSince(d.checkedAt);
-  if (reviewOverdue(d)) return -12;
+  if (reviewOverdue(d)) return -22;
   if (age <= 7) return 10;
   if (age <= 21) return 4;
   if (age <= 60) return -2;
@@ -172,16 +172,20 @@ function clamp(n: number, lo: number, hi: number) {
   return Math.max(lo, Math.min(hi, n));
 }
 
+const OVERDUE_UNKNOWN =
+  "This record is past its review date. Treat this layer as stale until the official source is re-read.";
+
 export function buildLayers(d: Destination): IntelLayer[] {
   const t = readTags(d);
   const fresh = freshnessBonus(d);
+  const overdue = reviewOverdue(d);
   const lines = [...d.currentNotices, ...d.directVerification];
+  const cap = overdue ? 48 : 88;
 
   const hazardSignals = match(lines, HAZARD_PATTERNS).signals;
   const crowdSignals = match(lines, CROWD_PATTERNS).signals;
   const seasonalSignals = match(lines, SEASONAL_PATTERNS).signals;
 
-  /* --- Layer 1: Access & legality --- */
   const accessSignals: Signal[] = d.publicAccess.map((a) => ({
     label: humanize(a.type),
     detail: a.status ? `${a.name} — ${humanize(a.status)}` : a.name,
@@ -197,7 +201,6 @@ export function buildLayers(d: Destination): IntelLayer[] {
       ? "Access is documented as an official directory, not a single site. One named site must be chosen before travel."
       : `${t.namedSites} named public facilit${t.namedSites === 1 ? "y" : "ies"} documented on the official source.`;
 
-  /* --- Layer 2: Conditions & hazards --- */
   const hazardCount = t.hazards.size;
   const conditionsGrade: Grade =
     hazardCount >= 4 ? "flagged" : hazardCount >= 2 ? "watch" : "clear";
@@ -205,7 +208,6 @@ export function buildLayers(d: Destination): IntelLayer[] {
     ? `${hazardCount} documented hazard famil${hazardCount === 1 ? "y" : "ies"} on record. These are standing characteristics of the water, not a forecast.`
     : "No standing hazard families recorded on the official notices. Weather still governs the day.";
 
-  /* --- Layer 3: Capacity & crowding --- */
   const crowdCount = t.crowd.size;
   const capacityGrade: Grade =
     crowdCount >= 4 ? "flagged" : crowdCount >= 2 ? "watch" : "clear";
@@ -213,7 +215,6 @@ export function buildLayers(d: Destination): IntelLayer[] {
     ? `${crowdCount} capacity pressure signal${crowdCount === 1 ? "" : "s"} documented. Signals describe typical load, never live occupancy.`
     : "No documented capacity pressure. Expect ordinary parking and launch behaviour, unverified.";
 
-  /* --- Layer 4: Seasonal & regulatory pressure --- */
   const seasonalCount = t.seasonal.size;
   const seasonalGrade: Grade =
     seasonalCount >= 4 ? "flagged" : seasonalCount >= 2 ? "watch" : "clear";
@@ -221,9 +222,11 @@ export function buildLayers(d: Destination): IntelLayer[] {
     ? `${seasonalCount} regulatory pressure point${seasonalCount === 1 ? "" : "s"}. Rules here move with date, section and vessel.`
     : "No section-specific regulatory variance recorded. Statewide rules still apply.";
 
-  /* --- Layer 5: Field-check requirement --- */
   const checkCount = d.directVerification.length;
   const fieldGrade: Grade = checkCount >= 4 ? "flagged" : checkCount >= 2 ? "watch" : "clear";
+
+  const stale = (unknowns: string[]) =>
+    overdue ? [OVERDUE_UNKNOWN, ...unknowns] : unknowns;
 
   return [
     {
@@ -232,16 +235,16 @@ export function buildLayers(d: Destination): IntelLayer[] {
       title: "Access & legality",
       readout: accessReadout,
       grade: accessGrade,
-      confidence: clamp(46 + accessSignals.length * 9 + fresh, 22, 88),
+      confidence: clamp(46 + accessSignals.length * 9 + fresh, 18, Math.min(88, cap)),
       confidenceLabel: "Moderate",
       signals: accessSignals,
-      unknowns: [
+      unknowns: stale([
         "Same-day gate hours, fees and closures are set locally and are not mirrored here.",
         t.directoryOnly
           ? "The specific site you will use has not been chosen yet — this record covers the network, not one ramp."
           : "Facility condition (surface, dock presence, ADA status) is not tracked at record level.",
         "Landowner boundaries adjacent to public corridors are outside this dataset.",
-      ],
+      ]),
     },
     {
       key: "conditions",
@@ -249,14 +252,14 @@ export function buildLayers(d: Destination): IntelLayer[] {
       title: "Conditions & hazards",
       readout: conditionsReadout,
       grade: conditionsGrade,
-      confidence: clamp(40 + hazardSignals.length * 8 + fresh, 20, 82),
+      confidence: clamp(40 + hazardSignals.length * 8 + fresh, 16, Math.min(82, cap)),
       confidenceLabel: "Moderate",
       signals: hazardSignals,
-      unknowns: [
+      unknowns: stale([
         "No live gauge height, discharge, tide table or wind reading is held in this record.",
         "Water clarity, temperature and hatch activity are not modelled and will not be estimated.",
         "Hazard families describe what the water is known to do, not what it is doing today.",
-      ],
+      ]),
     },
     {
       key: "capacity",
@@ -264,14 +267,14 @@ export function buildLayers(d: Destination): IntelLayer[] {
       title: "Capacity & crowding",
       readout: capacityReadout,
       grade: capacityGrade,
-      confidence: clamp(34 + crowdSignals.length * 9 + fresh, 18, 74),
+      confidence: clamp(34 + crowdSignals.length * 9 + fresh, 14, Math.min(74, cap)),
       confidenceLabel: "Low",
       signals: crowdSignals,
-      unknowns: [
+      unknowns: stale([
         "Live lot occupancy, ramp queue length and trailer counts are not observable from here.",
         "Event, tournament and regatta calendars are not ingested.",
         "Crowding language reflects documented patterns, not a prediction for your date.",
-      ],
+      ]),
     },
     {
       key: "seasonal",
@@ -279,14 +282,14 @@ export function buildLayers(d: Destination): IntelLayer[] {
       title: "Seasonal & regulatory pressure",
       readout: seasonalReadout,
       grade: seasonalGrade,
-      confidence: clamp(44 + seasonalSignals.length * 8 + fresh, 20, 80),
+      confidence: clamp(44 + seasonalSignals.length * 8 + fresh, 16, Math.min(80, cap)),
       confidenceLabel: "Moderate",
       signals: seasonalSignals,
-      unknowns: [
+      unknowns: stale([
         "The regulation booklet is authoritative; this layer flags where variance exists, it does not restate the rule.",
         "Emergency orders and in-season rule changes can post after the last source check.",
         "Species presence is context, never a catch expectation.",
-      ],
+      ]),
     },
     {
       key: "fieldcheck",
@@ -294,16 +297,16 @@ export function buildLayers(d: Destination): IntelLayer[] {
       title: "Field-check requirement",
       readout: `${checkCount} verification${checkCount === 1 ? "" : "s"} must be completed on the day of travel before this water is considered go.`,
       grade: fieldGrade,
-      confidence: clamp(64 + fresh, 30, 90),
+      confidence: clamp(64 + fresh, 24, Math.min(90, cap)),
       confidenceLabel: "High",
       signals: d.directVerification.map((v, i) => ({
         label: `Check ${String(i + 1).padStart(2, "0")}`,
         detail: v,
       })),
-      unknowns: [
-        "Checks are the operator's responsibility; nothing here completes them for you.",
+      unknowns: stale([
+        "Checks are yours to complete; nothing here completes them for you.",
         "If a check cannot be completed, the water is treated as not-go by default.",
-      ],
+      ]),
     },
   ].map((l) => ({
     ...l,
@@ -346,8 +349,8 @@ export function readiness(d: Destination): Readiness {
   );
 
   const freshValue = clamp(
-    25 - Math.floor(age / 7) * 3 - (overdue ? 8 : 0),
-    3,
+    25 - Math.floor(age / 7) * 3 - (overdue ? 14 : 0),
+    2,
     25,
   );
 
@@ -371,7 +374,7 @@ export function readiness(d: Destination): Readiness {
       value: freshValue,
       max: 25,
       note: overdue
-        ? `Source check is past its review date (${d.nextReviewAt}).`
+        ? `Review overdue since ${d.nextReviewAt}. This score is capped until the official source is re-read.`
         : `Official source last checked ${age} day${age === 1 ? "" : "s"} ago.`,
     },
     {
@@ -400,9 +403,10 @@ export function readiness(d: Destination): Readiness {
     },
   ];
 
-  const score = parts.reduce((sum, p) => sum + p.value, 0);
+  let score = parts.reduce((sum, p) => sum + p.value, 0);
+  if (overdue) score = Math.min(score, 65);
 
-  const band: Readiness["band"] =
+  let band: Readiness["band"] =
     score >= 82
       ? "Ready to plan"
       : score >= 66
@@ -411,8 +415,23 @@ export function readiness(d: Destination): Readiness {
           ? "Plan carefully"
           : "Constrained";
 
+  // Fail closed: a lapsed review cannot sit in a high-readiness band.
+  if (overdue && (band === "Ready to plan" || band === "Plan with checks")) {
+    band = "Plan carefully";
+  }
+
   const grade: Grade =
-    score >= 82 ? "clear" : score >= 66 ? "watch" : score >= 48 ? "flagged" : "restricted";
+    overdue
+      ? score >= 48
+        ? "flagged"
+        : "restricted"
+      : score >= 82
+        ? "clear"
+        : score >= 66
+          ? "watch"
+          : score >= 48
+            ? "flagged"
+            : "restricted";
 
   return {
     score,
@@ -452,7 +471,7 @@ export const JOBS: JobDef[] = [
   { id: "kayak", label: "Kayak & paddle", blurb: "Hand-launched craft, wind-sensitive, short haul from the car." },
   { id: "small_boat", label: "Small boat", blurb: "Trailered craft needing a usable hard-surface ramp." },
   { id: "scouting", label: "Scouting", blurb: "Learning a new water. Depth of documentation matters most." },
-  { id: "tournament", label: "Tournament-adjacent", blurb: "Pre-fish and rule-exposure work around organised events." },
+  { id: "tournament", label: "Tournament-adjacent", blurb: "Pre-fish days and rule checks around organized events." },
   { id: "family", label: "Family day", blurb: "Low commitment, low hazard, facilities and short walks." },
 ];
 
@@ -630,12 +649,12 @@ export function fitFor(
   }
 
   if (t.restricted && !blocked) {
-    cautions.push("Restricted-access notice on record — read layer 01 before committing.");
+    cautions.push("Restricted-access notice on record — read Access & legality before committing.");
   }
 
   if (reviewOverdue(d)) {
     cautions.push("Record is past its review date; treat every layer as provisional.");
-    score -= 6;
+    score -= 10;
   }
 
   return {
@@ -695,53 +714,61 @@ export function buildChecklist(
     "Record: source freshness",
   );
 
+  if (reviewOverdue(d)) {
+    add(
+      "Before you leave",
+      `This record was due for review on ${d.nextReviewAt} and is overdue. Re-read the official source before you decide anything else.`,
+      "Record: review overdue",
+    );
+  }
+
   if (t.directoryOnly) {
     add(
       "Before you leave",
       "Select ONE named public access site from the official directory and write it down. Do not depart against a network.",
-      "Layer 01: access is directory-level",
+      "Access: directory-level",
     );
   }
   if (t.hasClosedLaunch) {
     add(
       "Before you leave",
       "Confirm which launches are open today — at least one is documented closed.",
-      "Layer 01: documented closure",
+      "Access: documented closure",
     );
   }
   if (t.hazards.has("wind")) {
-    add("Before you leave", "Pull the wind forecast and set a turn-back speed before you commit.", "Layer 02: wind & fetch");
+    add("Before you leave", "Pull the wind forecast and set a turn-back speed before you commit.", "Conditions: wind & fetch");
   }
   if (t.hazards.has("tide")) {
-    add("Before you leave", "Read the tide table for your window; note the stage that strands you.", "Layer 02: tide stage");
+    add("Before you leave", "Read the tide table for your window; note the stage that strands you.", "Conditions: tide stage");
   }
   if (t.hazards.has("level")) {
-    add("Before you leave", "Check current water level and ramp usability; assume unmarked hazards where levels are low.", "Layer 02: water level");
+    add("Before you leave", "Check current water level and ramp usability; assume unmarked hazards where levels are low.", "Conditions: water level");
   }
   if (t.hazards.has("fire")) {
-    add("Before you leave", "Check wildfire closures, smoke and fire restrictions for the corridor.", "Layer 02: wildfire & smoke");
+    add("Before you leave", "Check wildfire closures, smoke and fire restrictions for the corridor.", "Conditions: wildfire & smoke");
   }
   if (t.hazards.has("algae")) {
-    add("Before you leave", "Check current algal-bloom advisories before contact recreation.", "Layer 02: algal advisory");
+    add("Before you leave", "Check current algal-bloom advisories before contact recreation.", "Conditions: algal advisory");
   }
   if (t.seasonal.has("ais")) {
-    add("Before you leave", "Clean, drain, dry. Confirm inspection or decontamination requirements for this water.", "Layer 04: AIS obligation");
+    add("Before you leave", "Clean, drain, dry. Confirm inspection or decontamination requirements for this water.", "Rules: AIS obligation");
   }
   if (t.seasonal.has("jurisdiction")) {
-    add("Before you leave", "Confirm which jurisdiction governs the exact section you intend to fish.", "Layer 04: multi-jurisdiction");
+    add("Before you leave", "Confirm which jurisdiction governs the exact section you intend to fish.", "Rules: multi-jurisdiction");
   }
   if (t.seasonal.size) {
-    add("Standing rules", "Read the current regulation entry for this water — season dates, gear and limits vary by section.", "Layer 04: regulatory pressure");
+    add("Standing rules", "Read the current regulation entry for this water — season dates, gear and limits vary by section.", "Rules: regulatory pressure");
   }
 
   if (t.crowd.size) {
-    add("At the access", "Have a named fallback access in case parking or the ramp is full on arrival.", "Layer 03: capacity pressure");
+    add("At the access", "Have a named fallback access in case parking or the ramp is full on arrival.", "Capacity: pressure");
   }
   if (t.crowd.has("permit")) {
-    add("At the access", "Carry the required permit, pass or fee payment method.", "Layer 03: permit or fee");
+    add("At the access", "Carry the required permit, pass or fee payment method.", "Capacity: permit or fee");
   }
   if (t.crowd.has("hours")) {
-    add("At the access", "Confirm gate and day-use hours, including the closing time.", "Layer 03: operating hours");
+    add("At the access", "Confirm gate and day-use hours, including the closing time.", "Capacity: operating hours");
   }
   add("At the access", "Confirm posted signage matches what this packet says. Posted signage wins.", "Standing policy");
   add("At the access", "Note the exact access name and managing authority in your log.", "Standing policy");
@@ -765,13 +792,13 @@ export function buildChecklist(
     add("On the water", "Log access condition, parking count and hazards observed for the next visit.", "Job: scouting");
   }
   if (t.hazards.has("traffic")) {
-    add("On the water", "Stay clear of the navigation channel; commercial traffic has right of way and long stopping distance.", "Layer 02: vessel traffic");
+    add("On the water", "Stay clear of the navigation channel; commercial traffic has right of way and long stopping distance.", "Conditions: vessel traffic");
   }
   if (t.hazards.has("current")) {
-    add("On the water", "Read current before wading or anchoring; flows can change with releases.", "Layer 02: current & flow");
+    add("On the water", "Read current before wading or anchoring; flows can change with releases.", "Conditions: current & flow");
   }
   if (t.hazards.has("ice") ) {
-    add("On the water", "Cold-water exposure planning: layers, change of clothes, immersion plan.", "Layer 02: cold exposure");
+    add("On the water", "Cold-water exposure planning: layers, change of clothes, immersion plan.", "Conditions: cold exposure");
   }
 
   add(
@@ -802,16 +829,19 @@ export function buildHandoff(
   const r = readiness(d);
   const t = readTags(d);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
+  const overdue = reviewOverdue(d);
   return [
     "FIELD SENSE NAVIGATOR — CARRY FORWARD",
-    `Record: ${d.id} (schema 0.4.0)`,
+    `Record: ${d.id}`,
     `Water: ${d.waterbody}${d.accessSite ? ` — ${d.accessSite}` : ""}`,
     `Place: ${d.region}, ${d.state}${d.county ? ` (${d.county} County)` : ""}`,
     `Type: ${d.waterType} · Boundary: public waters only`,
     `Job: ${jobLabel}${c ? ` · Gear: ${humanize(c.gear)} · Window: ${c.timeWindow} · Wind tolerance: ${c.wind}` : ""}`,
     `Field Readiness: ${r.score}/100 — ${r.band}`,
     `Status: ${humanize(d.status)}`,
-    `Last source check: ${d.checkedAt.slice(0, 10)} · Next review: ${d.nextReviewAt}`,
+    overdue
+      ? `Last source check: ${d.checkedAt.slice(0, 10)} · Review OVERDUE since ${d.nextReviewAt}`
+      : `Last source check: ${d.checkedAt.slice(0, 10)} · Next review: ${d.nextReviewAt}`,
     `Official source: ${d.officialSourceUrl}`,
     "",
     "OPEN ITEMS (must clear before departure):",
@@ -823,3 +853,4 @@ export function buildHandoff(
     "NOT INCLUDED: live gauge, flow, tide, weather, bite or catch data. No private spots, no coordinates.",
   ].join("\n");
 }
+

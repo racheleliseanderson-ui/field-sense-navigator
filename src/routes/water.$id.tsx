@@ -137,6 +137,20 @@ function WaterRecord() {
             {d.county ? ` · ${d.county} County` : ""}
           </p>
 
+          {overdue && (
+            <div
+              role="status"
+              className="mt-6 max-w-2xl border border-alert/50 bg-alert/10 px-5 py-4"
+            >
+              <p className="tick text-alert">Review overdue</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground">
+                This record was due for review on {d.nextReviewAt}. That date
+                has passed. Every layer below is provisional. Re-read the
+                official source before you treat any of it as current.
+              </p>
+            </div>
+          )}
+
           {/* readiness band — above the fold on a phone */}
           <div className="panel mt-7 p-5 lg:hidden" data-print="hide">
             <ReadinessMeter readiness={r} compact />
@@ -194,12 +208,23 @@ function WaterRecord() {
           {([
             { k: "Status", v: humanize(d.status) },
             { k: "Last source check", v: `${daysSince(d.checkedAt)}d ago` },
-            { k: "Next review", v: d.nextReviewAt },
+            {
+              k: overdue ? "Review overdue" : "Next review",
+              v: overdue ? `Due ${d.nextReviewAt}` : d.nextReviewAt,
+            },
             { k: "Boundary", v: "Public destination" },
           ] as Array<{ k: string; v: string }>).map((s) => (
             <div key={s.k} className="min-w-0 px-5 py-5 sm:px-8 sm:py-6">
-              <dt className="tick text-[0.55rem]">{s.k}</dt>
-              <dd className="mt-2 text-sm leading-snug text-foreground">{s.v}</dd>
+              <dt className={`tick text-[0.55rem] ${s.k === "Review overdue" ? "text-alert" : ""}`}>
+                {s.k}
+              </dt>
+              <dd
+                className={`mt-2 text-sm leading-snug ${
+                  s.k === "Review overdue" ? "text-alert" : "text-foreground"
+                }`}
+              >
+                {s.v}
+              </dd>
             </div>
           ))}
         </dl>

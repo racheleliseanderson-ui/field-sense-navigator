@@ -35,9 +35,9 @@ const es: Dict = {
   "footer.planDay": "Planear un día",
   "footer.fullCatalog": "Catálogo completo",
   "footer.boundaryMethod": "Límites y método",
-  "footer.schema": "Esquema 0.4.0",
-  "footer.waters": "318 aguas con nombre",
-  "footer.states": "23 estados",
+  "footer.watersUnit": "aguas con nombre",
+  "footer.statesUnit": "estados",
+  "footer.provincesUnit": "provincias y territorios",
   "footer.legal":
     "Field Sense Navigator — creado para Hook the Horizon. Las fuentes oficiales son autoritativas; la señalización publicada el mismo día prevalece sobre lo impreso aquí.",
   // catalog / search

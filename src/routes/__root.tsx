@@ -119,6 +119,9 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <HeadContent />
+        <noscript>
+          <style>{`[data-reveal],[data-reveal-crop],[data-reveal-rule]{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+        </noscript>
       </head>
       <body>
         {children}
