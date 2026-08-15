@@ -54,6 +54,9 @@ export const SCHEMA_VERSION = "0.5.0";
 
 export const destinations = raw as Destination[];
 
+/** Single source of truth for every displayed catalog count. */
+export const NAMED_WATER_COUNT = destinations.length;
+
 export const destinationById = (id: string) =>
   destinations.find((d) => d.id === id);
 
@@ -102,16 +105,32 @@ export const titleCase = (value: string) =>
 export const displayName = (d: Destination) =>
   d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
 
-/** Days since the record was last verified against its official source. */
-export function daysSince(iso: string, now = new Date()): number {
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return 999;
-  return Math.max(0, Math.round((now.getTime() - then) / 86_400_000));
+/** UTC calendar day as epoch-ms at midnight. NaN if the input is unparseable. */
+function utcDay(isoOrDate: string | Date): number {
+  const d = typeof isoOrDate === "string" ? new Date(isoOrDate) : isoOrDate;
+  if (Number.isNaN(d.getTime())) return Number.NaN;
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 }
 
+/**
+ * Calendar days between the record's dated source check and `now`.
+ *
+ * Uses the UTC date part of both timestamps so a packet that prints
+ * "Last updated: 2026-08-08" ages by the same whole day the reader sees,
+ * instead of rounding elapsed 24-hour blocks (which was off by one
+ * whenever the check happened later in the day).
+ */
+export function daysSince(iso: string, now = new Date()): number {
+  const then = utcDay(iso);
+  if (Number.isNaN(then)) return 999;
+  return Math.max(0, Math.round((utcDay(now) - then) / 86_400_000));
+}
+
+/** True when today's UTC date is after the record's next-review date. */
 export function reviewOverdue(d: Destination, now = new Date()): boolean {
-  const due = new Date(d.nextReviewAt).getTime();
-  return !Number.isNaN(due) && now.getTime() > due;
+  const due = utcDay(d.nextReviewAt);
+  if (Number.isNaN(due)) return false;
+  return utcDay(now) > due;
 }
 
 /** True when regs or access review dates are older than 90 days. */
