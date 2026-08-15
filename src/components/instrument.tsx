@@ -160,7 +160,6 @@ export function LayerPanel({
         aria-expanded={open}
         className="group flex w-full items-start gap-3 py-5 text-left sm:gap-4 sm:py-6"
       >
-        <span className="data mt-1 text-xs text-brass">{layer.index}</span>
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">

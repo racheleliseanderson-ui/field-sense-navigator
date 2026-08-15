@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Columns3 } from "lucide-react";
-import { displayName, humanize, type Destination } from "@/lib/catalog";
+import { displayName, daysSince, humanize, reviewOverdue, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
@@ -46,6 +46,8 @@ export function WaterCard({
 }) {
   const r = fit?.readiness ?? readiness(destination);
   const t = readTags(destination);
+  const overdue = reviewOverdue(destination);
+  const age = daysSince(destination.checkedAt);
   const layerCounts = [
     { k: "Access", v: destination.publicAccess.length },
     { k: "Hazards", v: t.hazards.size },
@@ -109,6 +111,12 @@ export function WaterCard({
         <GradeChip grade={r.grade} label={r.band} />
       </div>
 
+      {overdue && (
+        <p className="mt-3 text-xs font-medium leading-relaxed text-alert">
+          Review overdue — this record is past {destination.nextReviewAt}. Treat it as not-go until the official source is re-read.
+        </p>
+      )}
+
       {fit && (fit.reasons.length > 0 || fit.cautions.length > 0) && (
         <ul className="mt-4 space-y-1.5">
           {fit.reasons.slice(0, 2).map((x, i) => (
@@ -143,6 +151,8 @@ export function WaterCard({
 
       <p className="mt-3 text-[0.65rem] text-muted-foreground">
         {humanize(destination.status)}
+        {" · "}
+        Last source check: {age === 0 ? "today" : `${age}d ago`}
       </p>
     </Link>
     </div>
