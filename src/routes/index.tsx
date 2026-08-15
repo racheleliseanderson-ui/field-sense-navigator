@@ -142,14 +142,13 @@ function Home() {
 
             <ol className="divide-y divide-hairline border-y border-hairline">
               {[
-                ["01", "Access & legality", "Published facilities, closures, directory-level networks, and the line where public corridor ends."],
-                ["02", "Conditions & hazards", "Standing hazard families the water is known for — wind fetch, tide, level swing, traffic. Never a forecast."],
-                ["03", "Capacity & crowding", "Documented pressure on parking, ramps and hours. Patterns, never live occupancy."],
-                ["04", "Seasonal & regulatory pressure", "Where rules move with date, section and vessel — and where jurisdiction changes under you."],
-                ["05", "Field-check requirement", "The same-day work you must complete. Incomplete means not-go."],
-              ].map(([n, title, body]) => (
-                <li key={n} className="group flex gap-6 py-7">
-                  <span className="data text-xs text-brass">{n}</span>
+                ["Access & legality", "Published facilities, closures, directory-level networks, and the line where public corridor ends."],
+                ["Conditions & hazards", "Standing hazard families the water is known for — wind fetch, tide, level swing, traffic. Never a forecast."],
+                ["Capacity & crowding", "Documented pressure on parking, ramps and hours. Patterns, never live occupancy."],
+                ["Seasonal & regulatory pressure", "Where rules move with date, section and vessel — and where jurisdiction changes under you."],
+                ["Field-check requirement", "The same-day work you must complete. Incomplete means not-go."],
+              ].map(([title, body]) => (
+                <li key={title} className="group py-7">
                   <div>
                     <h3 className="font-display text-lg font-bold tracking-tight text-foreground">
                       {title}
