@@ -105,32 +105,35 @@ export const titleCase = (value: string) =>
 export const displayName = (d: Destination) =>
   d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
 
-/** UTC calendar day as epoch-ms at midnight. NaN if the input is unparseable. */
-function utcDay(isoOrDate: string | Date): number {
-  const d = typeof isoOrDate === "string" ? new Date(isoOrDate) : isoOrDate;
-  if (Number.isNaN(d.getTime())) return Number.NaN;
-  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+/** Printed YYYY-MM-DD prefix — the same date a packet shows as last updated. */
+function printedDay(iso: string): number {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return Number.NaN;
+  return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+}
+
+function utcToday(now: Date): number {
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 }
 
 /**
- * Calendar days between the record's dated source check and `now`.
+ * Calendar days between the stamp's printed date and UTC today.
  *
- * Uses the UTC date part of both timestamps so a packet that prints
- * "Last updated: 2026-08-08" ages by the same whole day the reader sees,
- * instead of rounding elapsed 24-hour blocks (which was off by one
- * whenever the check happened later in the day).
+ * Do not round elapsed milliseconds. A check at 17:20 on the 8th was
+ * showing "6d ago" on the 15th because 6×24h had not quite elapsed.
+ * The packet prints the date prefix; this ages by that same date.
  */
 export function daysSince(iso: string, now = new Date()): number {
-  const then = utcDay(iso);
+  const then = printedDay(iso);
   if (Number.isNaN(then)) return 999;
-  return Math.max(0, Math.round((utcDay(now) - then) / 86_400_000));
+  return Math.max(0, Math.round((utcToday(now) - then) / 86_400_000));
 }
 
 /** True when today's UTC date is after the record's next-review date. */
 export function reviewOverdue(d: Destination, now = new Date()): boolean {
-  const due = utcDay(d.nextReviewAt);
+  const due = printedDay(d.nextReviewAt);
   if (Number.isNaN(due)) return false;
-  return utcDay(now) > due;
+  return utcToday(now) > due;
 }
 
 /** True when regs or access review dates are older than 90 days. */

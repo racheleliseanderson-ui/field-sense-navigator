@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard } from "@/components/water-card";
-import { destinations, states } from "@/lib/catalog";
+import { destinations, NAMED_WATER_COUNT, states } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
 import heroImg from "@/assets/hero-water.jpg";
 import riverImg from "@/assets/river.jpg";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A layered field intelligence instrument for 318 named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.",
+          `A layered field intelligence instrument for ${NAMED_WATER_COUNT} named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.`,
       },
       { property: "og:title", content: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
@@ -68,7 +68,7 @@ function Home() {
         <div className="mx-auto max-w-7xl px-5 pb-16 pt-24 sm:px-8 md:pb-24 md:pt-36">
           <div className="flex items-center gap-4">
             <span className="h-px w-12 bg-brass" />
-            <p className="tick text-brass">Hook the Horizon · Schema 0.4.0</p>
+            <p className="tick text-brass">Hook the Horizon</p>
           </div>
 
           <h1 className="rise mt-8 max-w-5xl font-display text-[clamp(2.8rem,8.4vw,7.2rem)] font-bold uppercase leading-[0.86] tracking-[-0.045em] text-foreground">
@@ -78,7 +78,7 @@ function Home() {
           </h1>
 
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/80">
-            Five intelligence layers over {destinations.length} named public
+            Five intelligence layers over {NAMED_WATER_COUNT} named public
             waters. Declare the job you are actually doing, and the instrument
             ranks the water that fits it — then prints the same-day checks you
             have to clear before you go.
@@ -105,7 +105,7 @@ function Home() {
         <div className="relative border-y border-hairline bg-abyss/70 backdrop-blur">
           <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-hairline sm:px-0 md:grid-cols-4">
             {[
-              { k: "Named waters", v: destinations.length },
+              { k: "Named waters", v: NAMED_WATER_COUNT },
               { k: "States & provinces", v: states.length },
               { k: "Intelligence layers", v: 5 },
               { k: "Private spots", v: 0 },
@@ -214,7 +214,7 @@ function Home() {
             catalog, slowly.
           </h3>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/75">
-            {destinations.length} records across {states.length} states,
+            {NAMED_WATER_COUNT} records across {states.length} states,
             provinces and territories, filtered by jurisdiction, water type and
             readiness band. Exploration without the spreadsheet.
           </p>
@@ -226,7 +226,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="tick text-brass">Best documented right now</p>
+            <p className="tick text-brass">Best documented</p>
             <h2 className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
               Highest field readiness
             </h2>
