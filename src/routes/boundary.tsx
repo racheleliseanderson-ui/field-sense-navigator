@@ -25,7 +25,7 @@ export const Route = createFileRoute("/boundary")({
 const IN_SCOPE = [
   "Named public waterbodies and officially published public access facilities.",
   "Notices and advisories that the managing agency has published.",
-  "Verification steps the operator must complete on the day of travel.",
+  "Verification steps you must complete on the day of travel.",
   "Documented seasonal and regulatory pressure points, by section where stated.",
   "The date the official source was last read, and when it is due to be read again.",
 ];
