@@ -279,16 +279,17 @@ function cdecIso(t?: string) {
   const m = String(t).match(/^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{2})/);
   if (!m) return t;
   const pad = (n: string) => n.padStart(2, "0");
-  return `${m[1]}-${pad(m[2])}-${pad(m[3])}T${pad(m[4])}:${m[5]}:00`;
+  return `${m[1]}-${pad(m[2] ?? "")}-${pad(m[3] ?? "")}T${pad(m[4] ?? "")}:${m[5]}:00`;
 }
 
 function cdecLatest(
   rows: Array<{ value?: number | string; obsDate?: string; date?: string; sensorType?: string; units?: string }>,
 ) {
   for (let i = rows.length - 1; i >= 0; i -= 1) {
-    const v = Number(rows[i]?.value);
+    const row = rows[i];
+    const v = Number(row?.value);
     if (Number.isFinite(v) && v !== -9999) {
-      return { value: String(rows[i].value), at: cdecIso(rows[i].obsDate || rows[i].date) };
+      return { value: String(row?.value), at: cdecIso(row?.obsDate || row?.date) };
     }
   }
   return null;
@@ -336,10 +337,10 @@ async function usbrHydrometFb(code: string): Promise<{ value: string; at: string
   const text = await res.text();
   const lines = text.split("\n").map((l) => l.trim()).filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
   for (let i = lines.length - 1; i >= 0; i -= 1) {
-    const [d, v] = lines[i].split(",");
+    const [d, v] = (lines[i] ?? "").split(",");
     const n = Number(String(v).trim());
     if (!Number.isFinite(n)) continue;
-    const [mm, dd, yy] = d.split("/");
+    const [mm, dd, yy] = (d ?? "").split("/");
     return { value: String(n), at: `${yy}-${mm}-${dd}T00:00:00Z` };
   }
   return null;
@@ -359,7 +360,9 @@ async function usbrReadings(siteId: string): Promise<Reading[]> {
 }
 
 async function usaceReadings(siteId: string): Promise<Reading[]> {
-  const [office, name] = siteId.includes(":") ? siteId.split(":") : ["SAS", siteId];
+  const parts = siteId.includes(":") ? siteId.split(":") : ["SAS", siteId];
+  const office = parts[0] ?? "SAS";
+  const name = parts[1] ?? siteId;
   const end = new Date();
   const begin = new Date(end.getTime() - 10 * 86400_000);
   const url =
@@ -373,7 +376,8 @@ async function usaceReadings(siteId: string): Promise<Reading[]> {
   const vals = json?.values ?? [];
   if (!vals.length) return [];
   const last = vals[vals.length - 1];
-  const observedAt = last?.[0] ? new Date(last[0]).toISOString() : "";
+  if (!last) return [];
+  const observedAt = last[0] ? new Date(last[0]).toISOString() : "";
   return [
     {
       label: "Reservoir stage",
