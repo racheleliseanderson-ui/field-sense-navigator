@@ -91,6 +91,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Layered intelligence for named public waters. No private spots, no invented conditions.",
       },
       { property: "og:type", content: "website" },
+      {
+        property: "og:image",
+        content:
+          "https://i0.wp.com/hookthehorizon.blog/wp-content/uploads/2026/07/River-current-and-foam-lines-%E2%80%94-Jonas-Gerg.jpg?resize=1200%2C630&ssl=1",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content:
+          "Looking down on a river showing foam lines and current seams between faster and slower water",
+      },
+      { property: "og:url", content: "https://waterways.hookthehorizon.blog/" },
+      {
+        name: "twitter:image",
+        content:
+          "https://i0.wp.com/hookthehorizon.blog/wp-content/uploads/2026/07/River-current-and-foam-lines-%E2%80%94-Jonas-Gerg.jpg?resize=1200%2C630&ssl=1",
+      },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
