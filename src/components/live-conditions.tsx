@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Activity, RefreshCw, ChevronDown } from "lucide-react";
@@ -42,10 +42,13 @@ export function LiveConditions({ destination }: { destination: Destination }) {
   const [open, setOpen] = useState(false);
   const [queuedReplay, setQueuedReplay] = useState(false);
   const queueKey = `live-readings:${destination.id}`;
+  const replayed = useRef(false);
 
   // Replay a "show readings" press that landed before hydration wired the button.
   useEffect(() => {
+    if (replayed.current) return;
     if (consumeQueuedClick(queueKey)) {
+      replayed.current = true;
       setQueuedReplay(true);
       setOpen(true);
     }
@@ -77,7 +80,10 @@ export function LiveConditions({ destination }: { destination: Destination }) {
         {open && (
           <button
             type="button"
-            onClick={() => void refetch()}
+            onClick={() => {
+              if (isFetching) return;
+              void refetch();
+            }}
             disabled={isFetching}
             aria-label="Refresh official readings"
             className="tap grid h-9 w-9 place-items-center text-muted-foreground hover:text-brass disabled:opacity-50"
@@ -102,6 +108,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
             type="button"
             data-queue-click={queueKey}
             onClick={() => setOpen(true)}
+            aria-expanded={open}
             className="mt-4 inline-flex min-h-10 items-center gap-2 border border-hairline px-4 text-xs uppercase tracking-[0.12em] text-foreground hover:border-brass/50"
           >
             Show official readings
