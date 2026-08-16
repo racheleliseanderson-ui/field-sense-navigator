@@ -129,7 +129,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
           {data.source !== "unbound" && (
             <p className="mt-2 text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground">
-              {sourceLine(data.source, data.snapshotAgeMinutes, data.station?.agency)}
+              {sourceLine(data.source, data.snapshotAgeMinutes, data.station?.agency ?? null)}
             </p>
           )}
 
