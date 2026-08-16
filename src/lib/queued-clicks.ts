@@ -18,6 +18,8 @@ if (typeof document !== "undefined") {
       const trigger = target?.closest?.("[data-queue-click]");
       const key = trigger?.getAttribute("data-queue-click");
       if (!key) return;
+      // Repeat taps in the same pre-hydration window collapse into one request.
+      if (queued.has(key)) return;
       queued.add(key);
       (trigger as HTMLElement).setAttribute("aria-busy", "true");
       document
