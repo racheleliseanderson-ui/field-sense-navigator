@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Activity, RefreshCw, ChevronDown } from "lucide-react";
 import { getLiveConditions } from "@/lib/live.functions";
+import { consumeQueuedClick } from "@/lib/queued-clicks";
 import type { Destination } from "@/lib/catalog";
 
 function ago(iso: string) {
@@ -39,6 +40,13 @@ function sourceLine(source: string, age: number | null, agency: string | null) {
  */
 export function LiveConditions({ destination }: { destination: Destination }) {
   const [open, setOpen] = useState(false);
+  const queueKey = `live-readings:${destination.id}`;
+
+  // Replay a "show readings" press that landed before hydration wired the button.
+  useEffect(() => {
+    if (consumeQueuedClick(queueKey)) setOpen(true);
+  }, [queueKey]);
+
   const call = useServerFn(getLiveConditions);
   const { data, isLoading, isFetching, refetch, isError } = useQuery({
     queryKey: ["live", destination.id],
@@ -88,6 +96,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
           </p>
           <button
             type="button"
+            data-queue-click={queueKey}
             onClick={() => setOpen(true)}
             className="mt-4 inline-flex min-h-10 items-center gap-2 border border-hairline px-4 text-xs uppercase tracking-[0.12em] text-foreground hover:border-brass/50"
           >
