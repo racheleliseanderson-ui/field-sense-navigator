@@ -40,11 +40,15 @@ function sourceLine(source: string, age: number | null, agency: string | null) {
  */
 export function LiveConditions({ destination }: { destination: Destination }) {
   const [open, setOpen] = useState(false);
+  const [queuedReplay, setQueuedReplay] = useState(false);
   const queueKey = `live-readings:${destination.id}`;
 
   // Replay a "show readings" press that landed before hydration wired the button.
   useEffect(() => {
-    if (consumeQueuedClick(queueKey)) setOpen(true);
+    if (consumeQueuedClick(queueKey)) {
+      setQueuedReplay(true);
+      setOpen(true);
+    }
   }, [queueKey]);
 
   const call = useServerFn(getLiveConditions);
@@ -103,11 +107,24 @@ export function LiveConditions({ destination }: { destination: Destination }) {
             Show official readings
             <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
           </button>
+          <p
+            data-queue-notice={queueKey}
+            hidden
+            aria-live="polite"
+            className="mt-3 text-xs uppercase tracking-[0.12em] text-brass"
+          >
+            Queued — loading official readings…
+          </p>
         </div>
       )}
 
       {open && isLoading && (
         <div className="mt-5 space-y-3" aria-live="polite">
+          {queuedReplay && (
+            <p className="text-xs uppercase tracking-[0.12em] text-brass">
+              Queued — loading official readings…
+            </p>
+          )}
           <div className="shimmer h-3 w-2/3" />
           <div className="shimmer h-3 w-1/2" />
           <div className="shimmer h-10 w-full" />
