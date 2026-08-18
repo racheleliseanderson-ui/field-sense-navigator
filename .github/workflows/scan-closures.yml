@@ -1,0 +1,40 @@
+name: Scan agency-page closure language
+
+on:
+  schedule:
+    - cron: "17 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Scan official source URLs
+        run: node scripts/scan-closures.mjs
+      - name: Publish closures.json to live-snapshot branch
+        run: |
+          set -eu
+          git config user.email "Rachel.Elise.Anderson@gmail.com"
+          git config user.name "Rachel Elise Anderson"
+          mkdir -p /tmp/live-snap
+          cp public/live/closures.json /tmp/live-snap/closures.json
+          git fetch origin live-snapshot || true
+          git show origin/live-snapshot:snapshot.json >/tmp/live-snap/snapshot.json || true
+          git checkout --orphan live-snapshot-tmp
+          git rm -rf --quiet . || true
+          cp /tmp/live-snap/closures.json closures.json
+          git add closures.json
+          if [ -f /tmp/live-snap/snapshot.json ]; then
+            cp /tmp/live-snap/snapshot.json snapshot.json
+            git add snapshot.json
+          fi
+          git commit -m "scan: agency-page closure language $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --force origin HEAD:live-snapshot
