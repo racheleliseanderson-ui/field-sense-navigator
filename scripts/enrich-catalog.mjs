@@ -4,7 +4,9 @@
  * plus explicit related[] links.
  *
  * Rules:
- * - Accuracy outranks completeness. Unmatched / tourism CVB domains stay null.
+ * - Accuracy outranks completeness. Tourism CVB hosts are not mapped.
+ *   Five corridor records get an editorial government identity (see
+ *   EDITORIAL_AGENCY) without changing officialSourceUrl.
  * - Agency-specific hosts map at hostname. Statewide portals (in.gov, tn.gov,
  *   michigan.gov, …) map only when the URL path is a known department prefix.
  * - Only fill agency/regs when currently empty, except path-mapped portal
@@ -270,7 +272,9 @@ const PATH_AGENCY = {
 
 /**
  * Tourism / commercial publisher domains. The cited URL is kept as
- * officialSourceUrl; we do not invent a managing agency from a CVB.
+ * officialSourceUrl; we do not invent a managing agency from a CVB host.
+ * Specific records may still receive an editorial government identity
+ * via EDITORIAL_AGENCY below.
  */
 const SKIP_DOMAINS = new Set([
   "destinfwb.com",
@@ -279,6 +283,43 @@ const SKIP_DOMAINS = new Set([
   "visitcorpuschristi.com",
   "navarrebeachpier.com",
 ]);
+
+/**
+ * Per-record government identity when the cited publisher is not the manager.
+ * officialSourceUrl is not changed. Fishing-regulator vs site-operator:
+ * mixed city/county corridors get the state fishing agency; a single named
+ * municipal facility gets that municipality.
+ * @type {Record<string, { agency: string, regs: string | null }>}
+ */
+const EDITORIAL_AGENCY = {
+  // Horace Caldwell = Nueces County Coastal Parks; Roberts Point / Brundrett /
+  // Charlie's Pasture = City of Port Aransas. Mixed site ownership → TPWD.
+  "HHI-DEST-179": {
+    agency: "Texas Parks and Wildlife Department",
+    regs: "https://tpwd.texas.gov/regulations/outdoor-annual/",
+  },
+  // Marisol (Laguna Madre) Boat Ramp — City of South Padre Island (myspi.org).
+  "HHI-DEST-183": {
+    agency: "City of South Padre Island",
+    regs: "https://tpwd.texas.gov/regulations/outdoor-annual/",
+  },
+  // Packery Channel Park boat ramp — City of Corpus Christi (named in access).
+  "HHI-DEST-192": {
+    agency: "City of Corpus Christi Parks and Recreation",
+    regs: "https://tpwd.texas.gov/regulations/outdoor-annual/",
+  },
+  // Okaloosa Island Pier = Okaloosa County; Joe's Bayou = City of Destin.
+  // Mixed site ownership → FWC.
+  "HHI-DEST-227": {
+    agency: "Florida Fish and Wildlife Conservation Commission",
+    regs: "https://myfwc.com/fishing/",
+  },
+  // Navarre Beach Pier — Santa Rosa County (santarosa.fl.gov/248/Navarre-Beach-Pier).
+  "HHI-DEST-239": {
+    agency: "Santa Rosa County",
+    regs: "https://myfwc.com/fishing/",
+  },
+};
 
 /**
  * Editorial same-waterbody groups. Homonyms excluded:
@@ -382,6 +423,7 @@ let enriched = 0;
 let reevaluated = 0;
 let unfilled = 0;
 let skippedTourism = 0;
+let editorialFilled = 0;
 let noMatch = 0;
 const unmatchedHosts = {};
 const pathHits = {};
@@ -389,6 +431,19 @@ const pathHits = {};
 for (const r of data) {
   const host = hostOf(r.officialSourceUrl || "");
   const pathname = pathOf(r.officialSourceUrl || "");
+
+  const editorial = EDITORIAL_AGENCY[r.id];
+  if (editorial) {
+    if (!r.managingAgency) {
+      r.managingAgency = editorial.agency;
+      if (editorial.regs && !r.officialRegsUrl) r.officialRegsUrl = editorial.regs;
+      stampReview(r);
+      editorialFilled += 1;
+    } else {
+      already += 1;
+    }
+    continue;
+  }
 
   if (SKIP_DOMAINS.has(host)) {
     skippedTourism += 1;
@@ -501,6 +556,7 @@ console.log(
       portalReevaluated: reevaluated,
       portalUnfilled: unfilled,
       skippedTourismCvb: skippedTourism,
+      editorialFilled,
       noDomainMatch: noMatch,
       unmatchedHosts,
       pathHits,

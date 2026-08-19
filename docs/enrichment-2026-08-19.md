@@ -29,9 +29,10 @@ Review dates stamp from `lastVerified` when present.
 |--------|------:|
 | Already had `managingAgency` | 24 |
 | Newly filled from domain/path map | 489 |
-| Tourism / CVB domains left null | 5 |
+| Tourism / CVB domains left unmapped at host level | 5 |
+| Editorial government identity on those five records | 5 |
 | Unmatched after second-pass map | 0 |
-| **With agency after this pass** | **513 / 518** |
+| **With agency after this pass** | **518 / 518** |
 
 ### Portal path prefixes (current catalog)
 
@@ -60,13 +61,26 @@ that cites a generic homepage.
 | `www2.gov.bc.ca` | `/gov/content/sports-culture/recreation/fishing-hunting/fishing` | BC WLRS |
 | `www2.gnb.ca` | `/content/gnb/en/departments/erd/natural_resources/` | NB NRED |
 
-Left null on purpose (publisher is not the managing agency):
+Left null from host mapping (publisher is not the managing agency):
 
 - destinfwb.com
 - portaransas.org
 - portisabelsouthpadre.com
 - visitcorpuschristi.com
 - navarrebeachpier.com
+
+Those five records received a separate **editorial** government identity
+(`EDITORIAL_AGENCY` in the script). `officialSourceUrl` is unchanged.
+
+| Record | Water | Managing agency | Why |
+|---|---|---|---|
+| HHI-DEST-179 | Port Aransas pier corridor | Texas Parks and Wildlife Department | Mixed site ownership (Nueces County Horace Caldwell + City of Port Aransas free piers). TPWD governs fishing on all of them. |
+| HHI-DEST-183 | Marisol / Lower Laguna Madre | City of South Padre Island | City-owned ramp (`myspi.org` project). TPWD Outdoor Annual as regs. |
+| HHI-DEST-192 | Packery Channel | City of Corpus Christi Parks and Recreation | Named municipal ramp. TPWD Outdoor Annual as regs. |
+| HHI-DEST-227 | Destin / Okaloosa Island | Florida Fish and Wildlife Conservation Commission | Mixed site ownership (Okaloosa County pier + City of Destin Joe's Bayou). FWC governs fishing. |
+| HHI-DEST-239 | Navarre Beach Fishing Pier | Santa Rosa County | County pier page at `santarosa.fl.gov`. FWC as regs. |
+
+**With agency after editorial pass: 518 / 518.**
 
 ## Related links
 
