@@ -36,6 +36,8 @@ Use the current live version as the baseline. Do not start from scratch — elev
 
 This project was built with [Lovable](https://lovable.dev).
 
+Scheduled ingest lives in GitHub Actions (`.github/workflows/ingest-live.yml` and `ingest-critical.yml`) and publishes `snapshot.json` + `status.json` to the `live-snapshot` branch. Interior-west / override / NOAA CO-OPS gauges refresh every 10 minutes; the full catalog every 30. USBR is isolated so a RISE timeout cannot stall USGS or NOAA. The last 24 hourly snapshots are kept under `archive/`. The app consumes that snapshot fail-closed.
+
 **Live app**: https://field-sense-navigator.lovable.app
 
 ## Build with Lovable

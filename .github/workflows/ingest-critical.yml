@@ -1,0 +1,39 @@
+name: Ingest critical stations
+
+on:
+  schedule:
+    # Every 10 minutes, offset from the full ingest at :02/:32.
+    - cron: "5,15,25,35,45,55 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: live-snapshot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  critical:
+    name: Interior-west, overrides, NOAA CO-OPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Pull critical gauges and bound NWS stations
+        run: node scripts/ingest-live.mjs --mode=critical --skip-slow --merge
+      - name: Overlay onto live-snapshot (keep history)
+        env:
+          PUBLISH_MESSAGE: "ingest: critical ${{ github.run_id }}"
+        run: bash scripts/publish-live-snapshot.sh snapshot status
+      - name: Notify on failure
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scripts/notify-ingest.mjs --failed

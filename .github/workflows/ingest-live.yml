@@ -2,38 +2,77 @@ name: Ingest live official readings
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Offset from the 10-minute critical job (:05/:15/:25/:35/:45/:55).
+    - cron: "2,32 * * * *"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Ingest mode"
+        type: choice
+        options:
+          - all
+          - critical
+        default: all
+
+concurrency:
+  group: live-snapshot
+  cancel-in-progress: false
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
-  ingest:
+  fast:
+    name: Fast agencies (skip USBR)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Pull USGS, NOAA CO-OPS, WSC, and NWS observations
-        run: node scripts/ingest-live.mjs
-      - name: Publish snapshot to live-snapshot branch
+      - name: Pull USGS, NOAA CO-OPS, WSC, USACE, CDEC, NWS
         run: |
-          set -eu
-          git config user.email "Rachel.Elise.Anderson@gmail.com"
-          git config user.name "Rachel Elise Anderson"
-          mkdir -p /tmp/live-snap
-          cp public/live/snapshot.json /tmp/live-snap/snapshot.json
-          git fetch origin live-snapshot || true
-          git show origin/live-snapshot:closures.json >/tmp/live-snap/closures.json || true
-          git checkout --orphan live-snapshot-tmp
-          git rm -rf --quiet . || true
-          cp /tmp/live-snap/snapshot.json snapshot.json
-          git add snapshot.json
-          if [ -f /tmp/live-snap/closures.json ]; then
-            cp /tmp/live-snap/closures.json closures.json
-            git add closures.json
+          if [ "${{ github.event.inputs.mode }}" = "critical" ]; then
+            node scripts/ingest-live.mjs --mode=critical --skip-slow --merge
+          else
+            node scripts/ingest-live.mjs --skip-slow --merge
           fi
-          git commit -m "ingest: official readings $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push --force origin HEAD:live-snapshot
+      - name: Publish snapshot + status (keep history)
+        env:
+          PUBLISH_MESSAGE: "ingest: fast agencies ${{ github.run_id }}"
+        run: bash scripts/publish-live-snapshot.sh snapshot status
+      - name: Notify on failure
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scripts/notify-ingest.mjs --failed
+
+  slow:
+    name: Slow agencies (USBR, isolated)
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.mode != 'critical' }}
+    needs: fast
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Pull USBR RISE / Hydromet sequentially
+        run: node scripts/ingest-live.mjs --only-slow --merge
+      - name: Merge USBR into live-snapshot
+        env:
+          PUBLISH_MESSAGE: "ingest: usbr ${{ github.run_id }}"
+        run: bash scripts/publish-live-snapshot.sh snapshot status
+      - name: Notify if USBR failed or hard-errored
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scripts/notify-ingest.mjs ${{ job.status == 'failure' && '--failed' || '' }}

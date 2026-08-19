@@ -13,6 +13,8 @@ const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
 const SNAPSHOT_STALE_MS = 45 * 60_000;
 const SNAPSHOT_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";
+const STATUS_URL =
+  "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/status.json";
 const CLOSURES_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/closures.json";
 
@@ -78,6 +80,7 @@ export interface LiveSnapshot {
   source: string;
   cadenceMinutes: number;
   doctrine: string;
+  mode?: string;
   stats: {
     boundStations: number;
     withReadings: number;
@@ -96,6 +99,7 @@ export interface LiveSnapshot {
       readings: Reading[];
       fetchedAt: string;
       error?: string;
+      carriedForward?: boolean;
     }
   >;
   observations?: Record<
@@ -106,8 +110,36 @@ export interface LiveSnapshot {
       readings: Reading[];
       fetchedAt: string;
       error?: string;
+      carriedForward?: boolean;
     }
   >;
+}
+
+export interface IngestStatusError {
+  kind: string;
+  agency: string | null;
+  siteId?: string;
+  error: string;
+  carriedForward: boolean;
+}
+
+export interface IngestStatus {
+  schema: string;
+  ok: boolean;
+  degraded: boolean;
+  mode: string;
+  ingestedAt: string;
+  cadenceMinutes: number;
+  criticalCadenceMinutes: number;
+  fullCadenceMinutes: number;
+  stats: LiveSnapshot["stats"];
+  errorCount: number;
+  hardErrorCount: number;
+  errors: IngestStatusError[];
+  usbr: { bound: number; withReadings: number; timeouts: number };
+  runUrl: string | null;
+  archiveRetentionHours: number;
+  doctrine?: string;
 }
 
 export interface ClosureFile {
@@ -124,6 +156,7 @@ export interface ClosureFile {
 }
 
 let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: null };
+let statusCache: { at: number; data: IngestStatus | null } = { at: 0, data: null };
 let closureCache: { at: number; data: ClosureFile | null } = { at: 0, data: null };
 
 async function fetchJson<T>(url: string, extraHeaders: Record<string, string> = {}): Promise<T | null> {
@@ -152,6 +185,24 @@ async function loadSnapshot(): Promise<LiveSnapshot | null> {
   return null;
 }
 
+async function loadStatus(): Promise<IngestStatus | null> {
+  const now = Date.now();
+  if (now - statusCache.at < 60_000) return statusCache.data;
+  for (const url of [STATUS_URL, "/live/status.json"]) {
+    try {
+      const data = await fetchJson<IngestStatus>(url);
+      if (data?.ingestedAt && data.schema) {
+        statusCache = { at: now, data };
+        return data;
+      }
+    } catch {
+      /* try the next source */
+    }
+  }
+  statusCache = { at: now, data: null };
+  return null;
+}
+
 async function loadClosures(): Promise<ClosureFile | null> {
   const now = Date.now();
   if (now - closureCache.at < 60_000) return closureCache.data;
@@ -172,6 +223,10 @@ async function loadClosures(): Promise<ClosureFile | null> {
 
 export async function loadSnapshotMeta(): Promise<LiveSnapshot | null> {
   return loadSnapshot();
+}
+
+export async function loadStatusMeta(): Promise<IngestStatus | null> {
+  return loadStatus();
 }
 
 export async function loadClosureMeta(): Promise<ClosureFile | null> {
@@ -583,6 +638,12 @@ export async function readLive(input: {
   if (snapFresh && snapRow) {
     readings = snapRow.readings;
     source = "scheduled-snapshot";
+    if (snapRow.carriedForward || /last agency observation retained/i.test(snapRow.error ?? "")) {
+      unknowns.push(
+        snapRow.error ??
+          "The last official observation was retained after a silent feed. Age is printed.",
+      );
+    }
   } else {
     readings = await liveReadings(bind.agency, bind.siteId).catch(() => [] as Reading[]);
     source = "agency-live";

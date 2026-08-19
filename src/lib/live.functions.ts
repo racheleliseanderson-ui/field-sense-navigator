@@ -13,10 +13,11 @@ export const getLiveConditions = createServerFn({ method: "GET" })
 
 export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async () => {
   const { bindingsFile } = await import("@/lib/bindings");
-  const { loadSnapshotMeta, loadClosureMeta } = await import("@/lib/live.server");
+  const { loadSnapshotMeta, loadStatusMeta, loadClosureMeta } = await import("@/lib/live.server");
   const snapshot = await loadSnapshotMeta();
+  const status = await loadStatusMeta();
   const closures = await loadClosureMeta();
-  const ingestedAt = snapshot?.ingestedAt ?? null;
+  const ingestedAt = status?.ingestedAt ?? snapshot?.ingestedAt ?? null;
   const ageMinutes =
     ingestedAt && !Number.isNaN(new Date(ingestedAt).getTime())
       ? Math.max(0, Math.round((Date.now() - new Date(ingestedAt).getTime()) / 60000))
@@ -26,6 +27,11 @@ export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async 
     scannedAt && !Number.isNaN(new Date(scannedAt).getTime())
       ? Math.max(0, Math.round((Date.now() - new Date(scannedAt).getTime()) / 60000))
       : null;
+  const usbr = status?.usbr ?? {
+    bound: snapshot?.stats.byAgency?.USBR?.bound ?? 0,
+    withReadings: snapshot?.stats.byAgency?.USBR?.withReadings ?? 0,
+    timeouts: 0,
+  };
   return {
     bindings: {
       generatedAt: bindingsFile.generatedAt,
@@ -35,7 +41,10 @@ export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async 
     ingest: {
       ingestedAt,
       ageMinutes,
-      cadenceMinutes: snapshot?.cadenceMinutes ?? 30,
+      cadenceMinutes: status?.cadenceMinutes ?? snapshot?.cadenceMinutes ?? 30,
+      criticalCadenceMinutes: status?.criticalCadenceMinutes ?? 10,
+      fullCadenceMinutes: status?.fullCadenceMinutes ?? 30,
+      mode: status?.mode ?? snapshot?.mode ?? "all",
       boundStations: snapshot?.stats.boundStations ?? 0,
       withReadings: snapshot?.stats.withReadings ?? 0,
       emptyOrError: snapshot?.stats.emptyOrError ?? 0,
@@ -43,6 +52,12 @@ export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async 
       nwsStations: snapshot?.stats.nwsStations ?? 0,
       nwsWithObs: snapshot?.stats.nwsWithObs ?? 0,
       stale: ageMinutes == null ? true : ageMinutes > 45,
+      degraded: status?.degraded ?? false,
+      errorCount: status?.errorCount ?? 0,
+      hardErrorCount: status?.hardErrorCount ?? 0,
+      usbr,
+      archiveRetentionHours: status?.archiveRetentionHours ?? 24,
+      errors: (status?.errors ?? []).slice(0, 8),
     },
     closures: {
       scannedAt,

@@ -211,8 +211,10 @@ function Pipeline() {
             Station bindings are resolved on a nightly schedule (USGS, NOAA
             CO-OPS, Water Survey of Canada, USBR, USACE, CA DWR CDEC). Every
             record is located, given a weather station, scanned for agency-page
-            language, and offered a gauge. Official readings are ingested every
-            30 minutes. Misses stay misses — they are not omitted.
+            language, and offered a gauge. Interior-west, override, and NOAA
+            CO-OPS gauges refresh every 10 minutes; the full catalog every 30.
+            USBR is isolated so a RISE timeout cannot stall the rest. Misses
+            stay misses — they are not omitted.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -239,7 +241,8 @@ function Pipeline() {
           same four live layers — location, gauge, weather observation, agency
           page language. Live numbers come from the last ingest, then a direct
           agency pull if that snapshot is older than 45 minutes. A silent feed
-          is a miss, not a skip.
+          is a miss, not a skip. Last official values may be retained with
+          their original observed time when a fetch times out.
         </p>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
@@ -271,8 +274,16 @@ function Pipeline() {
             <div className="flex items-start justify-between gap-3">
               <p className="font-display text-base font-bold text-foreground">Scheduled ingest</p>
               <GradeChip
-                grade={!ingest || ingest.stale ? "watch" : "clear"}
-                label={!ingest ? "Waiting" : ingest.stale ? "Stale" : "Current"}
+                grade={!ingest || ingest.stale ? "watch" : ingest.degraded ? "watch" : "clear"}
+                label={
+                  !ingest
+                    ? "Waiting"
+                    : ingest.stale
+                      ? "Stale"
+                      : ingest.degraded
+                        ? "Degraded"
+                        : "Current"
+                }
               />
             </div>
             <p className="data mt-3 text-sm text-foreground">
@@ -284,10 +295,31 @@ function Pipeline() {
               NWS observations {ingest?.nwsWithObs ?? 0}/{ingest?.nwsStations ?? 0}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              {ingest?.ingestedAt
-                ? `Last ingest ${ingest.ageMinutes} min ago · cadence ${ingest.cadenceMinutes} min`
-                : "The 30-minute Action has not published a snapshot to the live-snapshot branch yet."}
+              Clocks {ingest?.criticalCadenceMinutes ?? 10} min critical ·{" "}
+              {ingest?.fullCadenceMinutes ?? 30} min full
+              {ingest?.mode ? ` · last pass ${ingest.mode}` : ""}
             </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              USBR {ingest?.usbr?.withReadings ?? 0}/{ingest?.usbr?.bound ?? 0} with readings
+              {ingest?.usbr?.timeouts
+                ? ` · ${ingest.usbr.timeouts} timeout${ingest.usbr.timeouts === 1 ? "" : "s"} this pass`
+                : ""}
+              . Isolated sequential fetch; a RISE miss cannot stall USGS or NOAA.
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              {ingest?.ingestedAt
+                ? `Last ingest ${ingest.ageMinutes} min ago · ${ingest.archiveRetentionHours ?? 24} hourly archives on live-snapshot`
+                : "The scheduled Action has not published a snapshot to the live-snapshot branch yet."}
+            </p>
+            {(ingest?.errorCount ?? 0) > 0 && (
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {ingest!.errorCount} feed miss{ingest!.errorCount === 1 ? "" : "es"}
+                {ingest!.hardErrorCount
+                  ? ` · ${ingest!.hardErrorCount} with no last official value to retain`
+                  : " · last official values retained where a prior observation existed"}
+                . Age is printed.
+              </p>
+            )}
           </li>
           <li className="panel p-5 md:col-span-2">
             <div className="flex items-start justify-between gap-3">
