@@ -12,7 +12,9 @@
  * USGS NWIS IV, NOAA CO-OPS latest, Water Survey of Canada realtime,
  * USBR, USACE, CDEC, and the NWS observation station bound on the record.
  * Agency observations only. A silent feed is a miss. Last agency values
- * may be retained with their original observedAt when a fetch times out.
+ * may be retained with their original observedAt when a fetch times out
+ * or when the last official observation is older than the freshness window
+ * (48 h stage/flow/weather, 7 d reservoir elevation).
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -24,6 +26,7 @@ import {
   mergeSnapshot,
   collectErrors,
   buildStatus,
+  finalizeSnapshot,
 } from "./ingest-live.lib.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -533,7 +536,7 @@ async function main() {
     source: "usgs-nwis-iv+noaa-coops+wsc-geomet+usbr-rise+usace-cwms+cdec+nws-obs",
     cadenceMinutes: cadenceFor(opts),
     doctrine:
-      "Agency observations only. Age is printed. A silent feed is a miss, not a default.",
+      "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current.",
     stats: {
       boundStations: uniqueIds.length,
       withReadings,
@@ -554,6 +557,8 @@ async function main() {
       cadenceMinutes: cadenceFor(opts),
       mode,
     });
+  } else {
+    payload = finalizeSnapshot(payload, Date.parse(ingestedAt) || Date.now());
   }
 
   const errors = collectErrors(payload.stations, payload.observations);
@@ -575,7 +580,8 @@ async function main() {
       ` · USBR ${payload.stats.byAgency.USBR?.withReadings ?? 0}/${payload.stats.byAgency.USBR?.bound ?? 0}` +
       ` · USACE ${payload.stats.byAgency.USACE?.withReadings ?? 0}/${payload.stats.byAgency.USACE?.bound ?? 0}` +
       ` · CDEC ${payload.stats.byAgency.CDEC?.withReadings ?? 0}/${payload.stats.byAgency.CDEC?.bound ?? 0}` +
-      ` · errors ${errors.length}`,
+      ` · errors ${errors.length}` +
+      ` · stale-only ${payload.stats.withStaleOnly ?? 0}`,
   );
 }
 

@@ -3,6 +3,12 @@
  * I/O-heavy and these rules can be unit-tested without hitting agencies.
  */
 
+import {
+  STALE_WINDOW_NOTE,
+  applyObservationAge,
+  applyObservationAgeMap,
+} from "./observation-age.mjs";
+
 export const CRITICAL_STATES = new Set([
   "Colorado",
   "Wyoming",
@@ -18,6 +24,16 @@ export const DAILY_AGENCIES = new Set(["CDEC", "USACE"]);
 
 export const CRITICAL_CADENCE_MINUTES = 10;
 export const FULL_CADENCE_MINUTES = 30;
+
+export {
+  LIVE_FRESH_MS,
+  DAILY_FRESH_MS,
+  STALE_WINDOW_NOTE,
+  classifyReading,
+  partitionReadings,
+  applyObservationAge,
+  applyObservationAgeMap,
+} from "./observation-age.mjs";
 
 export function parseArgs(argv = []) {
   const out = { mode: "all", skipSlow: false, onlySlow: false, merge: false };
@@ -64,54 +80,70 @@ function retainNote(cause) {
   return `${cause}; last agency observation retained. Age is printed.`;
 }
 
-export function carryForward(prevStations = {}, nextStations = {}) {
-  const out = { ...nextStations };
-  for (const [id, row] of Object.entries(out)) {
-    if (row?.readings?.length) continue;
-    const prev = prevStations[id];
-    if (!prev?.readings?.length) continue;
-    const cause = row?.error ? String(row.error) : "Feed silent this cycle";
+export function carryForward(prevStations = {}, nextStations = {}, now = Date.now()) {
+  const out = {};
+  for (const [id, raw] of Object.entries(nextStations)) {
+    const next = applyObservationAge(raw, now);
+    if (next.readings.length) {
+      out[id] = next;
+      continue;
+    }
+    const prev = applyObservationAge(prevStations[id] ?? {}, now);
+    if (prev.readings.length) {
+      const cause = raw?.error ? String(raw.error) : "Feed silent this cycle";
+      out[id] = {
+        ...next,
+        siteName: next.siteName || prev.siteName || null,
+        readings: prev.readings,
+        retainedReadings: next.retainedReadings.length
+          ? next.retainedReadings
+          : prev.retainedReadings,
+        carriedForward: true,
+        staleOnly: false,
+        error: retainNote(cause),
+      };
+      continue;
+    }
+    const retained = next.retainedReadings.length
+      ? next.retainedReadings
+      : prev.retainedReadings;
     out[id] = {
-      ...row,
-      siteName: row.siteName || prev.siteName || null,
-      readings: prev.readings,
-      carriedForward: true,
-      error: retainNote(cause),
+      ...next,
+      readings: [],
+      retainedReadings: retained,
+      staleOnly: retained.length > 0,
+      error: retained.length
+        ? next.error && /freshness window/i.test(next.error)
+          ? next.error
+          : [raw?.error, STALE_WINDOW_NOTE].filter(Boolean).join("; ")
+        : next.error,
     };
   }
   return out;
 }
 
-export function mergeStations(prevStations, nextStations) {
+export function mergeStations(prevStations, nextStations, now = Date.now()) {
   const merged = { ...(prevStations ?? {}), ...(nextStations ?? {}) };
-  return carryForward(prevStations ?? {}, merged);
+  return carryForward(prevStations ?? {}, merged, now);
 }
 
-export function mergeObservations(prevObs = {}, nextObs = {}) {
+export function mergeObservations(prevObs = {}, nextObs = {}, now = Date.now()) {
   const merged = { ...prevObs, ...nextObs };
-  for (const [id, row] of Object.entries(nextObs)) {
-    if (row?.readings?.length) continue;
-    const prev = prevObs[id];
-    if (!prev?.readings?.length) continue;
-    const cause = row?.error ? String(row.error) : "Observation silent this cycle";
-    merged[id] = {
-      ...row,
-      stationName: row.stationName || prev.stationName,
-      readings: prev.readings,
-      carriedForward: true,
-      error: retainNote(cause),
-    };
-  }
-  return merged;
+  return carryForward(prevObs, merged, now);
 }
 
 export function rebuildStats(stations, observations, destinationBindings = 0) {
   const byAgency = {};
+  let withStaleOnly = 0;
   for (const s of Object.values(stations ?? {})) {
     const agency = s.agency ?? "unknown";
-    if (!byAgency[agency]) byAgency[agency] = { bound: 0, withReadings: 0 };
+    if (!byAgency[agency]) byAgency[agency] = { bound: 0, withReadings: 0, withStaleOnly: 0 };
     byAgency[agency].bound += 1;
     if (s.readings?.length) byAgency[agency].withReadings += 1;
+    else if (s.retainedReadings?.length) {
+      byAgency[agency].withStaleOnly += 1;
+      withStaleOnly += 1;
+    }
   }
   const ids = Object.keys(stations ?? {});
   const withReadings = Object.values(stations ?? {}).filter((s) => s.readings?.length).length;
@@ -120,6 +152,7 @@ export function rebuildStats(stations, observations, destinationBindings = 0) {
   return {
     boundStations: ids.length,
     withReadings,
+    withStaleOnly,
     emptyOrError: ids.length - withReadings,
     destinationBindings,
     byAgency,
@@ -128,9 +161,21 @@ export function rebuildStats(stations, observations, destinationBindings = 0) {
   };
 }
 
+export function finalizeSnapshot(payload, now = Date.now()) {
+  const stations = applyObservationAgeMap(payload.stations, now);
+  const observations = applyObservationAgeMap(payload.observations ?? {}, now);
+  return {
+    ...payload,
+    stations,
+    observations,
+    stats: rebuildStats(stations, observations, payload.stats?.destinationBindings ?? 0),
+  };
+}
+
 export function mergeSnapshot(prev, next, meta) {
-  const stations = mergeStations(prev?.stations, next.stations);
-  const observations = mergeObservations(prev?.observations, next.observations);
+  const now = Date.parse(meta.ingestedAt) || Date.now();
+  const stations = mergeStations(prev?.stations, next.stations, now);
+  const observations = mergeObservations(prev?.observations, next.observations, now);
   const destinationBindings =
     next.stats?.destinationBindings ?? prev?.stats?.destinationBindings ?? 0;
   return {
@@ -141,7 +186,7 @@ export function mergeSnapshot(prev, next, meta) {
     doctrine:
       next.doctrine ??
       prev?.doctrine ??
-      "Agency observations only. Age is printed. A silent feed is a miss, not a default.",
+      "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current.",
     stats: rebuildStats(stations, observations, destinationBindings),
     stations,
     observations,
@@ -159,6 +204,7 @@ export function collectErrors(stations, observations) {
       siteId: s.siteId,
       error: s.error,
       carriedForward: Boolean(s.carriedForward),
+      staleOnly: Boolean(s.staleOnly),
     });
   }
   for (const o of Object.values(observations ?? {})) {
@@ -169,6 +215,7 @@ export function collectErrors(stations, observations) {
       siteId: o.stationId,
       error: o.error,
       carriedForward: Boolean(o.carriedForward),
+      staleOnly: Boolean(o.staleOnly),
     });
   }
   return errors;
@@ -179,7 +226,7 @@ export function buildStatus({ payload, opts, runUrl = null, errors = [] }) {
   const usbrTimeouts = errors.filter(
     (e) => e.agency === "USBR" && /timeout|aborted/i.test(e.error ?? ""),
   ).length;
-  const hard = errors.filter((e) => !e.carriedForward);
+  const hard = errors.filter((e) => !e.carriedForward && !e.staleOnly);
   const mode = opts.onlySlow ? "slow" : opts.mode;
   return {
     schema: "0.1.0",
@@ -204,8 +251,8 @@ export function buildStatus({ payload, opts, runUrl = null, errors = [] }) {
 /**
  * Webhooks / the health issue fire on a crashed job or a miss with no
  * last official value to retain. A USBR timeout that carried the previous
- * observation is printed in status.json and the pipeline console — it is
- * not a page.
+ * observation, or a fossil IV value older than the window, is printed in
+ * status.json — it is not a page.
  */
 export function shouldNotify(status, { failed = false } = {}) {
   if (failed) return true;

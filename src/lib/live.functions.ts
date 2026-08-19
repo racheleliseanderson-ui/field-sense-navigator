@@ -47,6 +47,7 @@ export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async 
       mode: status?.mode ?? snapshot?.mode ?? "all",
       boundStations: snapshot?.stats.boundStations ?? 0,
       withReadings: snapshot?.stats.withReadings ?? 0,
+      withStaleOnly: snapshot?.stats.withStaleOnly ?? 0,
       emptyOrError: snapshot?.stats.emptyOrError ?? 0,
       byAgency: snapshot?.stats.byAgency ?? bindingsFile.stats.byAgency ?? {},
       nwsStations: snapshot?.stats.nwsStations ?? 0,
