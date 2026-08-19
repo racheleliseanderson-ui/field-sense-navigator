@@ -14,6 +14,9 @@ import {
   reviewOverdue,
   relatedRecords,
   RELATION_LABEL,
+  catalogTags,
+  tagLabel,
+  waterTypes,
   type Destination,
 } from "@/lib/catalog";
 import {
@@ -245,6 +248,30 @@ function WaterRecord() {
           ))}
         </dl>
       </section>
+
+      {catalogTags(d).length > 0 && (
+        <section className="border-b border-hairline bg-background/40">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-5 py-3 sm:px-8">
+            <p className="tick shrink-0 text-[0.55rem] text-muted-foreground">Catalog tags</p>
+            <ul className="flex flex-wrap gap-1.5" aria-label="Catalog tags">
+              {catalogTags(d).map((t) => {
+                const isType = waterTypes.includes(t as (typeof waterTypes)[number]);
+                return (
+                  <li key={t}>
+                    <Link
+                      to="/explore"
+                      search={isType ? { type: t } : { tag: t }}
+                      className="tap inline-flex min-h-9 items-center border border-hairline bg-card px-2 py-1 text-[0.58rem] uppercase tracking-[0.08em] text-muted-foreground hover:border-brass/50 hover:text-brass"
+                    >
+                      {tagLabel(t)}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto grid max-w-7xl gap-12 overflow-x-hidden px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
         {/* layers */}

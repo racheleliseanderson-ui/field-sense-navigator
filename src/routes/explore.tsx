@@ -16,6 +16,7 @@ import {
   waterTypes,
   daysSince,
   displayName,
+  tagLabel,
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
@@ -24,8 +25,10 @@ import {
   suggest,
   speciesList,
   ACCESS_FACETS,
+  TAG_FACETS,
   matchesAccess,
   matchesSpecies,
+  matchesTag,
   type Suggestion,
 } from "@/lib/search";
 import { useReveal, useParallax } from "@/lib/motion";
@@ -41,6 +44,7 @@ const searchSchema = z.object({
   band: fallback(z.string(), "").default(""),
   species: fallback(z.string(), "").default(""),
   access: fallback(z.string(), "").default(""),
+  tag: fallback(z.string(), "").default(""),
   fresh: fallback(z.number(), 0).default(0),
   min: fallback(z.number(), 0).default(0),
   watch: fallback(z.boolean(), false).default(false),
@@ -55,6 +59,7 @@ interface CatalogSearch {
   band: string;
   species: string;
   access: string;
+  tag: string;
   fresh: number;
   min: number;
   watch: boolean;
@@ -195,6 +200,7 @@ function Explore() {
         if (params.band && r.band !== params.band) return false;
         if (params.species && !matchesSpecies(d, params.species)) return false;
         if (params.access && !matchesAccess(d, params.access)) return false;
+        if (params.tag && !matchesTag(d, params.tag)) return false;
         if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
         if (params.min > 0 && r.score < params.min) return false;
         if (params.watch && !watched.includes(d.id)) return false;
@@ -219,6 +225,7 @@ function Explore() {
     params.band,
     params.species,
     params.access,
+    params.tag,
     params.fresh,
     params.min,
     params.watch,
@@ -235,6 +242,7 @@ function Explore() {
       params.band,
       params.species,
       params.access,
+      params.tag,
       params.fresh,
       params.min,
       params.watch,
@@ -254,6 +262,7 @@ function Explore() {
     Number(Boolean(params.band)) +
     Number(Boolean(params.species)) +
     Number(Boolean(params.access)) +
+    Number(Boolean(params.tag)) +
     Number(params.fresh > 0) +
     Number(params.min > 0) +
     Number(params.watch);
@@ -263,7 +272,7 @@ function Explore() {
   const clearAll = () =>
     navigate({
       search: {
-        q: "", juris: "", state: "", type: "", band: "", species: "", access: "",
+        q: "", juris: "", state: "", type: "", band: "", species: "", access: "", tag: "",
         fresh: 0, min: 0, watch: false, sort: "readiness",
       },
     });
@@ -379,6 +388,18 @@ function Explore() {
             key={a.id}
             active={params.access === a.id}
             onClick={() => set({ access: params.access === a.id ? "" : a.id })}
+          >
+            {a.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]">Catalog tags</span>
+        {TAG_FACETS.map((a) => (
+          <Chip
+            key={a.id}
+            active={params.tag === a.id}
+            onClick={() => set({ tag: params.tag === a.id ? "" : a.id })}
           >
             {a.label}
           </Chip>
@@ -608,6 +629,7 @@ function Explore() {
                   ["band", params.band, params.band],
                   ["species", params.species, params.species],
                   ["access", params.access, params.access],
+                  ["tag", params.tag, params.tag ? tagLabel(params.tag) : ""],
                   ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
                   ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
                   ["watch", params.watch, params.watch ? "watchlist only" : ""],

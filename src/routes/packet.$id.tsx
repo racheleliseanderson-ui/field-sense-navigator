@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
-import { destinationById, displayName, humanize, reviewOverdue } from "@/lib/catalog";
+import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -255,8 +255,16 @@ function Packet() {
                 <p className="mt-2 break-words text-sm leading-relaxed">{d.officialRegsUrl}</p>
               </>
             )}
-            <h3 className="packet-tick mt-6">Species context</h3>
+            <h3 className="packet-tick">Species context</h3>
             <p className="mt-2 text-sm leading-relaxed">{d.speciesContext.join(", ")}</p>
+            {catalogTags(d).length > 0 && (
+              <>
+                <h3 className="packet-tick mt-6">Catalog tags</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {catalogTags(d).map(tagLabel).join(", ")}
+                </p>
+              </>
+            )}
           </div>
         </section>
 

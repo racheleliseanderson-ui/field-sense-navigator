@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Columns3 } from "lucide-react";
-import { displayName, daysSince, humanize, reviewOverdue, type Destination } from "@/lib/catalog";
+import { displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
@@ -158,6 +158,21 @@ export function WaterCard({
         <p className="mt-1 truncate text-[0.65rem] text-muted-foreground/90">
           {destination.managingAgency}
         </p>
+      )}
+      {catalogTags(destination).length > 0 && (
+        <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Catalog tags">
+          {catalogTags(destination)
+            .filter((t) => t !== destination.waterType)
+            .slice(0, 4)
+            .map((t) => (
+              <li
+                key={t}
+                className="border border-hairline bg-background/60 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-[0.08em] text-muted-foreground"
+              >
+                {tagLabel(t)}
+              </li>
+            ))}
+        </ul>
       )}
     </Link>
     </div>

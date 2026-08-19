@@ -136,6 +136,34 @@ export const humanize = (value: string) =>
 export const titleCase = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1);
 
+/**
+ * Catalog tags stored on the record (waterType, access anatomy, land-manager
+ * class). Derived only from documented fields — never estimated live state.
+ */
+export function catalogTags(d: Destination): string[] {
+  return [...(d.tags ?? [])].sort();
+}
+
+/** Display label for a catalog tag slug. */
+export function tagLabel(tag: string): string {
+  const known: Record<string, string> = {
+    lake: "Lake",
+    reservoir: "Reservoir",
+    river: "River",
+    marine: "Marine",
+    pier: "Pier",
+    boat_ramp: "Boat ramp",
+    shore_access: "Shore access",
+    state_park: "State park",
+    national_park: "National park",
+    national_forest: "National forest",
+    blm: "BLM",
+    usbr: "Bureau of Reclamation",
+    usace: "Army Corps",
+  };
+  return known[tag] ?? titleCase(humanize(tag));
+}
+
 export const displayName = (d: Destination) =>
   d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
 

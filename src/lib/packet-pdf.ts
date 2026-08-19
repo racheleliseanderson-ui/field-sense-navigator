@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 
-import { displayName, humanize, reviewOverdue, type Destination } from "@/lib/catalog";
+import { catalogTags, displayName, humanize, reviewOverdue, tagLabel, type Destination } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -243,6 +243,12 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   ctx.y += 8;
   tick(ctx, "Species context");
   paragraph(ctx, d.speciesContext.length ? d.speciesContext.join(", ") : "None recorded.");
+  const tags = catalogTags(d);
+  if (tags.length) {
+    ctx.y += 8;
+    tick(ctx, "Catalog tags");
+    paragraph(ctx, tags.map(tagLabel).join(", "));
+  }
   ctx.y += 8;
   tick(ctx, "Official source");
   paragraph(ctx, d.officialSourceUrl, { size: 8.5, color: MUTED });
