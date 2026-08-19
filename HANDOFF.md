@@ -58,6 +58,9 @@ jspdf (field packet export). Nothing else.
 ## Known limits
 - Live reads depend on a snapshot published to the `live-snapshot` branch; when stale the console
   says so rather than falling back to a nearby station.
+- Critical gauges overlay every 10 minutes; full catalog at :02/:32; USBR is a follow-on job.
+  Hourly copies live in `archive/` (24 retained). `status.json` drives the pipeline pulse and
+  optional Slack/Discord + GitHub-issue notify on hard failure.
 - Ambiguous multi-match stations stay unmatched by design and must be pinned by hand.
 - Readings panel needs hydration; pre-hydration taps are queued and replayed.
 

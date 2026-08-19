@@ -2,18 +2,37 @@
 /**
  * Scheduled ingest of official readings for every matched binding.
  *
+ * Modes:
+ *   (default)           full catalog, including slow agencies
+ *   --mode=critical     interior-west + overrides + NOAA CO-OPS (10-minute job)
+ *   --skip-slow         skip USBR so a RISE timeout cannot stall the snapshot
+ *   --only-slow         USBR only, sequential, long timeout
+ *   --merge             overlay onto the previous live-snapshot instead of replacing it
+ *
  * USGS NWIS IV, NOAA CO-OPS latest, Water Survey of Canada realtime,
- * and the NWS observation station bound on the record. Agency
- * observations only. A silent feed is a miss.
+ * USBR, USACE, CDEC, and the NWS observation station bound on the record.
+ * Agency observations only. A silent feed is a miss. Last agency values
+ * may be retained with their original observedAt when a fetch times out.
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  parseArgs,
+  selectRecords,
+  cadenceFor,
+  mergeSnapshot,
+  collectErrors,
+  buildStatus,
+} from "./ingest-live.lib.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const BIND_PATH = resolve(ROOT, "src/data/station-bindings.json");
 const OUT_PATH = resolve(ROOT, "public/live/snapshot.json");
+const STATUS_PATH = resolve(ROOT, "public/live/status.json");
+const PRIOR_URL =
+  "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";
 
 const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
 const USGS_PARAMS = {
@@ -26,6 +45,7 @@ const USGS_PARAMS = {
   "72020": { label: "Reservoir storage", unit: "ac-ft" },
 };
 const BATCH = 40;
+const USBR_TIMEOUT_MS = 90_000;
 
 function chunk(arr, size) {
   const out = [];
@@ -55,6 +75,23 @@ function emptyStation(siteId, agency, extra = {}) {
     fetchedAt: new Date().toISOString(),
     error: extra.error,
   };
+}
+
+async function loadPriorSnapshot() {
+  try {
+    const json = JSON.parse(readFileSync(OUT_PATH, "utf8"));
+    if (json?.stations && Object.keys(json.stations).length > 4) return json;
+  } catch {
+    /* placeholder on main is not a prior */
+  }
+  try {
+    const res = await fetch(PRIOR_URL, { headers: { "User-Agent": UA, Accept: "application/json" } });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json?.stations ? json : null;
+  } catch {
+    return null;
+  }
 }
 
 async function usgsBatch(siteIds) {
@@ -218,7 +255,7 @@ async function nwsObservation(stationId) {
     const compass =
       dir == null
         ? ""
-        : ` ${["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"][Math.round(((dir % 360) + 360) % 360 / 22.5) % 16]}`;
+        : ` ${["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"][Math.round((((dir % 360) + 360) % 360) / 22.5) % 16]}`;
     readings.push({
       label: "Wind",
       value: `${mph.toFixed(1)}${compass}`,
@@ -288,11 +325,11 @@ async function usbrStation(siteId, siteName) {
         `https://data.usbr.gov/rise/api/result?filter[itemId]=${encodeURIComponent(itemId)}` +
         `&filter[dateTime][GT]=${since}&page[size]=5`;
       let lastErr = null;
-      for (let attempt = 1; attempt <= 3; attempt += 1) {
+      for (let attempt = 1; attempt <= 2; attempt += 1) {
         try {
           const res = await fetch(url, {
             headers: { "User-Agent": UA, Accept: "application/vnd.api+json" },
-            signal: AbortSignal.timeout(45000),
+            signal: AbortSignal.timeout(USBR_TIMEOUT_MS),
           });
           if (!res.ok) throw new Error(`USBR RISE ${res.status}`);
           const json = await res.json();
@@ -309,7 +346,7 @@ async function usbrStation(siteId, siteName) {
           break;
         } catch (err) {
           lastErr = err;
-          await new Promise((r) => setTimeout(r, 1500 * attempt));
+          await new Promise((r) => setTimeout(r, 2000 * attempt));
         }
       }
       if (lastErr && !readings.length) throw lastErr;
@@ -322,6 +359,7 @@ async function usbrStation(siteId, siteName) {
         `&eyer=${now.getUTCFullYear()}&emnth=${now.getUTCMonth() + 1}&edy=${now.getUTCDate()}&format=2`;
       const res = await fetch(`https://www.usbr.gov/pn-bin/webarccsv.pl?${q}`, {
         headers: { "User-Agent": UA },
+        signal: AbortSignal.timeout(USBR_TIMEOUT_MS),
       });
       if (!res.ok) throw new Error(`USBR Hydromet ${res.status}`);
       const text = await res.text();
@@ -376,8 +414,11 @@ async function usaceStation(siteId, siteName) {
 }
 
 async function main() {
+  const opts = parseArgs(process.argv.slice(2));
   const bindings = JSON.parse(readFileSync(BIND_PATH, "utf8"));
   const matched = bindings.records.filter((r) => r.status === "matched" && r.siteId);
+  const selected = selectRecords(bindings.records, opts);
+  const prior = await loadPriorSnapshot();
   const stations = {};
   const byAgency = {
     USGS: { bound: 0, withReadings: 0 },
@@ -388,26 +429,14 @@ async function main() {
     CDEC: { bound: 0, withReadings: 0 },
   };
 
-  const usgsIds = [
-    ...new Set(matched.filter((r) => r.agency === "USGS").map((r) => r.siteId)),
-  ];
+  const usgsIds = [...new Set(selected.filter((r) => r.agency === "USGS").map((r) => r.siteId))];
   const noaaRows = [
-    ...new Map(
-      matched.filter((r) => r.agency === "NOAA-COOPS").map((r) => [r.siteId, r]),
-    ).values(),
+    ...new Map(selected.filter((r) => r.agency === "NOAA-COOPS").map((r) => [r.siteId, r])).values(),
   ];
-  const wscRows = [
-    ...new Map(matched.filter((r) => r.agency === "WSC").map((r) => [r.siteId, r])).values(),
-  ];
-  const usbrRows = [
-    ...new Map(matched.filter((r) => r.agency === "USBR").map((r) => [r.siteId, r])).values(),
-  ];
-  const usaceRows = [
-    ...new Map(matched.filter((r) => r.agency === "USACE").map((r) => [r.siteId, r])).values(),
-  ];
-  const cdecRows = [
-    ...new Map(matched.filter((r) => r.agency === "CDEC").map((r) => [r.siteId, r])).values(),
-  ];
+  const wscRows = [...new Map(selected.filter((r) => r.agency === "WSC").map((r) => [r.siteId, r])).values()];
+  const usbrRows = [...new Map(selected.filter((r) => r.agency === "USBR").map((r) => [r.siteId, r])).values()];
+  const usaceRows = [...new Map(selected.filter((r) => r.agency === "USACE").map((r) => [r.siteId, r])).values()];
+  const cdecRows = [...new Map(selected.filter((r) => r.agency === "CDEC").map((r) => [r.siteId, r])).values()];
 
   byAgency.USGS.bound = usgsIds.length;
   byAgency["NOAA-COOPS"].bound = noaaRows.length;
@@ -415,6 +444,13 @@ async function main() {
   byAgency.USBR.bound = usbrRows.length;
   byAgency.USACE.bound = usaceRows.length;
   byAgency.CDEC.bound = cdecRows.length;
+
+  console.error(
+    `ingest mode=${opts.onlySlow ? "slow" : opts.mode}` +
+      `${opts.skipSlow ? " skip-slow" : ""}` +
+      `${opts.merge ? " merge" : ""}` +
+      ` · ${selected.length} rows`,
+  );
 
   for (const group of chunk(usgsIds, BATCH)) {
     try {
@@ -437,43 +473,48 @@ async function main() {
 
   const noaaResults = await poolMap(noaaRows, 4, (r) => noaaStation(r.siteId, r.siteName));
   for (const row of noaaResults) stations[row.siteId] = row;
-  console.error(`noaa  ${noaaRows.length} stations`);
+  if (noaaRows.length) console.error(`noaa  ${noaaRows.length} stations`);
 
   const wscResults = await poolMap(wscRows, 4, (r) => wscStation(r.siteId, r.siteName));
   for (const row of wscResults) stations[row.siteId] = row;
-  console.error(`wsc   ${wscRows.length} stations`);
+  if (wscRows.length) console.error(`wsc   ${wscRows.length} stations`);
 
-  const usbrResults = await poolMap(usbrRows, 3, (r) => usbrStation(r.siteId, r.siteName));
+  const usbrResults = await poolMap(usbrRows, 1, (r) => usbrStation(r.siteId, r.siteName));
   for (const row of usbrResults) stations[row.siteId] = row;
-  console.error(`usbr  ${usbrRows.length} stations`);
+  if (usbrRows.length) console.error(`usbr  ${usbrRows.length} stations (serial, ${USBR_TIMEOUT_MS / 1000}s timeout)`);
 
   const usaceResults = await poolMap(usaceRows, 3, (r) => usaceStation(r.siteId, r.siteName));
   for (const row of usaceResults) stations[row.siteId] = row;
-  console.error(`usace ${usaceRows.length} stations`);
+  if (usaceRows.length) console.error(`usace ${usaceRows.length} stations`);
 
   const cdecResults = await poolMap(cdecRows, 3, (r) => cdecStation(r.siteId, r.siteName));
   for (const row of cdecResults) stations[row.siteId] = row;
-  console.error(`cdec  ${cdecRows.length} stations`);
+  if (cdecRows.length) console.error(`cdec  ${cdecRows.length} stations`);
 
-  const nwsIds = [
-    ...new Set(bindings.records.map((r) => r.nwsStationId).filter(Boolean)),
-  ];
+  const nwsSource = opts.onlySlow
+    ? []
+    : opts.mode === "critical"
+      ? selected
+      : bindings.records;
+  const nwsIds = [...new Set(nwsSource.map((r) => r.nwsStationId).filter(Boolean))];
   const observations = {};
-  const nwsResults = await poolMap(nwsIds, 4, async (id) => {
-    try {
-      return await nwsObservation(id);
-    } catch (err) {
-      return {
-        stationId: id,
-        stationName: id,
-        readings: [],
-        fetchedAt: new Date().toISOString(),
-        error: String(err.message ?? err),
-      };
-    }
-  });
-  for (const row of nwsResults) observations[row.stationId] = row;
-  console.error(`nws   ${nwsIds.length} observation stations`);
+  if (nwsIds.length) {
+    const nwsResults = await poolMap(nwsIds, 4, async (id) => {
+      try {
+        return await nwsObservation(id);
+      } catch (err) {
+        return {
+          stationId: id,
+          stationName: id,
+          readings: [],
+          fetchedAt: new Date().toISOString(),
+          error: String(err.message ?? err),
+        };
+      }
+    });
+    for (const row of nwsResults) observations[row.stationId] = row;
+    console.error(`nws   ${nwsIds.length} observation stations`);
+  }
 
   for (const [agency, stat] of Object.entries(byAgency)) {
     stat.withReadings = Object.values(stations).filter(
@@ -484,11 +525,13 @@ async function main() {
   const withReadings = Object.values(stations).filter((s) => s.readings.length > 0).length;
   const nwsWithObs = Object.values(observations).filter((s) => s.readings.length > 0).length;
   const uniqueIds = Object.keys(stations);
-  const payload = {
+  const ingestedAt = new Date().toISOString();
+  const mode = opts.onlySlow ? "slow" : opts.mode;
+  let payload = {
     schema: "0.6.0",
-    ingestedAt: new Date().toISOString(),
+    ingestedAt,
     source: "usgs-nwis-iv+noaa-coops+wsc-geomet+usbr-rise+usace-cwms+cdec+nws-obs",
-    cadenceMinutes: 30,
+    cadenceMinutes: cadenceFor(opts),
     doctrine:
       "Agency observations only. Age is printed. A silent feed is a miss, not a default.",
     stats: {
@@ -502,19 +545,37 @@ async function main() {
     },
     stations,
     observations,
+    mode,
   };
+
+  if (prior && (opts.merge || opts.skipSlow || opts.onlySlow || opts.mode === "critical")) {
+    payload = mergeSnapshot(prior, payload, {
+      ingestedAt,
+      cadenceMinutes: cadenceFor(opts),
+      mode,
+    });
+  }
+
+  const errors = collectErrors(payload.stations, payload.observations);
+  const runUrl =
+    process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID
+      ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+      : null;
+  const status = buildStatus({ payload, opts, runUrl, errors });
 
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, `${JSON.stringify(payload)}\n`);
+  writeFileSync(STATUS_PATH, `${JSON.stringify(status, null, 2)}\n`);
   console.error(
-    `wrote ${OUT_PATH} · ${withReadings}/${uniqueIds.length} gauges` +
-      ` · NWS ${nwsWithObs}/${nwsIds.length}` +
-      ` · USGS ${byAgency.USGS.withReadings}/${byAgency.USGS.bound}` +
-      ` · NOAA ${byAgency["NOAA-COOPS"].withReadings}/${byAgency["NOAA-COOPS"].bound}` +
-      ` · WSC ${byAgency.WSC.withReadings}/${byAgency.WSC.bound}` +
-      ` · USBR ${byAgency.USBR.withReadings}/${byAgency.USBR.bound}` +
-      ` · USACE ${byAgency.USACE.withReadings}/${byAgency.USACE.bound}` +
-      ` · CDEC ${byAgency.CDEC.withReadings}/${byAgency.CDEC.bound}`,
+    `wrote ${OUT_PATH} · ${payload.stats.withReadings}/${payload.stats.boundStations} gauges` +
+      ` · NWS ${payload.stats.nwsWithObs}/${payload.stats.nwsStations}` +
+      ` · USGS ${payload.stats.byAgency.USGS?.withReadings ?? 0}/${payload.stats.byAgency.USGS?.bound ?? 0}` +
+      ` · NOAA ${payload.stats.byAgency["NOAA-COOPS"]?.withReadings ?? 0}/${payload.stats.byAgency["NOAA-COOPS"]?.bound ?? 0}` +
+      ` · WSC ${payload.stats.byAgency.WSC?.withReadings ?? 0}/${payload.stats.byAgency.WSC?.bound ?? 0}` +
+      ` · USBR ${payload.stats.byAgency.USBR?.withReadings ?? 0}/${payload.stats.byAgency.USBR?.bound ?? 0}` +
+      ` · USACE ${payload.stats.byAgency.USACE?.withReadings ?? 0}/${payload.stats.byAgency.USACE?.bound ?? 0}` +
+      ` · CDEC ${payload.stats.byAgency.CDEC?.withReadings ?? 0}/${payload.stats.byAgency.CDEC?.bound ?? 0}` +
+      ` · errors ${errors.length}`,
   );
 }
 
