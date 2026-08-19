@@ -2,14 +2,14 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-19T23:28:27.169Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-19T23:30:10.498Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
-    "boundStations": 405,
-    "withReadings": 241,
+    "boundStations": 408,
+    "withReadings": 244,
     "withStaleOnly": 13,
     "emptyOrError": 164,
     "destinationBindings": 439,
@@ -38,6 +38,11 @@
         "bound": 3,
         "withReadings": 1,
         "withStaleOnly": 2
+      },
+      "USBR": {
+        "bound": 3,
+        "withReadings": 3,
+        "withStaleOnly": 0
       }
     },
     "nwsStations": 355,
@@ -184,8 +189,9 @@
     }
   ],
   "usbr": {
-    "bound": 0,
-    "withReadings": 0,
+    "bound": 3,
+    "withReadings": 3,
+    "withStaleOnly": 0,
     "timeouts": 0
   },
   "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32313343014",
