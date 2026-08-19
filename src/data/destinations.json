@@ -33457,6 +33457,18 @@
       {
         "id": "HHI-DEST-519",
         "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-524",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-525",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-526",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "tags": [
@@ -33549,6 +33561,18 @@
       {
         "id": "HHI-DEST-461",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-529",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-530",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-533",
+        "relation": "shared_agency_page"
       }
     ],
     "tags": [
@@ -33631,6 +33655,10 @@
       {
         "id": "HHI-DEST-461",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-527",
+        "relation": "same_waterbody_segment"
       }
     ],
     "tags": [
@@ -35952,6 +35980,10 @@
       {
         "id": "HHI-DEST-461",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-531",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "tags": [
@@ -36127,6 +36159,10 @@
       },
       {
         "id": "HHI-DEST-523",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-532",
         "relation": "adjacent_public_corridor"
       }
     ],
@@ -40076,6 +40112,14 @@
       {
         "id": "HHI-DEST-458",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-524",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-525",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "lastHumanReviewedAt": "2026-08-19",
@@ -40439,6 +40483,864 @@
     "unresolvedQuestions": [
       "Confirm the current operator and hours of the Granisle public boat launch on the date of travel.",
       "Do not treat Rainbow Alley / Babine River as part of this lake record."
+    ]
+  },
+  {
+    "id": "HHI-DEST-524",
+    "state": "British Columbia",
+    "region": "Lower Mainland",
+    "waterbody": "Cultus Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/cultus-lake-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Cutthroat trout",
+      "Dolly Varden"
+    ],
+    "publicAccess": [
+      {
+        "name": "Cultus Lake Park \u2014 Maple Bay boat launch (double paved ramp)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Cultus Lake Park \u2014 Jade Bay boat launch (double paved ramp)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Cultus Lake Park \u2014 Entrance Bay and Maple Bay day-use wharfs",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 2 exception (MU 2-3): no wild trout over 50 cm; 1 bull trout over 60 cm; kokanee catch and release; no vessels on parts; 5 km/h speed restriction at the north end as buoyed and signed.",
+      "Travel on the lake is restricted to counter-clockwise. Swimmer\u2019s itch may be present. Steep drop-offs along the lakeshore.",
+      "Park expansion protects foreshore habitat for endangered Cultus Lake sockeye and threatened Cultus pygmy sculpin \u2014 those are not listed as open fisheries here.",
+      "Boat launches (Maple Bay, Jade Bay) are described as open 7 am to dusk, operating season Apr 1\u2013Oct 15, 2026, with daytime trailer parking only. Confirm on the live BC Parks page before travel."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm Maple Bay and Jade Bay launch hours and gate status on the live Cultus Lake Park page (facilities accordion)."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-525",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-519",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-425",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access: BC Parks Cultus Lake Park names Entrance Bay and Maple Bay day-use wharfs in page body; Maple Bay and Jade Bay double paved launching ramps are named in the park facilities section (BC Parks page, indexed 2026-08-16; launches open 7 am\u2013dusk, Apr 1\u2013Oct 15, 2026). Species from that park page (rainbow, cutthroat, Dolly Varden). Exceptions from Region 2 synopsis CULTUS LAKE MU 2-3.",
+    "confidenceNotes": "Static HTML retrieved 2026-08-19 omitted the facilities accordion; Maple Bay/Jade Bay ramps are taken from the official park URL\u2019s indexed facilities text, not from a municipal or unofficial page. Community marina/rentals in Cultus Lake village were not added.",
+    "unresolvedQuestions": [
+      "Re-read the live Cultus Lake Park facilities accordion on the date of travel to confirm Maple Bay and Jade Bay launch hours.",
+      "Do not treat Cultus sockeye as an open recreational fishery on this record."
+    ]
+  },
+  {
+    "id": "HHI-DEST-525",
+    "state": "British Columbia",
+    "region": "Lower Mainland",
+    "waterbody": "Chilliwack Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Dolly Varden",
+      "Kokanee",
+      "Rainbow trout",
+      "Cutthroat trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Sx\u0331\u00f3tsaqel/Chilliwack Lake Park \u2014 Chilliwack Lake boat launch (day-use / campground)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Sx\u0331\u00f3tsaqel/Chilliwack Lake Park \u2014 day-use beach (left of boat launch)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 2 exception (MU 2-4): no wild trout over 50 cm; 1 bull trout over 60 cm.",
+      "The Chilliwack Lake boat launch is not suitable for large craft. Vessels longer than 20 ft risk damage. Open headers are not permitted. Water levels can put the launch underwater.",
+      "Speed: 10 km/h within 100 m of shoreline; 25 km/h on the remainder of the lake.",
+      "Severe afternoon winds are frequent. Dangerous currents at the lake outflow \u2014 avoid boating and rafting there. Only experienced paddlers.",
+      "No camping or fires on any Chilliwack Lake shoreline except designated sites. Park gate closed October\u2013May (walk-in from end of pavement)."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm launch usability at current water level and whether the park gate is open."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-524",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-519",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-425",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access and species from BC Parks Sx\u0331\u00f3tsaqel/Chilliwack Lake Park (named Chilliwack Lake boat launch; Dolly Varden, kokanee, rainbow, cutthroat). Exceptions from Region 2 synopsis CHILLIWACK LAKE MU 2-4. Launch size/speed/wind language from that park page.",
+    "confidenceNotes": "Lindeman, Greendrop, Flora, and Radium lakes are separate backcountry waters in the same park and are not this record.",
+    "unresolvedQuestions": [
+      "Confirm 2026 park-gate dates on the BC Parks operating-dates page before travel."
+    ]
+  },
+  {
+    "id": "HHI-DEST-526",
+    "state": "British Columbia",
+    "region": "Lower Mainland",
+    "waterbody": "Alouette Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/golden-ears-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Bull trout (char)"
+    ],
+    "publicAccess": [
+      {
+        "name": "Golden Ears Park \u2014 Alouette Lake boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Golden Ears Park \u2014 Alouette (South Beach) day-use shore",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 2 exception (MU 2-8): bull trout (char) catch and release; no vessels in swimming areas as buoyed and signed; 8 km/h speed restriction at the south end, south of a line from the BC Parks boat ramp to signs on the east shore.",
+      "Day-use vehicle passes are required at Golden Ears Friday, Saturday, Sunday, Monday, and holidays May 15\u2013September 7, 2026 for lots past Spirea trailhead, including the Alouette Lake boat launch parking lot (~100 boat-launch vehicles). Overnight campers with a valid reservation do not need a day-use pass.",
+      "Powerboats operate on Alouette Lake. Strong currents near the mouth of Gold Creek. No powerboats or other motorized craft on Mike Lake (separate water in the park).",
+      "The Golden Ears park page does not name sportfish species; bull trout catch-and-release is from the Region 2 synopsis only."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm day-use pass requirement and launch-lot capacity on https://bcparks.ca/reservations/day-use-passes/ before peak-season travel."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-425",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-519",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-524",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Launch named on BC Parks Golden Ears Park (boat launch / canoe rental shop) and on the BC Parks day-use passes page (Alouette Lake boat launch parking lot). Region 2 synopsis ALOUETTE LAKE MU 2-8 names the BC Parks boat ramp in the south-end speed line and sets bull trout catch and release. Mike Lake motor ban from the Golden Ears page.",
+    "confidenceNotes": "No sportfish species list on the park page. Pitt Lake is a separate waterbody and was not added (no named BC Parks launch read for Pitt).",
+    "unresolvedQuestions": [
+      "Confirm whether BC Parks or Metro Vancouver names any additional public Alouette launch outside Golden Ears."
+    ]
+  },
+  {
+    "id": "HHI-DEST-527",
+    "state": "British Columbia",
+    "region": "Vancouver Island",
+    "waterbody": "Cowichan Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/gordon-bay-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Cutthroat trout",
+      "Dolly Varden"
+    ],
+    "publicAccess": [
+      {
+        "name": "Gordon Bay Park boat launch (northeast of day-use parking lot)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 1 exception (MU 1-4, including Bear Lake): cutthroat trout daily quota = 2 (none over 50 cm); bait ban and single barbless hook Nov 15\u2013Apr 15; speed restriction on parts (8 km/h) plus overall 10 km/h within 60 m of shore.",
+      "Cowichan River from the weir at the lake outlet is a separate classified/stream fishery (HHI-DEST-427) \u2014 do not apply river closures to the lake.",
+      "Salmon (chum, coho, Chinook, steelhead) mentioned on the park page are DFO-managed; confirm same-day. Cutthroat reward tags are in use on Cowichan Lake (see synopsis).",
+      "Waterskiers and windsurfers must remain outside swim buoys."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm Gordon Bay launch and any 8 km/h buoyed zones same-day."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "Cowichan Lake bait ban and single barbless hook",
+        "start": "11-15",
+        "end": "04-15",
+        "notes": "BC 2025\u20132027 Region 1 COWICHAN LAKE (including Bear Lake) MU 1-4: bait ban and single barbless hook Nov 15\u2013Apr 15. Cutthroat daily quota = 2 (none over 50 cm) is standing."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-427",
+        "relation": "same_waterbody_segment"
+      },
+      {
+        "id": "HHI-DEST-457",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-528",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access and trout species from BC Parks Gordon Bay Park (boat launch northeast of day-use parking lot; rainbow, cutthroat, Dolly Varden). Exceptions from Region 1 synopsis COWICHAN LAKE including Bear Lake MU 1-4. River closures left on HHI-DEST-427.",
+    "confidenceNotes": "Other Cowichan Lake municipal launches were not added without a matching provincial page.",
+    "unresolvedQuestions": [
+      "Confirm whether Cowichan Lake First Nation or CVRD publishes a separate public launch that should be listed."
+    ]
+  },
+  {
+    "id": "HHI-DEST-528",
+    "state": "British Columbia",
+    "region": "Vancouver Island",
+    "waterbody": "Sproat Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/sproat-lake-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Cutthroat trout",
+      "Rainbow trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Sproat Lake Park boat launch (near day-use area)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Sproat Lake Park day-use swimming shore (near boat launch)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 1 exception (MU 1-7): cutthroat trout catch and release; no wild rainbow trout over 50 cm; single barbless hook.",
+      "Sproat River (lake outlet to Hwy 4 signs) has a separate June 15\u2013Nov 15 no-fishing window \u2014 that is not this lake record.",
+      "Fishing is subject to provincial and federal closures; DFO tables must be confirmed same-day. Specific closures will be posted in the park.",
+      "A short trail leads from the day-use parking lot to a small pier at the east end of the park (petroglyph panel K\u2019ak\u2019awin). No motorized vehicle access in the day-use area trail network."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm any in-park posted closures and DFO salmon table same-day."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-527",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-427",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-457",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access from BC Parks Sproat Lake Park (boat launch near day-use). Species not named on the park page; cutthroat catch-and-release and no wild rainbow over 50 cm are from Region 1 synopsis SPROAT LAKE MU 1-7. Sproat River dates were not copied onto the lake record.",
+    "confidenceNotes": "Great Central Lake was not added in this pass (outlet-only dated closure; no named provincial launch read).",
+    "unresolvedQuestions": [
+      "Confirm winter accessibility of the Sproat Lake Park launch on the date of travel."
+    ]
+  },
+  {
+    "id": "HHI-DEST-529",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Kalamalka Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/kekuli-bay-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Kokanee",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Kekuli Bay Park boat launch (Kalamalka Lake)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Kalamalka Lake Park shore / Cosens Bay (no launch in that park)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Kal Beach (City of Vernon) boat launch \u2014 named on the BC Parks Kalamalka Lake Park page",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 8 exception (MU 8-22): kokanee daily quota = 5; yellow perch daily quota = 20; speed restrictions or no vessels as buoyed and signed, various locations.",
+      "BC Parks Kekuli Bay and Kalamalka Lake pages still print a daily kokanee quota of two. The 2025\u20132027 synopsis quota is 5. Confirm same-day on the official synopsis; do not rely on the park-page quota.",
+      "Kalamalka Lake Park has no boat launch. Kekuli Bay is the provincial launch (rocky point; historically heavily used). Swimming area at Kekuli is rocky and close to the train track and launch.",
+      "Rattlesnakes inhabit Kalamalka Lake Park grasslands. Swimmer\u2019s itch may be present."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm Kekuli Bay launch status (park page has described it as open until first snowfall) and synopsis kokanee quota."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-426",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-530",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-522",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Launch from BC Parks Kekuli Bay Park (boat launch on Kalamalka Lake). Kalamalka Lake Park page states there is no launch in that park and names Kekuli Bay Park plus Kal Beach (City of Vernon). Species/quota from Region 8 synopsis KALAMALKA LAKE MU 8-22 (kokanee 5, yellow perch 20). Park pages\u2019 \u201cquota of two\u201d noted as a discrepancy, not used as the standing rule.",
+    "confidenceNotes": "Kal Beach is municipal; it is listed only because the official Kalamalka Lake Park page names it as a launch location.",
+    "unresolvedQuestions": [
+      "Confirm Kekuli Bay launch after first snowfall; the indexed facilities text described it as open until first snowfall but the static HTML retrieved 2026-08-19 did not repeat that sentence."
+    ]
+  },
+  {
+    "id": "HHI-DEST-530",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Osoyoos Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/swiws-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Kokanee",
+      "Bass",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "s\u1e81i\u1e81s Park (Osoyoos Indian Band / BC Parks) \u2014 boat launch, concrete ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "s\u1e81i\u1e81s Park lakeside / beach (day-use and campsites)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 8 exception (MU 8-1): kokanee daily quota = 5 (none over 30 cm from July 1\u2013Oct 31); bass daily quota = 8; yellow perch daily quota = 20; barbless hook July 1\u2013Oct 31; speed restriction on parts; no vessels in 5 signed swimming areas.",
+      "Park is managed by the Osoyoos Indian Band. s\u1e81i\u1e81s means a shallow/narrow crossing of Osoyoos Lake. Severe unexpected winds; tents must be tied down. Maximum stay seven nights per calendar year.",
+      "DFO salmon (including any Osoyoos sockeye table) is separate from the provincial synopsis and must be confirmed same-day.",
+      "Boaters: narrow channel at the end of Haynes Point \u2014 stay between yellow markers (facilities text on the park page)."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm the concrete ramp is open (park facilities text has described year-round launch access) and kokanee size/barbless rules if travelling July 1\u2013Oct 31."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "Osoyoos Lake kokanee size limit and barbless hook",
+        "start": "07-01",
+        "end": "10-31",
+        "notes": "BC 2025\u20132027 Region 8 OSOYOOS LAKE MU 8-1: no kokanee over 30 cm July 1\u2013Oct 31; barbless hook the same dates. Daily kokanee quota = 5 is standing."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-426",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-529",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-533",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access from BC Parks s\u1e81i\u1e81s Park (formerly Haynes Point): lakeside campsites/beach in page body; concrete ramp / year-round launch access from the park facilities section (indexed 2026-08-16). Exceptions from Region 8 synopsis OSOYOOS LAKE MU 8-1. Park operated by the Osoyoos Indian Band.",
+    "confidenceNotes": "Static HTML retrieved 2026-08-19 omitted the facilities accordion; ramp language is from the official park URL\u2019s indexed facilities text. Species list is from the synopsis (park page did not name sportfish).",
+    "unresolvedQuestions": [
+      "Re-read the live s\u1e81i\u1e81s Park facilities accordion on the date of travel to confirm ramp status and Haynes Point channel markers."
+    ]
+  },
+  {
+    "id": "HHI-DEST-531",
+    "state": "British Columbia",
+    "region": "Kootenay",
+    "waterbody": "Lower Arrow Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/syringa-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Bull trout",
+      "Kokanee"
+    ],
+    "publicAccess": [
+      {
+        "name": "Syringa Park boat launch (Boater\u2019s Beach)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Syringa Park day-use shore",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Lower Arrow Lake is a Columbia River reservoir behind Hugh Keenleyside Dam. Water is low in May, rises in June, and is at full pond July\u2013September. Confirm launch depth same-day.",
+      "The Region 4 table has no separate Lower Arrow Lake row (ARROW LAKES cross-references Upper Arrow Lake). Tributaries: bull trout catch and release. Combined kokanee daily quota for Lower Arrow, Upper Arrow, and the drawdown area is the Region 4 regional quota. Confirm same-day.",
+      "Lake weather changes rapidly; shoreline paddling is recommended. Peak canoe months July\u2013August at full pond.",
+      "Upper Arrow Lake / Revelstoke drawdown is a separate reach and is not this record."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm reservoir level and Syringa launch usability (especially before July full pond)."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-459",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-425",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access and species from BC Parks Syringa Park (boat launch / Boater\u2019s Beach; rainbow or bull trout and kokanee). Reservoir fluctuation from that park page. Region 4 synopsis: ARROW LAKES see Upper Arrow Lake; LOWER ARROW LAKE\u2019S TRIBUTARIES bull trout catch and release; combined kokanee quota with Upper Arrow.",
+    "confidenceNotes": "No dated whole-lake closure was printed for Lower Arrow Lake itself. Upper Arrow drawdown rules were not copied onto this record.",
+    "unresolvedQuestions": [
+      "Confirm whether Shelter Bay (Arrow Lakes Park) should be listed as a second official launch on a later Upper Arrow record."
+    ]
+  },
+  {
+    "id": "HHI-DEST-532",
+    "state": "British Columbia",
+    "region": "Skeena",
+    "waterbody": "Lakelse Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/lakelse-lake-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Dolly Varden",
+      "Rainbow trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Lakelse Lake Park docking and launching facilities (Furlong Bay)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Lakelse Lake Park \u2014 Furlong Bay day-use shore",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Lakelse Picnic Site family beach (open year-round)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Gruchy\u2019s Beach (open year-round; subject to winter snowfall closures)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 6 exception (MU 6-11): rainbow trout over 50 cm catch and release.",
+      "Lakelse River is a separate Class I water (fly fishing only between the lake and CNR Bridge Mar 1\u2013May 31; non-guided non-resident alien prohibition on part of the river). Do not treat river rules as the lake record.",
+      "Dolly Varden are a common catch in the lake (park page). All five Pacific salmon spawn in area rivers \u2014 DFO, same-day check. Park is closed to hunting; no firearms.",
+      "Areas around docking and launching facilities are not suitable for waterskiing."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm Furlong Bay launch/dock status and that you are not fishing the river under lake rules."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-461",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-523",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Access from BC Parks Lakelse Lake Park (docking and launching facilities; Furlong Bay; Picnic Site; Gruchy\u2019s Beach). Dolly Varden from that park page. Rainbow over 50 cm catch-and-release from Region 6 synopsis LAKELSE LAKE MU 6-11. River Class I / fly-only dates left off this lake record.",
+    "confidenceNotes": "The park page names \u2018docking and launching facilities\u2019 rather than a single ramp name; listed as the park launch, not a municipal site.",
+    "unresolvedQuestions": [
+      "Confirm the current operator hours of Furlong Bay docks on the date of travel."
+    ]
+  },
+  {
+    "id": "HHI-DEST-533",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Christina Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/christina-lake-park/",
+    "checkedAt": "2026-08-20T00:10:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Bass",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Christina Lake Park day-use shore / sandy beach (buoyed swim area)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 8 exception (MU 8-15): no fishing north of a line between Bald and Knob Points, Mar 1\u2013May 31; rainbow trout daily quota = 2; bass daily quota = 8; yellow perch daily quota = 20.",
+      "Christina Lake Park is day-use beach only. The park page states the lake has two public boat launches and names Christina Lake Marina (~10 km, east side) as the closest. That marina was not added as a BC Parks facility.",
+      "Texas Creek Campground in Gladstone Park is a separate site ~13 km away and is not this record."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm the Bald/Knob Points line on the synopsis map if fishing the north end in spring."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "No fishing north of Bald and Knob Points (Christina Lake)",
+        "start": "03-01",
+        "end": "05-31",
+        "notes": "BC 2025\u20132027 Region 8 CHRISTINA LAKE MU 8-15: No Fishing north of a line between Bald and Knob Points, Mar 1\u2013May 31. Not a whole-lake closure."
+      }
+    ],
+    "tags": [
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-426",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-530",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-459",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-lakes-public-parks",
+    "provenanceNotes": "Shore access from BC Parks Christina Lake Park (sandy day-use beach, buoyed swim area). Park page notes two public launches and names Christina Lake Marina 10 km away; marina not listed as a provincial facility. Exceptions from Region 8 synopsis CHRISTINA LAKE MU 8-15.",
+    "confidenceNotes": "No BC Parks-named launch on the park grounds. Spring closure is a mapped line, not the entire lake.",
+    "unresolvedQuestions": [
+      "Confirm operator and public status of the two launches the park page refers to before listing either as publicAccess."
     ]
   }
 ]
