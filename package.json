@@ -17,7 +17,9 @@
     "ingest:live": "node scripts/ingest-live.mjs",
     "ingest:critical": "node scripts/ingest-live.mjs --mode=critical --skip-slow --merge",
     "test": "node --test 'scripts/**/*.test.mjs'",
-    "scan:closures": "node scripts/scan-closures.mjs"
+    "scan:closures": "node scripts/scan-closures.mjs",
+    "assert:catalog": "node scripts/assert-catalog.mjs",
+    "prebuild": "node scripts/assert-catalog.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
