@@ -17,6 +17,17 @@ export interface SeasonWindow {
   notes?: string;
 }
 
+/** Explicit relationship to another catalog record. Additive only. */
+export interface RelatedWater {
+  id: string;
+  relation:
+    | "same_waterbody_segment"
+    | "adjacent_public_corridor"
+    | "shared_agency_page"
+    | "parent"
+    | "child";
+}
+
 export interface Destination {
   id: string;
   state: string;
@@ -48,9 +59,13 @@ export interface Destination {
   lastVerified?: string | null;
   speciesPresent?: string[] | null;
   seasonWindows?: SeasonWindow[] | null;
+  /** Optional controlled tags (accessClass, hazardFamily, etc.). Derived tags still live in readTags(). */
+  tags?: string[] | null;
+  /** Optional explicit links to related catalog records. */
+  related?: RelatedWater[] | null;
 }
 
-export const SCHEMA_VERSION = "0.5.0";
+export const SCHEMA_VERSION = "0.5.1";
 
 export const destinations = raw as Destination[];
 
