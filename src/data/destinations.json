@@ -33453,6 +33453,10 @@
       {
         "id": "HHI-DEST-461",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-519",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "tags": [
@@ -35849,6 +35853,18 @@
       {
         "id": "HHI-DEST-461",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-521",
+        "relation": "same_waterbody_segment"
+      },
+      {
+        "id": "HHI-DEST-520",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-522",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "tags": [
@@ -36108,6 +36124,10 @@
       {
         "id": "HHI-DEST-460",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-523",
+        "relation": "adjacent_public_corridor"
       }
     ],
     "tags": [
@@ -39985,6 +40005,440 @@
       "boat_ramp",
       "marine",
       "shore_access"
+    ]
+  },
+  {
+    "id": "HHI-DEST-519",
+    "state": "British Columbia",
+    "region": "Lower Mainland",
+    "waterbody": "Harrison Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/sasquatch-park/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Cutthroat trout",
+      "Brook char",
+      "Bull trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Sasquatch Park \u2014 Green Point boat launch (Harrison Lake)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Sasquatch Park \u2014 Green Point day-use shore (Harrison Lake)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 2 exception (MU 2-18): no wild trout over 50 cm; 1 bull trout over 60 cm; 10 km/h speed restriction at the south end as buoyed and signed.",
+      "Harrison Lake can raise high winds quickly. Swimmer\u2019s itch may be present at Green Point.",
+      "No overnight parking at Green Point."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-425",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-458",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Access from BC Parks Sasquatch Park (Green Point boat launch on Harrison Lake). Species from that park page plus Region 2 synopsis exception table (HARRISON LAKE, MU 2-18). Synopsis PDF 2025\u20132027.",
+    "confidenceNotes": "Green Point is the only Harrison Lake launch named on the BC Parks Sasquatch page. Municipal Harrison Hot Springs launches were not added without a matching provincial page.",
+    "unresolvedQuestions": [
+      "Confirm whether District of Harrison Hot Springs publishes a separate public launch that should be listed."
+    ]
+  },
+  {
+    "id": "HHI-DEST-520",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Adams Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/adams-lake-park-bush-creek-site/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Kokanee",
+      "Rainbow trout",
+      "Lake trout",
+      "Bull trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Adams Lake Park \u2014 Bush Creek Site boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Adams Lake Marine Park \u2014 Refuge Bay (vehicle and boat access)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 3 exception (MU 3-37): no fishing north of a line drawn due west from the mouth of the Momich River, Mar 15\u2013June 30.",
+      "Lake trout catch and release Oct 15\u2013Jan 31. Daily quota = 1 bull trout or lake trout (no bull trout under 80 cm or lake trout under 60 cm).",
+      "Overnight parking for boat-launch use is not permitted at Bush Creek; only registered overnight campers. Access closes after unsafe snowfall."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm Bush Creek road is open (closes after snowfall)."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "No fishing north of Momich River mouth line (BC Region 3 / Adams Lake)",
+        "start": "03-15",
+        "end": "06-30",
+        "notes": "BC 2025\u20132027 synopsis, ADAMS LAKE MU 3-37: No Fishing north of a line drawn due west from mouth of Momich River, Mar 15\u2013June 30. Confirm on the official page."
+      },
+      {
+        "label": "Lake trout catch and release (Adams Lake)",
+        "start": "10-15",
+        "end": "01-31",
+        "notes": "BC 2025\u20132027 synopsis, ADAMS LAKE: lake trout catch and release Oct 15\u2013Jan 31."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-458",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-521",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Access from BC Parks Adams Lake Park Bush Creek Site (boat launch language) and Adams Lake Marine Park Refuge Bay (vehicle and boat access). Species from Bush Creek park page (kokanee, rainbow) plus Region 3 synopsis (lake trout, bull trout).",
+    "confidenceNotes": null,
+    "unresolvedQuestions": [
+      "Confirm Refuge Bay road status same-day; BC Parks describes it as suitable for visitors with backcountry experience."
+    ]
+  },
+  {
+    "id": "HHI-DEST-521",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Mara Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/mara-park/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Char"
+    ],
+    "publicAccess": [
+      {
+        "name": "Mara Park boat launch (day-use)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Mara Lake is included with Shuswap Lake in Region 3 MU 3-26 unless stated otherwise. Conservation Surcharge Stamp required to keep rainbow trout over 50 cm or char over 60 cm.",
+      "Region 8 (MU 8-26): no powered boats south of the CPR bridge. See Shuswap Lake in Region 3 for the remaining exceptions.",
+      "Mara Park is day-use only. Overnight camping and overnight boat mooring are not permitted. Boat traffic is heavy near the park."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "Shuswap/Mara spring closure zones (see synopsis maps)",
+        "start": "03-15",
+        "end": "05-14",
+        "notes": "BC 2025\u20132027 Region 3: No Fishing Mar 15\u2013May 14 in mapped Shuswap/Little Shuswap/Mara zones (maps A\u2013C). Not the entire lake. Confirm the mapped lines same-day."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-458",
+        "relation": "same_waterbody_segment"
+      },
+      {
+        "id": "HHI-DEST-522",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-520",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Access from BC Parks Mara Park and Shuswap Lake Marine Park pages, which name Mara Parks among Shuswap-system launch facilities. Regs: Region 3 SHUSWAP LAKE entry includes Mara Lake; Region 8 MARA LAKE points back to Region 3 and adds no powered boats south of the CPR bridge.",
+    "confidenceNotes": "Spring closures are zone-specific (synopsis maps), not a whole-lake closure.",
+    "unresolvedQuestions": [
+      "Confirm 2026 Mara Park gate/operating dates on the BC Parks operating-dates page before travel."
+    ]
+  },
+  {
+    "id": "HHI-DEST-522",
+    "state": "British Columbia",
+    "region": "Thompson-Okanagan",
+    "waterbody": "Mabel Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/mabel-lake-park/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Bull trout (Dolly Varden)"
+    ],
+    "publicAccess": [
+      {
+        "name": "Mabel Lake Park boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Mabel Lake Park shore / beach (outside the buoyed swim area)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 8 exception (MU 8-24): no fishing south of a line between fishing boundary signs approximately 800 m north of the Shuswap River inlet, Jan 1\u2013May 31. Bull trout (Dolly Varden) daily quota = 1 (none under 50 cm). Single barbless hook.",
+      "DFO Region 8 salmon table lists a time-limited chinook fishery in a defined portion of Mabel Lake; that table is separate from the provincial synopsis and must be confirmed same-day.",
+      "The lake is 35 km long and subject to sudden weather. Day-use area and boat launch may be inaccessible in winter."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm DFO Region 8 recreational salmon table for Mabel Lake if targeting salmon."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "No fishing south end near Shuswap River inlet (Mabel Lake)",
+        "start": "01-01",
+        "end": "05-31",
+        "notes": "BC 2025\u20132027 Region 8 MABEL LAKE MU 8-24: No Fishing south of a line between fishing boundary signs on the lakeshore approximately 800 m north of Shuswap River inlet, Jan 1\u2013May 31."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-521",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-458",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-426",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Access and rainbow trout year-round language from BC Parks Mabel Lake Park. Provincial exceptions from Region 8 synopsis. DFO chinook dates noted as a same-day check, not copied as a standing open season.",
+    "confidenceNotes": "Chinook dates were not written as seasonWindows because DFO tables change and apply only inside a signed box.",
+    "unresolvedQuestions": [
+      "Confirm winter accessibility of the Mabel Lake Park boat launch on the date of travel."
+    ]
+  },
+  {
+    "id": "HHI-DEST-523",
+    "state": "British Columbia",
+    "region": "Skeena",
+    "waterbody": "Babine Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/red-bluff-park/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Char"
+    ],
+    "publicAccess": [
+      {
+        "name": "Red Bluff Park (BC Parks) \u2014 Babine Lake shore access at Granisle",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Babine Lake Marine Park boat landings (boat-access park sites)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Village of Granisle public boat launch",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025\u20132027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 6 exception (MU 6-6): no fishing east of a line from Gullwing Creek to the south shore of Babine Lake; no fishing within a 400 m radius of the mouth of Pinkut Creek, Aug 15\u2013Sept 15.",
+      "The flowing water between Babine and Nilkitkwa lakes (\u201cRainbow Alley\u201d) is designated Babine River, not the lake \u2014 separate Class 1 / steelhead-stamp rules apply there.",
+      "Babine Lake Marine Park sites are marine-accessible wilderness landings; several have no BC Parks facilities."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025\u20132027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day.",
+      "Confirm the Granisle public launch is open; it is named on the BC Parks Bear Island Conservancy page as the public launch for this shore of the lake."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": [
+      {
+        "label": "No fishing within 400 m of Pinkut Creek mouth (Babine Lake)",
+        "start": "08-15",
+        "end": "09-15",
+        "notes": "BC 2025\u20132027 Region 6 BABINE LAKE MU 6-6: No Fishing within a 400 m radius of the mouth of Pinkut Creek, Aug 15\u2013Sept 15. The Gullwing Creek line is a standing (not dated) no-fishing area."
+      }
+    ],
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-461",
+        "relation": "adjacent_public_corridor"
+      },
+      {
+        "id": "HHI-DEST-458",
+        "relation": "shared_agency_page"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Species from BC Parks Red Bluff Park. Access: Red Bluff and Babine Lake Marine Park pages plus Bear Island Conservancy naming a public boat launch at Granisle. Exceptions from Region 6 Skeena synopsis BABINE LAKE MU 6-6.",
+    "confidenceNotes": "Red Bluff Park HTML did not name a boat launch in the sections retrieved; Granisle launch is cited from another BC Parks page on the same lake. Topley Landing Park is a traditional Nat\u2019oot\u2019en fishery site and was not listed as a recreational launch.",
+    "unresolvedQuestions": [
+      "Confirm the current operator and hours of the Granisle public boat launch on the date of travel.",
+      "Do not treat Rainbow Alley / Babine River as part of this lake record."
     ]
   }
 ]
