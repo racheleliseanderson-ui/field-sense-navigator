@@ -8,17 +8,57 @@ no destructive merges.
 
 Script: `scripts/enrich-catalog.mjs`
 
-Maps `officialSourceUrl` host → `managingAgency` (+ `officialRegsUrl` when a
-clear fishing/regs landing page is already cited or is the agency's published
-fishing page). Only fills null fields. Stamps review dates from `lastVerified`.
+Two lookup tables, in order:
+
+1. **Path map** (`PATH_AGENCY`) — statewide / whole-of-government portals. The
+   hostname is not an agency. A fill is earned only when the cited URL path
+   starts with a known department prefix (case-insensitive). First matching
+   prefix wins. Used for `in.gov` (`/dnr/`), `tn.gov` (`/twra/`), and the other
+   generic portals listed below.
+2. **Host map** (`DOMAIN_AGENCY`) — hostname *is* the agency (`wdfw.wa.gov`,
+   `fw.ky.gov`, `nps.gov`, …). No path required.
+
+Only fills null fields on host-mapped records. Portal hosts are re-evaluated
+on each run so a later URL that is merely `tn.gov/something-else` cannot keep
+a TWRA stamp. Editorial names that are *more specific* than the path map
+(e.g. CT DEEP — Marine Fisheries) are left untouched.
+
+Review dates stamp from `lastVerified` when present.
 
 | Metric | Count |
 |--------|------:|
 | Already had `managingAgency` | 24 |
-| Newly filled from domain map | 489 |
+| Newly filled from domain/path map | 489 |
 | Tourism / CVB domains left null | 5 |
 | Unmatched after second-pass map | 0 |
 | **With agency after this pass** | **513 / 518** |
+
+### Portal path prefixes (current catalog)
+
+Every current record on these hosts already sat on a matching prefix, so
+tightening the gate did not drop any fill. The gate is for the next record
+that cites a generic homepage.
+
+| Host | Required path prefix | Agency |
+|---|---|---|
+| `in.gov` | `/dnr/` | Indiana DNR |
+| `tn.gov` | `/twra/` | Tennessee Wildlife Resources Agency |
+| `michigan.gov` | `/dnr/` | Michigan DNR |
+| `maine.gov` | `/ifw/` | Maine IFW |
+| `mass.gov` | `/freshwater-fishing` | MassWildlife |
+| `mass.gov` | `/guides/recreational-saltwater-fishing`, `/info-details/recreational-saltwater-fishing` | Mass. DMF |
+| `portal.ct.gov` | `/deep/` | CT DEEP |
+| `ontario.ca` | `/document/ontario-fishing-regulations-summary`, `/page/fishing` | Ontario MNRF |
+| `gov.mb.ca` | `/nrnd/fish-wildlife/fish/` | Manitoba NRND |
+| `gov.nl.ca` | `/ffa/` | NL FFA |
+| `yukon.ca` | `/en/fishing-licences-and-regulations`, `/en/fishing-regulations-summary` | Yukon Environment |
+| `gov.nu.ca` | `/en/environment/` | Nunavut Environment |
+| `gov.nt.ca` | `/ecc/` | NWT ECC |
+| `saskatchewan.ca` | `/residents/…/angling/` | Saskatchewan Environment |
+| `novascotia.ca` | `/fish/sportfishing` | NS Fisheries |
+| `princeedwardisland.ca` | `/en/topic/fishing-and-angling`, `/en/topic/angling` | PEI Environment |
+| `www2.gov.bc.ca` | `/gov/content/sports-culture/recreation/fishing-hunting/fishing` | BC WLRS |
+| `www2.gnb.ca` | `/content/gnb/en/departments/erd/natural_resources/` | NB NRED |
 
 Left null on purpose (publisher is not the managing agency):
 

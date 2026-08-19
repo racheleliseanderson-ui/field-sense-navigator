@@ -5,7 +5,11 @@
  *
  * Rules:
  * - Accuracy outranks completeness. Unmatched / tourism CVB domains stay null.
- * - Only fill agency/regs when currently empty.
+ * - Agency-specific hosts map at hostname. Statewide portals (in.gov, tn.gov,
+ *   michigan.gov, …) map only when the URL path is a known department prefix.
+ * - Only fill agency/regs when currently empty, except path-mapped portal
+ *   hosts: those are re-evaluated so a later generic-host fill can be undone
+ *   if the path no longer matches.
  * - related[] is additive; never merges records.
  * - same_waterbody_segment is editorial (homonyms excluded).
  * - shared_agency_page is exact officialSourceUrl match (including statewide
@@ -21,7 +25,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, "../src/data/destinations.json");
 
-/** @type {Record<string, [string, string | null]>} */
+/**
+ * Hostname IS the agency. Exact host match, no path required.
+ * @type {Record<string, [string, string | null]>}
+ */
 const DOMAIN_AGENCY = {
   "tpwd.texas.gov": ["Texas Parks and Wildlife Department", "https://tpwd.texas.gov/regulations/outdoor-annual/"],
   "wdfw.wa.gov": ["Washington Department of Fish and Wildlife", "https://www.wdfw.wa.gov/fishing/regulations"],
@@ -35,17 +42,12 @@ const DOMAIN_AGENCY = {
   "myfwc.com": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
   "gis.myfwc.com": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
   "ocean.floridamarine.org": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
-  "michigan.gov": ["Michigan Department of Natural Resources", "https://www.michigan.gov/dnr/things-to-do/fishing"],
   "wildlife.ca.gov": ["California Department of Fish and Wildlife", "https://wildlife.ca.gov/Fishing"],
-  "ontario.ca": ["Ontario Ministry of Natural Resources and Forestry", "https://www.ontario.ca/page/fishing"],
   "nps.gov": ["National Park Service", null],
-  "www2.gov.bc.ca": ["British Columbia Ministry of Water, Land and Resource Stewardship", null],
   "mffp.gouv.qc.ca": ["Ministère des Forêts, de la Faune et des Parcs (Québec)", null],
   "dnr.wisconsin.gov": ["Wisconsin Department of Natural Resources", "https://dnr.wisconsin.gov/topic/Fishing"],
   "dec.ny.gov": ["New York State Department of Environmental Conservation", "https://www.dec.ny.gov/outdoor/fishing.html"],
   "albertaregulations.ca": ["Alberta Environment and Parks", null],
-  "maine.gov": ["Maine Department of Inland Fisheries and Wildlife", null],
-  "mass.gov": ["Massachusetts Division of Fisheries and Wildlife", null],
   "wlf.louisiana.gov": ["Louisiana Department of Wildlife and Fisheries", null],
   "ohiodnr.gov": ["Ohio Department of Natural Resources", null],
   "parksandrecreation.idaho.gov": ["Idaho Department of Parks and Recreation", null],
@@ -55,16 +57,13 @@ const DOMAIN_AGENCY = {
   "dwr.virginia.gov": ["Virginia Department of Wildlife Resources", null],
   "dnr.maryland.gov": ["Maryland Department of Natural Resources", null],
   "adfg.alaska.gov": ["Alaska Department of Fish and Game", null],
-  "gov.mb.ca": ["Manitoba Natural Resources and Northern Development", null],
   "myodfw.com": ["Oregon Department of Fish and Wildlife", "https://myodfw.com/fishing"],
   "fishandboat.com": ["Pennsylvania Fish and Boat Commission", null],
   "dnr.illinois.gov": ["Illinois Department of Natural Resources", null],
   "parks.ca.gov": ["California State Parks", null],
   "wildlife.nh.gov": ["New Hampshire Fish and Game Department", null],
-  "portal.ct.gov": ["Connecticut Department of Energy and Environmental Protection", null],
   "georgiawildlife.com": ["Georgia Department of Natural Resources", null],
   "ncwildlife.gov": ["North Carolina Wildlife Resources Commission", null],
-  "tn.gov": ["Tennessee Wildlife Resources Agency", null],
 
   "fw.ky.gov": ["Kentucky Department of Fish and Wildlife Resources", "https://fw.ky.gov/Fish/Pages/default.aspx"],
   "mdwfp.com": ["Mississippi Department of Wildlife, Fisheries, and Parks", "https://www.mdwfp.com/fishing-boating/"],
@@ -82,22 +81,13 @@ const DOMAIN_AGENCY = {
   "wildlife.state.nm.us": ["New Mexico Department of Game and Fish", "https://www.wildlife.state.nm.us/fishing/"],
   "azgfd.com": ["Arizona Game and Fish Department", "https://www.azgfd.com/fishing/"],
   "wvdnr.gov": ["West Virginia Division of Natural Resources", "https://wvdnr.gov/fishing/"],
-  "in.gov": ["Indiana Department of Natural Resources", "https://www.in.gov/dnr/fish-and-wildlife/fishing/"],
   "vtfishandwildlife.com": ["Vermont Fish & Wildlife Department", "https://vtfishandwildlife.com/fish"],
   "dnrec.delaware.gov": ["Delaware Department of Natural Resources and Environmental Control", "https://dnrec.delaware.gov/fish-wildlife/fishing/"],
   "dlnr.hawaii.gov": ["Hawaiʻi Department of Land and Natural Resources — Division of Aquatic Resources", "https://dlnr.hawaii.gov/dar/fishing/"],
   "dem.ri.gov": ["Rhode Island Department of Environmental Management", "https://dem.ri.gov/natural-resources-bureau/fish-wildlife/freshwater-fisheries"],
 
-  "www2.gnb.ca": ["New Brunswick Department of Natural Resources and Energy Development", null],
-  "novascotia.ca": ["Nova Scotia Department of Fisheries and Aquaculture", "https://novascotia.ca/fish/sportfishing/"],
-  "princeedwardisland.ca": ["Prince Edward Island Department of Environment, Energy and Climate Action", null],
-  "gov.nl.ca": ["Newfoundland and Labrador Department of Fisheries, Forestry and Agriculture", "https://www.gov.nl.ca/ffa/licences/recreational-fishing/"],
-  "yukon.ca": ["Yukon Department of Environment", "https://yukon.ca/en/fishing-licences-and-regulations"],
-  "gov.nu.ca": ["Government of Nunavut — Department of Environment", "https://www.gov.nu.ca/en/environment/sport-fishing"],
-  "saskatchewan.ca": ["Saskatchewan Ministry of Environment", "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/hunting-trapping-and-angling/angling"],
   "envrbrportal.crm.saskatchewan.ca": ["Saskatchewan Ministry of Environment", "https://envrbrportal.crm.saskatchewan.ca/fishing-guide/"],
   "enr.gov.nt.ca": ["Northwest Territories Environment and Climate Change", "https://www.enr.gov.nt.ca/en/services/sport-fishing"],
-  "gov.nt.ca": ["Northwest Territories Environment and Climate Change", "https://www.gov.nt.ca/ecc/en/services/sport-fishing"],
   "pac.dfo-mpo.gc.ca": ["Fisheries and Oceans Canada — Pacific Region", "https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/index-eng.html"],
 
   "usbr.gov": ["U.S. Bureau of Reclamation", null],
@@ -122,6 +112,160 @@ const DOMAIN_AGENCY = {
   "rivcoparks.org": ["Riverside County Regional Park and Open-Space District", null],
   "countyofsb.org": ["County of Santa Barbara Parks", null],
   "castaiclake.com": ["Los Angeles County Department of Parks and Recreation", null],
+};
+
+/**
+ * Statewide / whole-of-government portals. The hostname is not an agency.
+ * A fill is earned only when the path starts with a known department prefix
+ * (case-insensitive). First matching prefix wins.
+ *
+ * @type {Record<string, Array<{ prefix: string, agency: string, regs: string | null }>>}
+ */
+const PATH_AGENCY = {
+  "in.gov": [
+    {
+      prefix: "/dnr/",
+      agency: "Indiana Department of Natural Resources",
+      regs: "https://www.in.gov/dnr/fish-and-wildlife/fishing/",
+    },
+  ],
+  "tn.gov": [
+    {
+      prefix: "/twra/",
+      agency: "Tennessee Wildlife Resources Agency",
+      regs: "https://www.tn.gov/twra/fishing.html",
+    },
+  ],
+  "michigan.gov": [
+    {
+      prefix: "/dnr/",
+      agency: "Michigan Department of Natural Resources",
+      regs: "https://www.michigan.gov/dnr/things-to-do/fishing",
+    },
+  ],
+  "maine.gov": [
+    {
+      prefix: "/ifw/",
+      agency: "Maine Department of Inland Fisheries and Wildlife",
+      regs: null,
+    },
+  ],
+  "mass.gov": [
+    {
+      prefix: "/info-details/recreational-saltwater-fishing",
+      agency: "Massachusetts Division of Marine Fisheries",
+      regs: "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations",
+    },
+    {
+      prefix: "/guides/recreational-saltwater-fishing",
+      agency: "Massachusetts Division of Marine Fisheries",
+      regs: "https://www.mass.gov/guides/recreational-saltwater-fishing",
+    },
+    {
+      prefix: "/freshwater-fishing",
+      agency: "Massachusetts Division of Fisheries and Wildlife",
+      regs: "https://www.mass.gov/freshwater-fishing",
+    },
+  ],
+  "portal.ct.gov": [
+    {
+      prefix: "/deep/",
+      agency: "Connecticut Department of Energy and Environmental Protection",
+      regs: null,
+    },
+  ],
+  "ontario.ca": [
+    {
+      prefix: "/document/ontario-fishing-regulations-summary",
+      agency: "Ontario Ministry of Natural Resources and Forestry",
+      regs: "https://www.ontario.ca/page/fishing",
+    },
+    {
+      prefix: "/page/fishing",
+      agency: "Ontario Ministry of Natural Resources and Forestry",
+      regs: "https://www.ontario.ca/page/fishing",
+    },
+  ],
+  "gov.mb.ca": [
+    {
+      prefix: "/nrnd/fish-wildlife/fish/",
+      agency: "Manitoba Natural Resources and Northern Development",
+      regs: null,
+    },
+  ],
+  "gov.nl.ca": [
+    {
+      prefix: "/ffa/",
+      agency: "Newfoundland and Labrador Department of Fisheries, Forestry and Agriculture",
+      regs: "https://www.gov.nl.ca/ffa/licences/recreational-fishing/",
+    },
+  ],
+  "yukon.ca": [
+    {
+      prefix: "/en/fishing-licences-and-regulations",
+      agency: "Yukon Department of Environment",
+      regs: "https://yukon.ca/en/fishing-licences-and-regulations",
+    },
+    {
+      prefix: "/en/fishing-regulations-summary",
+      agency: "Yukon Department of Environment",
+      regs: "https://yukon.ca/en/fishing-regulations-summary",
+    },
+  ],
+  "gov.nu.ca": [
+    {
+      prefix: "/en/environment/",
+      agency: "Government of Nunavut — Department of Environment",
+      regs: "https://www.gov.nu.ca/en/environment/sport-fishing",
+    },
+  ],
+  "gov.nt.ca": [
+    {
+      prefix: "/ecc/",
+      agency: "Northwest Territories Environment and Climate Change",
+      regs: "https://www.gov.nt.ca/ecc/en/services/sport-fishing",
+    },
+  ],
+  "saskatchewan.ca": [
+    {
+      prefix: "/residents/parks-culture-heritage-and-sport/hunting-trapping-and-angling/",
+      agency: "Saskatchewan Ministry of Environment",
+      regs: "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/hunting-trapping-and-angling/angling",
+    },
+  ],
+  "novascotia.ca": [
+    {
+      prefix: "/fish/sportfishing",
+      agency: "Nova Scotia Department of Fisheries and Aquaculture",
+      regs: "https://novascotia.ca/fish/sportfishing/",
+    },
+  ],
+  "princeedwardisland.ca": [
+    {
+      prefix: "/en/topic/fishing-and-angling",
+      agency: "Prince Edward Island Department of Environment, Energy and Climate Action",
+      regs: null,
+    },
+    {
+      prefix: "/en/topic/angling",
+      agency: "Prince Edward Island Department of Environment, Energy and Climate Action",
+      regs: null,
+    },
+  ],
+  "www2.gov.bc.ca": [
+    {
+      prefix: "/gov/content/sports-culture/recreation/fishing-hunting/fishing",
+      agency: "British Columbia Ministry of Water, Land and Resource Stewardship",
+      regs: null,
+    },
+  ],
+  "www2.gnb.ca": [
+    {
+      prefix: "/content/gnb/en/departments/erd/natural_resources/",
+      agency: "New Brunswick Department of Natural Resources and Energy Development",
+      regs: null,
+    },
+  ],
 };
 
 /**
@@ -165,6 +309,10 @@ const SAME_WATERBODY = [
   ["HHI-DEST-094", "HHI-DEST-475"],
 ];
 
+const PORTAL_AGENCIES = new Set(
+  Object.values(PATH_AGENCY).flatMap((rules) => rules.map((r) => r.agency)),
+);
+
 function hostOf(url) {
   try {
     return new URL(url).hostname.replace(/^www\./, "").toLowerCase();
@@ -173,15 +321,38 @@ function hostOf(url) {
   }
 }
 
+function pathOf(url) {
+  try {
+    return new URL(url).pathname || "/";
+  } catch {
+    return "/";
+  }
+}
+
 function canonUrl(url) {
   try {
     const u = new URL(url);
     u.hash = "";
-    let path = u.pathname.replace(/\/+$/, "");
+    const path = u.pathname.replace(/\/+$/, "");
     return `${u.origin}${path}${u.search}`.toLowerCase();
   } catch {
     return (url || "").split("#")[0].replace(/\/+$/, "").toLowerCase();
   }
+}
+
+/** First matching path prefix on a portal host, else host-level agency map. */
+function lookupAgency(host, pathname) {
+  const rules = PATH_AGENCY[host];
+  if (rules) {
+    const p = pathname.toLowerCase();
+    for (const rule of rules) {
+      if (p === rule.prefix.toLowerCase() || p.startsWith(rule.prefix.toLowerCase())) {
+        return [rule.agency, rule.regs];
+      }
+    }
+    return null;
+  }
+  return DOMAIN_AGENCY[host] ?? null;
 }
 
 function addRelated(record, id, relation) {
@@ -197,26 +368,73 @@ function addRelated(record, id, relation) {
   record.related.push({ id, relation });
 }
 
+function stampReview(r) {
+  if (!r.lastVerified) return;
+  if (!r.regsReviewedDate) r.regsReviewedDate = r.lastVerified;
+  if (!r.accessReviewedDate) r.accessReviewedDate = r.lastVerified;
+}
+
 const data = JSON.parse(readFileSync(DATA, "utf8"));
 const byId = new Map(data.map((r) => [r.id, r]));
 
 let already = 0;
 let enriched = 0;
+let reevaluated = 0;
+let unfilled = 0;
 let skippedTourism = 0;
 let noMatch = 0;
 const unmatchedHosts = {};
+const pathHits = {};
 
 for (const r of data) {
-  if (r.managingAgency) {
-    already += 1;
-    continue;
-  }
   const host = hostOf(r.officialSourceUrl || "");
+  const pathname = pathOf(r.officialSourceUrl || "");
+
   if (SKIP_DOMAINS.has(host)) {
     skippedTourism += 1;
     continue;
   }
-  const hit = DOMAIN_AGENCY[host];
+
+  const hit = lookupAgency(host, pathname);
+  const isPortal = Boolean(PATH_AGENCY[host]);
+
+  if (isPortal) {
+    if (hit) {
+      pathHits[host] = (pathHits[host] || 0) + 1;
+      const [agency, regs] = hit;
+      const wasEmpty = !r.managingAgency;
+      const machine = !r.managingAgency || PORTAL_AGENCIES.has(r.managingAgency);
+      if (machine) {
+        if (r.managingAgency !== agency) {
+          r.managingAgency = agency;
+          if (wasEmpty) enriched += 1;
+          else reevaluated += 1;
+        } else if (wasEmpty) {
+          enriched += 1;
+        } else {
+          already += 1;
+        }
+        if (regs && !r.officialRegsUrl) r.officialRegsUrl = regs;
+        stampReview(r);
+      } else {
+        already += 1;
+      }
+    } else if (r.managingAgency && PORTAL_AGENCIES.has(r.managingAgency)) {
+      r.managingAgency = null;
+      unfilled += 1;
+    } else if (r.managingAgency) {
+      already += 1;
+    } else {
+      noMatch += 1;
+      unmatchedHosts[`${host}${pathname}`] = (unmatchedHosts[`${host}${pathname}`] || 0) + 1;
+    }
+    continue;
+  }
+
+  if (r.managingAgency) {
+    already += 1;
+    continue;
+  }
   if (!hit) {
     noMatch += 1;
     unmatchedHosts[host] = (unmatchedHosts[host] || 0) + 1;
@@ -225,10 +443,7 @@ for (const r of data) {
   const [agency, regs] = hit;
   r.managingAgency = agency;
   if (regs && !r.officialRegsUrl) r.officialRegsUrl = regs;
-  if (r.lastVerified) {
-    if (!r.regsReviewedDate) r.regsReviewedDate = r.lastVerified;
-    if (!r.accessReviewedDate) r.accessReviewedDate = r.lastVerified;
-  }
+  stampReview(r);
   enriched += 1;
 }
 
@@ -283,11 +498,14 @@ console.log(
     {
       alreadyHadAgency: already,
       newlyEnriched: enriched,
+      portalReevaluated: reevaluated,
+      portalUnfilled: unfilled,
       skippedTourismCvb: skippedTourism,
       noDomainMatch: noMatch,
       unmatchedHosts,
+      pathHits,
       total: data.length,
-      withAgencyAfter: already + enriched,
+      withAgencyAfter: data.filter((r) => r.managingAgency).length,
       sameWaterbodyGroups: SAME_WATERBODY.length,
       sharedUrlGroups: urlGroups,
       recordsWithRelated: withRelated,
