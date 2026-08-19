@@ -1,25 +1,38 @@
 /**
- * Merge Plan carefully overlay fields into destinations.json.
- * Runs at prebuild so Vercel ships the enrichment without requiring a 1.4MB
- * API upload of the full catalog. Idempotent.
+ * Merge Plan carefully overlay fields into destinations.json (prebuild).
+ * Accepts plan-carefully-overlay.json and optional -a/-b split files.
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const overlayPath = join(root, "src/data/plan-carefully-overlay.json");
 const destPath = join(root, "src/data/destinations.json");
+const candidates = [
+  "src/data/plan-carefully-overlay.json",
+  "src/data/plan-carefully-overlay-a.json",
+  "src/data/plan-carefully-overlay-b.json",
+].map((p) => join(root, p));
 
-if (!existsSync(overlayPath)) {
+const overlay = [];
+for (const p of candidates) {
+  if (!existsSync(p)) continue;
+  const part = JSON.parse(readFileSync(p, "utf8"));
+  if (!Array.isArray(part)) {
+    console.error(`apply-plan-carefully-overlay: ${p} is not an array`);
+    process.exit(1);
+  }
+  overlay.push(...part);
+}
+
+if (overlay.length === 0) {
   console.log("apply-plan-carefully-overlay: no overlay file, skip");
   process.exit(0);
 }
 
-const overlay = JSON.parse(readFileSync(overlayPath, "utf8"));
 const dest = JSON.parse(readFileSync(destPath, "utf8"));
-if (!Array.isArray(overlay) || !Array.isArray(dest)) {
-  console.error("apply-plan-carefully-overlay: expected arrays");
+if (!Array.isArray(dest)) {
+  console.error("apply-plan-carefully-overlay: destinations.json is not an array");
   process.exit(1);
 }
 
@@ -36,4 +49,4 @@ for (const row of dest) {
 }
 
 writeFileSync(destPath, JSON.stringify(dest, null, 2) + "\n");
-console.log(`apply-plan-carefully-overlay: merged ${n} records`);
+console.log(`apply-plan-carefully-overlay: merged ${n} records from ${overlay.length} overlay rows`);
