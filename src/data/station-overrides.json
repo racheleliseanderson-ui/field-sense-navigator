@@ -1,0 +1,351 @@
+{
+  "schema": "0.6.0",
+  "doctrine": "Human-pinned official station IDs. An override wins over name matching. Pin only a station you would defend by the water's published name \u2014 never a nearby substitute. Example: Barnegat Bay \u2192 USGS 01408167 (the estuary site that publishes under Barnegat Bay). Do not pin Lake Washington to 12150400 \u2014 that site is the Snoqualmie River at Duvall.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-010",
+      "agency": "NOAA-COOPS",
+      "siteId": "8726607",
+      "siteName": "Old Port Tampa",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
+    },
+    {
+      "destinationId": "HHI-DEST-044",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
+      "lat": 47.61712097,
+      "lon": -119.2993212,
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK)."
+    },
+    {
+      "destinationId": "HHI-DEST-062",
+      "agency": "USGS",
+      "siteId": "12468000",
+      "siteName": "PARK LAKE NEAR COULEE CITY, WA",
+      "note": "Pinned to the USGS lake site that publishes under Park Lake. The word Park is otherwise treated as catalog noise."
+    },
+    {
+      "destinationId": "HHI-DEST-082",
+      "agency": "USBR",
+      "siteId": "BNK",
+      "siteName": "Banks Lake and Dry Falls Dam (BNK)",
+      "lat": 47.61712097,
+      "lon": -119.2993212,
+      "note": "Pinned to the USBR Pacific Northwest Hydromet site that publishes under Banks Lake (CBTT BNK)."
+    },
+    {
+      "destinationId": "HHI-DEST-118",
+      "agency": "USGS",
+      "siteId": "13037500",
+      "siteName": "SNAKE RIVER NR HEISE ID",
+      "note": "Pinned to the Heise mainstem gauge. USGS publishes this reach as Snake River; the catalog names it South Fork Snake (Palisades to the Henry's Fork)."
+    },
+    {
+      "destinationId": "HHI-DEST-124",
+      "agency": "USGS",
+      "siteId": "01040500",
+      "siteName": "MOOSEHEAD LAKE AT EAST OUTLET, ME",
+      "note": "Pinned to the USGS site that publishes at East Outlet on Moosehead Lake."
+    },
+    {
+      "destinationId": "HHI-DEST-146",
+      "agency": "USGS",
+      "siteId": "13037500",
+      "siteName": "SNAKE RIVER NR HEISE ID",
+      "note": "Pinned to the Heise mainstem gauge. USGS publishes this reach as Snake River; the catalog names it South Fork Snake (Palisades to the Henry's Fork)."
+    },
+    {
+      "destinationId": "HHI-DEST-177",
+      "agency": "NOAA-COOPS",
+      "siteId": "8776139",
+      "siteName": "S. Bird Island",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Bird Island on the Upper Laguna Madre."
+    },
+    {
+      "destinationId": "HHI-DEST-183",
+      "agency": "NOAA-COOPS",
+      "siteId": "8779748",
+      "siteName": "South Padre Island CG Station",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under South Padre Island on the Lower Laguna Madre."
+    },
+    {
+      "destinationId": "HHI-DEST-195",
+      "agency": "USGS",
+      "siteId": "08167800",
+      "siteName": "Guadalupe Rv at Sattler, TX",
+      "note": "Pinned to the Sattler gauge immediately below Canyon Dam. Name-match alone also hits Hunt and Kerrville above the dam."
+    },
+    {
+      "destinationId": "HHI-DEST-219",
+      "agency": "NOAA-COOPS",
+      "siteId": "8726607",
+      "siteName": "Old Port Tampa",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Tampa."
+    },
+    {
+      "destinationId": "HHI-DEST-237",
+      "agency": "USGS",
+      "siteId": "02236210",
+      "siteName": "LAKE GEORGE NR SALT SPRINGS, FLA.",
+      "note": "Pinned to the USGS lake site that publishes under Lake George. The catalog types the record as river because it also names the upper St. Johns."
+    },
+    {
+      "destinationId": "HHI-DEST-261",
+      "agency": "CDEC",
+      "siteId": "PRR",
+      "siteName": "LAKE PERRIS",
+      "lat": 33.858002,
+      "lon": -117.182999,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Lake Perris."
+    },
+    {
+      "destinationId": "HHI-DEST-268",
+      "agency": "CDEC",
+      "siteId": "DMV",
+      "siteName": "DIAMOND VALLEY",
+      "lat": 33.669998,
+      "lon": -117.066002,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Diamond Valley."
+    },
+    {
+      "destinationId": "HHI-DEST-273",
+      "agency": "CDEC",
+      "siteId": "SKN",
+      "siteName": "SKINNER",
+      "lat": 33.583,
+      "lon": -117.071999,
+      "note": "Pinned to the CA DWR CDEC reservoir station that publishes under Skinner."
+    },
+    {
+      "destinationId": "HHI-DEST-277",
+      "agency": "NOAA-COOPS",
+      "siteId": "9412110",
+      "siteName": "Port San Luis",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Port San Luis."
+    },
+    {
+      "destinationId": "HHI-DEST-284",
+      "agency": "NOAA-COOPS",
+      "siteId": "9099018",
+      "siteName": "Marquette C.G.",
+      "note": "Pinned to the NOAA CO-OPS Great Lakes station that publishes at Marquette on Lake Superior."
+    },
+    {
+      "destinationId": "HHI-DEST-326",
+      "agency": "USACE",
+      "siteId": "SAS:Jocassee.Stage.Inst.1Hour.0.Rev-SHEF_SAS",
+      "siteName": "JOCASSEE DAM",
+      "lat": 34.96,
+      "lon": -82.9187,
+      "note": "Pinned to the USACE Savannah District CWMS site that publishes under Jocassee."
+    },
+    {
+      "destinationId": "HHI-DEST-331",
+      "agency": "USGS",
+      "siteId": "03609000",
+      "siteName": "KENTUCKY LAKE AT GILBERTSVILLE, KY",
+      "note": "Pinned to the USGS lake site that publishes under Kentucky Lake. The dam and this station sit on the Kentucky shore of the same reservoir."
+    },
+    {
+      "destinationId": "HHI-DEST-342",
+      "agency": "USGS",
+      "siteId": "02399499",
+      "siteName": "COOSA RIVER AT WEISS LAKE NEAR LEESBURG, AL",
+      "note": "Pinned to the USGS site that publishes at Weiss Lake. The Coosa impoundment is the lake."
+    },
+    {
+      "destinationId": "HHI-DEST-346",
+      "agency": "USGS",
+      "siteId": "03593000",
+      "siteName": "PICKWICK LAKE",
+      "note": "Pinned to the USGS lake site that publishes under Pickwick Lake. The catalog lists the Mississippi shore of the same reservoir."
+    },
+    {
+      "destinationId": "HHI-DEST-367",
+      "agency": "USGS",
+      "siteId": "06690000",
+      "siteName": "LAKE MC CONAUGHY NEAR KEYSTONE, NEBR.",
+      "note": "Pinned to the USGS lake site. Official spelling is LAKE MC CONAUGHY (space after Mc)."
+    },
+    {
+      "destinationId": "HHI-DEST-383",
+      "agency": "USBR",
+      "siteId": "rise:341",
+      "siteName": "Flaming Gorge Reservoir Dam and Powerplant",
+      "lat": 40.97789,
+      "lon": -109.57304,
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Flaming Gorge Reservoir. The pool is one number; the catalog lists the Wyoming reach separately from the Utah dam gauge."
+    },
+    {
+      "destinationId": "HHI-DEST-401",
+      "agency": "USBR",
+      "siteId": "rise:6128",
+      "siteName": "Lake Havasu Parker Dam and Powerplant",
+      "lat": 34.2964,
+      "lon": -114.1385,
+      "note": "Pinned to the USBR RISE reservoir-elevation series that publishes under Lake Havasu at Parker Dam."
+    },
+    {
+      "destinationId": "HHI-DEST-421",
+      "agency": "NOAA-COOPS",
+      "siteId": "9455090",
+      "siteName": "Seward",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Seward, at the head of Resurrection Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-424",
+      "agency": "NOAA-COOPS",
+      "siteId": "1612480",
+      "siteName": "Mokuoloe",
+      "note": "Pinned to the NOAA CO-OPS water-level station on Mokuoloe (Coconut Island) in Kaneohe Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-425",
+      "agency": "WSC",
+      "siteId": "08MF005",
+      "siteName": "FRASER RIVER AT HOPE",
+      "note": "Pinned to the Hope mainstem gauge. Name-match alone also hits Fort Fraser tributaries."
+    },
+    {
+      "destinationId": "HHI-DEST-430",
+      "agency": "WSC",
+      "siteId": "05BH004",
+      "siteName": "BOW RIVER AT CALGARY",
+      "note": "Pinned to the Calgary mainstem gauge. LITTLE BOW is a different river."
+    },
+    {
+      "destinationId": "HHI-DEST-435",
+      "agency": "WSC",
+      "siteId": "05OJ021",
+      "siteName": "RED RIVER UPSTREAM OF ST. ANDREWS DAM AT LOCKPORT",
+      "note": "Pinned to the Lockport reach named on the record."
+    },
+    {
+      "destinationId": "HHI-DEST-443",
+      "agency": "WSC",
+      "siteId": "01BD008",
+      "siteName": "MATAPEDIA (RIVIERE) PRES DE AMQUI",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Matap\u00e9dia."
+    },
+    {
+      "destinationId": "HHI-DEST-474",
+      "agency": "WSC",
+      "siteId": "02EA014",
+      "siteName": "LAKE HURON AT PARRY SOUND",
+      "note": "Pinned to the Water Survey of Canada station that publishes at Parry Sound. Georgian Bay is the Lake Huron reach named on the record."
+    },
+    {
+      "destinationId": "HHI-DEST-478",
+      "agency": "WSC",
+      "siteId": "02UC002",
+      "siteName": "MOISIE (RIVIERE) A 5,1 KM EN AMONT DU PONT DU Q.N.S.L.R.",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Moisie."
+    },
+    {
+      "destinationId": "HHI-DEST-479",
+      "agency": "WSC",
+      "siteId": "02QA002",
+      "siteName": "RIMOUSKI (RIVIERE) A 3,7 KM EN AMONT DU PONT-ROUTE 132",
+      "note": "Pinned to the Water Survey of Canada station that publishes under Rivi\u00e8re Rimouski."
+    },
+    {
+      "destinationId": "HHI-DEST-495",
+      "agency": "USGS",
+      "siteId": "01408167",
+      "siteName": "Barnegat Bay at Route 528 bridge at Mantoloking NJ",
+      "note": "Pinned to the USGS estuary site that publishes under Barnegat Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-497",
+      "agency": "NOAA-COOPS",
+      "siteId": "8638610",
+      "siteName": "Sewells Point",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes on the lower Chesapeake."
+    },
+    {
+      "destinationId": "HHI-DEST-499",
+      "agency": "NOAA-COOPS",
+      "siteId": "8557380",
+      "siteName": "Lewes",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Delaware Bay at Lewes."
+    },
+    {
+      "destinationId": "HHI-DEST-500",
+      "agency": "NOAA-COOPS",
+      "siteId": "8737048",
+      "siteName": "Mobile State Docks",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Mobile on Mobile Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-502",
+      "agency": "NOAA-COOPS",
+      "siteId": "8665530",
+      "siteName": "Charleston",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Charleston Harbor."
+    },
+    {
+      "destinationId": "HHI-DEST-505",
+      "agency": "NOAA-COOPS",
+      "siteId": "8443970",
+      "siteName": "Boston",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Boston on Massachusetts Bay / Boston Harbor."
+    },
+    {
+      "destinationId": "HHI-DEST-506",
+      "agency": "NOAA-COOPS",
+      "siteId": "8518750",
+      "siteName": "The Battery",
+      "note": "Pinned to the NOAA CO-OPS water-level station at The Battery, the reach named on the New York Harbor record."
+    },
+    {
+      "destinationId": "HHI-DEST-508",
+      "agency": "NOAA-COOPS",
+      "siteId": "8575512",
+      "siteName": "Annapolis",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Annapolis on the Chesapeake."
+    },
+    {
+      "destinationId": "HHI-DEST-509",
+      "agency": "NOAA-COOPS",
+      "siteId": "9437540",
+      "siteName": "Garibaldi",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Garibaldi, inside Tillamook Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-512",
+      "agency": "NOAA-COOPS",
+      "siteId": "8658120",
+      "siteName": "Wilmington",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Wilmington on the Cape Fear estuary."
+    },
+    {
+      "destinationId": "HHI-DEST-513",
+      "agency": "NOAA-COOPS",
+      "siteId": "8637689",
+      "siteName": "Yorktown USCG Training Center",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes at Yorktown on the York River."
+    },
+    {
+      "destinationId": "HHI-DEST-514",
+      "agency": "NOAA-COOPS",
+      "siteId": "9455500",
+      "siteName": "Seldovia",
+      "note": "Pinned to the NOAA CO-OPS water-level station at Seldovia on Kachemak Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-515",
+      "agency": "NOAA-COOPS",
+      "siteId": "1617760",
+      "siteName": "Hilo, Hilo Bay, Kuhio Bay",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Hilo Bay."
+    },
+    {
+      "destinationId": "HHI-DEST-516",
+      "agency": "NOAA-COOPS",
+      "siteId": "8768094",
+      "siteName": "Calcasieu Pass",
+      "note": "Pinned to the NOAA CO-OPS water-level station that publishes under Calcasieu Pass."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+name: Resolve station bindings
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Locate every water by published name
+        run: node scripts/resolve-locations.mjs --retry-misses
+      - name: Resolve USGS / NOAA / WSC bindings and NWS stations
+        run: node scripts/resolve-stations.mjs
+      - name: Open PR if bindings or locations changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "data: refresh locations and station bindings from official indexes"
+          committer: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
+          author: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
+          branch: data/station-bindings
+          title: "Refresh locations and multi-agency station bindings"
+          body: |
+            Nightly resolve of the 494-water catalog.
+
+            Same contract on every record:
+            1. Gazetteer location of the published water (not a neighbor gauge)
+            2. Gauge attempt — overrides, then USGS, then NOAA CO-OPS, then WSC
+            3. NWS observation station on every located US water
+            4. Agency-page language is scanned by the nightly closure workflow
+
+            Fail-closed: name + water-type must align. Ambiguous multi-matches
+            stay unmatched so they can be pinned. No nearby station is substituted.
+            Review the diff before merge — this file is what the instrument trusts.
+          labels: data,pipeline

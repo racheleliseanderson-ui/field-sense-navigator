@@ -1,0 +1,222 @@
+{
+  "schema": "0.6.0",
+  "doctrine": "Human-pinned coordinates for the published water itself — never a neighbor. Used when the gazetteer cannot name the water. A jurisdiction-wide network stays unlocated.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-118",
+      "lat": 43.3331,
+      "lon": -111.203,
+      "name": "South Fork Snake River at Palisades Dam, Idaho",
+      "kind": "override",
+      "query": "Wikidata Q7127598 Palisades Dam",
+      "note": "Pinned to Palisades Dam on the South Fork Snake — the published corridor, not a neighboring river."
+    },
+    {
+      "destinationId": "HHI-DEST-146",
+      "lat": 43.3331,
+      "lon": -111.203,
+      "name": "South Fork Snake River at Palisades Dam, Idaho",
+      "kind": "override",
+      "query": "Wikidata Q7127598 Palisades Dam",
+      "note": "Pinned to Palisades Dam, the upstream end named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-149",
+      "lat": 44.7597,
+      "lon": -92.8686,
+      "name": "Mississippi River Lock and Dam No. 2, Hastings, Minnesota",
+      "kind": "override",
+      "query": "Wikidata Q6665267 Lock and Dam No. 2",
+      "note": "Pinned to Lock and Dam No. 2, the downstream end of Pool 2 named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-281",
+      "lat": 43.2128,
+      "lon": -91.1042,
+      "name": "Mississippi River Lock and Dam No. 9, Wisconsin",
+      "kind": "override",
+      "query": "Wikidata Q14714517 Lock and Dam No. 9",
+      "note": "Pinned to Lock and Dam No. 9, the structure that names Pool 9."
+    },
+    {
+      "destinationId": "HHI-DEST-368",
+      "lat": 40.063056,
+      "lon": -99.290556,
+      "name": "Harlan County Reservoir, Nebraska",
+      "kind": "override",
+      "query": "Wikidata Q5658289 Harlan County Reservoir",
+      "note": "Pinned to the reservoir published under this name."
+    },
+    {
+      "destinationId": "HHI-DEST-374",
+      "lat": 41.8981,
+      "lon": -90.1558,
+      "name": "Mississippi River Lock and Dam No. 13, Iowa/Illinois",
+      "kind": "override",
+      "query": "Wikidata Q266350 Lock and Dam No. 13",
+      "note": "Pinned to Lock and Dam No. 13, the structure that names Pool 13."
+    },
+    {
+      "destinationId": "HHI-DEST-388",
+      "lat": 40.9144,
+      "lon": -109.421,
+      "name": "Flaming Gorge Dam, Daggett County, Utah",
+      "kind": "override",
+      "query": "Wikidata Q14711519 Flaming Gorge Dam",
+      "note": "Pinned to Flaming Gorge Dam on the Utah reach named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-392",
+      "lat": 39.083333,
+      "lon": -120.033333,
+      "name": "Lake Tahoe, California and Nevada",
+      "kind": "override",
+      "query": "Wikidata Q169962 Lake Tahoe",
+      "note": "Pinned to Lake Tahoe, the water named on the Nevada-shoreline record."
+    },
+    {
+      "destinationId": "HHI-DEST-412",
+      "lat": 39.535,
+      "lon": -76.085,
+      "name": "Susquehanna Flats at the mouth of the Susquehanna, Maryland",
+      "kind": "override",
+      "query": "Mouth of the Susquehanna / head of Chesapeake Bay",
+      "note": "Pinned to the named flats at the Susquehanna mouth. No discrete gazetteer point publishes under this name."
+    },
+    {
+      "destinationId": "HHI-DEST-422",
+      "lat": 21.500555,
+      "lon": -158.060443,
+      "name": "Lake Wilson / Wahiawa Reservoir, Hawaii",
+      "kind": "override",
+      "query": "Wikidata Q112120517 Lake Wilson",
+      "note": "Pinned to Wahiawa Reservoir (Lake Wilson), the water inside the public fishing area."
+    },
+    {
+      "destinationId": "HHI-DEST-423",
+      "lat": 19.7186,
+      "lon": -155.075,
+      "name": "Wailoa River State Recreation Area, Hilo, Hawaii",
+      "kind": "override",
+      "query": "Wikidata Q7960071 Wailoa River State Recreation Area",
+      "note": "Pinned to the Wailoa / Waiakea public fishing water in Hilo."
+    },
+    {
+      "destinationId": "HHI-DEST-440",
+      "lat": 45.43,
+      "lon": -75.7,
+      "name": "Ottawa River at the Gatineau reach",
+      "kind": "override",
+      "query": "Ottawa River between Ottawa and Gatineau",
+      "note": "Pinned to the Ottawa River at the Gatineau reach named on this record, not the river mouth."
+    },
+    {
+      "destinationId": "HHI-DEST-442",
+      "lat": 46.204167,
+      "lon": -72.832222,
+      "name": "Lac Saint-Pierre, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q842881 Lac Saint-Pierre",
+      "note": "Pinned to Lac Saint-Pierre, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-443",
+      "lat": 47.97144,
+      "lon": -66.941639,
+      "name": "Rivière Matapédia, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q3433741 Rivière Matapédia",
+      "note": "Pinned to the Matapédia River published under this name."
+    },
+    {
+      "destinationId": "HHI-DEST-477",
+      "lat": 47.33333,
+      "lon": -79.5,
+      "name": "Lac Témiscamingue, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q33268039 Lac Témiscamingue",
+      "note": "Pinned to Lac Témiscamingue, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-478",
+      "lat": 50.2,
+      "lon": -66.0675,
+      "name": "Rivière Moisie, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q601279 Rivière Moisie",
+      "note": "Pinned to the Moisie River published under this name."
+    },
+    {
+      "destinationId": "HHI-DEST-479",
+      "lat": 48.445278,
+      "lon": -68.540833,
+      "name": "Rivière Rimouski, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q3433792 Rimouski River",
+      "note": "Pinned to the Rimouski River published under this name."
+    },
+    {
+      "destinationId": "HHI-DEST-480",
+      "lat": 46.8,
+      "lon": -75.8,
+      "name": "Réservoir Baskatong, Quebec",
+      "kind": "override",
+      "query": "Wikidata Q1329423 Baskatong Reservoir",
+      "note": "Pinned to Réservoir Baskatong, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-493",
+      "lat": 63.749444,
+      "lon": -68.521667,
+      "name": "Iqaluit tidal water, Frobisher Bay, Nunavut",
+      "kind": "override",
+      "query": "Wikidata Q2030 Iqaluit",
+      "note": "Pinned to Iqaluit on Frobisher Bay, the named tidal-flat area."
+    },
+    {
+      "destinationId": "HHI-DEST-495",
+      "lat": 39.851709,
+      "lon": -74.114113,
+      "name": "Barnegat Bay, Ocean County, New Jersey",
+      "kind": "override",
+      "query": "Wikidata Q2879596 Barnegat Bay",
+      "note": "Pinned to Barnegat Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-496",
+      "lat": 41.9,
+      "lon": -70.3,
+      "name": "Cape Cod Bay, Massachusetts",
+      "kind": "override",
+      "query": "Wikidata Q516993 Cape Cod Bay",
+      "note": "Pinned to Cape Cod Bay, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-497",
+      "lat": 37.248061,
+      "lon": -76.119439,
+      "name": "Chesapeake Bay, Virginia reach",
+      "kind": "override",
+      "query": "Wikidata Q216868 Chesapeake Bay",
+      "note": "Pinned to Chesapeake Bay on the Virginia reach named on this record."
+    },
+    {
+      "destinationId": "HHI-DEST-498",
+      "lat": 35.312778,
+      "lon": -75.937222,
+      "name": "Pamlico Sound, North Carolina",
+      "kind": "override",
+      "query": "Wikidata Q2033236 Pamlico Sound",
+      "note": "Pinned to Pamlico Sound, the published water."
+    },
+    {
+      "destinationId": "HHI-DEST-499",
+      "lat": 39.1,
+      "lon": -75.2,
+      "name": "Delaware Bay",
+      "kind": "override",
+      "query": "Wikidata Q738808 Delaware Bay",
+      "note": "Pinned to Delaware Bay, the published water."
+    }
+  ]
+}

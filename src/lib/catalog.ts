@@ -1,0 +1,148 @@
+import raw from "@/data/destinations.json";
+
+export type WaterType = "lake" | "reservoir" | "river" | "marine";
+
+export interface AccessPoint {
+  name: string;
+  type: string;
+  status?: string;
+  officiallyPublished?: boolean;
+  amenities?: string[];
+}
+
+export interface SeasonWindow {
+  label: string;
+  start?: string;
+  end?: string;
+  notes?: string;
+}
+
+export interface Destination {
+  id: string;
+  state: string;
+  region: string;
+  county?: string;
+  waterbody: string;
+  accessSite?: string;
+  waterType: WaterType;
+  officialSourceUrl: string;
+  checkedAt: string;
+  nextReviewAt: string;
+  status: string;
+  speciesContext: string[];
+  publicAccess: AccessPoint[];
+  currentNotices: string[];
+  directVerification: string[];
+  privacy: {
+    classification: string;
+    publicLocationIncluded: boolean;
+    sensitiveLocationIncluded: boolean;
+  };
+  usgsSiteId?: string | null;
+  noaaCoopsStationId?: string | null;
+  ndbcBuoyId?: string | null;
+  managingAgency?: string | null;
+  officialRegsUrl?: string | null;
+  regsReviewedDate?: string | null;
+  accessReviewedDate?: string | null;
+  lastVerified?: string | null;
+  speciesPresent?: string[] | null;
+  seasonWindows?: SeasonWindow[] | null;
+}
+
+export const SCHEMA_VERSION = "0.5.0";
+
+export const destinations = raw as Destination[];
+
+/** Single source of truth for every displayed catalog count. */
+export const NAMED_WATER_COUNT = destinations.length;
+
+export const destinationById = (id: string) =>
+  destinations.find((d) => d.id === id);
+
+export const states = [...new Set(destinations.map((d) => d.state))].sort();
+
+/** Canadian provinces and territories held by the catalog, in official order. */
+export const PROVINCES = [
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Northwest Territories",
+  "Nova Scotia",
+  "Nunavut",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Yukon",
+] as const;
+
+const PROVINCE_SET: ReadonlySet<string> = new Set(PROVINCES);
+
+export type Jurisdiction = "us" | "ca";
+
+export const isProvince = (state: string) => PROVINCE_SET.has(state);
+
+export const jurisdictionOf = (d: Destination): Jurisdiction =>
+  isProvince(d.state) ? "ca" : "us";
+
+/** Provinces and territories that actually carry records, sorted. */
+export const provinces = states.filter(isProvince);
+
+/** US states that actually carry records, sorted. */
+export const usStates = states.filter((s) => !isProvince(s));
+
+export const waterTypes: WaterType[] = ["lake", "reservoir", "river", "marine"];
+
+export const humanize = (value: string) =>
+  value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+
+export const titleCase = (value: string) =>
+  value.charAt(0).toUpperCase() + value.slice(1);
+
+export const displayName = (d: Destination) =>
+  d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
+
+/** Printed YYYY-MM-DD prefix — the same date a packet shows as last updated. */
+function printedDay(iso: string): number {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return Number.NaN;
+  return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+}
+
+function utcToday(now: Date): number {
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+}
+
+/**
+ * Calendar days between the stamp's printed date and UTC today.
+ *
+ * Do not round elapsed milliseconds. A check at 17:20 on the 8th was
+ * showing "6d ago" on the 15th because 6×24h had not quite elapsed.
+ * The packet prints the date prefix; this ages by that same date.
+ */
+export function daysSince(iso: string, now = new Date()): number {
+  const then = printedDay(iso);
+  if (Number.isNaN(then)) return 999;
+  return Math.max(0, Math.round((utcToday(now) - then) / 86_400_000));
+}
+
+/** True when today's UTC date is after the record's next-review date. */
+export function reviewOverdue(d: Destination, now = new Date()): boolean {
+  const due = printedDay(d.nextReviewAt);
+  if (Number.isNaN(due)) return false;
+  return utcToday(now) > due;
+}
+
+/** True when regs or access review dates are older than 90 days. */
+export function reviewDue(d: Destination, now = new Date()): boolean {
+  const maxAge = 90 * 86_400_000;
+  const check = (iso: string | null | undefined) => {
+    if (!iso) return false;
+    const t = new Date(iso).getTime();
+    return !Number.isNaN(t) && now.getTime() - t > maxAge;
+  };
+  return check(d.regsReviewedDate) || check(d.accessReviewedDate);
+}
