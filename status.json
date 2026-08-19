@@ -2,15 +2,15 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-19T22:55:16.982Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-19T22:57:02.507Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
     "boundStations": 408,
-    "withReadings": 255,
-    "emptyOrError": 153,
+    "withReadings": 257,
+    "emptyOrError": 151,
     "destinationBindings": 439,
     "byAgency": {
       "NOAA-COOPS": {
@@ -27,7 +27,7 @@
       },
       "USBR": {
         "bound": 3,
-        "withReadings": 1
+        "withReadings": 3
       },
       "USACE": {
         "bound": 1,
@@ -39,25 +39,11 @@
       }
     },
     "nwsStations": 355,
-    "nwsWithObs": 347
+    "nwsWithObs": 344
   },
-  "errorCount": 12,
-  "hardErrorCount": 6,
+  "errorCount": 4,
+  "hardErrorCount": 4,
   "errors": [
-    {
-      "kind": "station",
-      "agency": "USBR",
-      "siteId": "rise:341",
-      "error": "The operation was aborted due to timeout",
-      "carriedForward": false
-    },
-    {
-      "kind": "station",
-      "agency": "USBR",
-      "siteId": "rise:6128",
-      "error": "The operation was aborted due to timeout",
-      "carriedForward": false
-    },
     {
       "kind": "nws",
       "agency": "NWS",
@@ -68,51 +54,9 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "E6690",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "ITD55",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "D3277",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
       "siteId": "KGUC",
       "error": "NWS KGUC 404",
       "carriedForward": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "CO099",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "E3174",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "D0414",
-      "error": "Observation silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true
     },
     {
       "kind": "nws",
@@ -131,8 +75,8 @@
   ],
   "usbr": {
     "bound": 3,
-    "withReadings": 1,
-    "timeouts": 2
+    "withReadings": 3,
+    "timeouts": 0
   },
   "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32310968141",
   "archiveRetentionHours": 24,
