@@ -2,83 +2,63 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "slow",
-  "ingestedAt": "2026-08-19T22:57:02.507Z",
-  "cadenceMinutes": 30,
+  "mode": "critical",
+  "ingestedAt": "2026-08-19T23:20:46.274Z",
+  "cadenceMinutes": 10,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
-    "boundStations": 408,
-    "withReadings": 257,
-    "emptyOrError": 151,
+    "boundStations": 131,
+    "withReadings": 81,
+    "withStaleOnly": 1,
+    "emptyOrError": 50,
     "destinationBindings": 439,
     "byAgency": {
       "NOAA-COOPS": {
         "bound": 32,
-        "withReadings": 27
+        "withReadings": 27,
+        "withStaleOnly": 0
       },
       "USGS": {
-        "bound": 313,
-        "withReadings": 175
+        "bound": 92,
+        "withReadings": 51,
+        "withStaleOnly": 1
       },
       "WSC": {
-        "bound": 56,
-        "withReadings": 48
-      },
-      "USBR": {
-        "bound": 3,
-        "withReadings": 3
-      },
-      "USACE": {
-        "bound": 1,
-        "withReadings": 1
-      },
-      "CDEC": {
-        "bound": 3,
-        "withReadings": 3
+        "bound": 7,
+        "withReadings": 3,
+        "withStaleOnly": 0
       }
     },
-    "nwsStations": 355,
-    "nwsWithObs": 344
+    "nwsStations": 107,
+    "nwsWithObs": 103
   },
-  "errorCount": 4,
-  "hardErrorCount": 4,
+  "errorCount": 2,
+  "hardErrorCount": 1,
   "errors": [
     {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "K3W7",
-      "error": "NWS K3W7 404",
-      "carriedForward": false
+      "kind": "station",
+      "agency": "USGS",
+      "siteId": "13153776",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
     },
     {
       "kind": "nws",
       "agency": "NWS",
       "siteId": "KGUC",
       "error": "NWS KGUC 404",
-      "carriedForward": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "ZEPNV",
-      "error": "NWS ZEPNV 404",
-      "carriedForward": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "K7W6",
-      "error": "NWS K7W6 404",
-      "carriedForward": false
+      "carriedForward": false,
+      "staleOnly": false
     }
   ],
   "usbr": {
-    "bound": 3,
-    "withReadings": 3,
+    "bound": 0,
+    "withReadings": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32310968141",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32312834357",
   "archiveRetentionHours": 24,
-  "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default."
+  "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
