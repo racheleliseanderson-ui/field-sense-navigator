@@ -245,6 +245,16 @@ function Packet() {
           <div>
             <h3 className="packet-tick">Official source</h3>
             <p className="mt-2 break-words text-sm leading-relaxed">{d.officialSourceUrl}</p>
+            <h3 className="packet-tick mt-6">Managing agency</h3>
+            <p className="mt-2 text-sm leading-relaxed">
+              {d.managingAgency ?? "Not recorded from the cited source."}
+            </p>
+            {d.officialRegsUrl && (
+              <>
+                <h3 className="packet-tick mt-6">Official regulations</h3>
+                <p className="mt-2 break-words text-sm leading-relaxed">{d.officialRegsUrl}</p>
+              </>
+            )}
             <h3 className="packet-tick mt-6">Species context</h3>
             <p className="mt-2 text-sm leading-relaxed">{d.speciesContext.join(", ")}</p>
           </div>
@@ -263,6 +273,12 @@ function Packet() {
             without notice; the official source above governs. If a check cannot
             be cleared, the correct answer is not to go.
           </p>
+          {d.managingAgency && (
+            <p className="mt-3">
+              Managing agency recorded from the cited source: {d.managingAgency}.
+              {d.officialRegsUrl ? ` Regulations landing: ${d.officialRegsUrl}` : ""}
+            </p>
+          )}
         </footer>
       </article></main>
     </div>

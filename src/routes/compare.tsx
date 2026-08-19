@@ -384,6 +384,14 @@ function Compare() {
               ))}
             </Row>
 
+            <Row label="Managing agency" note="Filled only from the cited official-source domain.">
+              {cols.map((c) => (
+                <p key={c.d.id} className="text-sm leading-relaxed text-foreground">
+                  {c.d.managingAgency ?? "Not recorded."}
+                </p>
+              ))}
+            </Row>
+
             <Row label="Official source">
               {cols.map((c) => (
                 <a

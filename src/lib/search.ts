@@ -117,7 +117,7 @@ const index: Row[] = destinations.map((d) => {
   const access = norm(d.publicAccess.map((a) => `${a.name} ${a.type}`).join(" "));
   return {
     d, name, state, region, county, type, species, access,
-    blob: [name, state, region, county, type, species, access].join(" "),
+    blob: [name, state, region, county, type, species, access, norm(d.managingAgency ?? "")].join(" "),
   };
 });
 

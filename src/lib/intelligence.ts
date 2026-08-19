@@ -843,6 +843,8 @@ export function buildHandoff(
       ? `Last source check: ${d.checkedAt.slice(0, 10)} · Review OVERDUE since ${d.nextReviewAt}`
       : `Last source check: ${d.checkedAt.slice(0, 10)} · Next review: ${d.nextReviewAt}`,
     `Official source: ${d.officialSourceUrl}`,
+    ...(d.managingAgency ? [`Managing agency: ${d.managingAgency}`] : []),
+    ...(d.officialRegsUrl ? [`Official regulations: ${d.officialRegsUrl}`] : []),
     "",
     "OPEN ITEMS (must clear before departure):",
     ...d.directVerification.map((v, i) => `  ${i + 1}. ${v}`),

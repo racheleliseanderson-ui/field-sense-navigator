@@ -75,6 +75,25 @@ export const NAMED_WATER_COUNT = destinations.length;
 export const destinationById = (id: string) =>
   destinations.find((d) => d.id === id);
 
+export const RELATION_LABEL: Record<RelatedWater["relation"], string> = {
+  same_waterbody_segment: "Same waterbody",
+  adjacent_public_corridor: "Adjacent public corridor",
+  shared_agency_page: "Shared agency page",
+  parent: "Parent water",
+  child: "Child / access site",
+};
+
+export function relatedRecords(d: Destination) {
+  return (d.related ?? [])
+    .map((rel) => {
+      const destination = destinationById(rel.id);
+      return destination ? { ...rel, destination } : null;
+    })
+    .filter(
+      (row): row is RelatedWater & { destination: Destination } => row !== null,
+    );
+}
+
 export const states = [...new Set(destinations.map((d) => d.state))].sort();
 
 /** Canadian provinces and territories held by the catalog, in official order. */

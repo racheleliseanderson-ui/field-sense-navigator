@@ -154,6 +154,11 @@ export function WaterCard({
         {" · "}
         Last source check: {age === 0 ? "today" : `${age}d ago`}
       </p>
+      {destination.managingAgency && (
+        <p className="mt-1 truncate text-[0.65rem] text-muted-foreground/90">
+          {destination.managingAgency}
+        </p>
+      )}
     </Link>
     </div>
   );

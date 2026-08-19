@@ -246,6 +246,14 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   ctx.y += 8;
   tick(ctx, "Official source");
   paragraph(ctx, d.officialSourceUrl, { size: 8.5, color: MUTED });
+  ctx.y += 8;
+  tick(ctx, "Managing agency");
+  paragraph(ctx, d.managingAgency || "Not recorded from the cited source.");
+  if (d.officialRegsUrl) {
+    ctx.y += 8;
+    tick(ctx, "Official regulations");
+    paragraph(ctx, d.officialRegsUrl, { size: 8.5, color: MUTED });
+  }
 
   rule(ctx);
 

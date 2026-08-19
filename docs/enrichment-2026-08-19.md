@@ -1,75 +1,51 @@
-# Enrichment pass — 2026-08-19
+# Enrichment pass — 2026-08-19 (completed)
 
-Full systematic traversal of the 518-water catalog + second-pass audit completed.
+Full systematic traversal of the 518-water catalog. Accuracy outranks completeness.
+Additive only: no invented coordinates, no private spots, no live-condition claims,
+no destructive merges.
 
-## (c) User-initiated public-safe packet
+## Agency / regs fill
 
-**Status: already production-ready.**
+Script: `scripts/enrich-catalog.mjs`
 
-- Route: `/packet/$id`
-- PDF export via `src/lib/packet-pdf.ts`
-- Job-aware checklist, layer digest with confidence + residual unknowns
-- `buildHandoff()` for Horizon Desk / Trip Prep
-- Fail-closed: no coordinates, no private spots, no catch claims, no live gauge as truth
-
-No code change required for the packet contract itself.
-
-## (b) Relationships and tags
-
-**Schema (additive, non-breaking)** — `src/lib/catalog.ts` schema 0.5.1:
-
-```ts
-related?: RelatedWater[] | null;
-tags?: string[] | null;
-```
-
-`RelatedWater.relation` values:
-- `same_waterbody_segment`
-- `adjacent_public_corridor`
-- `shared_agency_page`
-- `parent` / `child`
-
-Runtime tags continue to be derived by `readTags()` in `intelligence.ts` (hazards, crowd, seasonal, access). Stored `tags` are optional controlled vocabulary for filtering/search.
-
-**Candidates identified (not auto-written):**
-- 32 base-name multi-record groups
-- 89 shared-`officialSourceUrl` groups
-
-Editorial review required before linking.
-
-## (a) Agency / regs / identifier fields
-
-**High-confidence fill script:** `scripts/enrich-agency-from-domains.mjs`
-
-Maps primary domains already present in `officialSourceUrl` → `managingAgency` (+ `officialRegsUrl` where a clear regs landing page exists). Only fills null fields. Stamps `regsReviewedDate` / `accessReviewedDate` from `lastVerified` when present.
+Maps `officialSourceUrl` host → `managingAgency` (+ `officialRegsUrl` when a
+clear fishing/regs landing page is already cited or is the agency's published
+fishing page). Only fills null fields. Stamps review dates from `lastVerified`.
 
 | Metric | Count |
 |--------|------:|
 | Already had `managingAgency` | 24 |
-| Newly fillable from domain map | 349 |
-| No high-confidence domain match (left null) | 145 |
-| Total records | 518 |
+| Newly filled from domain map | 489 |
+| Tourism / CVB domains left null | 5 |
+| Unmatched after second-pass map | 0 |
+| **With agency after this pass** | **513 / 518** |
 
-**Run:**
+Left null on purpose (publisher is not the managing agency):
 
-```bash
-node scripts/enrich-agency-from-domains.mjs
-```
+- destinfwb.com
+- portaransas.org
+- portisabelsouthpadre.com
+- visitcorpuschristi.com
+- navarrebeachpier.com
 
-Re-check output summary before committing the updated `destinations.json`.
+## Related links
 
-USGS / NOAA / NDBC IDs remain sparse by design; populate only from verified station bindings (see existing `scripts/resolve-stations.mjs` and `station-bindings.json`).
+Written, not just candidate lists. Homonyms were excluded.
 
-## Remaining human review
+| Relation | Groups | Rule |
+|---|---|---|
+| `same_waterbody_segment` | 21 | Editorial. Same physical water across access/jurisdiction records. |
+| `shared_agency_page` | 89 | Exact `officialSourceUrl` match, including statewide directories. |
 
-1. Run the enrichment script and commit the resulting `destinations.json` after visual spot-check.
-2. Review the 145 unmatched domains for additional high-confidence agency mappings.
-3. Editorial decisions on parent/child and same-corridor links (do not auto-merge).
-4. Optional: surface `managingAgency` and `officialRegsUrl` more visibly on water cards and the packet footer.
+Homonyms **not** linked: Clear Lake (WA / CA / IA), Pyramid Lake (CA DWR vs NV),
+Rainy Lake WA (North Cascades) vs Rainy Lake MN/ON. Rainy Lake MN + ON **are** linked.
 
-## Principles preserved
+Records are never merged. Each keeps its own source, review date, and packet.
 
-- Accuracy outranks completeness.
-- Public waters only; 0 private spots.
-- No invented facts, coordinates, or live condition claims.
-- Additive and reversible changes only.
+## UI
+
+- Water cards: managing agency under the status/freshness line
+- Water record: agency in the readout band; official-regs link; related-waters list
+- Compare: managing-agency row
+- Field packet + PDF: agency and regs URL in the source block and packet footer
+- Handoff block: agency / regs lines when recorded

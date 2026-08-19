@@ -12,6 +12,8 @@ import {
   humanize,
   daysSince,
   reviewOverdue,
+  relatedRecords,
+  RELATION_LABEL,
   type Destination,
 } from "@/lib/catalog";
 import {
@@ -187,6 +189,17 @@ function WaterRecord() {
               Official source
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
+            {d.officialRegsUrl && d.officialRegsUrl !== d.officialSourceUrl && (
+              <a
+                href={d.officialRegsUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 border border-hairline bg-abyss/60 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur hover:border-brass/50"
+              >
+                Official regulations
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            )}
           </div>
 
           <a
@@ -212,7 +225,10 @@ function WaterRecord() {
               k: overdue ? "Review overdue" : "Next review",
               v: overdue ? `Due ${d.nextReviewAt}` : d.nextReviewAt,
             },
-            { k: "Boundary", v: "Public destination" },
+            {
+              k: "Managing agency",
+              v: d.managingAgency ?? "Not recorded from the cited source",
+            },
           ] as Array<{ k: string; v: string }>).map((s) => (
             <div key={s.k} className="min-w-0 px-5 py-5 sm:px-8 sm:py-6">
               <dt className={`tick text-[0.55rem] ${s.k === "Review overdue" ? "text-alert" : ""}`}>
@@ -230,9 +246,9 @@ function WaterRecord() {
         </dl>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
+      <section className="mx-auto grid max-w-7xl gap-12 overflow-x-hidden px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
         {/* layers */}
-        <div>
+        <div className="min-w-0">
           <div className="flex items-center gap-4">
             <span className="h-px w-10 bg-brass" />
             <p className="tick text-brass">Intelligence stack</p>
@@ -276,10 +292,42 @@ function WaterRecord() {
               carries no statement about timing, forage or activity.
             </p>
           </div>
+
+          {relatedRecords(d).length > 0 && (
+            <div className="mt-14">
+              <p className="tick text-brass">Related public waters</p>
+              <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+                Explicit catalog links only. Records are not merged; each water keeps its own source and review date.
+              </p>
+              <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
+                {relatedRecords(d).map((rel) => (
+                  <li key={`${rel.relation}-${rel.id}`}>
+                    <Link
+                      to="/water/$id"
+                      params={{ id: rel.id }}
+                      className="tap flex min-h-12 items-center justify-between gap-4 py-3"
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm text-foreground">
+                          {displayName(rel.destination)}
+                        </span>
+                        <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
+                          {RELATION_LABEL[rel.relation]} · {rel.destination.state}
+                        </span>
+                      </span>
+                      <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
+                        {rel.id}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* rail */}
-        <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+        <aside className="min-w-0 space-y-6 lg:sticky lg:top-28 lg:self-start">
           <LiveConditions destination={d} />
           <div className="panel p-6 lg:p-6">
             <ReadinessMeter readiness={r} compact />
