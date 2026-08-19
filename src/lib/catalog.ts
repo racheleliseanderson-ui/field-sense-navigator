@@ -63,9 +63,20 @@ export interface Destination {
   tags?: string[] | null;
   /** Optional explicit links to related catalog records. */
   related?: RelatedWater[] | null;
+
+  /**
+   * Lightweight provenance & human-review metadata (schema 0.6.0+).
+   * All optional so existing records remain valid.
+   * Populate only with high-confidence, source-backed information.
+   */
+  lastHumanReviewedAt?: string | null;
+  lastHumanReviewedBy?: string | null;
+  provenanceNotes?: string | null;
+  confidenceNotes?: string | null;
+  unresolvedQuestions?: string[] | null;
 }
 
-export const SCHEMA_VERSION = "0.5.1";
+export const SCHEMA_VERSION = "0.6.0";
 
 export const destinations = raw as Destination[];
 
