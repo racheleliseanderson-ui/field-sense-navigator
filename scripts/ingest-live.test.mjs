@@ -12,7 +12,11 @@ import {
   collectErrors,
   buildStatus,
   shouldNotify,
+  applyObservationAge,
 } from "./ingest-live.lib.mjs";
+
+const NOW = Date.parse("2026-08-19T22:30:00Z");
+const FRESH = "2026-08-19T21:15:00Z";
 
 test("parseArgs defaults to a full ingest", () => {
   assert.deepEqual(parseArgs([]), {
@@ -112,7 +116,14 @@ test("carry-forward keeps the last agency observation and prints the miss", () =
       siteId: "rise:341",
       agency: "USBR",
       siteName: "Flaming Gorge",
-      readings: [{ label: "Reservoir elevation", value: "6024.1", unit: "ft", observedAt: "2026-08-18T00:00:00Z" }],
+      readings: [
+        {
+          label: "Reservoir elevation",
+          value: "6024.1",
+          unit: "ft",
+          observedAt: "2026-08-18T00:00:00Z",
+        },
+      ],
     },
   };
   const next = {
@@ -124,22 +135,63 @@ test("carry-forward keeps the last agency observation and prints the miss", () =
       error: "The operation was aborted due to timeout",
     },
   };
-  const out = carryForward(prev, next);
+  const out = carryForward(prev, next, NOW);
   assert.equal(out["rise:341"].carriedForward, true);
   assert.equal(out["rise:341"].readings[0].value, "6024.1");
   assert.equal(out["rise:341"].readings[0].observedAt, "2026-08-18T00:00:00Z");
   assert.match(out["rise:341"].error, /last agency observation retained/);
 });
 
-test("merge keeps stations the current pass did not fetch", () => {
+test("a fossil IV value is not treated as current; a still-fresh prior wins", () => {
   const prev = {
-    A: { siteId: "A", agency: "USGS", readings: [{ value: "1" }] },
-    B: { siteId: "B", agency: "USBR", readings: [{ value: "9" }] },
+    "12117700": {
+      siteId: "12117700",
+      agency: "USGS",
+      readings: [{ label: "Gage height", value: "5.12", unit: "ft", observedAt: FRESH }],
+    },
   };
   const next = {
-    A: { siteId: "A", agency: "USGS", readings: [{ value: "2" }] },
+    "12117700": {
+      siteId: "12117700",
+      agency: "USGS",
+      readings: [
+        {
+          label: "Streamflow",
+          value: "6.00",
+          unit: "ft³/s",
+          observedAt: "1990-09-30T23:45:00.000-07:00",
+        },
+      ],
+    },
   };
-  const merged = mergeStations(prev, next);
+  const out = carryForward(prev, next, NOW);
+  assert.equal(out["12117700"].readings[0].label, "Gage height");
+  assert.equal(out["12117700"].readings[0].value, "5.12");
+  assert.equal(out["12117700"].retainedReadings[0].value, "6.00");
+  assert.equal(out["12117700"].carriedForward, true);
+});
+
+test("merge keeps stations the current pass did not fetch", () => {
+  const prev = {
+    A: {
+      siteId: "A",
+      agency: "USGS",
+      readings: [{ label: "Streamflow", value: "1", unit: "ft³/s", observedAt: FRESH }],
+    },
+    B: {
+      siteId: "B",
+      agency: "USBR",
+      readings: [{ label: "Reservoir elevation", value: "9", unit: "ft", observedAt: "2026-08-18T00:00:00Z" }],
+    },
+  };
+  const next = {
+    A: {
+      siteId: "A",
+      agency: "USGS",
+      readings: [{ label: "Streamflow", value: "2", unit: "ft³/s", observedAt: FRESH }],
+    },
+  };
+  const merged = mergeStations(prev, next, NOW);
   assert.equal(merged.A.readings[0].value, "2");
   assert.equal(merged.B.readings[0].value, "9");
 });
@@ -150,10 +202,17 @@ test("mergeSnapshot rebuilds stats across the combined catalog", () => {
     cadenceMinutes: 30,
     stats: { destinationBindings: 439 },
     stations: {
-      old: { siteId: "old", agency: "USGS", readings: [{ value: "1" }] },
+      old: {
+        siteId: "old",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "1", unit: "ft³/s", observedAt: FRESH }],
+      },
     },
     observations: {
-      KAPA: { stationId: "KAPA", readings: [{ value: "clear" }] },
+      KAPA: {
+        stationId: "KAPA",
+        readings: [{ label: "Weather", value: "clear", unit: "", observedAt: FRESH }],
+      },
     },
   };
   const next = {
@@ -161,7 +220,11 @@ test("mergeSnapshot rebuilds stats across the combined catalog", () => {
     source: "usgs-nwis-iv",
     doctrine: "Agency observations only.",
     stations: {
-      new: { siteId: "new", agency: "USGS", readings: [{ value: "3" }] },
+      new: {
+        siteId: "new",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "3", unit: "ft³/s", observedAt: FRESH }],
+      },
     },
     observations: {},
     stats: { destinationBindings: 439 },
@@ -178,19 +241,40 @@ test("mergeSnapshot rebuilds stats across the combined catalog", () => {
   assert.equal(snap.stats.nwsStations, 1);
 });
 
-test("rebuildStats and status surface USBR timeouts without inventing values", () => {
+test("rebuildStats counts only current observations; fossils are stale-only", () => {
   const stations = {
-    BNK: { siteId: "BNK", agency: "USBR", readings: [{ value: "1566" }] },
+    BNK: {
+      siteId: "BNK",
+      agency: "USBR",
+      readings: [{ label: "Reservoir elevation", value: "1566", unit: "ft", observedAt: "2026-08-18T00:00:00Z" }],
+    },
     "rise:341": {
       siteId: "rise:341",
       agency: "USBR",
       readings: [],
       error: "The operation was aborted due to timeout",
     },
+    fossil: applyObservationAge(
+      {
+        siteId: "12117700",
+        agency: "USGS",
+        readings: [
+          {
+            label: "Streamflow",
+            value: "6.00",
+            unit: "ft³/s",
+            observedAt: "1990-09-30T23:45:00.000-07:00",
+          },
+        ],
+      },
+      NOW,
+    ),
   };
   const stats = rebuildStats(stations, {}, 2);
   assert.equal(stats.byAgency.USBR.bound, 2);
   assert.equal(stats.byAgency.USBR.withReadings, 1);
+  assert.equal(stats.byAgency.USGS.withReadings, 0);
+  assert.equal(stats.withStaleOnly, 1);
   const errors = collectErrors(stations, {});
   const status = buildStatus({
     payload: { ingestedAt: "now", cadenceMinutes: 30, stats, doctrine: "x" },
@@ -201,12 +285,43 @@ test("rebuildStats and status surface USBR timeouts without inventing values", (
   assert.equal(status.degraded, true);
   assert.equal(status.usbr.timeouts, 1);
   assert.equal(status.ok, true);
-  assert.equal(status.hardErrorCount, 1);
 });
 
 test("shouldNotify skips carry-forward-only degrades and fires on hard misses", () => {
-  assert.equal(shouldNotify(null, { failed: true }), true);
-  assert.equal(shouldNotify(null, { failed: false }), false);
-  assert.equal(shouldNotify({ hardErrorCount: 0, degraded: true }, { failed: false }), false);
-  assert.equal(shouldNotify({ hardErrorCount: 1, degraded: true }, { failed: false }), true);
+  assert.equal(shouldNotify(null), false);
+  assert.equal(shouldNotify({ hardErrorCount: 0, degraded: true }), false);
+  assert.equal(shouldNotify({ hardErrorCount: 2, degraded: true }), true);
+  assert.equal(shouldNotify({ hardErrorCount: 0 }, { failed: true }), true);
+});
+
+test("a fossil IV miss does not page — it is printed, not a hard error", () => {
+  const fossil = applyObservationAge(
+    {
+      siteId: "14056500",
+      agency: "USGS",
+      readings: [
+        {
+          label: "Streamflow",
+          value: "448",
+          unit: "ft³/s",
+          observedAt: "1991-09-30T23:30:00.000-07:00",
+        },
+      ],
+    },
+    NOW,
+  );
+  const errors = collectErrors({ "14056500": fossil }, {});
+  const status = buildStatus({
+    payload: {
+      ingestedAt: "now",
+      cadenceMinutes: 30,
+      stats: rebuildStats({ "14056500": fossil }, {}, 1),
+      doctrine: "x",
+    },
+    opts: { mode: "all", onlySlow: false },
+    errors,
+  });
+  assert.equal(status.degraded, true);
+  assert.equal(status.hardErrorCount, 0);
+  assert.equal(shouldNotify(status), false);
 });

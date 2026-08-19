@@ -8,6 +8,7 @@
  */
 
 import { bindingFor, bindingsFile, type StationBinding } from "@/lib/bindings";
+import { presentReadings, STALE_WINDOW_NOTE, type AgeReading } from "@/lib/observation-age";
 
 const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
 const SNAPSHOT_STALE_MS = 45 * 60_000;
@@ -35,6 +36,7 @@ export interface NwsObservation {
   stationId: string;
   stationName: string;
   readings: Reading[];
+  retainedReadings: Reading[];
 }
 
 export interface ClosureHit {
@@ -52,6 +54,7 @@ export interface ClosureScan {
 export interface LiveConditions {
   station: Station | null;
   readings: Reading[];
+  retainedReadings: Reading[];
   forecast: { office: string; period: string; detail: string } | null;
   observation: NwsObservation | null;
   closures: ClosureScan;
@@ -84,6 +87,7 @@ export interface LiveSnapshot {
   stats: {
     boundStations: number;
     withReadings: number;
+    withStaleOnly?: number;
     emptyOrError: number;
     destinationBindings: number;
     byAgency?: Record<string, { bound: number; withReadings: number }>;
@@ -97,9 +101,11 @@ export interface LiveSnapshot {
       agency?: string;
       siteName: string | null;
       readings: Reading[];
+      retainedReadings?: Reading[];
       fetchedAt: string;
       error?: string;
       carriedForward?: boolean;
+      staleOnly?: boolean;
     }
   >;
   observations?: Record<
@@ -108,9 +114,11 @@ export interface LiveSnapshot {
       stationId: string;
       stationName: string;
       readings: Reading[];
+      retainedReadings?: Reading[];
       fetchedAt: string;
       error?: string;
       carriedForward?: boolean;
+      staleOnly?: boolean;
     }
   >;
 }
@@ -491,6 +499,7 @@ function emptyLive(
   return {
     station: null,
     readings: [],
+    retainedReadings: [],
     forecast: null,
     observation: null,
     closures,
@@ -574,20 +583,24 @@ export async function readLive(input: {
     const snapAge = snapshot
       ? Math.max(0, Math.round((Date.now() - new Date(snapshot.ingestedAt).getTime()) / 60000))
       : null;
-    const snapFresh =
-      snapshot &&
-      Number.isFinite(new Date(snapshot.ingestedAt).getTime()) &&
-      Date.now() - new Date(snapshot.ingestedAt).getTime() < SNAPSHOT_STALE_MS;
+    const snapFileFresh =
+      Boolean(snapshot) &&
+      Number.isFinite(new Date(snapshot!.ingestedAt).getTime()) &&
+      Date.now() - new Date(snapshot!.ingestedAt).getTime() < SNAPSHOT_STALE_MS;
 
     let observation: NwsObservation | null = null;
     if (bind.nwsStationId) {
       const snapObs = snapshot?.observations?.[bind.nwsStationId];
-      if (snapObs && snapObs.readings.length > 0 && snapFresh) {
-        observation = {
-          stationId: snapObs.stationId,
-          stationName: snapObs.stationName,
-          readings: snapObs.readings,
-        };
+      if (snapObs && snapFileFresh) {
+        const presented = presentReadings(snapObs);
+        if (presented.readings.length || presented.retainedReadings.length) {
+          observation = {
+            stationId: snapObs.stationId,
+            stationName: snapObs.stationName,
+            readings: presented.readings,
+            retainedReadings: presented.retainedReadings,
+          };
+        }
       }
     }
     const forecast =
@@ -608,6 +621,7 @@ export async function readLive(input: {
     return {
       station: null,
       readings: [],
+      retainedReadings: [],
       forecast,
       observation,
       closures,
@@ -625,46 +639,61 @@ export async function readLive(input: {
   const snapAge = snapshot
     ? Math.max(0, Math.round((Date.now() - new Date(snapshot.ingestedAt).getTime()) / 60000))
     : null;
-  const snapFresh =
-    snapshot &&
-    Number.isFinite(new Date(snapshot.ingestedAt).getTime()) &&
-    Date.now() - new Date(snapshot.ingestedAt).getTime() < SNAPSHOT_STALE_MS &&
-    snapRow &&
-    snapRow.readings.length > 0;
+  const snapFileFresh =
+    Boolean(snapshot) &&
+    Number.isFinite(new Date(snapshot!.ingestedAt).getTime()) &&
+    Date.now() - new Date(snapshot!.ingestedAt).getTime() < SNAPSHOT_STALE_MS;
 
   let readings: Reading[] = [];
+  let retainedReadings: Reading[] = [];
   let source: LiveConditions["source"] = "agency-live";
 
-  if (snapFresh && snapRow) {
-    readings = snapRow.readings;
-    source = "scheduled-snapshot";
-    if (snapRow.carriedForward || /last agency observation retained/i.test(snapRow.error ?? "")) {
+  const takeRow = (
+    row: { readings?: AgeReading[]; retainedReadings?: AgeReading[]; error?: string; carriedForward?: boolean },
+    from: LiveConditions["source"],
+  ) => {
+    const presented = presentReadings(row);
+    readings = presented.readings;
+    retainedReadings = presented.retainedReadings;
+    source = from;
+    if (row.carriedForward || /last agency observation retained/i.test(row.error ?? "")) {
       unknowns.push(
-        snapRow.error ??
-          "The last official observation was retained after a silent feed. Age is printed.",
+        row.error ?? "The last official observation was retained after a silent feed. Age is printed.",
       );
     }
+  };
+
+  if (snapFileFresh && snapRow) {
+    takeRow(snapRow, "scheduled-snapshot");
   } else {
-    readings = await liveReadings(bind.agency, bind.siteId).catch(() => [] as Reading[]);
+    const live = await liveReadings(bind.agency, bind.siteId).catch(() => [] as Reading[]);
+    const presented = presentReadings({ readings: live });
+    readings = presented.readings;
+    retainedReadings = presented.retainedReadings;
     source = "agency-live";
-    if (readings.length === 0 && snapRow?.readings.length) {
-      readings = snapRow.readings;
-      source = "scheduled-snapshot";
-      unknowns.push(
-        "The live agency feed returned no values; showing the last scheduled snapshot instead.",
-      );
+    if (readings.length === 0 && snapRow) {
+      takeRow(snapRow, "scheduled-snapshot");
+      if (!unknowns.some((u) => /retained after a silent feed/i.test(u))) {
+        unknowns.push(
+          "The live agency feed returned no current values; showing the last scheduled snapshot instead.",
+        );
+      }
     }
   }
 
   let observation: NwsObservation | null = null;
   if (bind.nwsStationId) {
     const snapObs = snapshot?.observations?.[bind.nwsStationId];
-    if (snapObs && snapObs.readings.length > 0 && snapFresh) {
-      observation = {
-        stationId: snapObs.stationId,
-        stationName: snapObs.stationName,
-        readings: snapObs.readings,
-      };
+    if (snapObs && snapFileFresh) {
+      const presented = presentReadings(snapObs);
+      if (presented.readings.length || presented.retainedReadings.length) {
+        observation = {
+          stationId: snapObs.stationId,
+          stationName: snapObs.stationName,
+          readings: presented.readings,
+          retainedReadings: presented.retainedReadings,
+        };
+      }
     }
   }
 
@@ -673,7 +702,11 @@ export async function readLive(input: {
       ? await nwsForecast(bind.lat, bind.lon).catch(() => null)
       : null;
 
-  if (readings.length === 0) {
+  if (readings.length === 0 && retainedReadings.length > 0) {
+    if (!unknowns.some((u) => /freshness window/i.test(u))) {
+      unknowns.push(STALE_WINDOW_NOTE);
+    }
+  } else if (readings.length === 0) {
     unknowns.push("The matched station returned no current values; the feed may be offline.");
   }
   if (bind.nwsStationId && !observation) {
@@ -701,6 +734,7 @@ export async function readLive(input: {
       agency: bind.agency ?? "USGS",
     },
     readings,
+    retainedReadings,
     forecast,
     observation,
     closures,

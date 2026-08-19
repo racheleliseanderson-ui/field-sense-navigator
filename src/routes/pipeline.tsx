@@ -93,7 +93,9 @@ function Pipeline() {
         station: live.station ? `${live.station.agency} ${live.station.id}` : null,
         readings: live.readings.length,
         note: live.station
-          ? live.station.name
+          ? live.readings.length === 0 && (live.retainedReadings?.length ?? 0) > 0
+            ? `${live.station.name} · last official observation older than the window`
+            : live.station.name
           : (live.unknowns[0] ?? "No official station publishes under this name."),
       };
     } catch {
@@ -241,8 +243,11 @@ function Pipeline() {
           same four live layers — location, gauge, weather observation, agency
           page language. Live numbers come from the last ingest, then a direct
           agency pull if that snapshot is older than 45 minutes. A silent feed
-          is a miss, not a skip. Last official values may be retained with
-          their original observed time when a fetch times out.
+          is a miss, not a skip. Observation time, not ingest time, decides
+          whether a value is current (48 h stage/flow/weather, 7 d reservoir
+          elevation). Last official values may be retained with their original
+          observed time when a fetch times out or when the last official
+          observation is older than that window.
         </p>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
@@ -288,11 +293,14 @@ function Pipeline() {
             </div>
             <p className="data mt-3 text-sm text-foreground">
               {ingest
-                ? `${ingest.withReadings}/${ingest.boundStations} gauges with readings`
+                ? `${ingest.withReadings}/${ingest.boundStations} gauges with current readings`
                 : "Snapshot not published yet"}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               NWS observations {ingest?.nwsWithObs ?? 0}/{ingest?.nwsStations ?? 0}
+              {(ingest?.withStaleOnly ?? 0) > 0
+                ? ` · ${ingest!.withStaleOnly} last official observation${ingest!.withStaleOnly === 1 ? "" : "s"} older than the window`
+                : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               Clocks {ingest?.criticalCadenceMinutes ?? 10} min critical ·{" "}

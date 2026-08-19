@@ -6,13 +6,23 @@ import { getLiveConditions } from "@/lib/live.functions";
 import { consumeQueuedClick } from "@/lib/queued-clicks";
 import type { Destination } from "@/lib/catalog";
 
+type PanelReading = {
+  label: string;
+  value: string;
+  unit: string;
+  observedAt: string;
+};
+
 function ago(iso: string) {
   const t = new Date(iso).getTime();
   if (Number.isNaN(t)) return "unknown time";
   const mins = Math.max(0, Math.round((Date.now() - t) / 60000));
   if (mins < 60) return `${mins} min ago`;
   const hrs = Math.round(mins / 60);
-  return hrs < 48 ? `${hrs} h ago` : `${Math.round(hrs / 24)} d ago`;
+  if (hrs < 48) return `${hrs} h ago`;
+  const days = Math.round(hrs / 24);
+  if (days < 365) return `${days} d ago`;
+  return `${Math.round(days / 365)} y ago`;
 }
 
 function formatAsOf(iso: string) {
@@ -23,6 +33,12 @@ function formatAsOf(iso: string) {
   return `${hh}:${mm}`;
 }
 
+function formatObservedDate(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "unknown time";
+  return d.toISOString().slice(0, 10);
+}
+
 function sourceLine(source: string, age: number | null, agency: string | null) {
   if (source === "scheduled-snapshot") {
     return `Scheduled ingest · ${age ?? "?"} min old`;
@@ -31,6 +47,54 @@ function sourceLine(source: string, age: number | null, agency: string | null) {
     return `Live ${agency ?? "agency"} pull · binding used`;
   }
   return null;
+}
+
+function ReadingRows({
+  readings,
+  stationId,
+  retained = false,
+}: {
+  readings: PanelReading[];
+  stationId?: string | null;
+  retained?: boolean;
+}) {
+  return (
+    <dl className="mt-3 space-y-3">
+      {readings.map((r) => (
+        <div
+          key={`${r.label}-${r.observedAt}`}
+          className={retained ? "border-l border-hairline pl-3" : "border-l border-brass/50 pl-3"}
+        >
+          <dt className={`tick text-[0.55rem] ${retained ? "text-muted-foreground" : "text-brass"}`}>
+            {r.label}
+          </dt>
+          <dd
+            className={`data mt-1 ${retained ? "text-sm text-muted-foreground" : "text-lg text-foreground"}`}
+          >
+            {r.value}
+            {r.unit ? (
+              <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
+            ) : null}
+          </dd>
+          <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
+            {retained
+              ? `observed ${formatObservedDate(r.observedAt)} · ${ago(r.observedAt)}`
+              : `as of ${formatAsOf(r.observedAt)} · ${stationId ?? r.label}`}
+          </p>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function gaugeEmptyCopy(station: boolean, retainedCount: number) {
+  if (station && retainedCount > 0) {
+    return "No current official reading. The last agency observation is older than the freshness window and is printed below with its original time.";
+  }
+  if (station) {
+    return "The matched station returned no current values; the feed may be offline.";
+  }
+  return "No official gauge reading on this record. The pipeline will not invent a nearby station.";
 }
 
 /**
@@ -69,6 +133,9 @@ export function LiveConditions({ destination }: { destination: Destination }) {
     staleTime: 5 * 60_000,
     retry: 1,
   });
+
+  const retained = data?.retainedReadings ?? [];
+  const obsRetained = data?.observation?.retainedReadings ?? [];
 
   return (
     <div className="panel p-6">
@@ -169,33 +236,26 @@ export function LiveConditions({ destination }: { destination: Destination }) {
           <div className="mt-5">
             <p className="tick text-[0.55rem] text-brass">Gauge</p>
             {data.readings.length > 0 ? (
-              <dl className="mt-3 space-y-3">
-                {data.readings.map((r) => (
-                  <div key={r.label} className="border-l border-brass/50 pl-3">
-                    <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
-                    <dd className="data mt-1 text-lg text-foreground">
-                      {r.value}
-                      {r.unit ? (
-                        <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
-                      ) : null}
-                    </dd>
-                    <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
-                      as of {formatAsOf(r.observedAt)} · {data.station?.id ?? r.label}
-                    </p>
-                  </div>
-                ))}
-              </dl>
+              <ReadingRows readings={data.readings} stationId={data.station?.id} />
             ) : (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                No official gauge reading on this record. The pipeline will not
-                invent a nearby station.
+                {gaugeEmptyCopy(Boolean(data.station), retained.length)}
               </p>
+            )}
+            {retained.length > 0 && (
+              <div className="mt-4">
+                <p className="tick text-[0.55rem] text-muted-foreground">
+                  Last official observation
+                </p>
+                <ReadingRows readings={retained} stationId={data.station?.id} retained />
+              </div>
             )}
           </div>
 
           <div className="mt-5 border-t border-hairline pt-4">
             <p className="tick text-[0.55rem]">Weather observation</p>
-            {data.observation && data.observation.readings.length > 0 ? (
+            {data.observation &&
+            (data.observation.readings.length > 0 || obsRetained.length > 0) ? (
               <>
                 <p className="mt-2 text-sm text-foreground">
                   NWS {data.observation.stationId} — {data.observation.stationName}
@@ -203,19 +263,29 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                 <p className="mt-1 text-[0.68rem] text-muted-foreground">
                   Bound observation station for this water's published location.
                 </p>
-                <dl className="mt-3 space-y-2">
-                  {data.observation.readings.map((r) => (
-                    <div key={r.label}>
-                      <dt className="tick text-[0.55rem] text-brass">{r.label}</dt>
-                      <dd className="data mt-0.5 text-sm text-foreground">
-                        {r.value}
-                        {r.unit ? (
-                          <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
-                        ) : null}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+                {data.observation.readings.length > 0 ? (
+                  <ReadingRows
+                    readings={data.observation.readings}
+                    stationId={data.observation.stationId}
+                  />
+                ) : (
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    No current official observation. The last agency observation
+                    is printed below with its original time.
+                  </p>
+                )}
+                {obsRetained.length > 0 && (
+                  <div className="mt-4">
+                    <p className="tick text-[0.55rem] text-muted-foreground">
+                      Last official observation
+                    </p>
+                    <ReadingRows
+                      readings={obsRetained}
+                      stationId={data.observation.stationId}
+                      retained
+                    />
+                  </div>
+                )}
               </>
             ) : (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
