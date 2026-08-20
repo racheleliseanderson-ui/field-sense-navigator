@@ -23,5 +23,80 @@
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-charlotte-harbor",
     "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-010",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
+        "start": "05-01",
+        "end": "08-31",
+        "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay region (Fred Howard Park / Pasco–Pinellas through Manatee). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Gulf — December–February)",
+        "start": "12-01",
+        "end": "02-28",
+        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Tampa Bay falls in the Northern/Eastern Gulf band (Fred Howard Park to State Road 64 / Manatee): May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC regional boundary assignment for Tampa Bay on the official snook page before relying on the May–August closed window.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-tampa-bay",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-214",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
+        "start": "05-01",
+        "end": "08-31",
+        "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay / Pinellas region (Fred Howard Park band). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Gulf — December–February)",
+        "start": "12-01",
+        "end": "02-28",
+        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Fort De Soto (Pinellas) falls in the Northern/Eastern Gulf band with Tampa Bay: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC regional boundary assignment for Fort De Soto / Pinellas on the official snook page before relying on the May–August closed window.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-fort-de-soto",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-009",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Atlantic — June–August)",
+        "start": "06-01",
+        "end": "08-31",
+        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Atlantic — December–January)",
+        "start": "12-15",
+        "end": "01-31",
+        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Lake Worth Lagoon is Southeast Atlantic Coast — closed Jun 1–Aug 31 and Dec 15–Jan 31. Spotted seatrout not listed in speciesContext; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC Atlantic regional assignment for Lake Worth Lagoon on the official snook page before relying on the closed windows.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-lake-worth",
+    "nextReviewAt": "2026-09-30"
   }
 ]
