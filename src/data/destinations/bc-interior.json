@@ -1,0 +1,77 @@
+[
+  {
+    "id": "HHI-DEST-519",
+    "state": "British Columbia",
+    "region": "Lower Mainland",
+    "waterbody": "Harrison Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://bcparks.ca/sasquatch-park/",
+    "checkedAt": "2026-08-19T23:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Rainbow trout",
+      "Cutthroat trout",
+      "Brook char",
+      "Bull trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Sasquatch Park — Green Point boat launch (Harrison Lake)",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Sasquatch Park — Green Point day-use shore (Harrison Lake)",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Provincial freshwater licence required; salmon (where present) is managed separately by DFO and must be confirmed same-day.",
+      "Waterbody-specific exceptions in the 2025–2027 Freshwater Fishing Regulations Synopsis apply. Confirm in-season variation orders before fishing.",
+      "Clean, Drain, Dry and pull the plug before moving any watercraft between waters.",
+      "Region 2 exception (MU 2-18): no wild trout over 50 cm; 1 bull trout over 60 cm; 10 km/h speed restriction at the south end as buoyed and signed.",
+      "Harrison Lake can raise high winds quickly. Swimmer’s itch may be present at Green Point.",
+      "No overnight parking at Green Point."
+    ],
+    "directVerification": [
+      "Confirm current in-season variation orders on the official regulations page.",
+      "Confirm the intended BC Parks launch or shore access is open on the date of travel.",
+      "Confirm the 2025–2027 synopsis exceptions for this waterbody (and any DFO salmon table) same-day."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "officialRegsUrl": "https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations",
+    "regsReviewedDate": "2026-08-19",
+    "accessReviewedDate": "2026-08-19",
+    "lastVerified": "2026-08-19",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-425",
+        "relation": "adjacent_public_corridor"
+      }
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19-bc-interior-lakes",
+    "provenanceNotes": "Access from BC Parks Sasquatch Park page (Green Point launch and shore). Exceptions from Region 2 HARRISON LAKE MU 2-18 (size/quota/speed; no dated closed season).",
+    "confidenceNotes": "Harrison Hot Springs municipal launch is not listed on the Sasquatch Parks page and was left unresolved.",
+    "unresolvedQuestions": [
+      "Confirm whether the Harrison Hot Springs municipal launch is currently public and open on the date of travel."
+    ]
+  }
+]
