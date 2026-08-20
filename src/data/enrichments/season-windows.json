@@ -98,5 +98,105 @@
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-lake-worth",
     "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-235",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
+        "start": "05-01",
+        "end": "08-31",
+        "notes": "FWC: Closed May 1 – August 31 for the Nature Coast / Crystal River region (north of Fred Howard Park band through the Big Bend). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Gulf — December–February)",
+        "start": "12-01",
+        "end": "02-28",
+        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Crystal River / Kings Bay (Citrus County, Nature Coast) is north of Tampa Bay and falls in the Northern/Eastern Gulf closed pair: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC regional boundary assignment for Crystal River / Kings Bay on the official snook page before relying on the May–August closed window.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-crystal-river",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-221",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Southern Gulf — May–September)",
+        "start": "05-01",
+        "end": "09-30",
+        "notes": "FWC: Closed May 1 – September 30 for Gasparilla / Boca Grande (south of ~27°04.727′N Venice line, with Charlotte Harbor). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Gulf — December–February)",
+        "start": "12-01",
+        "end": "02-28",
+        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Gasparilla Island / Boca Grande Pass is southwest of Charlotte Harbor and south of the Venice Municipal Airport line — Southern Gulf closed pair: May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC regional boundary assignment for Boca Grande / Gasparilla on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-boca-grande",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-215",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Atlantic — June–August)",
+        "start": "06-01",
+        "end": "08-31",
+        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Sebastian Inlet / Indian River Lagoon. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Atlantic — December–January)",
+        "start": "12-15",
+        "end": "01-31",
+        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Sebastian Inlet State Park (Atlantic jetties, inlet, and Indian River Lagoon) is Atlantic Coast — closed Jun 1–Aug 31 and Dec 15–Jan 31. Red drum has no dated closed season on the FWC page; IRL red drum C&R rules if any are not standing dated windows on the recreational page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC Atlantic regional assignment for Sebastian Inlet on the official snook page before relying on the closed windows.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-sebastian-inlet",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-229",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Atlantic — June–August)",
+        "start": "06-01",
+        "end": "08-31",
+        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Indian River Lagoon mid-coast. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Atlantic — December–January)",
+        "start": "12-15",
+        "end": "01-31",
+        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Indian River Lagoon mid-coast public corridor is Atlantic Coast / IRL — closed Jun 1–Aug 31 and Dec 15–Jan 31. Red drum has no dated closed season on the FWC recreational page. No freshwater bass windows.",
+    "unresolvedQuestions": [
+      "Confirm FWC Atlantic regional assignment for the IRL mid-coast corridor on the official snook page before relying on the closed windows.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-irl-midcoast",
+    "nextReviewAt": "2026-09-30"
   }
 ]
