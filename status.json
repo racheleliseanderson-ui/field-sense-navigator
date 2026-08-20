@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-20T21:33:33.789Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-20T21:35:46.412Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 350
   },
-  "errorCount": 25,
+  "errorCount": 23,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -146,22 +146,6 @@
       "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
-    },
-    {
-      "kind": "station",
-      "agency": "USBR",
-      "siteId": "rise:341",
-      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USBR",
-      "siteId": "rise:6128",
-      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
     },
     {
       "kind": "nws",
