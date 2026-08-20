@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-20T05:05:18.432Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-20T05:06:47.970Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 349
   },
-  "errorCount": 21,
+  "errorCount": 22,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -150,6 +150,14 @@
     {
       "kind": "nws",
       "agency": "NWS",
+      "siteId": "ITD55",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
       "siteId": "ITD20",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
@@ -174,17 +182,17 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "K3W7",
-      "error": "NWS K3W7 404",
-      "carriedForward": false,
+      "siteId": "PHNG",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
       "staleOnly": false
     },
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "E6690",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
+      "siteId": "K3W7",
+      "error": "NWS K3W7 404",
+      "carriedForward": false,
       "staleOnly": false
     },
     {
