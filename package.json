@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "node scripts/assert-catalog.mjs && vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -15,7 +15,8 @@
     "resolve:locations": "node scripts/resolve-locations.mjs",
     "bind:weather": "node scripts/bind-weather.mjs",
     "ingest:live": "node scripts/ingest-live.mjs",
-    "scan:closures": "node scripts/scan-closures.mjs"
+    "scan:closures": "node scripts/scan-closures.mjs",
+    "assert:catalog": "node scripts/assert-catalog.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
