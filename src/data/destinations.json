@@ -6,8 +6,8 @@
     "waterbody": "Lake Washington",
     "waterType": "lake",
     "officialSourceUrl": "https://wdfw.wa.gov/fishing/locations/lowland-lakes/lake-washington",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T19:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Coastal cutthroat trout",
@@ -59,14 +59,16 @@
     "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "boat_ramp",
       "lake",
       "pier"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-002",
@@ -76,8 +78,8 @@
     "waterbody": "Munn Lake",
     "waterType": "lake",
     "officialSourceUrl": "https://wdfw.wa.gov/fishing/locations/lowland-lakes/munn-lake",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T19:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Rainbow trout",
@@ -119,14 +121,16 @@
     "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "boat_ramp",
       "lake",
       "shore_access"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-003",
@@ -136,8 +140,8 @@
     "waterbody": "Boyd Lake",
     "waterType": "reservoir",
     "officialSourceUrl": "https://cpw.state.co.us/state-parks/boyd-lake-state-park",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-11",
+    "checkedAt": "2026-08-19T13:00:00.000Z",
+    "nextReviewAt": "2026-09-15",
     "status": "restricted_access_current_notice",
     "speciesContext": [
       "Walleye",
@@ -190,13 +194,15 @@
     "officialRegsUrl": "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "boat_ramp",
       "reservoir"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-004",
@@ -206,8 +212,8 @@
     "waterbody": "Chatfield Reservoir",
     "waterType": "reservoir",
     "officialSourceUrl": "https://cpw.state.co.us/state-parks/chatfield-state-park/chatfield-state-park-park-highlights",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T13:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_hazard_and_capacity_checks_required",
     "speciesContext": [
       "Rainbow trout",
@@ -256,13 +262,15 @@
     "officialRegsUrl": "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "boat_ramp",
       "reservoir"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-005",
@@ -341,8 +349,8 @@
     "waterbody": "Flathead Lake",
     "waterType": "lake",
     "officialSourceUrl": "https://fwp.mt.gov/fish",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T19:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_ais_and_weather_checks",
     "speciesContext": [
       "Lake trout",
@@ -375,11 +383,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Montana Fish, Wildlife & Parks",
+    "managingAgency": "Montana Fish, Wildlife & Parks (north of Flathead Indian Reservation boundary); Confederated Salish and Kootenai Tribes (southern portion)",
     "officialRegsUrl": "https://fwp.mt.gov/fish",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -394,7 +402,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-007",
@@ -403,8 +413,8 @@
     "waterbody": "Charlotte Harbor",
     "waterType": "marine",
     "officialSourceUrl": "https://myfwc.com/fishing/saltwater/recreational/",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-10-02",
     "status": "current_with_tide_and_marine_checks",
     "speciesContext": [
       "Snook",
@@ -438,11 +448,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Florida Fish and Wildlife Conservation Commission",
+    "managingAgency": "Florida Fish and Wildlife Conservation Commission (species/license); county and municipal ramp operators",
     "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -462,7 +472,9 @@
     "tags": [
       "boat_ramp",
       "marine"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-008",
@@ -471,8 +483,8 @@
     "waterbody": "Lake Tohopekaliga (Lake Toho)",
     "waterType": "lake",
     "officialSourceUrl": "https://myfwc.com/fishing/freshwater/",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Largemouth bass",
@@ -509,7 +521,7 @@
     "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -525,7 +537,9 @@
     "tags": [
       "boat_ramp",
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-009",
@@ -534,8 +548,8 @@
     "waterbody": "Lake Worth Lagoon / public pier corridor",
     "waterType": "marine",
     "officialSourceUrl": "https://myfwc.com/fishing/saltwater/recreational/",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-02",
     "status": "current_with_tide_and_marine_checks",
     "speciesContext": [
       "Snook",
@@ -569,11 +583,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Florida Fish and Wildlife Conservation Commission",
+    "managingAgency": "Florida Fish and Wildlife Conservation Commission (species/license); local governments (named piers)",
     "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -590,7 +604,9 @@
       "marine",
       "pier",
       "shore_access"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-010",
@@ -599,8 +615,8 @@
     "waterbody": "Tampa Bay",
     "waterType": "marine",
     "officialSourceUrl": "https://myfwc.com/fishing/saltwater/recreational/",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-02",
     "status": "current_with_tide_and_marine_checks",
     "speciesContext": [
       "Snook",
@@ -634,11 +650,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Florida Fish and Wildlife Conservation Commission",
+    "managingAgency": "Florida Fish and Wildlife Conservation Commission (species/license); city and county ramp operators",
     "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -662,7 +678,9 @@
     "tags": [
       "boat_ramp",
       "marine"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-011",
@@ -671,8 +689,8 @@
     "waterbody": "Lake St. Clair",
     "waterType": "lake",
     "officialSourceUrl": "https://www.michigan.gov/dnr/things-to-do/boating/boating-facility-finder",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_ais_and_weather_checks",
     "speciesContext": [
       "Walleye",
@@ -711,11 +729,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Michigan Department of Natural Resources",
+    "managingAgency": "Michigan Department of Natural Resources (state sites); local park authorities (metropark and municipal launches)",
     "officialRegsUrl": "https://www.michigan.gov/dnr/things-to-do/fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -735,7 +753,9 @@
     "tags": [
       "boat_ramp",
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-012",
@@ -744,8 +764,8 @@
     "waterbody": "Saginaw Bay (Lake Huron)",
     "waterType": "lake",
     "officialSourceUrl": "https://www.michigan.gov/dnr/things-to-do/boating/boating-facility-finder",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_ais_and_weather_checks",
     "speciesContext": [
       "Walleye",
@@ -778,11 +798,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Michigan Department of Natural Resources",
+    "managingAgency": "Michigan Department of Natural Resources (state sites); local municipalities",
     "officialRegsUrl": "https://www.michigan.gov/dnr/things-to-do/fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -797,7 +817,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-013",
@@ -806,8 +828,8 @@
     "waterbody": "Lake Michigan",
     "waterType": "lake",
     "officialSourceUrl": "https://www.michigan.gov/dnr/things-to-do/boating/boating-facility-finder",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_destination_finder_with_local_authority_checks",
     "speciesContext": [
       "Salmon and trout (seasonal)",
@@ -840,11 +862,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Michigan Department of Natural Resources",
+    "managingAgency": "Michigan Department of Natural Resources (state harbors and access sites); local harbor authorities",
     "officialRegsUrl": "https://www.michigan.gov/dnr/things-to-do/fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -875,7 +897,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-014",
@@ -884,8 +908,8 @@
     "waterbody": "Green Bay (Lake Michigan)",
     "waterType": "lake",
     "officialSourceUrl": "https://dnr.wisconsin.gov/topic/fishing/boataccess",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_ais_and_weather_checks",
     "speciesContext": [
       "Walleye",
@@ -919,11 +943,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Wisconsin Department of Natural Resources",
+    "managingAgency": "Wisconsin Department of Natural Resources; municipal harbor and launch operators",
     "officialRegsUrl": "https://dnr.wisconsin.gov/topic/Fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -938,7 +962,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-015",
@@ -948,8 +974,8 @@
     "accessSite": "Door County public harbors and launches",
     "waterType": "lake",
     "officialSourceUrl": "https://dnr.wisconsin.gov/topic/fishing/boataccess",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_seasonal_facility_checks",
     "speciesContext": [
       "Smallmouth bass",
@@ -982,11 +1008,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Wisconsin Department of Natural Resources",
+    "managingAgency": "Wisconsin Department of Natural Resources; Door County and municipal harbor operators",
     "officialRegsUrl": "https://dnr.wisconsin.gov/topic/Fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1017,7 +1043,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-016",
@@ -1027,8 +1055,8 @@
     "accessSite": "Maumee Bay / western basin public accesses",
     "waterType": "lake",
     "officialSourceUrl": "https://ohiodnr.gov/go-and-do/boating",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_ais_and_weather_checks",
     "speciesContext": [
       "Walleye",
@@ -1065,7 +1093,7 @@
     "officialRegsUrl": "https://ohiodnr.gov/rules-and-regulations/recreation-rules/fishing-rules",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1092,7 +1120,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-017",
@@ -1101,8 +1131,8 @@
     "waterbody": "Lake Erie",
     "waterType": "lake",
     "officialSourceUrl": "https://ohiodnr.gov/go-and-do/boating",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_destination_finder_with_local_authority_checks",
     "speciesContext": [
       "Walleye",
@@ -1139,7 +1169,7 @@
     "officialRegsUrl": "https://ohiodnr.gov/rules-and-regulations/recreation-rules/fishing-rules",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1166,7 +1196,9 @@
     ],
     "tags": [
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-018",
@@ -1175,8 +1207,8 @@
     "waterbody": "Lake Erie",
     "waterType": "lake",
     "officialSourceUrl": "https://dec.ny.gov/things-to-do/boating/launch-sites",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_jurisdiction_and_commercial_traffic_checks",
     "speciesContext": [
       "Walleye",
@@ -1213,7 +1245,7 @@
     "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1241,7 +1273,9 @@
     "tags": [
       "boat_ramp",
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-019",
@@ -1251,8 +1285,8 @@
     "accessSite": "Hamlin Beach State Park and Monroe County public launches",
     "waterType": "lake",
     "officialSourceUrl": "https://dec.ny.gov/things-to-do/boating/launch-sites/monroe-county",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_launch_type_and_closure_checks",
     "speciesContext": [
       "Salmon and trout (seasonal)",
@@ -1295,11 +1329,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "New York State Department of Environmental Conservation",
+    "managingAgency": "New York State Department of Environmental Conservation (Sandy Creek); New York State Office of Parks, Recreation and Historic Preservation (Hamlin Beach State Park, Irondequoit Bay State Marine Park); local municipalities (other listed sites)",
     "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1311,7 +1345,9 @@
     "tags": [
       "boat_ramp",
       "lake"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-020",
@@ -1321,8 +1357,8 @@
     "accessSite": "Selkirk Shores State Park corridor",
     "waterType": "lake",
     "officialSourceUrl": "https://parks.ny.gov/visit/state-parks/selkirk-shores-state-park",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T20:00:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_seasonal_facility_checks",
     "speciesContext": [
       "Salmon and trout (seasonal)",
@@ -1363,7 +1399,7 @@
     "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1375,7 +1411,9 @@
     "tags": [
       "lake",
       "shore_access"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-021",
@@ -1384,8 +1422,8 @@
     "waterbody": "Detroit River",
     "waterType": "river",
     "officialSourceUrl": "https://www.michigan.gov/dnr/things-to-do/fishing/fishing-regulations",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_with_jurisdiction_and_commercial_traffic_checks",
     "speciesContext": [
       "Walleye",
@@ -1424,16 +1462,18 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Michigan Department of Natural Resources",
+    "managingAgency": "Michigan Department of Natural Resources (Michigan waters); Ontario provincial rules apply on the Canadian side",
     "officialRegsUrl": "https://www.michigan.gov/dnr/things-to-do/fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "river"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-022",
@@ -1442,8 +1482,8 @@
     "waterbody": "Wisconsin public navigable waters access network",
     "waterType": "lake",
     "officialSourceUrl": "https://dnr.wisconsin.gov/topic/fishing/boataccess",
-    "checkedAt": "2026-08-04T20:00:00-06:00",
-    "nextReviewAt": "2026-08-18",
+    "checkedAt": "2026-08-19T21:30:00.000Z",
+    "nextReviewAt": "2026-09-30",
     "status": "current_destination_finder_with_local_authority_checks",
     "speciesContext": [
       "Species vary widely by waterbody and region"
@@ -1478,11 +1518,11 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "Wisconsin Department of Natural Resources",
+    "managingAgency": "Wisconsin Department of Natural Resources (statewide inventory); counties, cities, and towns (many individual sites)",
     "officialRegsUrl": "https://dnr.wisconsin.gov/topic/Fishing",
     "regsReviewedDate": "2026-08-04",
     "accessReviewedDate": "2026-08-04",
-    "lastVerified": "2026-08-04",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "related": [
@@ -1498,7 +1538,9 @@
     "tags": [
       "lake",
       "shore_access"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-023",
@@ -4355,8 +4397,8 @@
     "waterbody": "Spinney Mountain Reservoir",
     "waterType": "reservoir",
     "officialSourceUrl": "https://cpw.state.co.us/state-parks/spinney-mountain-state-park",
-    "checkedAt": "2026-08-10T12:00:00-06:00",
-    "nextReviewAt": "2026-08-24",
+    "checkedAt": "2026-08-19T13:00:00.000Z",
+    "nextReviewAt": "2026-09-15",
     "status": "restricted_access_current_notice",
     "speciesContext": [
       "Rainbow trout",
@@ -4403,13 +4445,15 @@
     "officialRegsUrl": "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
     "regsReviewedDate": "2026-08-10",
     "accessReviewedDate": "2026-08-10",
-    "lastVerified": "2026-08-10",
+    "lastVerified": "2026-08-19",
     "speciesPresent": null,
     "seasonWindows": null,
     "tags": [
       "boat_ramp",
       "reservoir"
-    ]
+    ],
+    "lastHumanReviewedAt": "2026-08-19",
+    "lastHumanReviewedBy": "enrichment-pass-2026-08-19"
   },
   {
     "id": "HHI-DEST-052",
