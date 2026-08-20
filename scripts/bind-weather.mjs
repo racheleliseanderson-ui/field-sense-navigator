@@ -2,7 +2,8 @@
 /**
  * Bind an official weather observation station to every located water.
  *
- * US: NWS points API → first observation station on that grid.
+ * US: NWS points API → first *live* observation station on that grid
+ *     (skips stations that 404 on /observations/latest).
  * CA: skipped here (NWS has no grid). Gauge + forecast layers still apply
  *     where a WSC station or location exists.
  *
@@ -34,6 +35,21 @@ async function fetchJson(url) {
   return res.json();
 }
 
+/** True if the station publishes a latest observation (not 404 / empty). */
+async function stationIsLive(id) {
+  try {
+    const res = await fetch(
+      `https://api.weather.gov/stations/${id}/observations/latest`,
+      { headers: { "User-Agent": UA, Accept: "application/geo+json, application/json" } },
+    );
+    if (!res.ok) return false;
+    const body = await res.json();
+    return Boolean(body?.properties?.timestamp || body?.properties?.station);
+  } catch {
+    return false;
+  }
+}
+
 async function nwsObservationStation(lat, lon) {
   const key = `${lat.toFixed(2)},${lon.toFixed(2)}`;
   if (nwsCache.has(key)) return nwsCache.get(key);
@@ -47,7 +63,20 @@ async function nwsObservationStation(lat, lon) {
       return nwsCache.get(key);
     }
     const col = await fetchJson(stationsUrl);
-    const first = col.features?.[0]?.properties;
+    const features = col.features ?? [];
+    // Prefer the first station that actually serves observations.
+    for (const f of features.slice(0, 8)) {
+      const props = f?.properties;
+      const id = props?.stationIdentifier;
+      if (!id) continue;
+      if (await stationIsLive(id)) {
+        const hit = { id, name: props.name ?? id };
+        nwsCache.set(key, hit);
+        return hit;
+      }
+    }
+    // Fallback: first identifier even if unvalidated (rare).
+    const first = features[0]?.properties;
     const hit = first?.stationIdentifier
       ? { id: first.stationIdentifier, name: first.name ?? first.stationIdentifier }
       : { id: null, name: null };
@@ -97,7 +126,7 @@ async function main() {
       if (done % 25 === 0) console.error(`nws   ${done}/${need.length}`);
     }
   }
-  await Promise.all(Array.from({ length: 6 }, worker));
+  await Promise.all(Array.from({ length: 4 }, worker));
 
   bindings.stats = {
     ...bindings.stats,
