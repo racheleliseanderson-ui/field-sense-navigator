@@ -1,0 +1,27 @@
+[
+  {
+    "id": "HHI-DEST-007",
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Southern Gulf — May–September)",
+        "start": "05-01",
+        "end": "09-30",
+        "notes": "FWC: Closed May 1 – September 30 in the region from ~27°04.727′N near Venice Municipal Airport south through Collier. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Gulf — December–February)",
+        "start": "12-01",
+        "end": "02-28",
+        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only (Southern Gulf boundary at 27°04.727′N / Venice; Charlotte Harbor falls in the May 1–Sep 30 + Dec–Feb closed pair). Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows. Boundary assignment requires same-day FWC check.",
+    "unresolvedQuestions": [
+      "Confirm FWC regional boundary assignment for Charlotte Harbor on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.",
+      "Same-day FWC check still required; in-season variation orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-charlotte-harbor",
+    "nextReviewAt": "2026-09-30"
+  }
+]
