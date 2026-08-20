@@ -1,1 +1,9 @@
-PLACEHOLDER_TOO_LARGE
+[
+  {
+    "id": "HHI-DEST-001",
+    "state": "Washington",
+    "region": "Puget Sound lowlands",
+    "waterbody": "Lake Washington",
+    "waterType": "lake"
+  }
+]
