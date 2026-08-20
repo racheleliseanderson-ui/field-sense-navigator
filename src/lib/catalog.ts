@@ -1,5 +1,6 @@
 import base from "@/data/destinations.json";
 import bcInterior from "@/data/destinations/bc-interior.json";
+import seasonWindowsEnrichment from "@/data/enrichments/season-windows.json";
 
 export type WaterType = "lake" | "reservoir" | "river" | "marine";
 
@@ -77,17 +78,42 @@ export interface Destination {
   unresolvedQuestions?: string[] | null;
 }
 
+/** Partial Destination written by bench enrichment; applied by id after load. */
+export type DestinationEnrichment = Partial<Destination> & { id: string };
+
 export const SCHEMA_VERSION = "0.6.0";
 
 /**
- * Catalog is the concatenation of the base file plus jurisdiction shards.
- * See AGENTS.project.md Scale section. Add new shards under src/data/destinations/
- * and import + spread them here. Keep base + shards free of duplicate ids.
+ * Catalog is the concatenation of the base file plus jurisdiction shards,
+ * then field-level enrichments committed under src/data/enrichments/.
+ * See AGENTS.project.md Scale section.
+ *
+ * Bench rule: one fully built waterbody (or one official-source family) per
+ * enrichment entry. No partial stacks. Official page must have been read.
  */
-export const destinations = [
+function applyEnrichments(
+  records: Destination[],
+  enrichments: DestinationEnrichment[],
+): Destination[] {
+  if (!enrichments.length) return records;
+  const byId = new Map(enrichments.map((e) => [e.id, e]));
+  return records.map((r) => {
+    const e = byId.get(r.id);
+    if (!e) return r;
+    const { id: _id, ...fields } = e;
+    return { ...r, ...fields };
+  });
+}
+
+const assembled: Destination[] = [
   ...(base as Destination[]),
   ...(bcInterior as Destination[]),
 ];
+
+export const destinations = applyEnrichments(
+  assembled,
+  seasonWindowsEnrichment as DestinationEnrichment[],
+);
 
 /** Single source of truth for every displayed catalog count. */
 export const NAMED_WATER_COUNT = destinations.length;
