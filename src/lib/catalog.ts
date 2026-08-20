@@ -1,4 +1,5 @@
-import raw from "@/data/destinations.json";
+import base from "@/data/destinations.json";
+import bcInterior from "@/data/destinations/bc-interior.json";
 
 export type WaterType = "lake" | "reservoir" | "river" | "marine";
 
@@ -78,7 +79,15 @@ export interface Destination {
 
 export const SCHEMA_VERSION = "0.6.0";
 
-export const destinations = raw as Destination[];
+/**
+ * Catalog is the concatenation of the base file plus jurisdiction shards.
+ * See AGENTS.project.md Scale section. Add new shards under src/data/destinations/
+ * and import + spread them here. Keep base + shards free of duplicate ids.
+ */
+export const destinations = [
+  ...(base as Destination[]),
+  ...(bcInterior as Destination[]),
+];
 
 /** Single source of truth for every displayed catalog count. */
 export const NAMED_WATER_COUNT = destinations.length;
