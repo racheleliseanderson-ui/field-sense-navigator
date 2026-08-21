@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Columns3 } from "lucide-react";
-import { displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, type Destination } from "@/lib/catalog";
+import { displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
@@ -48,11 +48,12 @@ export function WaterCard({
   const t = readTags(destination);
   const overdue = reviewOverdue(destination);
   const age = daysSince(destination.checkedAt);
+  const dated = datedWindows(destination);
   const layerCounts = [
     { k: "Access", v: destination.publicAccess.length },
     { k: "Hazards", v: t.hazards.size },
     { k: "Capacity", v: t.crowd.size },
-    { k: "Rules", v: t.seasonal.size },
+    { k: "Windows", v: dated.length },
     { k: "Checks", v: destination.directVerification.length },
   ];
 
@@ -153,6 +154,10 @@ export function WaterCard({
         {humanize(destination.status)}
         {" · "}
         Last source check: {age === 0 ? "today" : `${age}d ago`}
+        {" · "}
+        {dated.length
+          ? `${dated.length} dated closure${dated.length === 1 ? "" : "s"}`
+          : "no dated closure published"}
       </p>
       {destination.managingAgency && (
         <p className="mt-1 truncate text-[0.65rem] text-muted-foreground/90">

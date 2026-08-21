@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 
-import { catalogTags, displayName, humanize, reviewOverdue, tagLabel, type Destination } from "@/lib/catalog";
+import { catalogTags, datedWindows, displayName, humanize, reviewOverdue, tagLabel, windowSpan, type Destination } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -243,6 +243,30 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   ctx.y += 8;
   tick(ctx, "Species context");
   paragraph(ctx, d.speciesContext.length ? d.speciesContext.join(", ") : "None recorded.");
+  ctx.y += 8;
+  tick(ctx, "Season windows");
+  {
+    const dated = datedWindows(d);
+    if (dated.length === 0) {
+      paragraph(
+        ctx,
+        "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Fail closed — do not assume harvest is open.",
+      );
+    } else {
+      for (const w of dated) {
+        paragraph(
+          ctx,
+          `${windowSpan(w) ?? ""}  ${w.label}${w.notes ? ` — ${w.notes}` : ""}`,
+          { size: 9 },
+        );
+      }
+    }
+  }
+  if (d.provenanceNotes) {
+    ctx.y += 8;
+    tick(ctx, "Provenance");
+    paragraph(ctx, d.provenanceNotes, { size: 8.5, color: MUTED });
+  }
   const tags = catalogTags(d);
   if (tags.length) {
     ctx.y += 8;

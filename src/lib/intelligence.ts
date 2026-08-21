@@ -1,7 +1,9 @@
 import {
+  datedWindows,
   daysSince,
   humanize,
   reviewOverdue,
+  windowSpan,
   type Destination,
 } from "@/lib/catalog";
 
@@ -88,6 +90,7 @@ export interface WaterTags {
   directoryOnly: boolean;
   restricted: boolean;
   namedSites: number;
+  datedClosures: number;
 }
 
 export function readTags(d: Destination): WaterTags {
@@ -127,6 +130,7 @@ export function readTags(d: Destination): WaterTags {
     namedSites: d.publicAccess.filter(
       (a) => !DIRECTORY_RX.test(a.type) && !DIRECTORY_RX.test(a.name),
     ).length,
+    datedClosures: datedWindows(d).length,
   };
 }
 
@@ -184,7 +188,15 @@ export function buildLayers(d: Destination): IntelLayer[] {
 
   const hazardSignals = match(lines, HAZARD_PATTERNS).signals;
   const crowdSignals = match(lines, CROWD_PATTERNS).signals;
-  const seasonalSignals = match(lines, SEASONAL_PATTERNS).signals;
+  const dated = datedWindows(d);
+  const windowSignals: Signal[] = dated.map((w) => ({
+    label: windowSpan(w) ?? w.label,
+    detail: w.notes ? `${w.label}. ${w.notes}` : w.label,
+  }));
+  const seasonalSignals = [
+    ...windowSignals,
+    ...match(lines, SEASONAL_PATTERNS).signals,
+  ];
 
   const accessSignals: Signal[] = d.publicAccess.map((a) => ({
     label: humanize(a.type),
@@ -215,12 +227,18 @@ export function buildLayers(d: Destination): IntelLayer[] {
     ? `${crowdCount} capacity pressure signal${crowdCount === 1 ? "" : "s"} documented. Signals describe typical load, never live occupancy.`
     : "No documented capacity pressure. Expect ordinary parking and launch behaviour, unverified.";
 
-  const seasonalCount = t.seasonal.size;
+  const seasonalCount = t.seasonal.size + t.datedClosures;
   const seasonalGrade: Grade =
-    seasonalCount >= 4 ? "flagged" : seasonalCount >= 2 ? "watch" : "clear";
-  const seasonalReadout = seasonalCount
-    ? `${seasonalCount} regulatory pressure point${seasonalCount === 1 ? "" : "s"}. Rules here move with date, section and vessel.`
-    : "No section-specific regulatory variance recorded. Statewide rules still apply.";
+    t.datedClosures >= 2 || seasonalCount >= 4
+      ? "flagged"
+      : t.datedClosures >= 1 || seasonalCount >= 2
+        ? "watch"
+        : "clear";
+  const seasonalReadout = t.datedClosures
+    ? `${t.datedClosures} dated harvest closure${t.datedClosures === 1 ? "" : "s"} on the official standing season. Bag, size and gear still apply outside these windows. Same-day agency check required.`
+    : t.seasonal.size
+      ? `${t.seasonal.size} regulatory pressure point${t.seasonal.size === 1 ? "" : "s"}. Rules here move with date, section and vessel.`
+      : "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Bag, size and gear rules still apply.";
 
   const checkCount = d.directVerification.length;
   const fieldGrade: Grade = checkCount >= 4 ? "flagged" : checkCount >= 2 ? "watch" : "clear";
@@ -286,6 +304,10 @@ export function buildLayers(d: Destination): IntelLayer[] {
       confidenceLabel: "Moderate",
       signals: seasonalSignals,
       unknowns: stale([
+        ...(d.unresolvedQuestions ?? []),
+        t.datedClosures
+          ? "These windows are standing MM-DD closures from the cited agency page. Emergency orders can supersede them the same day."
+          : "Empty season windows mean no defensible dated harvest closure was published at the source used for this record — not that harvest is assumed open.",
         "The regulation booklet is authoritative; this layer flags where variance exists, it does not restate the rule.",
         "Emergency orders and in-season rule changes can post after the last source check.",
         "Species presence is context, never a catch expectation.",
@@ -356,7 +378,7 @@ export function readiness(d: Destination): Readiness {
 
   const hazardValue = clamp(20 - t.hazards.size * 3, 4, 20);
   const crowdValue = clamp(10 - t.crowd.size * 2, 2, 10);
-  const regValue = clamp(15 - t.seasonal.size * 2, 3, 15);
+  const regValue = clamp(15 - t.seasonal.size * 2 - t.datedClosures * 2, 3, 15);
 
   const parts: ScorePart[] = [
     {
@@ -397,9 +419,11 @@ export function readiness(d: Destination): Readiness {
       label: "Regulatory certainty",
       value: regValue,
       max: 15,
-      note: t.seasonal.size
-        ? `${t.seasonal.size} areas where rules vary by date, section or vessel.`
-        : "No section-level regulatory variance recorded.",
+      note: t.datedClosures
+        ? `${t.datedClosures} dated harvest closure${t.datedClosures === 1 ? "" : "s"} on the standing season.`
+        : t.seasonal.size
+          ? `${t.seasonal.size} areas where rules vary by date, section or vessel.`
+          : "No dated harvest closure published at the cited source.",
     },
   ];
 
@@ -757,6 +781,25 @@ export function buildChecklist(
   if (t.seasonal.has("jurisdiction")) {
     add("Before you leave", "Confirm which jurisdiction governs the exact section you intend to fish.", "Rules: multi-jurisdiction");
   }
+  const dated = datedWindows(d);
+  if (dated.length) {
+    for (const w of dated) {
+      const span = windowSpan(w);
+      add(
+        "Standing rules",
+        span
+          ? `${w.label} (${span}). Confirm this window is still in force today before harvest.`
+          : `${w.label}. Confirm this window is still in force today before harvest.`,
+        "Record: dated harvest closure",
+      );
+    }
+  } else {
+    add(
+      "Standing rules",
+      "No dated harvest closure is published on this record. Confirm bag, size and gear on the current agency page before harvest. Fail closed — do not assume open.",
+      "Record: no dated closure published",
+    );
+  }
   if (t.seasonal.size) {
     add("Standing rules", "Read the current regulation entry for this water — season dates, gear and limits vary by section.", "Rules: regulatory pressure");
   }
@@ -851,6 +894,14 @@ export function buildHandoff(
     "",
     `Hazard families: ${t.hazards.size ? [...t.hazards].join(", ") : "none recorded"}`,
     `Capacity pressure: ${t.crowd.size ? [...t.crowd].join(", ") : "none recorded"}`,
+    `Season windows: ${
+      datedWindows(d).length
+        ? datedWindows(d)
+            .map((w) => `${w.label}${windowSpan(w) ? ` ${windowSpan(w)}` : ""}`)
+            .join("; ")
+        : "none dated — checked, not a gap"
+    }`,
+    ...(d.provenanceNotes ? [`Provenance: ${d.provenanceNotes}`] : []),
     "",
     "NOT INCLUDED: live gauge, flow, tide, weather, bite or catch data. No private spots, no coordinates.",
   ].join("\n");

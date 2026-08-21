@@ -17,6 +17,8 @@ import {
   catalogTags,
   tagLabel,
   waterTypes,
+  datedWindows,
+  windowSpan,
   type Destination,
 } from "@/lib/catalog";
 import {
@@ -76,6 +78,7 @@ function WaterRecord() {
     layers[0]?.key ?? null,
   );
   const overdue = reviewOverdue(d);
+  const dated = datedWindows(d);
 
   const downloadPdf = async () => {
     setPdfBusy(true);
@@ -126,6 +129,14 @@ function WaterRecord() {
             <span className="tick text-[0.55rem]">{d.waterType}</span>
             <GradeChip grade={r.grade} label={r.band} />
             {overdue && <GradeChip grade="restricted" label="Review overdue" />}
+            {dated.length > 0 ? (
+              <GradeChip
+                grade={dated.length >= 2 ? "flagged" : "watch"}
+                label={`${dated.length} dated closure${dated.length === 1 ? "" : "s"}`}
+              />
+            ) : (
+              <GradeChip grade="clear" label="None dated" />
+            )}
             <WatchButton id={d.id} name={displayName(d)} />
           </div>
 
@@ -272,6 +283,8 @@ function WaterRecord() {
           </div>
         </section>
       )}
+
+      <SeasonWindowsBand destination={d} />
 
       <section className="mx-auto grid max-w-7xl gap-12 overflow-x-hidden px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
         {/* layers */}
@@ -505,5 +518,92 @@ function WaterRecord() {
       <SiteFooter />
       <div className="h-14 sm:hidden" aria-hidden="true" />
     </div>
+  );
+}
+
+function SeasonWindowsBand({ destination }: { destination: Destination }) {
+  const dated = datedWindows(destination);
+  const questions = destination.unresolvedQuestions ?? [];
+
+  return (
+    <section className="border-b border-hairline bg-abyss/50">
+      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12">
+        <div className="flex items-center gap-4">
+          <span className="h-px w-10 bg-brass" />
+          <p className="tick text-brass">Season windows</p>
+        </div>
+        <h2 className="mt-4 font-display text-[clamp(1.5rem,3vw,2.2rem)] font-bold tracking-[-0.035em] text-foreground">
+          {dated.length
+            ? `${dated.length} dated harvest closure${dated.length === 1 ? "" : "s"}`
+            : "No dated harvest closure published"}
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          {dated.length
+            ? "Standing MM-DD windows from the official agency page used for this record. Emergency orders can supersede them the same day. Bag, size and gear still apply outside these closures."
+            : "Empty windows mean the cited source published no defensible dated harvest closure — a completed check, not a gap. Harvest is not assumed open. Bag, size and gear still apply."}
+        </p>
+
+        {dated.length > 0 ? (
+          <ul className="mt-6 grid gap-3 md:grid-cols-2">
+            {dated.map((w) => (
+              <li
+                key={`${w.label}-${w.start}-${w.end}`}
+                className="border border-hairline bg-card/40 px-5 py-4"
+              >
+                <p className="data text-xs text-brass">{windowSpan(w)}</p>
+                <p className="mt-2 text-sm font-medium leading-snug text-foreground">
+                  {w.label}
+                </p>
+                {w.notes ? (
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {w.notes}
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {(destination.provenanceNotes || questions.length > 0) && (
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {destination.provenanceNotes ? (
+              <div>
+                <p className="tick">Provenance</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {destination.provenanceNotes}
+                </p>
+                {destination.lastHumanReviewedAt ? (
+                  <p className="data mt-3 text-[0.65rem] text-muted-foreground">
+                    Bench {destination.lastHumanReviewedAt}
+                    {destination.lastHumanReviewedBy
+                      ? ` · ${destination.lastHumanReviewedBy}`
+                      : ""}
+                    {destination.nextReviewAt
+                      ? ` · next ${destination.nextReviewAt}`
+                      : ""}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+            {questions.length > 0 ? (
+              <div>
+                <p className="tick">Same-day unresolved</p>
+                <ul className="mt-2 space-y-2">
+                  {questions.map((q) => (
+                    <li
+                      key={q}
+                      className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
+                    >
+                      <span className="mt-2 h-px w-4 shrink-0 bg-brass/60" />
+                      {q}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
