@@ -142,5 +142,41 @@
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-lake-worth-corridor",
     "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-225",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Southern/Far Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 for Flamingo / Florida Bay (south of ~26°15.227′N Vanderbilt Beach through the Keys). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Everglades National Park — Flamingo (Florida Bay / Whitewater Bay) falls in the Southern/Far Southern Gulf band (Collier south through Monroe / Keys): May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows. Park-specific rules may also apply — same-day NPS + FWC check.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Flamingo / Florida Bay on the official snook page before relying on the May–September closed window.", "Confirm any Everglades National Park–specific harvest rules that may be stricter than statewide FWC.", "Same-day FWC (and NPS) check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-flamingo",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-228",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Southern/Far Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 for Everglades City / Ten Thousand Islands (Collier south of ~26°15.227′N). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Everglades National Park — Gulf Coast / Everglades City (Ten Thousand Islands) is Collier County south of the Vanderbilt Beach line — Southern/Far Southern Gulf: May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows. Park-specific rules may also apply — same-day NPS + FWC check.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Everglades City / Ten Thousand Islands on the official snook page before relying on the May–September closed window.", "Confirm any Everglades National Park–specific harvest rules that may be stricter than statewide FWC.", "Same-day FWC (and NPS) check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-everglades-city",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-245",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Southern/Far Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 for Rookery Bay / Naples (Collier, south of ~26°15.227′N Vanderbilt Beach line). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Rookery Bay / Naples public access corridor is Collier County in the Southern/Far Southern Gulf band: May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Rookery Bay / Naples on the official snook page (Vanderbilt Beach / 26°15.227′N line) before relying on the May–September closed window.", "Same-day FWC check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-rookery-bay",
+    "nextReviewAt": "2026-09-30"
   }
 ]
