@@ -2,6 +2,15 @@ import base from "@/data/destinations.json";
 import bcInterior from "@/data/destinations/bc-interior.json";
 import seasonWindowsEnrichment from "@/data/enrichments/season-windows.json";
 import alaskaSeasonWindowsEnrichment from "@/data/enrichments/alaska-season-windows.json";
+import floridaRemainder from "@/data/enrichments/florida-remainder.json";
+import montana from "@/data/enrichments/montana.json";
+import washington from "@/data/enrichments/washington.json";
+import texas from "@/data/enrichments/texas.json";
+import idahoMinnesota from "@/data/enrichments/idaho-minnesota.json";
+import californiaColorado from "@/data/enrichments/california-colorado.json";
+import canada from "@/data/enrichments/canada.json";
+import restUsA from "@/data/enrichments/rest-us-a.json";
+import restUsB from "@/data/enrichments/rest-us-b.json";
 
 export type WaterType = "lake" | "reservoir" | "river" | "marine";
 
@@ -111,10 +120,19 @@ const assembled: Destination[] = [
   ...(bcInterior as Destination[]),
 ];
 
-/** All season-window enrichments (Florida FWC, Alaska ADFG, future jurisdictions). */
+/** All season-window enrichments (Florida FWC, Alaska ADFG, remaining jurisdictions). */
 const allSeasonWindowEnrichments: DestinationEnrichment[] = [
   ...(seasonWindowsEnrichment as DestinationEnrichment[]),
   ...(alaskaSeasonWindowsEnrichment as DestinationEnrichment[]),
+  ...(floridaRemainder as DestinationEnrichment[]),
+  ...(montana as DestinationEnrichment[]),
+  ...(washington as DestinationEnrichment[]),
+  ...(texas as DestinationEnrichment[]),
+  ...(idahoMinnesota as DestinationEnrichment[]),
+  ...(californiaColorado as DestinationEnrichment[]),
+  ...(canada as DestinationEnrichment[]),
+  ...(restUsA as DestinationEnrichment[]),
+  ...(restUsB as DestinationEnrichment[]),
 ];
 
 export const destinations = applyEnrichments(
