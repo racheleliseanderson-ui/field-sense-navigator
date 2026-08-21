@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
-import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel } from "@/lib/catalog";
+import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -257,6 +257,23 @@ function Packet() {
             )}
             <h3 className="packet-tick">Species context</h3>
             <p className="mt-2 text-sm leading-relaxed">{d.speciesContext.join(", ")}</p>
+            <h3 className="packet-tick mt-6">Season windows</h3>
+            {datedWindows(d).length === 0 ? (
+              <p className="mt-2 text-sm leading-relaxed">
+                No dated harvest closure published. Empty windows are a completed
+                check, not a gap. Fail closed — do not assume harvest is open.
+              </p>
+            ) : (
+              <ul className="mt-2 space-y-2">
+                {datedWindows(d).map((w) => (
+                  <li key={`${w.label}-${w.start}`} className="text-sm leading-relaxed">
+                    <span className="font-medium">{windowSpan(w)}</span>
+                    {" — "}
+                    {w.label}
+                  </li>
+                ))}
+              </ul>
+            )}
             {catalogTags(d).length > 0 && (
               <>
                 <h3 className="packet-tick mt-6">Catalog tags</h3>

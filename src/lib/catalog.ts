@@ -206,6 +206,16 @@ export function tagLabel(tag: string): string {
   return known[tag] ?? titleCase(humanize(tag));
 }
 
+/** Dated harvest closures (MM-DD). Empty array is a completed check, not a gap. */
+export function datedWindows(d: Destination): SeasonWindow[] {
+  return (d.seasonWindows ?? []).filter((w) => Boolean(w.start && w.end));
+}
+
+export function windowSpan(w: SeasonWindow): string | null {
+  if (!w.start || !w.end) return null;
+  return `${w.start} → ${w.end}`;
+}
+
 export const displayName = (d: Destination) =>
   d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
 
