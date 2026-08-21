@@ -1,0 +1,220 @@
+{
+  "fwc-atl-snook": {
+    "seasonWindows": [
+      {
+        "label": "Snook harvest closed (FWC Atlantic — June–August)",
+        "start": "06-01",
+        "end": "08-31",
+        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      {
+        "label": "Snook harvest closed (FWC Atlantic — December–January)",
+        "start": "12-15",
+        "end": "01-31",
+        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: live FWC Snook page. Atlantic Coast closed Jun 1–Aug 31 and Dec 15–Jan 31. Red drum has no dated closed season on that page.",
+    "unresolvedQuestions": [
+      "Confirm FWC Atlantic regional assignment on the official snook page.",
+      "Same-day FWC check required at https://myfwc.com/fishing/saltwater/recreational/snook/"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-fl-atlantic-snook",
+    "nextReviewAt": "2026-09-30"
+  },
+  "fwc-none": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: FWC recreational pages. Documented species have no standing dated harvest closure (bass/crappie year-round under bag/size; red drum no dated closure). Empty seasonWindows = none published, not a gap.",
+    "unresolvedQuestions": [
+      "Confirm water-specific FWC or NPS/federal closures if grouper or red snapper are targeted.",
+      "Same-day FWC check required at https://myfwc.com/fishing/"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-fwc",
+    "nextReviewAt": "2026-09-30"
+  },
+  "fwp-west-river": {
+    "seasonWindows": [
+      {
+        "label": "Standard stream season closed (FWP Western District rivers — Dec through 3rd Saturday in May)",
+        "start": "12-01",
+        "end": "05-15",
+        "notes": "FWP 2026: Western District rivers open 3rd Saturday in May through Nov 30. Recurring closed span Dec 1 through the day before that Saturday (2026 opener May 16). https://fwp.mt.gov/fish/licensing-basics"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: FWP 2026 district standard regulations. Western District rivers: open 3rd Saturday in May–Nov 30 unless Exceptions apply.",
+    "unresolvedQuestions": [
+      "Confirm Western District assignment and Exceptions to Standard Regulations.",
+      "Same-day FWP check required at https://fwp.mt.gov/fish/licensing-basics"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-fwp-western-river",
+    "nextReviewAt": "2026-09-30"
+  },
+  "fwp-open": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: FWP 2026 district standard regulations. Central/Eastern rivers and all-district lakes/reservoirs are open all year unless Exceptions apply. Empty seasonWindows = no standing dated closure.",
+    "unresolvedQuestions": [
+      "Confirm district assignment and any Exceptions (hoot-owl, spawning).",
+      "Same-day FWP check required at https://fwp.mt.gov/fish/licensing-basics"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-fwp",
+    "nextReviewAt": "2026-09-30"
+  },
+  "tpwd-flounder": {
+    "seasonWindows": [
+      {
+        "label": "Southern flounder harvest closed (TPWD Outdoor Annual — Nov–mid December)",
+        "start": "11-01",
+        "end": "12-14",
+        "notes": "TPWD 2026–27 Outdoor Annual: flounder fishery closed Nov 1 – Dec 14 (bag = 0). https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits/flounder-bag-length-limits"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: TPWD Outdoor Annual saltwater. Statewide southern flounder closed Nov 1–Dec 14. Red drum/seatrout have no dated statewide closed season on that page.",
+    "unresolvedQuestions": [
+      "Confirm current Outdoor Annual dates. Federal reef-fish seasons if snapper/grouper targeted.",
+      "Same-day TPWD check required at https://tpwd.texas.gov/regulations/outdoor-annual/"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-tpwd-marine",
+    "nextReviewAt": "2026-09-30"
+  },
+  "tpwd-fresh": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: TPWD Outdoor Annual freshwater. No standing dated statewide harvest closure for documented bass/crappie/catfish/striped bass (bag/size manage harvest; open year-round unless a water exception is listed).",
+    "unresolvedQuestions": [
+      "Confirm reservoir-specific exceptions on the Outdoor Annual waterbody page.",
+      "Same-day TPWD check required at https://tpwd.texas.gov/regulations/outdoor-annual/"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-tpwd-fresh",
+    "nextReviewAt": "2026-09-30"
+  },
+  "mn-gamefish": {
+    "seasonWindows": [
+      {
+        "label": "Inland walleye / sauger / pike / bass harvest closed (MN DNR — after Feb 28 until fishing opener)",
+        "start": "03-01",
+        "end": "05-08",
+        "notes": "MN DNR 2026 inland walleye/sauger listed 05/09/26–02/28/27. Recurring closed span Mar 1 through the day before opener. https://www.dnr.state.mn.us/fishing/seasons.html"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: MN DNR fishing seasons. Inland walleye/sauger 2026 opener May 9 through Feb 28. Panfish remain open year-round on the general inland page. Border waters / Lake Superior can differ.",
+    "unresolvedQuestions": [
+      "Confirm inland vs border-water vs Lake Superior table.",
+      "Same-day MN DNR check required at https://www.dnr.state.mn.us/fishing/seasons.html"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-mn-dnr",
+    "nextReviewAt": "2026-09-30"
+  },
+  "mn-gamefish-muskie": {
+    "seasonWindows": [
+      {
+        "label": "Inland walleye / sauger / pike / bass harvest closed (MN DNR — after Feb 28 until fishing opener)",
+        "start": "03-01",
+        "end": "05-08",
+        "notes": "MN DNR 2026 inland walleye/sauger listed 05/09/26–02/28/27. https://www.dnr.state.mn.us/fishing/seasons.html"
+      },
+      {
+        "label": "Muskellunge harvest closed (MN DNR — after Dec 1 until muskie opener)",
+        "start": "12-02",
+        "end": "06-05",
+        "notes": "MN DNR 2026 muskellunge season listed 06/06/26–12/01/26. https://www.dnr.state.mn.us/fishing/seasons.html"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: MN DNR fishing seasons. Walleye opener May 9; muskellunge Jun 6–Dec 1.",
+    "unresolvedQuestions": [
+      "Confirm inland vs border-water table.",
+      "Same-day MN DNR check required at https://www.dnr.state.mn.us/fishing/seasons.html"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-mn-dnr",
+    "nextReviewAt": "2026-09-30"
+  },
+  "idfg-river": {
+    "seasonWindows": [
+      {
+        "label": "General trout season closed (IDFG — Dec 1 through Friday before Memorial Day weekend)",
+        "start": "12-01",
+        "end": "05-22",
+        "notes": "IDFG general trout pattern on many flowing waters: Saturday of Memorial Day weekend through Nov 30 open. 2026 Memorial Day May 25 (Friday before = May 22). Confirm on IDFG Fishing Planner. https://idfg.idaho.gov/rules"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: IDFG general trout season pattern applied as statewide default for flowing waters. Some rivers are winter C&R rather than full closure.",
+    "unresolvedQuestions": [
+      "Confirm this river on the IDFG Fishing Planner.",
+      "Same-day IDFG check required at https://idfg.idaho.gov/rules"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-idfg-river",
+    "nextReviewAt": "2026-09-30"
+  },
+  "idfg-lakes": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: IDFG rules. Lakes and reservoirs commonly open all year except Special Rules. Empty seasonWindows = no standing dated closure at general-rules level.",
+    "unresolvedQuestions": [
+      "Confirm Special Rules on the IDFG Fishing Planner.",
+      "Same-day IDFG check required at https://idfg.idaho.gov/rules"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-idfg-lakes",
+    "nextReviewAt": "2026-09-30"
+  },
+  "wdfw": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: WDFW 2026–2027 sport fishing rules. Seasons are water-specific; no statewide dated harvest closure was applied because it would be wrong for many waters. Empty seasonWindows = no defensible statewide window, not an unchecked gap.",
+    "unresolvedQuestions": [
+      "Look up this exact water in the current WDFW pamphlet / Fish Washington app.",
+      "Same-day WDFW check required at https://www.wdfw.wa.gov/fishing/regulations"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-wdfw",
+    "nextReviewAt": "2026-09-30"
+  },
+  "cdfw": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: CDFW sport fishing regulations. Trout districts have seasonal openers on many inland waters but reservoirs/bass/ocean tables differ. No single dated statewide window applied.",
+    "unresolvedQuestions": [
+      "Confirm district or ocean table in the current CDFW booklet.",
+      "Same-day CDFW check required at https://wildlife.ca.gov/Fishing"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-cdfw",
+    "nextReviewAt": "2026-09-30"
+  },
+  "cpw": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: CPW fishing regulations. Most waters open year-round unless a water-specific restriction is listed. Empty seasonWindows = no standing dated closure.",
+    "unresolvedQuestions": [
+      "Confirm water-specific restrictions in the current CPW brochure.",
+      "Same-day CPW check required at https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-cpw",
+    "nextReviewAt": "2026-09-30"
+  },
+  "bc": {
+    "provenanceNotes": "2026-08-20 bench: BC Freshwater Fishing Regulations Synopsis 2025–2027 (and DFO tidal if marine). No additional dated harvest closure applied beyond the MU table. Water-specific shard windows, if any, remain on the destination record.",
+    "unresolvedQuestions": [
+      "Confirm the current Region/MU table (and DFO tidal if marine/salmon).",
+      "Same-day check required at https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations"
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-bc",
+    "nextReviewAt": "2026-09-30"
+  },
+  "general": {
+    "seasonWindows": [],
+    "provenanceNotes": "2026-08-20 bench: Official agency page on the catalog record. No statewide dated harvest closure applied because seasons are water- or species-specific. Empty seasonWindows = no defensible dated closure at jurisdiction-general level. Fail-closed: harvest is not assumed open.",
+    "unresolvedQuestions": [
+      "Look up this exact water on the current agency regulation page before harvest.",
+      "Same-day agency check required; in-season orders can change."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-level-complete-jurisdiction-general",
+    "nextReviewAt": "2026-09-30"
+  }
+}
