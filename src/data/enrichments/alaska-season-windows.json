@@ -1,0 +1,126 @@
+[
+  {
+    "id": "HHI-DEST-418",
+    "seasonWindows": [
+      {
+        "label": "All sport fishing closed (ADFG Upper Kenai / Russian confluence — May–early June)",
+        "start": "05-01",
+        "end": "06-10",
+        "notes": "ADFG 2026 Southcentral Kenai River booklet: Upper Kenai / Russian River confluence waters closed to all sport fishing May 1–June 10. Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      },
+      {
+        "label": "King salmon closed (ADFG Kenai River early + late run — 2026 EO pattern)",
+        "start": "05-01",
+        "end": "08-15",
+        "notes": "ADFG Emergency Orders 2-KS-1-8-26 and 2-KS-1-7-26: Kenai River closed to all king salmon fishing (including catch-and-release) for the 2026 early and late runs. Other species remain open under gear restrictions. EOs supersede published booklet — same-day check required."
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from ADFG 2026 Southcentral Sport Fish Regulations (Kenai River PDF) and active 2026 Emergency Orders only. Kenai River (Southcentral, Northern Kenai management area). Standing May 1–June 10 all-species closure applies to upper river / Russian confluence waters. King salmon fully closed by EO for 2026 season. Sockeye/coho have open windows mid-June onward with section-specific bag limits and gear rules. Rainbow trout subject to size/possession limits year-round. Emergency Orders always supersede published regulations.",
+    "unresolvedQuestions": [
+      "Confirm exact river-mile / marker boundaries for the May 1–June 10 all-species closure on the current ADFG Kenai River map before relying on the window.",
+      "2026 king salmon closure is by Emergency Order and may change in future years; do not treat May–Aug king closure as permanent standing regulation.",
+      "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/ — bag limits, gear, and openings change mid-season."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kenai-river",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-419",
+    "seasonWindows": [
+      {
+        "label": "All sport fishing closed (ADFG Russian River — May–early June)",
+        "start": "05-01",
+        "end": "06-10",
+        "notes": "ADFG 2026 Southcentral Kenai River booklet: Russian River closed to all sport fishing May 1–June 10. Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      },
+      {
+        "label": "King salmon closed (ADFG Kenai system 2026 EO pattern)",
+        "start": "05-01",
+        "end": "08-15",
+        "notes": "ADFG 2026 Emergency Orders close Kenai system king salmon fishing (including C&R). Russian River is within the Kenai drainage management. EOs supersede published booklet — same-day check required."
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from ADFG 2026 Southcentral Sport Fish Regulations (Kenai River PDF) and active 2026 Emergency Orders only. Russian River (Kenai Peninsula, flows into Upper Kenai). Standing May 1–June 10 all-species closure. Sanctuary area has additional fly-only and sockeye windows (typically June 11–Aug 20 for sockeye under booklet rules, subject to EO liberalization). King salmon closed by 2026 EO. Emergency Orders always supersede published regulations.",
+    "unresolvedQuestions": [
+      "Confirm Russian River Sanctuary marker boundaries and any in-season EO openings (early sanctuary openings occur in strong sockeye years).",
+      "2026 king salmon closure is by Emergency Order; do not treat as permanent standing regulation.",
+      "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-russian-river",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-420",
+    "seasonWindows": [
+      {
+        "label": "King salmon closed (ADFG Anchorage Bowl / Ship Creek — 2026 EO)",
+        "start": "01-01",
+        "end": "12-31",
+        "notes": "ADFG 2026 Anchorage Bowl booklet + EO: King salmon fishing closed in Anchorage Bowl fresh waters for 2026 except limited youth-only opportunity on Ship Creek (third Saturday in June). Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from ADFG 2026 Southcentral Sport Fish Regulations (Anchorage Bowl PDF) and active 2026 Emergency Orders only. Ship Creek (Anchorage). King salmon closed by EO for 2026 with one youth-only exception (June, ages ≤15, limited section/hours). Other salmon (coho, etc.) have open seasons under booklet rules with daily hour restrictions in some sections (e.g. May 15–July 13 limited hours). Emergency Orders always supersede published regulations.",
+    "unresolvedQuestions": [
+      "Confirm exact Ship Creek section markers and any remaining youth-only or hatchery exceptions on the current ADFG Anchorage Bowl page.",
+      "2026 king closure is by Emergency Order; future years may reopen under different management.",
+      "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-ship-creek",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-421",
+    "seasonWindows": [
+      {
+        "label": "Salmon closed in Resurrection Bay freshwater drainages (ADFG — Jan–mid-June)",
+        "start": "01-01",
+        "end": "06-15",
+        "notes": "ADFG 2026 North Gulf Coast booklet: Freshwater drainages of Resurrection Bay closed to salmon fishing Jan 1–June 15. Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      },
+      {
+        "label": "Yelloweye rockfish no-retention (ADFG North Gulf Coast EO pattern — Apr–Jun)",
+        "start": "04-01",
+        "end": "06-30",
+        "notes": "ADFG 2026 EO: No retention of yelloweye rockfish April 1–June 30 in North Gulf Coast / Cook Inlet salt waters. Deepwater release device required. Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from ADFG 2026 Southcentral Sport Fish Regulations (North Gulf Coast PDF) and active 2026 Emergency Orders only. Resurrection Bay (North Gulf Coast saltwater + freshwater drainages). Saltwater king salmon open with seasonal bag limits (May–Aug higher bag in bay proper). Freshwater salmon closed Jan 1–June 15. Rockfish subject to EO bag reductions and yelloweye no-retention window. Halibut is federally managed (IPHC) — not captured here. Emergency Orders always supersede published regulations.",
+    "unresolvedQuestions": [
+      "Confirm exact freshwater drainage boundaries for the Jan 1–June 15 salmon closure.",
+      "Rockfish and king bag limits are frequently adjusted by EO; treat published numbers as baseline only.",
+      "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/. Federal IPHC rules apply for Pacific halibut."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-resurrection-bay",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-514",
+    "seasonWindows": [
+      {
+        "label": "Lingcod closed (ADFG Cook Inlet / Kachemak Bay — Jan–June)",
+        "start": "01-01",
+        "end": "06-30",
+        "notes": "ADFG 2026 Cook Inlet Salt Waters booklet: Lingcod open July 1–December 31 only (minimum size applies). Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      },
+      {
+        "label": "Yelloweye rockfish no-retention (ADFG Cook Inlet EO pattern — Apr–Jun)",
+        "start": "04-01",
+        "end": "06-30",
+        "notes": "ADFG 2026 EO: No retention of yelloweye rockfish April 1–June 30. Pelagic/nonpelagic bag limits also reduced by EO. Confirm same-day at https://www.adfg.alaska.gov/sf/EONR/"
+      }
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from ADFG 2026 Southcentral Sport Fish Regulations (Cook Inlet Salt Waters / Kachemak Bay PDF) and active 2026 Emergency Orders only. Kachemak Bay (Lower Cook Inlet saltwater, generally south of Bluff Point). Lingcod closed Jan 1–June 30 under standing booklet rules. King salmon subject to complex summer/winter and north/south-of-Bluff-Point rules plus 2026 EOs (Upper Cook Inlet north of Bluff Point closed to king May 1–Aug 15; Lower more liberal but still restricted). Rockfish EO bag reductions apply. Halibut is federally managed (IPHC). Emergency Orders always supersede published regulations.",
+    "unresolvedQuestions": [
+      "Confirm whether the specific access point falls north or south of Bluff Point (59°40′N) for king salmon rules.",
+      "King salmon and rockfish limits are EO-driven in 2026; do not treat as permanent.",
+      "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/. Federal IPHC rules apply for Pacifichalibut."
+    ],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kachemak-bay",
+    "nextReviewAt": "2026-09-30"
+  }
+]
