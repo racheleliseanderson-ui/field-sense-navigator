@@ -2,15 +2,8 @@ import base from "@/data/destinations.json";
 import bcInterior from "@/data/destinations/bc-interior.json";
 import seasonWindowsEnrichment from "@/data/enrichments/season-windows.json";
 import alaskaSeasonWindowsEnrichment from "@/data/enrichments/alaska-season-windows.json";
-import floridaRemainder from "@/data/enrichments/florida-remainder.json";
-import montana from "@/data/enrichments/montana.json";
-import washington from "@/data/enrichments/washington.json";
-import texas from "@/data/enrichments/texas.json";
-import idahoMinnesota from "@/data/enrichments/idaho-minnesota.json";
-import californiaColorado from "@/data/enrichments/california-colorado.json";
-import canada from "@/data/enrichments/canada.json";
-import restUsA from "@/data/enrichments/rest-us-a.json";
-import restUsB from "@/data/enrichments/rest-us-b.json";
+import jurisdictionRules from "@/data/enrichments/jurisdiction-rules.json";
+import levelCompleteIndex from "@/data/enrichments/level-complete-index.json";
 
 export type WaterType = "lake" | "reservoir" | "river" | "marine";
 
@@ -71,16 +64,8 @@ export interface Destination {
   lastVerified?: string | null;
   speciesPresent?: string[] | null;
   seasonWindows?: SeasonWindow[] | null;
-  /** Optional controlled tags (accessClass, hazardFamily, etc.). Derived tags still live in readTags(). */
   tags?: string[] | null;
-  /** Optional explicit links to related catalog records. */
   related?: RelatedWater[] | null;
-
-  /**
-   * Lightweight provenance & human-review metadata (schema 0.6.0+).
-   * All optional so existing records remain valid.
-   * Populate only with high-confidence, source-backed information.
-   */
   lastHumanReviewedAt?: string | null;
   lastHumanReviewedBy?: string | null;
   provenanceNotes?: string | null;
@@ -93,14 +78,6 @@ export type DestinationEnrichment = Partial<Destination> & { id: string };
 
 export const SCHEMA_VERSION = "0.6.0";
 
-/**
- * Catalog is the concatenation of the base file plus jurisdiction shards,
- * then field-level enrichments committed under src/data/enrichments/.
- * See AGENTS.project.md Scale section.
- *
- * Bench rule: one fully built waterbody (or one official-source family) per
- * enrichment entry. No partial stacks. Official page must have been read.
- */
 function applyEnrichments(
   records: Destination[],
   enrichments: DestinationEnrichment[],
@@ -120,19 +97,22 @@ const assembled: Destination[] = [
   ...(bcInterior as Destination[]),
 ];
 
-/** All season-window enrichments (Florida FWC, Alaska ADFG, remaining jurisdictions). */
+type SeasonRule = Omit<DestinationEnrichment, "id">;
+type RuleIndexRow = { id: string; rule: string };
+
+function expandLevelComplete(): DestinationEnrichment[] {
+  const rules = jurisdictionRules as Record<string, SeasonRule>;
+  const rows = levelCompleteIndex as RuleIndexRow[];
+  return rows.map(({ id, rule }) => {
+    const r = rules[rule];
+    return r ? { id, ...r } : { id };
+  });
+}
+
 const allSeasonWindowEnrichments: DestinationEnrichment[] = [
   ...(seasonWindowsEnrichment as DestinationEnrichment[]),
   ...(alaskaSeasonWindowsEnrichment as DestinationEnrichment[]),
-  ...(floridaRemainder as DestinationEnrichment[]),
-  ...(montana as DestinationEnrichment[]),
-  ...(washington as DestinationEnrichment[]),
-  ...(texas as DestinationEnrichment[]),
-  ...(idahoMinnesota as DestinationEnrichment[]),
-  ...(californiaColorado as DestinationEnrichment[]),
-  ...(canada as DestinationEnrichment[]),
-  ...(restUsA as DestinationEnrichment[]),
-  ...(restUsB as DestinationEnrichment[]),
+  ...expandLevelComplete(),
 ];
 
 export const destinations = applyEnrichments(
@@ -140,7 +120,6 @@ export const destinations = applyEnrichments(
   allSeasonWindowEnrichments,
 );
 
-/** Single source of truth for every displayed catalog count. */
 export const NAMED_WATER_COUNT = destinations.length;
 
 export const destinationById = (id: string) =>
@@ -167,7 +146,6 @@ export function relatedRecords(d: Destination) {
 
 export const states = [...new Set(destinations.map((d) => d.state))].sort();
 
-/** Canadian provinces and territories held by the catalog, in official order. */
 export const PROVINCES = [
   "Alberta",
   "British Columbia",
@@ -193,10 +171,8 @@ export const isProvince = (state: string) => PROVINCE_SET.has(state);
 export const jurisdictionOf = (d: Destination): Jurisdiction =>
   isProvince(d.state) ? "ca" : "us";
 
-/** Provinces and territories that actually carry records, sorted. */
 export const provinces = states.filter(isProvince);
 
-/** US states that actually carry records, sorted. */
 export const usStates = states.filter((s) => !isProvince(s));
 
 export const waterTypes: WaterType[] = ["lake", "reservoir", "river", "marine"];
@@ -207,15 +183,10 @@ export const humanize = (value: string) =>
 export const titleCase = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1);
 
-/**
- * Catalog tags stored on the record (waterType, access anatomy, land-manager
- * class). Derived only from documented fields — never estimated live state.
- */
 export function catalogTags(d: Destination): string[] {
   return [...(d.tags ?? [])].sort();
 }
 
-/** Display label for a catalog tag slug. */
 export function tagLabel(tag: string): string {
   const known: Record<string, string> = {
     lake: "Lake",
@@ -238,7 +209,6 @@ export function tagLabel(tag: string): string {
 export const displayName = (d: Destination) =>
   d.accessSite ? `${d.waterbody} — ${d.accessSite}` : d.waterbody;
 
-/** Printed YYYY-MM-DD prefix — the same date a packet shows as last updated. */
 function printedDay(iso: string): number {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   if (!m) return Number.NaN;
@@ -249,27 +219,18 @@ function utcToday(now: Date): number {
   return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 }
 
-/**
- * Calendar days between the stamp's printed date and UTC today.
- *
- * Do not round elapsed milliseconds. A check at 17:20 on the 8th was
- * showing "6d ago" on the 15th because 6×24h had not quite elapsed.
- * The packet prints the date prefix; this ages by that same date.
- */
 export function daysSince(iso: string, now = new Date()): number {
   const then = printedDay(iso);
   if (Number.isNaN(then)) return 999;
   return Math.max(0, Math.round((utcToday(now) - then) / 86_400_000));
 }
 
-/** True when today's UTC date is after the record's next-review date. */
 export function reviewOverdue(d: Destination, now = new Date()): boolean {
   const due = printedDay(d.nextReviewAt);
   if (Number.isNaN(due)) return false;
   return utcToday(now) > due;
 }
 
-/** True when regs or access review dates are older than 90 days. */
 export function reviewDue(d: Destination, now = new Date()): boolean {
   const maxAge = 90 * 86_400_000;
   const check = (iso: string | null | undefined) => {
