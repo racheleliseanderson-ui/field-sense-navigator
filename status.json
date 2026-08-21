@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-21T13:53:27.193Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-21T13:56:11.392Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,8 +48,8 @@
     "nwsStations": 355,
     "nwsWithObs": 350
   },
-  "errorCount": 63,
-  "hardErrorCount": 25,
+  "errorCount": 23,
+  "hardErrorCount": 4,
   "errors": [
     {
       "kind": "station",
@@ -70,138 +70,10 @@
     {
       "kind": "station",
       "agency": "USGS",
-      "siteId": "12079900",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12080570",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12087300",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12090300",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12117700",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12122000",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12176500",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12178000",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12191600",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12325000",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12371550",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
       "siteId": "12436000",
       "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12447900",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12451200",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12469500",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12471000",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "12471005",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
     },
     {
       "kind": "station",
@@ -214,161 +86,153 @@
     {
       "kind": "station",
       "agency": "USGS",
-      "siteId": "13201500",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
       "siteId": "14056500",
-      "error": "USGS IV 503; Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
     },
     {
       "kind": "station",
       "agency": "USGS",
-      "siteId": "14144780",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
+      "siteId": "08067320",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "USGS",
+      "siteId": "08211506",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "USGS",
+      "siteId": "08117975",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "USGS",
+      "siteId": "01484683",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "USACE",
+      "siteId": "SAS:Jocassee.Stage.Inst.1Hour.0.Rev-SHEF_SAS",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "CDEC",
+      "siteId": "DMV",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "CDEC",
+      "siteId": "SKN",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "MTSBN",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06741357",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06709600",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06037500",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "BSPM8",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "462530111314401",
-      "error": "USGS IV 503",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KGUC",
+      "error": "NWS KGUC 404",
       "carriedForward": false,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06065000",
-      "error": "USGS IV 503",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "K3W7",
+      "error": "NWS K3W7 404",
       "carriedForward": false,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06066000",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06737500",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06054500",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "E6690",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "06064500",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "385758105345600",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "02293332",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "02264900",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "433937083502301",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "413519081340100",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "04215900",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "04219796",
-      "error": "USGS IV 503",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "USGS",
-      "siteId": "04165710",
-      "error": "USGS IV 503; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KSEF",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KALX",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KCMS",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "ZEPNV",
+      "error": "NWS ZEPNV 404",
+      "carriedForward": false,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "C8738",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "K7W6",
+      "error": "NWS K7W6 404",
+      "carriedForward": false,
       "staleOnly": false
     }
   ],
