@@ -1,6 +1,7 @@
 import base from "@/data/destinations.json";
 import bcInterior from "@/data/destinations/bc-interior.json";
 import seasonWindowsEnrichment from "@/data/enrichments/season-windows.json";
+import alaskaSeasonWindowsEnrichment from "@/data/enrichments/alaska-season-windows.json";
 
 export type WaterType = "lake" | "reservoir" | "river" | "marine";
 
@@ -110,9 +111,15 @@ const assembled: Destination[] = [
   ...(bcInterior as Destination[]),
 ];
 
+/** All season-window enrichments (Florida FWC, Alaska ADFG, future jurisdictions). */
+const allSeasonWindowEnrichments: DestinationEnrichment[] = [
+  ...(seasonWindowsEnrichment as DestinationEnrichment[]),
+  ...(alaskaSeasonWindowsEnrichment as DestinationEnrichment[]),
+];
+
 export const destinations = applyEnrichments(
   assembled,
-  seasonWindowsEnrichment as DestinationEnrichment[],
+  allSeasonWindowEnrichments,
 );
 
 /** Single source of truth for every displayed catalog count. */
