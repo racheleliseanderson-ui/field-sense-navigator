@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-21T12:59:09.281Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-21T13:03:42.142Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -151,7 +151,7 @@
       "kind": "station",
       "agency": "USBR",
       "siteId": "rise:341",
-      "error": "Unexpected token '<', \"<U+FEFF><!\"... is not valid JSON; last agency observation retained. Age is printed.",
+      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
@@ -159,7 +159,7 @@
       "kind": "station",
       "agency": "USBR",
       "siteId": "rise:6128",
-      "error": "Unexpected token '<', \"<U+FEFF><!\"... is not valid JSON; last agency observation retained. Age is printed.",
+      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
