@@ -2,9 +2,9 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "critical",
-  "ingestedAt": "2026-08-21T17:16:42.411Z",
-  "cadenceMinutes": 10,
+  "mode": "all",
+  "ingestedAt": "2026-08-21T17:34:46.937Z",
+  "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 349
   },
-  "errorCount": 20,
+  "errorCount": 22,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -158,6 +158,22 @@
     {
       "kind": "nws",
       "agency": "NWS",
+      "siteId": "ITD55",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "ITD20",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
       "siteId": "KGUC",
       "error": "NWS KGUC 404",
       "carriedForward": false,
@@ -166,17 +182,17 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "K3W7",
-      "error": "NWS K3W7 404",
-      "carriedForward": false,
+      "siteId": "UT224",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
       "staleOnly": false
     },
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "E6690",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
+      "siteId": "K3W7",
+      "error": "NWS K3W7 404",
+      "carriedForward": false,
       "staleOnly": false
     },
     {
@@ -218,7 +234,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32507301975",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32508858485",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
