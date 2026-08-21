@@ -2,24 +2,11 @@
   {
     "id": "HHI-DEST-007",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Southern Gulf — May–September)",
-        "start": "05-01",
-        "end": "09-30",
-        "notes": "FWC: Closed May 1 – September 30 in the region from ~27°04.727′N near Venice Municipal Airport south through Collier. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Gulf — December–February)",
-        "start": "12-01",
-        "end": "02-28",
-        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 in the region from ~27°04.727′N near Venice Municipal Airport south through Collier. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only (Southern Gulf boundary at 27°04.727′N / Venice; Charlotte Harbor falls in the May 1–Sep 30 + Dec–Feb closed pair). Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows. Boundary assignment requires same-day FWC check.",
-    "unresolvedQuestions": [
-      "Confirm FWC regional boundary assignment for Charlotte Harbor on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Charlotte Harbor on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-charlotte-harbor",
     "nextReviewAt": "2026-09-30"
@@ -27,24 +14,11 @@
   {
     "id": "HHI-DEST-010",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
-        "start": "05-01",
-        "end": "08-31",
-        "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay region (Fred Howard Park / Pasco–Pinellas through Manatee). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Gulf — December–February)",
-        "start": "12-01",
-        "end": "02-28",
-        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)", "start": "05-01", "end": "08-31", "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay region (Fred Howard Park / Pasco–Pinellas through Manatee). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Tampa Bay falls in the Northern/Eastern Gulf band (Fred Howard Park to State Road 64 / Manatee): May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC regional boundary assignment for Tampa Bay on the official snook page before relying on the May–August closed window.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Tampa Bay on the official snook page before relying on the May–August closed window.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-tampa-bay",
     "nextReviewAt": "2026-09-30"
@@ -52,24 +26,11 @@
   {
     "id": "HHI-DEST-214",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
-        "start": "05-01",
-        "end": "08-31",
-        "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay / Pinellas region (Fred Howard Park band). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Gulf — December–February)",
-        "start": "12-01",
-        "end": "02-28",
-        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)", "start": "05-01", "end": "08-31", "notes": "FWC: Closed May 1 – August 31 for the Tampa Bay / Pinellas region (Fred Howard Park band). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Fort De Soto (Pinellas) falls in the Northern/Eastern Gulf band with Tampa Bay: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC regional boundary assignment for Fort De Soto / Pinellas on the official snook page before relying on the May–August closed window.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Fort De Soto / Pinellas on the official snook page before relying on the May–August closed window.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-fort-de-soto",
     "nextReviewAt": "2026-09-30"
@@ -77,24 +38,11 @@
   {
     "id": "HHI-DEST-009",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Atlantic — June–August)",
-        "start": "06-01",
-        "end": "08-31",
-        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Atlantic — December–January)",
-        "start": "12-15",
-        "end": "01-31",
-        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Atlantic — June–August)", "start": "06-01", "end": "08-31", "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Atlantic — December–January)", "start": "12-15", "end": "01-31", "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Lake Worth Lagoon is Southeast Atlantic Coast — closed Jun 1–Aug 31 and Dec 15–Jan 31. Spotted seatrout not listed in speciesContext; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC Atlantic regional assignment for Lake Worth Lagoon on the official snook page before relying on the closed windows.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC Atlantic regional assignment for Lake Worth Lagoon on the official snook page before relying on the closed windows.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-lake-worth",
     "nextReviewAt": "2026-09-30"
@@ -102,24 +50,11 @@
   {
     "id": "HHI-DEST-235",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)",
-        "start": "05-01",
-        "end": "08-31",
-        "notes": "FWC: Closed May 1 – August 31 for the Nature Coast / Crystal River region (north of Fred Howard Park band through the Big Bend). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Gulf — December–February)",
-        "start": "12-01",
-        "end": "02-28",
-        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)", "start": "05-01", "end": "08-31", "notes": "FWC: Closed May 1 – August 31 for the Nature Coast / Crystal River region (north of Fred Howard Park band through the Big Bend). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Crystal River / Kings Bay (Citrus County, Nature Coast) is north of Tampa Bay and falls in the Northern/Eastern Gulf closed pair: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC regional boundary assignment for Crystal River / Kings Bay on the official snook page before relying on the May–August closed window.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Crystal River / Kings Bay on the official snook page before relying on the May–August closed window.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-crystal-river",
     "nextReviewAt": "2026-09-30"
@@ -127,24 +62,11 @@
   {
     "id": "HHI-DEST-221",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Southern Gulf — May–September)",
-        "start": "05-01",
-        "end": "09-30",
-        "notes": "FWC: Closed May 1 – September 30 for Gasparilla / Boca Grande (south of ~27°04.727′N Venice line, with Charlotte Harbor). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Gulf — December–February)",
-        "start": "12-01",
-        "end": "02-28",
-        "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 for Gasparilla / Boca Grande (south of ~27°04.727′N Venice line, with Charlotte Harbor). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Gasparilla Island / Boca Grande Pass is southwest of Charlotte Harbor and south of the Venice Municipal Airport line — Southern Gulf closed pair: May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC regional boundary assignment for Boca Grande / Gasparilla on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Boca Grande / Gasparilla on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-boca-grande",
     "nextReviewAt": "2026-09-30"
@@ -152,24 +74,11 @@
   {
     "id": "HHI-DEST-215",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Atlantic — June–August)",
-        "start": "06-01",
-        "end": "08-31",
-        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Sebastian Inlet / Indian River Lagoon. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Atlantic — December–January)",
-        "start": "12-15",
-        "end": "01-31",
-        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Atlantic — June–August)", "start": "06-01", "end": "08-31", "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Sebastian Inlet / Indian River Lagoon. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Atlantic — December–January)", "start": "12-15", "end": "01-31", "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Sebastian Inlet State Park (Atlantic jetties, inlet, and Indian River Lagoon) is Atlantic Coast — closed Jun 1–Aug 31 and Dec 15–Jan 31. Red drum has no dated closed season on the FWC page; IRL red drum C&R rules if any are not standing dated windows on the recreational page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC Atlantic regional assignment for Sebastian Inlet on the official snook page before relying on the closed windows.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC Atlantic regional assignment for Sebastian Inlet on the official snook page before relying on the closed windows.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-sebastian-inlet",
     "nextReviewAt": "2026-09-30"
@@ -177,26 +86,61 @@
   {
     "id": "HHI-DEST-229",
     "seasonWindows": [
-      {
-        "label": "Snook harvest closed (FWC Atlantic — June–August)",
-        "start": "06-01",
-        "end": "08-31",
-        "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Indian River Lagoon mid-coast. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      },
-      {
-        "label": "Snook harvest closed (FWC Atlantic — December–January)",
-        "start": "12-15",
-        "end": "01-31",
-        "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"
-      }
+      {"label": "Snook harvest closed (FWC Atlantic — June–August)", "start": "06-01", "end": "08-31", "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Indian River Lagoon mid-coast. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Atlantic — December–January)", "start": "12-15", "end": "01-31", "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
     ],
     "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Indian River Lagoon mid-coast public corridor is Atlantic Coast / IRL — closed Jun 1–Aug 31 and Dec 15–Jan 31. Red drum has no dated closed season on the FWC recreational page. No freshwater bass windows.",
-    "unresolvedQuestions": [
-      "Confirm FWC Atlantic regional assignment for the IRL mid-coast corridor on the official snook page before relying on the closed windows.",
-      "Same-day FWC check still required; in-season variation orders can change."
-    ],
+    "unresolvedQuestions": ["Confirm FWC Atlantic regional assignment for the IRL mid-coast corridor on the official snook page before relying on the closed windows.", "Same-day FWC check still required; in-season variation orders can change."],
     "lastHumanReviewedAt": "2026-08-20",
     "lastHumanReviewedBy": "bench-enrich-2026-08-20-irl-midcoast",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-218",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Southern Gulf — May–September)", "start": "05-01", "end": "09-30", "notes": "FWC: Closed May 1 – September 30 for Charlotte Harbor public access corridor (same band as parent HHI-DEST-007). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Charlotte Harbor public access corridor (FWC-documented public ramps) is the corridor twin of HHI-DEST-007 — Southern Gulf closed pair: May 1–Sep 30 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for the Charlotte Harbor corridor on the official snook page (Venice / 27°04.727′N line) before relying on the May–September closed window.", "Same-day FWC check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-charlotte-corridor",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-219",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)", "start": "05-01", "end": "08-31", "notes": "FWC: Closed May 1 – August 31 for Tampa Bay public access corridor (same band as parent HHI-DEST-010). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Tampa Bay public access corridor (FWC-documented public ramps) is the corridor twin of HHI-DEST-010 — Northern/Eastern Gulf closed pair: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for the Tampa Bay corridor on the official snook page before relying on the May–August closed window.", "Same-day FWC check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-tampa-corridor",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-232",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Northern/Eastern Gulf — May–August)", "start": "05-01", "end": "08-31", "notes": "FWC: Closed May 1 – August 31 for Honeymoon Island / Pinellas (same Northern/Eastern Gulf band as Tampa Bay and Fort De Soto). Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Gulf — December–February)", "start": "12-01", "end": "02-28", "notes": "FWC: Closed December 1 – end of February. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Honeymoon Island State Park (Gulf and Hurricane Pass, Pinellas) falls in the Northern/Eastern Gulf band with Tampa Bay / Fort De Soto: May 1–Aug 31 + Dec 1–end Feb. Spotted seatrout open year-round in this FWC region; red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": ["Confirm FWC regional boundary assignment for Honeymoon Island / Pinellas on the official snook page before relying on the May–August closed window.", "Same-day FWC check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-honeymoon",
+    "nextReviewAt": "2026-09-30"
+  },
+  {
+    "id": "HHI-DEST-236",
+    "seasonWindows": [
+      {"label": "Snook harvest closed (FWC Atlantic — June–August)", "start": "06-01", "end": "08-31", "notes": "FWC: Closed June 1 – August 31 for all Atlantic regions including Lake Worth Lagoon / Palm Beach pier and ramp corridor. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"},
+      {"label": "Snook harvest closed (FWC Atlantic — December–January)", "start": "12-15", "end": "01-31", "notes": "FWC: Closed December 15 – January 31 for all Atlantic regions. Confirm same-day at https://myfwc.com/fishing/saltwater/recreational/snook/"}
+    ],
+    "provenanceNotes": "2026-08-20 bench: seasonWindows from live FWC Snook page only. Lake Worth Lagoon / Palm Beach public pier and ramp corridor is the corridor twin of HHI-DEST-009 — Atlantic closed pair: Jun 1–Aug 31 + Dec 15–Jan 31. Red drum has no dated closed season on the FWC page. No freshwater bass windows.",
+    "unresolvedQuestions": ["Confirm FWC Atlantic regional assignment for the Lake Worth / Palm Beach pier corridor on the official snook page before relying on the closed windows.", "Same-day FWC check still required; in-season variation orders can change."],
+    "lastHumanReviewedAt": "2026-08-20",
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-lake-worth-corridor",
     "nextReviewAt": "2026-09-30"
   }
 ]
