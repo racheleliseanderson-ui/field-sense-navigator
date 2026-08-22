@@ -2,9 +2,9 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "critical",
-  "ingestedAt": "2026-08-22T22:10:48.823Z",
-  "cadenceMinutes": 10,
+  "mode": "all",
+  "ingestedAt": "2026-08-22T22:27:52.937Z",
+  "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 348
   },
-  "errorCount": 30,
+  "errorCount": 32,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -150,7 +150,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "ITD55",
+      "siteId": "GINM8",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -158,7 +158,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "KMUO",
+      "siteId": "MTSBN",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -166,7 +166,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "D3277",
+      "siteId": "CO092",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -182,6 +182,14 @@
     {
       "kind": "nws",
       "agency": "NWS",
+      "siteId": "CO100",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
       "siteId": "KNQI",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
@@ -190,23 +198,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "D0414",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "PHNG",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "PHTO",
+      "siteId": "UT224",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -217,6 +209,14 @@
       "siteId": "K3W7",
       "error": "NWS K3W7 404",
       "carriedForward": false,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "E6690",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
       "staleOnly": false
     },
     {
@@ -238,7 +238,15 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "KCLW",
+      "siteId": "KSEF",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "LIB32",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -246,10 +254,26 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "KSEF",
-      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
-      "carriedForward": false,
-      "staleOnly": true
+      "siteId": "MSDSD",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "RCEC1",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "CESC1",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
     },
     {
       "kind": "nws",
@@ -266,14 +290,6 @@
       "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "KUOX",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
     },
     {
       "kind": "nws",
@@ -298,7 +314,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32601703140",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32602487943",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
