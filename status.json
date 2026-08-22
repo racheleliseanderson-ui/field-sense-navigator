@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-22T10:53:17.331Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-22T10:55:02.009Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -156,14 +156,6 @@
       "staleOnly": true
     },
     {
-      "kind": "station",
-      "agency": "USBR",
-      "siteId": "rise:6128",
-      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
       "kind": "nws",
       "agency": "NWS",
       "siteId": "ITD55",
@@ -190,22 +182,6 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "F5226",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "D0414",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
       "siteId": "PHNG",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
@@ -222,15 +198,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "D9695",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "D8787",
+      "siteId": "ODT78",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -254,6 +222,38 @@
     {
       "kind": "nws",
       "agency": "NWS",
+      "siteId": "LIB32",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "SE088",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "MSDSD",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "SE403",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "nws",
+      "agency": "NWS",
       "siteId": "SDFRV",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
@@ -262,7 +262,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "E3174",
+      "siteId": "KALX",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -270,7 +270,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "KALX",
+      "siteId": "KCMS",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
