@@ -34,7 +34,8 @@ import {
 import { useReveal, useParallax } from "@/lib/motion";
 import { useT } from "@/lib/i18n";
 import { useWatchlist } from "@/lib/watchlist";
-import flatsImg from "@/assets/flats.jpg";
+import { Art } from "@/components/art";
+import { PLATES } from "@/lib/imagery";
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
@@ -463,15 +464,13 @@ function Explore() {
       <main id="content">
 
       <section className="relative isolate overflow-hidden border-b border-hairline">
-        <img
-          ref={heroImg as React.Ref<HTMLImageElement>}
-          src={flatsImg}
-          alt="Open public water under low weather, seen from a shoreline access"
-          width={1280}
-          height={720}
-          className="parallax image-treated absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
+        <Art
+          plate={PLATES.flats}
+          scrim="side"
+          priority
+          parallax
+          imgRef={heroImg as React.Ref<HTMLImageElement>}
         />
-        <div className="absolute inset-0 -z-10 bg-linear-to-r from-abyss via-abyss/85 to-abyss/40" />
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-24">
           <div className="flex items-center gap-4" data-reveal>
             <span className="h-px w-10 bg-brass" data-reveal-rule />

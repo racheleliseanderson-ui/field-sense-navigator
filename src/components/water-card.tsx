@@ -5,6 +5,7 @@ import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
 import { useCompareTray } from "@/lib/compare-tray";
+import { plateFor, CARD } from "@/lib/imagery";
 
 function CompareButton({ id, name }: { id: string; name: string }) {
   const { has, toggle, full } = useCompareTray();
@@ -39,11 +40,15 @@ export function WaterCard({
   destination,
   fit,
   rank,
+  art = false,
 }: {
   destination: Destination;
   fit?: Fit;
   rank?: number;
+  /** show the water-type plate as a masthead strip */
+  art?: boolean;
 }) {
+  const plate = plateFor(destination.waterType);
   const r = fit?.readiness ?? readiness(destination);
   const t = readTags(destination);
   const overdue = reviewOverdue(destination);
@@ -70,8 +75,27 @@ export function WaterCard({
     <Link
       to="/water/$id"
       params={{ id: destination.id }}
-      className="panel lift group relative block overflow-hidden p-6"
+      className={`panel lift group relative block overflow-hidden ${art ? "pt-0" : ""} p-6`}
     >
+      {art && (
+        <div aria-hidden="true" className="relative -mx-6 mb-5 h-36 overflow-hidden sm:h-40">
+          <img
+            src={plate.src}
+            srcSet={plate.srcSet}
+            sizes={CARD}
+            alt=""
+            width={2400}
+            height={1355}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+            className="image-treated h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+            style={{ objectPosition: plate.position }}
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-card via-card/35 to-transparent" />
+          <div className="grain absolute inset-0" />
+        </div>
+      )}
       <div className="flex items-start justify-between gap-4 pr-[6.5rem]">
         <div className="flex items-center gap-3">
           {typeof rank === "number" && (

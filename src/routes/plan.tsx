@@ -15,7 +15,8 @@ import {
   type TimeWindow,
   type WindTolerance,
 } from "@/lib/intelligence";
-import riverImg from "@/assets/river.jpg";
+import { Art } from "@/components/art";
+import { PLATES } from "@/lib/imagery";
 
 export const Route = createFileRoute("/plan")({
   head: () => ({
@@ -167,14 +168,7 @@ function Plan() {
 
       {/* step 1 */}
       <section hidden={step !== 1} className="relative isolate overflow-hidden border-b border-hairline">
-        <img
-          src={riverImg}
-          alt="Cold river current running past a wet gravel bar at dawn"
-          width={1280}
-          height={960}
-          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-45"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-abyss/85 via-abyss/70 to-background" />
+        <Art plate={PLATES.river} scrim="hero" opacity={0.9} priority />
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
           <div className="flex items-center gap-4">
             <span className="data text-xs text-brass">STEP 01</span>

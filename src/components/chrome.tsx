@@ -217,23 +217,31 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <nav className="border-t border-hairline bg-abyss/95 px-5 py-3 md:hidden">
+        <nav className="page-in max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-hairline bg-abyss/95 px-safe pb-8 pt-2 backdrop-blur-xl md:hidden">
           <ul className="divide-y divide-hairline">
-            {NAV.map((item) => (
+            {NAV.map((item, i) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="tap flex min-h-12 items-center text-sm text-muted-foreground data-[status=active]:text-brass"
+                  className="tap group flex min-h-14 items-center gap-4 font-display text-xl font-bold tracking-tight text-foreground/85 data-[status=active]:text-brass"
                 >
+                  <span className="data text-[0.65rem] text-brass/70">{String(i + 1).padStart(2, "0")}</span>
                   {t(item.key, item.label)}
                 </Link>
               </li>
             ))}
           </ul>
-          <p className="tick mt-3 text-[0.58rem]">
-            {t("chrome.failClosed", "Public waters only · fail closed")}
-          </p>
+          <div className="mt-6 flex items-center gap-3">
+            <span className="h-px w-8 bg-brass" />
+            <p className="tick text-[0.58rem]">
+              {t("chrome.failClosed", "Public waters only · fail closed")}
+            </p>
+          </div>
+          <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+            <li><a href="https://knot.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Knot ↗</a></li>
+            <li><a href="https://hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Hook the Horizon ↗</a></li>
+          </ul>
         </nav>
       )}
     </header>
@@ -243,10 +251,18 @@ export function SiteHeader() {
 export function SiteFooter() {
   const t = useT();
   return (
-    <footer data-print="hide" className="mt-24 border-t border-hairline bg-abyss">
-      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer data-print="hide" className="relative mt-24 overflow-hidden border-t border-hairline bg-abyss">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brass/60 to-transparent" />
+      <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-safe py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <p className="font-display text-2xl font-bold tracking-tight text-foreground">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center border border-brass/40 bg-brass/10 text-brass">
+              <Anchor className="h-4 w-4" aria-hidden="true" />
+            </span>
+            <span className="tick text-brass">Hook the Horizon</span>
+          </div>
+          <p className="mt-6 font-display text-2xl font-bold tracking-tight text-foreground">
             {t("footer.headline", "Named public waters. Nothing else.")}
           </p>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
@@ -277,6 +293,26 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
+          <p className="tick">{t("footer.fleet", "The fleet")}</p>
+          <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+            <li>
+              <a href="https://waterways.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-brass">
+                Waterways
+              </a>
+            </li>
+            <li>
+              <a href="https://knot.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Knot ↗
+              </a>
+            </li>
+            <li>
+              <a href="https://hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Hook the Horizon ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
           <p className="tick">{t("footer.record", "Record")}</p>
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
@@ -289,8 +325,8 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-hairline">
-        <p className="mx-auto max-w-7xl px-5 py-5 text-xs text-muted-foreground sm:px-8">
+      <div className="relative border-t border-hairline">
+        <p className="mx-auto max-w-7xl px-safe py-5 text-xs text-muted-foreground sm:px-8">
           {t(
             "footer.legal",
             "Field Sense Navigator — built for Hook the Horizon. Official agency sources are authoritative; posted signage on the day wins over anything printed here.",

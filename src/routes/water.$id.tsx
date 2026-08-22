@@ -28,17 +28,8 @@ import {
   readiness,
   type JobId,
 } from "@/lib/intelligence";
-import heroImg from "@/assets/hero-water.jpg";
-import riverImg from "@/assets/river.jpg";
-import flatsImg from "@/assets/flats.jpg";
-import rampImg from "@/assets/ramp.jpg";
-
-function imageFor(d: Destination) {
-  if (d.waterType === "marine") return flatsImg;
-  if (d.waterType === "river") return riverImg;
-  if (d.waterType === "reservoir") return rampImg;
-  return heroImg;
-}
+import { Art } from "@/components/art";
+import { plateFor } from "@/lib/imagery";
 
 export const Route = createFileRoute("/water/$id")({
   loader: ({ params }) => {
@@ -110,15 +101,14 @@ function WaterRecord() {
 
       {/* masthead */}
       <section className="relative isolate overflow-hidden">
-        <img
-          ref={heroRef as React.Ref<HTMLImageElement>}
-          src={imageFor(d)}
-          alt={`Representative water conditions for a ${d.waterType} corridor`}
-          width={1280}
-          height={960}
-          className="parallax image-treated absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
+        <Art
+          plate={plateFor(d.waterType)}
+          scrim="hero"
+          opacity={0.85}
+          priority
+          parallax
+          imgRef={heroRef as React.Ref<HTMLImageElement>}
         />
-        <div className="absolute inset-0 -z-10 bg-linear-to-b from-abyss/85 via-abyss/70 to-background" />
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-8 sm:pt-16 md:pb-20 md:pt-24">
           <Link to="/explore" className="tick text-primary hover:text-brass">
             ← Catalog

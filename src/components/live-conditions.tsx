@@ -55,7 +55,7 @@ function ReadingRows({
   retained = false,
 }: {
   readings: PanelReading[];
-  stationId?: string | null;
+  stationId?: string | null | undefined;
   retained?: boolean;
 }) {
   return (

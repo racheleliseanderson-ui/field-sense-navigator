@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
-import rampImg from "@/assets/ramp.jpg";
+import { Art } from "@/components/art";
+import { PLATES } from "@/lib/imagery";
 
 export const Route = createFileRoute("/boundary")({
   head: () => ({
@@ -45,16 +46,8 @@ function BoundaryPage() {
       <SiteHeader />
       <main id="content">
 
-      <section className="relative overflow-hidden border-b border-hairline">
-        <img
-          src={rampImg}
-          alt="A wet public boat ramp descending into cold water before dawn"
-          width={1280}
-          height={960}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-abyss/70" />
+      <section className="relative isolate overflow-hidden border-b border-hairline">
+        <Art plate={PLATES.still} scrim="band" opacity={0.8} priority />
         <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
           <p className="tick text-brass">Doctrine</p>
           <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.4rem,6vw,4.6rem)] font-bold leading-[0.94] tracking-[-0.04em] text-foreground">
