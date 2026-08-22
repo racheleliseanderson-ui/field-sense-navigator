@@ -2,16 +2,16 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-22T16:54:33.528Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-22T16:55:52.255Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
     "boundStations": 408,
-    "withReadings": 246,
-    "withStaleOnly": 11,
-    "emptyOrError": 162,
+    "withReadings": 245,
+    "withStaleOnly": 12,
+    "emptyOrError": 163,
     "destinationBindings": 439,
     "byAgency": {
       "NOAA-COOPS": {
@@ -26,8 +26,8 @@
       },
       "WSC": {
         "bound": 56,
-        "withReadings": 48,
-        "withStaleOnly": 0
+        "withReadings": 47,
+        "withStaleOnly": 1
       },
       "USACE": {
         "bound": 1,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 348
   },
-  "errorCount": 21,
+  "errorCount": 22,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -127,6 +127,14 @@
       "kind": "station",
       "agency": "USGS",
       "siteId": "01484683",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "WSC",
+      "siteId": "08EB003",
       "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
