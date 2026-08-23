@@ -2,8 +2,8 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "all",
-  "ingestedAt": "2026-08-23T12:51:29.956Z",
+  "mode": "slow",
+  "ingestedAt": "2026-08-23T12:55:56.060Z",
   "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 348
   },
-  "errorCount": 22,
+  "errorCount": 23,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -151,6 +151,14 @@
       "kind": "station",
       "agency": "USBR",
       "siteId": "rise:341",
+      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
+      "carriedForward": true,
+      "staleOnly": false
+    },
+    {
+      "kind": "station",
+      "agency": "USBR",
+      "siteId": "rise:6128",
       "error": "USBR RISE 504; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
