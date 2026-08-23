@@ -3,7 +3,7 @@
   "ok": true,
   "degraded": true,
   "mode": "critical",
-  "ingestedAt": "2026-08-23T05:22:30.672Z",
+  "ingestedAt": "2026-08-23T05:52:53.420Z",
   "cadenceMinutes": 10,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -234,7 +234,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32620183493",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32621453930",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
