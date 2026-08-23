@@ -3,7 +3,7 @@
   "ok": true,
   "degraded": true,
   "mode": "critical",
-  "ingestedAt": "2026-08-23T07:52:47.851Z",
+  "ingestedAt": "2026-08-23T08:21:32.910Z",
   "cadenceMinutes": 10,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 348
   },
-  "errorCount": 27,
+  "errorCount": 24,
   "hardErrorCount": 4,
   "errors": [
     {
@@ -146,30 +146,6 @@
       "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
       "carriedForward": false,
       "staleOnly": true
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "GINM8",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "ITD20",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "MTM86",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
     },
     {
       "kind": "nws",
@@ -274,7 +250,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32626741528",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32628037032",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
