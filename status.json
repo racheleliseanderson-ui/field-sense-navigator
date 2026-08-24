@@ -3,7 +3,7 @@
   "ok": true,
   "degraded": true,
   "mode": "critical",
-  "ingestedAt": "2026-08-24T11:37:30.908Z",
+  "ingestedAt": "2026-08-24T12:02:13.795Z",
   "cadenceMinutes": 10,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 347
   },
-  "errorCount": 27,
+  "errorCount": 25,
   "hardErrorCount": 3,
   "errors": [
     {
@@ -150,23 +150,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "HVMT",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "TOSM",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "ITD20",
+      "siteId": "D0414",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -274,7 +258,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32722789058",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32724914041",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
