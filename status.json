@@ -2,9 +2,9 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "slow",
-  "ingestedAt": "2026-08-24T23:52:19.162Z",
-  "cadenceMinutes": 30,
+  "mode": "critical",
+  "ingestedAt": "2026-08-24T23:58:31.651Z",
+  "cadenceMinutes": 10,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
@@ -48,7 +48,7 @@
     "nwsStations": 355,
     "nwsWithObs": 348
   },
-  "errorCount": 28,
+  "errorCount": 25,
   "hardErrorCount": 3,
   "errors": [
     {
@@ -158,23 +158,7 @@
     {
       "kind": "nws",
       "agency": "NWS",
-      "siteId": "MTSBN",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "CO092",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "MTRAY",
+      "siteId": "ITD55",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -183,14 +167,6 @@
       "kind": "nws",
       "agency": "NWS",
       "siteId": "MTM86",
-      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "nws",
-      "agency": "NWS",
-      "siteId": "UT224",
       "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
@@ -282,7 +258,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32790989583",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/32791674660",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
