@@ -18,7 +18,32 @@ import {
 import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
 
+const JOB_IDS: JobId[] = JOBS.map((j) => j.id);
+
+type PlanSearch = {
+  job?: JobId;
+  guided?: boolean;
+};
+
+function parsePlanSearch(s: Record<string, unknown>): PlanSearch {
+  const raw = typeof s.job === "string" ? s.job : undefined;
+  const job = raw && JOB_IDS.includes(raw as JobId) ? (raw as JobId) : undefined;
+  const guided =
+    s.guided === true || s.guided === "1" || s.guided === "true" ? true : undefined;
+  const out: PlanSearch = {};
+  if (job) out.job = job;
+  if (guided) out.guided = guided;
+  return out;
+}
+
+function gearForJob(job: JobId | undefined): GearMode {
+  if (job === "kayak") return "hand_launch";
+  if (job === "small_boat") return "trailer";
+  return "shore_only";
+}
+
 export const Route = createFileRoute("/plan")({
+  validateSearch: parsePlanSearch,
   head: () => ({
     meta: [
       { title: "Plan a Day · Field Sense Navigator" },
@@ -102,10 +127,14 @@ function Selector<T extends string>({
 }
 
 function Plan() {
-  const [job, setJob] = useState<JobId | null>(null);
-  const [c, setC] = useState<Constraints>(DEFAULT_CONSTRAINTS);
+  const search = Route.useSearch();
+  const [job, setJob] = useState<JobId | null>(search.job ?? null);
+  const [c, setC] = useState<Constraints>(() => ({
+    ...DEFAULT_CONSTRAINTS,
+    gear: gearForJob(search.job),
+  }));
   const [shown, setShown] = useState(9);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(search.job ? (search.guided ? 3 : 2) : 1);
 
   const result = useMemo(
     () => (job ? rank(destinations, job, c) : null),
@@ -129,10 +158,22 @@ function Plan() {
     { n: 3 as const, label: "Ranked waters", done: false },
   ];
 
+  const jobLabel = JOBS.find((j) => j.id === job)?.label;
+
   return (
     <div className="min-h-dvh bg-background">
       <SiteHeader />
       <main id="content">
+
+      {search.job ? (
+        <div className="border-b border-hairline bg-brass/10">
+          <p className="mx-auto max-w-7xl px-5 py-3 text-sm leading-relaxed text-foreground sm:px-8">
+            Quick readiness check. Job is declared{jobLabel ? ` (${jobLabel})` : ""}.
+            Constraints stay optional. Ranked waters use documented records only —
+            same-day checks are not invented.
+          </p>
+        </div>
+      ) : null}
 
       {/* progress rail */}
       <nav
@@ -194,6 +235,7 @@ function Plan() {
                   type="button"
                   onClick={() => {
                     setJob(j.id);
+                    setC((prev) => ({ ...prev, gear: gearForJob(j.id) }));
                     setShown(9);
                     setStep(2);
                   }}
@@ -239,6 +281,10 @@ function Plan() {
           <h2 className="mt-6 font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
             Constraints
           </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Optional. Rank with these defaults if you want the first useful list
+            now. Widening later does not invent missing records.
+          </p>
 
           <div className="mt-9 grid gap-9 lg:grid-cols-3">
             <Selector label="Time window" options={TIME_OPTIONS} value={c.timeWindow} onChange={(v) => set("timeWindow", v)} />
@@ -320,11 +366,16 @@ function Plan() {
           <div className="mt-8">
             <EmptyState
               title="Declare a job to begin the ranking"
-              body="Nothing is ranked until the instrument knows what you are trying to do. Until then the catalog stays alphabetically indifferent — and that is the state this tool exists to replace."
+              body="Nothing is ranked until the instrument knows what you are trying to do. We will not invent a job to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
               action={
-                <Link to="/explore" className="tick text-primary hover:text-brass">
-                  Or browse the full catalog →
-                </Link>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Link to="/plan" search={{ job: "bank" }} className="tick text-brass">
+                    Start with a bank job →
+                  </Link>
+                  <Link to="/explore" className="tick text-primary hover:text-brass">
+                    Or browse the full catalog →
+                  </Link>
+                </div>
               }
             />
           </div>
@@ -333,6 +384,15 @@ function Plan() {
             <EmptyState
               title="Every candidate failed closed"
               body="With these constraints no record can be recommended without inventing something we do not hold. Widen the gear mode, the states, or the water type — the instrument will not soften the gate to fill the page."
+              action={
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className="tick text-brass"
+                >
+                  Change a constraint →
+                </button>
+              }
             />
           </div>
         ) : result ? (
