@@ -13,6 +13,38 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ThemeProvider, themeBootstrapScript } from "../lib/theme";
 
+function FleetReturnBar() {
+  return (
+    <div
+      role="region"
+      aria-label="Hook the Horizon field tools"
+      data-tool-manifest="https://hookthehorizon.blog/wp-json/hth/v1/tools"
+      style={{
+        position: "relative",
+        zIndex: 60,
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        gap: "0.45rem 1rem",
+        padding: "0.55rem 1rem",
+        background: "#071827",
+        color: "#e3e1d9",
+        fontFamily: "system-ui, sans-serif",
+        fontSize: "0.75rem",
+        lineHeight: 1.35,
+      }}
+    >
+      <a href="https://hookthehorizon.blog/field-tools/" style={{ color: "#c7a257", fontWeight: 800, textDecoration: "none" }}>
+        Hook the Horizon · All field tools
+      </a>
+      <span style={{ opacity: 0.78 }}>No exact fishing coordinates are required or passed between tools.</span>
+      <a href="https://hookthehorizon.blog/field-tools/first-run/" style={{ marginLeft: "auto", color: "#c7a257", fontWeight: 800, textDecoration: "none" }}>
+        90-second start →
+      </a>
+    </div>
+  );
+}
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -78,17 +110,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Field Sense Navigator — Public-water field instrument" },
+      { title: "Field Sense Navigator — Check a Public Water Before You Go" },
       {
         name: "description",
         content:
-          "A fail-closed field intelligence instrument for named public waters: layered readouts, field readiness, job-aware ranking and printable field packets.",
+          "Check access, rules, standing hazards, crowding and the same-day conditions you still need to verify for a named public water. No private spots or fishing pins.",
       },
       { name: "author", content: "Hook the Horizon" },
       { property: "og:title", content: "Field Sense Navigator" },
       {
         property: "og:description",
-        content: "Layered intelligence for named public waters. No private spots, no invented conditions.",
+        content: "Check whether a named public water is workable before you drive to it. No private spots or invented current conditions.",
       },
       { property: "og:type", content: "website" },
       {
@@ -142,6 +174,7 @@ function RootShell({ children }: { children: ReactNode }) {
         </noscript>
       </head>
       <body>
+        <FleetReturnBar />
         {children}
         <Scripts />
       </body>
