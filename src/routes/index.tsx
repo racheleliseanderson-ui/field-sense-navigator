@@ -368,9 +368,10 @@ function Home() {
           >
             One field. Several instruments.
           </h2>
-          <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-3" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
+          <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
             {[
               ["Waterways", "This instrument. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
+              ["Species", "Behavior hypotheses and presentation families — not bite scores.", "https://species.hookthehorizon.blog/", false],
               ["Knot", "Decide, diagnose and compare the knot for the job.", "https://knot.hookthehorizon.blog/", false],
               ["The blog", "Long-form field notes from Hook the Horizon.", "https://hookthehorizon.blog/", false],
             ].map(([name, body, href, current]) => (

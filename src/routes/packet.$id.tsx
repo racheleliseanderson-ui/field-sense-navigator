@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
 import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
+import { encodeSpeciesPacket } from "@/lib/species-handoff";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -87,6 +88,12 @@ function Packet() {
             ← Back to record
           </Link>
           <div className="flex flex-1 gap-2 sm:flex-none">
+            <a
+              href={encodeSpeciesPacket(d)}
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-3 border border-brass/50 px-6 text-xs font-semibold uppercase tracking-[0.14em] text-brass hover:bg-brass/10 sm:flex-none"
+            >
+              Carry to Species ↗
+            </a>
             <button
               type="button"
               onClick={downloadPdf}

@@ -30,6 +30,7 @@ import {
 } from "@/lib/intelligence";
 import { Art } from "@/components/art";
 import { plateFor } from "@/lib/imagery";
+import { encodeSpeciesPacket } from "@/lib/species-handoff";
 
 export const Route = createFileRoute("/water/$id")({
   loader: ({ params }) => {
@@ -404,8 +405,9 @@ function WaterRecord() {
           <div className="panel p-6">
             <p className="tick text-brass">Carry this water forward</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Hand the record to Horizon Desk or Trip Prep with its open items,
-              boundary note and source date attached.
+              Hand the record to Species & Presentation, Horizon Desk or Trip Prep with its open
+              items, boundary note and source date attached. Packets move only when you press
+              carry — nothing is posted automatically.
             </p>
 
             <label className="tick mt-5 block text-[0.55rem]" htmlFor="job">
@@ -426,6 +428,12 @@ function WaterRecord() {
             </select>
 
             <div className="mt-4 flex flex-col gap-2">
+              <a
+                href={encodeSpeciesPacket(d)}
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass transition-colors hover:bg-brass/20"
+              >
+                Carry to Species & Presentation ↗
+              </a>
               <button
                 type="button"
                 onClick={copyHandoff}

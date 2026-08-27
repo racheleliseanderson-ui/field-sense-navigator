@@ -239,6 +239,7 @@ export function SiteHeader() {
             </p>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+            <li><a href="https://species.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Species ↗</a></li>
             <li><a href="https://knot.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Knot ↗</a></li>
             <li><a href="https://hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Hook the Horizon ↗</a></li>
           </ul>
@@ -298,6 +299,11 @@ export function SiteFooter() {
             <li>
               <a href="https://waterways.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-brass">
                 Waterways
+              </a>
+            </li>
+            <li>
+              <a href="https://species.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Species ↗
               </a>
             </li>
             <li>
