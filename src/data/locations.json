@@ -1,6 +1,6 @@
 {
   "schema": "0.6.0",
-  "generatedAt": "2026-08-28T14:43:19.454Z",
+  "generatedAt": "2026-08-28T14:51:40.671Z",
   "doctrine": "Gazetteer lookup of the published water name in its jurisdiction. Not a nearby-gauge substitute. Hydro features preferred. location-overrides.json wins.",
   "stats": {
     "records": 523,
