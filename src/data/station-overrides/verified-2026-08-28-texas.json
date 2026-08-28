@@ -1,0 +1,28 @@
+{
+  "schema": "0.1.0",
+  "source": "Manual same-water verification against USGS Water Data for the Nation on 2026-08-28.",
+  "doctrine": "Exact same-water official stations only. No nearby substitution.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-186",
+      "agency": "USGS",
+      "siteId": "08210500",
+      "siteName": "Lk Corpus Christi nr Mathis, TX",
+      "note": "Verified same-reservoir USGS station. Continuous reservoir storage and lake/reservoir elevation were current on 2026-08-27; resolver name matching missed the abbreviated official station name."
+    },
+    {
+      "destinationId": "HHI-DEST-212",
+      "agency": "USGS",
+      "siteId": "07345900",
+      "siteName": "Lk O' the Pines nr Jefferson, TX",
+      "note": "Verified same-reservoir USGS station. Continuous lake/reservoir elevation was current on 2026-08-27; resolver name matching missed the abbreviated official station name."
+    },
+    {
+      "destinationId": "HHI-DEST-213",
+      "agency": "USGS",
+      "siteId": "08063010",
+      "siteName": "Cedar Ck Res nr Trinidad, TX",
+      "note": "Verified same-reservoir USGS station. Continuous reservoir storage and lake/reservoir elevation were current on 2026-08-27; resolver name matching missed the abbreviated official station name."
+    }
+  ]
+}
