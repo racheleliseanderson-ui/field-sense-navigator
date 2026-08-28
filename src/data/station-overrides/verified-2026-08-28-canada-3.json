@@ -1,0 +1,21 @@
+{
+  "schema": "0.1.0",
+  "source": "Manual same-water verification against Environment and Climate Change Canada Wateroffice real-time hydrometric search on 2026-08-28.",
+  "doctrine": "Exact same-water official stations only. No nearby substitution.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-431",
+      "agency": "WSC",
+      "siteId": "07CA004",
+      "siteName": "LAC LA BICHE AT LAC LA BICHE",
+      "note": "Verified exact same-lake WSC station. Environment Canada lists 07CA004 as a continuous real-time hydrometric station."
+    },
+    {
+      "destinationId": "HHI-DEST-433",
+      "agency": "WSC",
+      "siteId": "06CB001",
+      "siteName": "LAC LA RONGE AT LA RONGE",
+      "note": "Verified exact same-lake WSC station. Environment Canada lists 06CB001 as a continuous real-time hydrometric station."
+    }
+  ]
+}
