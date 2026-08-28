@@ -1,13 +1,12 @@
 /**
  * Vite base config for this TanStack Start app.
  *
- * Replaces `@lovable.dev/vite-tanstack-config`. It assembles the same plugin
- * set and resolved options that wrapper produced for local development and for
- * production builds — Tailwind, tsconfig path aliases, TanStack Start (with
- * server-only import protection), Nitro on build, React Fast Refresh, `VITE_*`
- * env inlining, the `@` -> `src` alias and React/TanStack deduping — with no
- * third-party build service, sandbox hooks, telemetry or devtools source
- * injection in the pipeline.
+ * This repository owns its build. It assembles the full plugin set and the
+ * resolved options for local development and for production builds — Tailwind,
+ * tsconfig path aliases, TanStack Start (with server-only import protection),
+ * Nitro on build, React Fast Refresh, `VITE_*` env inlining, the `@` -> `src`
+ * alias and React/TanStack deduping — with no third-party build service,
+ * sandbox hooks, telemetry or devtools source injection in the pipeline.
  *
  * Keep this file boring. It is deliberately a thin, readable assembly so the
  * build stays inspectable and owned by this repository.
