@@ -17,10 +17,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Assemble base + jurisdiction-shard catalog
+        run: node scripts/assemble-resolver-catalog.mjs
       - name: Locate every water by published name
         run: node scripts/resolve-locations.mjs --retry-misses
       - name: Resolve USGS / NOAA / WSC bindings and NWS stations
         run: node scripts/resolve-stations.mjs
+      - name: Restore sharded catalog source
+        if: always()
+        run: node scripts/assemble-resolver-catalog.mjs --restore
       - name: Open PR if bindings or locations changed
         uses: peter-evans/create-pull-request@v7
         with:
@@ -30,7 +35,7 @@ jobs:
           branch: data/station-bindings
           title: "Refresh locations and multi-agency station bindings"
           body: |
-            Nightly resolve of the 494-water catalog.
+            Nightly resolve of the complete base + jurisdiction-shard catalog.
 
             Same contract on every record:
             1. Gazetteer location of the published water (not a neighbor gauge)
