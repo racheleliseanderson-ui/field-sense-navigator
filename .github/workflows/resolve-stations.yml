@@ -12,9 +12,11 @@ on:
       - "src/data/destinations/**"
       - "src/data/location-overrides.json"
       - "src/data/station-overrides.json"
+      - "src/data/station-overrides/**"
       - "scripts/resolve-locations.mjs"
       - "scripts/resolve-stations.mjs"
       - "scripts/assemble-resolver-catalog.mjs"
+      - "scripts/assemble-resolver-overrides.mjs"
       - "scripts/preserve-resolver-bindings.mjs"
       - ".github/workflows/resolve-stations.yml"
 
@@ -33,16 +35,19 @@ jobs:
         run: cp src/data/station-bindings.json .resolver-station-bindings-prior.json
       - name: Assemble base + jurisdiction-shard catalog
         run: node scripts/assemble-resolver-catalog.mjs
+      - name: Assemble base + verified station-override shards
+        run: node scripts/assemble-resolver-overrides.mjs
       - name: Locate every water by published name
         run: node scripts/resolve-locations.mjs --retry-misses
       - name: Resolve USGS / NOAA / WSC bindings and NWS stations
         run: node scripts/resolve-stations.mjs
       - name: Preserve prior exact bindings across transient index outages
         run: node scripts/preserve-resolver-bindings.mjs
-      - name: Restore sharded catalog source
+      - name: Restore sharded resolver sources
         if: always()
         run: |
           node scripts/assemble-resolver-catalog.mjs --restore
+          node scripts/assemble-resolver-overrides.mjs --restore
           rm -f .resolver-station-bindings-prior.json
       - name: Publish refreshed data branch
         run: |
