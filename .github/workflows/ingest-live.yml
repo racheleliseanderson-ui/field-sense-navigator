@@ -13,6 +13,16 @@ on:
           - all
           - critical
         default: all
+  push:
+    branches:
+      - main
+    paths:
+      - "src/data/station-bindings.json"
+      - "src/data/station-overrides.json"
+      - "scripts/ingest-live.mjs"
+      - "scripts/ingest-live.lib.mjs"
+      - "scripts/observation-age.mjs"
+      - ".github/workflows/ingest-live.yml"
 
 concurrency:
   group: live-snapshot
