@@ -4,6 +4,18 @@ on:
   schedule:
     - cron: "17 6 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/data/destinations.json"
+      - "src/data/destinations/**"
+      - "src/data/location-overrides.json"
+      - "src/data/station-overrides.json"
+      - "scripts/resolve-locations.mjs"
+      - "scripts/resolve-stations.mjs"
+      - "scripts/assemble-resolver-catalog.mjs"
+      - ".github/workflows/resolve-stations.yml"
 
 permissions:
   contents: write
@@ -35,7 +47,9 @@ jobs:
           branch: data/station-bindings
           title: "Refresh locations and multi-agency station bindings"
           body: |
-            Nightly resolve of the complete base + jurisdiction-shard catalog.
+            Resolver pass of the complete base + jurisdiction-shard catalog.
+
+            Runs nightly and whenever catalog records, catalog shards, or station/location overrides change.
 
             Same contract on every record:
             1. Gazetteer location of the published water (not a neighbor gauge)
