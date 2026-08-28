@@ -174,7 +174,7 @@ function WaterRecord() {
               className="inline-flex items-center gap-3 bg-brass px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground transition-transform hover:-translate-y-0.5"
             >
               <Printer className="h-4 w-4" aria-hidden="true" />
-              Build field packet
+              Build field brief
             </Link>
             <button
               type="button"
@@ -406,7 +406,7 @@ function WaterRecord() {
             <p className="tick text-brass">Carry this water forward</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hand the record to Species & Presentation, Horizon Desk or Trip Prep with its open
-              items, boundary note and source date attached. Packets move only when you press
+              items, boundary note and source date attached. Notes move only when you press
               carry — nothing is posted automatically.
             </p>
 
@@ -456,7 +456,7 @@ function WaterRecord() {
                 search={job ? { job } : {}}
                 className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
               >
-                <Printer className="h-4 w-4" aria-hidden="true" /> Field packet
+                <Printer className="h-4 w-4" aria-hidden="true" /> Field brief
               </Link>
               <WatchButton id={d.id} name={displayName(d)} variant="full" />
               <button
@@ -495,7 +495,7 @@ function WaterRecord() {
             className="flex min-h-14 flex-col items-center justify-center gap-1 text-[0.6rem] uppercase tracking-[0.12em] text-foreground"
           >
             <Printer className="h-4 w-4" aria-hidden="true" />
-            Packet
+            Brief
           </Link>
           <button
             type="button"

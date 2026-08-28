@@ -17,8 +17,8 @@ const ROUTES = [
   { to: "/explore", label: "Catalog" },
   { to: "/compare", label: "Compare waters" },
   { to: "/watchlist", label: "Watchlist" },
-  { to: "/pipeline", label: "Pipeline console" },
-  { to: "/boundary", label: "Boundary and doctrine" },
+  { to: "/pipeline", label: "How it comes together" },
+  { to: "/boundary", label: "Limits & sources" },
 ] as const;
 
 /** Keyboard jump: waters, states and instrument sections. Cmd/Ctrl-K. */

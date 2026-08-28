@@ -22,17 +22,17 @@ import { bindingsFile } from "@/lib/bindings";
 export const Route = createFileRoute("/pipeline")({
   head: () => ({
     meta: [
-      { title: "Pipeline console · Field Sense Navigator" },
+      { title: "How a water reading comes together · Field Sense Navigator" },
       {
         name: "description",
         content:
-          "Catalog integrity, scheduled ingest (USGS / NOAA / WSC / USBR / USACE / CDEC / NWS), and fail-closed station bindings.",
+          "Official station sources and when a reading cannot be confirmed.",
       },
-      { property: "og:title", content: "Pipeline console · Field Sense Navigator" },
+      { property: "og:title", content: "How a water reading comes together · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Scheduled USGS ingest and fail-closed station bindings. Misses are printed as plainly as hits.",
+          "Official station sources and when a reading cannot be confirmed. Misses are printed as plainly as hits.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -183,12 +183,12 @@ function Pipeline() {
     run.state === "running"
       ? "Running"
       : run.state === "paused"
-        ? "Paused — nothing is being probed"
+        ? "Paused — checks on hold"
         : run.state === "stopped"
           ? `Stopped — ${run.counts.unreached} target(s) never reached`
           : run.state === "complete"
             ? "Run complete"
-            : "Idle";
+            : "Ready to start";
 
   const bind = pulse?.bindings ?? bindingsFile.stats;
   const ingest = pulse?.ingest;
@@ -201,22 +201,22 @@ function Pipeline() {
       <section className="border-b border-hairline bg-abyss">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:py-16">
           <div className="flex items-center gap-4">
-            <span className="data text-xs text-brass">PIPELINE</span>
+            <span className="data text-xs text-brass">SOURCES</span>
             <span className="h-px flex-1 bg-hairline" />
           </div>
           <h1 className="mt-6 max-w-3xl font-display text-[clamp(2rem,5vw,3.8rem)] font-bold leading-[0.94] tracking-[-0.04em] text-foreground">
-            What the catalog
+            How a water reading
             <br />
-            knows about itself.
+            comes together.
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Station bindings are resolved on a nightly schedule (USGS, NOAA
-            CO-OPS, Water Survey of Canada, USBR, USACE, CA DWR CDEC). Every
-            record is located, given a weather station, scanned for agency-page
-            language, and offered a gauge. Interior-west, override, and NOAA
-            CO-OPS gauges refresh every 10 minutes; the full catalog every 30.
-            USBR is isolated so a RISE timeout cannot stall the rest. Misses
-            stay misses — they are not omitted.
+            Official gauge stations are matched to each named water on a nightly
+            schedule (USGS, NOAA CO-OPS, Water Survey of Canada, USBR, USACE,
+            CA DWR CDEC). Every record is located, given a weather station,
+            scanned for agency-page language, and offered a gauge. Interior-west,
+            pinned, and NOAA CO-OPS gauges refresh every 10 minutes; the full
+            set every 30. USBR is isolated so a timeout cannot stall the rest.
+            Misses stay misses — they are not omitted.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
@@ -236,14 +236,14 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Scheduled pulse
+          Official sources
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Bindings are a committed data file. Every record is run through the
-          same four live layers — location, gauge, weather observation, agency
-          page language. Live numbers come from the last ingest, then a direct
-          agency pull if that snapshot is older than 45 minutes. A silent feed
-          is a miss, not a skip. Observation time, not ingest time, decides
+          Matched stations are a committed source list. Every record is run through
+          the same four live layers — location, gauge, weather observation, agency
+          page language. Live numbers come from the last published reading, then a
+          direct agency pull if that snapshot is older than 45 minutes. A silent
+          feed is a miss, not a skip. Observation time, not fetch time, decides
           whether a value is current (48 h stage/flow/weather, 7 d reservoir
           elevation). Last official values may be retained with their original
           observed time when a fetch times out or when the last official
@@ -252,7 +252,7 @@ function Pipeline() {
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
-              <p className="font-display text-base font-bold text-foreground">Station bindings</p>
+              <p className="font-display text-base font-bold text-foreground">Matched stations</p>
               <GradeChip grade="clear" label="Nightly" />
             </div>
             <p className="data mt-3 text-sm text-foreground">
@@ -271,13 +271,13 @@ function Pipeline() {
               Generated {pulse?.bindings.generatedAt
                 ? new Date(pulse.bindings.generatedAt).toUTCString()
                 : new Date(bindingsFile.generatedAt).toUTCString()}
-              . Override file wins. Name and water-type must both align. No nearby
+              . Pinned matches win. Name and water-type must both align. No nearby
               gauge is substituted.
             </p>
           </li>
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
-              <p className="font-display text-base font-bold text-foreground">Scheduled ingest</p>
+              <p className="font-display text-base font-bold text-foreground">Latest readings</p>
               <GradeChip
                 grade={!ingest || ingest.stale ? "watch" : ingest.degraded ? "watch" : "clear"}
                 label={
@@ -316,8 +316,8 @@ function Pipeline() {
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               {ingest?.ingestedAt
-                ? `Last ingest ${ingest.ageMinutes} min ago · ${ingest.archiveRetentionHours ?? 24} hourly archives on live-snapshot`
-                : "The scheduled Action has not published a snapshot to the live-snapshot branch yet."}
+                ? `Last reading ${ingest.ageMinutes} min ago · ${ingest.archiveRetentionHours ?? 24} hourly archives on live-snapshot`
+                : "A scheduled check has not published a snapshot to the live-snapshot branch yet."}
             </p>
             {(ingest?.errorCount ?? 0) > 0 && (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
@@ -355,7 +355,7 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Catalog integrity
+          Record completeness
         </h2>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {checks.map((c) => (
@@ -375,7 +375,7 @@ function Pipeline() {
               </p>
               {c.examples.length > 0 && (
                 <p className="mt-2 text-[0.68rem] leading-relaxed text-muted-foreground">
-                  Failing: {c.examples.join(", ")}
+                  Needs attention: {c.examples.join(", ")}
                   {c.count > c.examples.length ? ` +${c.count - c.examples.length} more` : ""}
                 </p>
               )}
@@ -386,18 +386,18 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Source verification & station resolution
+          Check a station or official page
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
           {mode === "source"
             ? "Each run reads the agency page the record cites and reports what the host returned. A page that has moved is reported as moved; a host that does not answer leaves the citation unverified."
-            : "Manual probes still work. The scheduled binding file is what the instrument uses on every water record — this console is for spot-checks, not the clock."}
+            : "Manual checks still work. The published station list is what this guide uses on every water record — this page is for spot-checks, not the clock."}
         </p>
 
         <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
           <div>
             <label className="tick text-[0.55rem]" htmlFor="mode">
-              Run type
+              Check type
             </label>
             <select
               id="mode"
@@ -464,7 +464,7 @@ function Pipeline() {
           </div>
           <div>
             <label className="tick text-[0.55rem]" htmlFor="concurrency">
-              Parallel probes
+              Checks at once
             </label>
             <select
               id="concurrency"
@@ -488,7 +488,7 @@ function Pipeline() {
               className="tap inline-flex min-h-11 items-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
             >
               <Play className="h-4 w-4" aria-hidden="true" />
-              Run ({targets.length})
+              {targets.length ? `Check sources (${targets.length})` : "Check sources"}
             </button>
             <button
               type="button"
@@ -527,7 +527,7 @@ function Pipeline() {
             <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
           </div>
           <p className="data mt-2 text-xs text-muted-foreground">
-            {statusLine} · {run.counts.probed}/{run.planned || targets.length} probed ·{" "}
+            {statusLine} · {run.counts.probed}/{run.planned || targets.length} checked ·{" "}
             {mode === "source"
               ? `${run.counts.matched} verified · ${run.counts.unmatched} moved · ${run.counts.errors} unverified`
               : `${run.counts.matched} matched · ${run.counts.unmatched} unmatched · ${run.counts.errors} error`}
@@ -559,7 +559,7 @@ function Pipeline() {
               className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-              Re-run failures
+              Retry unconfirmed
             </button>
             <button
               type="button"
@@ -620,7 +620,7 @@ function Pipeline() {
 
         {run.history.length > 0 && (
           <div className="mt-8">
-            <h3 className="tick text-[0.55rem]">Run history · last {run.history.length}</h3>
+            <h3 className="tick text-[0.55rem]">Check history · last {run.history.length}</h3>
             <ul className="data mt-3 divide-y divide-hairline border border-hairline text-xs">
               {run.history.map((h) => (
                 <li
@@ -631,7 +631,7 @@ function Pipeline() {
                     {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} · {h.outcome}
                   </span>
                   <span className="text-muted-foreground sm:text-right">
-                    {h.probed}/{h.planned} probed · {h.matched} matched · {h.errors} error ·{" "}
+                    {h.probed}/{h.planned} checked · {h.matched} matched · {h.errors} error ·{" "}
                     {(h.durationMs / 1000).toFixed(1)}s
                   </span>
                 </li>

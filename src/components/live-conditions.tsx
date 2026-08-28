@@ -94,7 +94,7 @@ function gaugeEmptyCopy(station: boolean, retainedCount: number) {
   if (station) {
     return "The matched station returned no current values; the feed may be offline.";
   }
-  return "No official gauge reading on this record. The pipeline will not invent a nearby station.";
+  return "No official gauge reading on this record. We will not invent a nearby station.";
 }
 
 /**

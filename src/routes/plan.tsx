@@ -50,13 +50,13 @@ export const Route = createFileRoute("/plan")({
       {
         name: "description",
         content:
-          "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a field packet.",
+          "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a same-day brief.",
       },
       { property: "og:title", content: "Plan a Day · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Situation-aware ranking of named public waters, with fail-closed exclusions and a printable same-day field packet.",
+          "Situation-aware ranking of named public waters, with required-check exclusions and a printable same-day brief.",
       },
     ],
   }),
@@ -382,8 +382,8 @@ function Plan() {
         ) : result && result.fits.length === 0 ? (
           <div className="mt-8">
             <EmptyState
-              title="Every candidate failed closed"
-              body="With these constraints no record can be recommended without inventing something we do not hold. Widen the gear mode, the states, or the water type — the instrument will not soften the gate to fill the page."
+              title="No water meets these requirements"
+              body="With these constraints no record can be recommended without inventing something we do not hold. Widen the gear mode, the states, or the water type — this guide will not soften a required check to fill the page."
               action={
                 <button
                   type="button"
@@ -403,7 +403,7 @@ function Plan() {
               </h2>
               <p className="data text-xs text-muted-foreground">
                 {result.fits.length} fit · {result.excluded.length} excluded by
-                fail-closed gates
+                required checks
               </p>
             </div>
 
@@ -439,10 +439,10 @@ function Plan() {
             {result.excluded.length > 0 && (
               <div className="mt-16">
                 <p className="tick text-alert">
-                  Excluded — fail closed ({result.excluded.length})
+                  Not a match for this plan ({result.excluded.length})
                 </p>
                 <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-                  These waters are not ranked because a hard gate could not be
+                  These waters are not ranked because a required check could not be
                   cleared from the record. They are shown so the exclusion is
                   visible rather than silent.
                 </p>

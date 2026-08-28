@@ -141,7 +141,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
   doc.setTextColor(...INK);
-  doc.text("Field Packet", M, ctx.y);
+  doc.text("Field brief", M, ctx.y);
   ctx.y += 8;
   rule(ctx, 12);
 
@@ -166,7 +166,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
     ctx.y += 8;
     paragraph(
       ctx,
-      `Review overdue since ${d.nextReviewAt}. Re-read the official source before you treat this packet as current.`,
+      `Review overdue since ${d.nextReviewAt}. Re-read the official source before you treat this brief as current.`,
       { style: "bold", size: 9.5 },
     );
   }
@@ -250,7 +250,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
     if (dated.length === 0) {
       paragraph(
         ctx,
-        "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Fail closed — do not assume harvest is open.",
+        "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Do not assume harvest is open. Confirm on the official page.",
       );
     } else {
       for (const w of dated) {
@@ -290,7 +290,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   tick(ctx, "Boundary and limitations");
   paragraph(
     ctx,
-    "Public, named destinations only. This packet contains no private spots, no coordinates, no catch expectation, and no live gauge, flow, tide, weather or hatch data. Conditions and regulations change without notice; the official source above governs. If a check cannot be cleared, the correct answer is not to go.",
+    "Public, named destinations only. This brief contains no private spots, no coordinates, no catch expectation, and no live gauge, flow, tide, weather or hatch data. Conditions and regulations change without notice; the official source above governs. If a check cannot be cleared, the correct answer is not to go.",
     { size: 8.5, color: MUTED },
   );
 }
@@ -306,8 +306,8 @@ export function downloadPacketPdf(d: Destination, job: JobId | null = null) {
   record(ctx, d, job);
   footer(ctx);
   doc.setProperties({
-    title: `Field Packet — ${displayName(d)}`,
-    subject: "Field Sense Navigator field packet",
+    title: `Field brief — ${displayName(d)}`,
+    subject: "Field Sense Navigator field brief",
     creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-${fileSafe(displayName(d))}-${issued}.pdf`);
@@ -330,7 +330,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
   doc.setTextColor(...INK);
-  doc.text("Shortlist Packet", M, ctx.y);
+  doc.text("Shortlist brief", M, ctx.y);
   ctx.y += 10;
   rule(ctx, 12);
   paragraph(
@@ -355,7 +355,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   }
   footer(ctx);
   doc.setProperties({
-    title: `Shortlist Packet — ${list.length} waters`,
+    title: `Shortlist brief — ${list.length} waters`,
     creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-shortlist-${issued}.pdf`);

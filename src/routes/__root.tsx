@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "A fail-closed field intelligence instrument for named public waters: layered readouts, field readiness, job-aware ranking and printable field packets.",
+          "A field guide for named public waters: readiness, ranking, and a printable brief.",
       },
       { name: "author", content: "Hook the Horizon" },
       { property: "og:title", content: "Field Sense Navigator" },

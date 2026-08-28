@@ -69,10 +69,10 @@ const es: Dict = {
   // record
   "record.back": "← Catálogo",
   "record.officialSource": "Fuente oficial",
-  "record.buildPacket": "Crear paquete de campo",
+  "record.buildPacket": "Crear informe de campo",
   "record.downloadPdf": "Descargar PDF",
   "record.preparingPdf": "Preparando PDF…",
-  "record.packet": "Paquete",
+  "record.packet": "Informe",
   "record.carry": "Llevar",
   "record.copied": "Copiado",
   "record.pdf": "PDF",

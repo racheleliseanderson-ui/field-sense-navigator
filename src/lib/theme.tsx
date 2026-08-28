@@ -18,7 +18,7 @@ export const LANG_STORAGE_KEY = "hhi-lang";
 
 export const THEMES: Array<{ id: Theme; label: string; hint: string }> = [
   { id: "dark", label: "Dark instrument", hint: "Deep-water navy" },
-  { id: "light", label: "Field daylight", hint: "Printed-packet paper" },
+  { id: "light", label: "Field daylight", hint: "Printed-brief paper" },
   { id: "black", label: "High-contrast black", hint: "Pure black, white ink" },
   { id: "white", label: "High-contrast white", hint: "Pure white, black ink" },
   { id: "cvd", label: "Color-blind safe", hint: "Blue / orange signal scale" },

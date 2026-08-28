@@ -27,15 +27,15 @@ export const Route = createFileRoute("/packet/$id")({
     return d;
   },
   head: ({ loaderData }) => {
-    const name = loaderData ? displayName(loaderData) : "Field packet";
+    const name = loaderData ? displayName(loaderData) : "Field brief";
     return {
       meta: [
-        { title: `Field Packet — ${name} · Field Sense Navigator` },
+        { title: `Field brief — ${name} · Field Sense Navigator` },
         {
           name: "description",
-          content: `Printable same-day field packet for ${name}: declared job, open verifications, hazard and capacity notes, and standing rules. Public waters only.`,
+          content: `Printable same-day brief for ${name}: declared job, open verifications, hazard and capacity notes, and standing rules. Public waters only.`,
         },
-        { property: "og:title", content: `Field Packet — ${name}` },
+        { property: "og:title", content: `Field brief — ${name}` },
         {
           property: "og:description",
           content: `A one-page briefing document to carry into the field for ${name}.`,
@@ -121,11 +121,10 @@ function Packet() {
           <div>
             <p className="packet-tick">Field Sense Navigator</p>
             <h1 className="mt-3 font-display text-[clamp(2rem,9vw,2.6rem)] font-bold leading-[0.95] tracking-[-0.04em]">
-              Field Packet
+              Field brief
             </h1>
           </div>
           <div className="text-[0.7rem] leading-relaxed text-packet-muted sm:text-right">
-            <p className="data">RECORD {d.id}</p>
             <p>Issued {issued}</p>
           </div>
         </header>
@@ -149,7 +148,7 @@ function Packet() {
           {overdue && (
             <p className="mt-5 border border-packet-ink/40 px-3 py-2 text-sm font-medium leading-relaxed">
               Review overdue since {d.nextReviewAt}. Re-read the official source
-              before you treat this packet as current.
+              before you treat this brief as current.
             </p>
           )}
 
@@ -268,7 +267,7 @@ function Packet() {
             {datedWindows(d).length === 0 ? (
               <p className="mt-2 text-sm leading-relaxed">
                 No dated harvest closure published. Empty windows are a completed
-                check, not a gap. Fail closed — do not assume harvest is open.
+                check, not a gap. Do not assume harvest is open. Confirm on the official page.
               </p>
             ) : (
               <ul className="mt-2 space-y-2">
@@ -299,7 +298,7 @@ function Packet() {
             Boundary and limitations
           </p>
           <p className="mt-2">
-            Public, named destinations only. This packet contains no private
+            Public, named destinations only. This brief contains no private
             spots, no coordinates, no catch expectation, and no live gauge,
             flow, tide, weather or hatch data. Conditions and regulations change
             without notice; the official source above governs. If a check cannot

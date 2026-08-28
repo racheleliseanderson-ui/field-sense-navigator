@@ -577,7 +577,7 @@ export async function readLive(input: {
   if (bind.status !== "matched" || !bind.siteId) {
     const unknowns = [
       bind.note,
-      "The scheduled pipeline will not invent a nearby gauge.",
+      "We will not invent a nearby gauge.",
     ];
     const snapshot = await loadSnapshot();
     const snapAge = snapshot

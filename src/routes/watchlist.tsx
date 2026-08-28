@@ -15,7 +15,7 @@ export const Route = createFileRoute("/watchlist")({
       {
         name: "description",
         content:
-          "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field packet.",
+          "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field brief.",
       },
       { property: "og:title", content: "Watchlist · Field Sense Navigator" },
       {

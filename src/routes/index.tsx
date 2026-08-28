@@ -14,13 +14,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          `A layered field intelligence instrument for ${NAMED_WATER_COUNT} named public waters: access, hazards, capacity, regulatory pressure and same-day field checks. No private spots.`,
+          `A field guide for ${NAMED_WATER_COUNT} named public waters: readiness, ranking, and a printable brief.`,
       },
       { property: "og:title", content: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
         property: "og:description",
         content:
-          "Declare the job, rank the waters that actually fit, print a field packet. Public waters only, fail-closed by design.",
+          "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — we will not guess when a check cannot be confirmed.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -185,7 +185,7 @@ function Home() {
                 data-reveal-crop
                 style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
               >
-                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="Plate 06 · The packet" />
+                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="Plate 06 · The brief" />
               </div>
             </div>
 

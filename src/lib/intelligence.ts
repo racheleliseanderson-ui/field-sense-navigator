@@ -796,7 +796,7 @@ export function buildChecklist(
   } else {
     add(
       "Standing rules",
-      "No dated harvest closure is published on this record. Confirm bag, size and gear on the current agency page before harvest. Fail closed — do not assume open.",
+      "No dated harvest closure is published on this record. Confirm bag, size and gear on the current agency page before harvest. Do not assume harvest is open. Confirm on the official page.",
       "Record: no dated closure published",
     );
   }
@@ -813,7 +813,7 @@ export function buildChecklist(
   if (t.crowd.has("hours")) {
     add("At the access", "Confirm gate and day-use hours, including the closing time.", "Capacity: operating hours");
   }
-  add("At the access", "Confirm posted signage matches what this packet says. Posted signage wins.", "Standing policy");
+  add("At the access", "Confirm posted signage matches what this brief says. Posted signage wins.", "Standing policy");
   add("At the access", "Note the exact access name and managing authority in your log.", "Standing policy");
 
   if (job === "kayak" || c?.gear === "hand_launch") {
@@ -846,7 +846,7 @@ export function buildChecklist(
 
   add(
     "Standing rules",
-    "If any check above cannot be completed, this water is NOT GO for the day. Fail closed.",
+    "Not ready for today. Confirm the open checks before going.",
     "Standing policy",
   );
 
