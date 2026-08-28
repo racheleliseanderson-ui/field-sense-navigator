@@ -413,7 +413,7 @@ function Plan() {
               judgement, not a prediction about the day.
             </p>
 
-            <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
               {result.fits.slice(0, shown).map((f, i) => (
                 <WaterCard
                   key={f.destination.id}
