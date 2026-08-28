@@ -40,6 +40,7 @@ export const THISTLE: FleetGroup = {
   publication: { name: "Tangled Thistle", url: "https://tangledthistle.blog" },
   apps: [
     { name: "Atmosphere OS", url: "https://atmosphere.tangledthistle.blog" },
+    { name: "Thistle Pulse", url: "https://pulse.tangledthistle.blog" },
     { name: "Venue Intelligence", url: "https://venue.tangledthistle.blog" },
   ],
 };
