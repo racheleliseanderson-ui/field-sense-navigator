@@ -123,6 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "canonical", href: "https://waterways.hookthehorizon.blog/" },
     ],
   }),
   shellComponent: RootShell,
