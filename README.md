@@ -34,19 +34,9 @@ Do not add private spots, exact coordinates, catch guarantees, or live real-time
 
 Use the current live version as the baseline. Do not start from scratch — elevate what already exists.
 
-This project was built with [Lovable](https://lovable.dev).
-
 Scheduled ingest lives in GitHub Actions (`.github/workflows/ingest-live.yml` and `ingest-critical.yml`) and publishes `snapshot.json` + `status.json` to the `live-snapshot` branch. Interior-west / override / NOAA CO-OPS gauges refresh every 10 minutes; the full catalog every 30. USBR is isolated so a RISE timeout cannot stall USGS or NOAA. The last 24 hourly snapshots are kept under `archive/`. Observation time, not ingest time, decides whether a value is current (48 h stage/flow/weather, 7 d reservoir elevation). Fossils stay retained with the original observedAt. The app consumes that snapshot fail-closed.
 
-**Live app**: https://field-sense-navigator.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/1fd2d7e7-c4b5-4d21-903f-3ccf64463ed4).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+**Live app**: https://waterways.hookthehorizon.blog
 
 ## Development
 

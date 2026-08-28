@@ -51,7 +51,7 @@ Richer readouts computed from the catalog already held — no invention, all tra
 - Theme is a CSS token layer in `src/styles.css` (`:root` daylight, `.dark` instrument) plus an inline pre-hydration script; components already use semantic tokens, so no color literals need touching.
 - PDF generation runs client-side from the existing packet markup, so no backend is required for it.
 - Derived intelligence extends `src/lib/intelligence.ts` with pure functions and explicit confidence inputs.
-- The expanded catalog stays a versioned data file unless the record count outgrows it, at which point Lovable Cloud can hold it.
+- The expanded catalog stays a versioned data file unless the record count outgrows it, at which point a hosted database can hold it.
 
 ## Not included
 

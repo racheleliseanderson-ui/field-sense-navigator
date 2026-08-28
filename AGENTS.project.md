@@ -2,7 +2,7 @@
 
 Production is **Vercel-only**. Canonical public URL: https://waterways.hookthehorizon.blog
 
-This repository is the source of truth. Do **not** treat Lovable as a second origin.
+This repository is the source of truth. Do **not** treat a hosted editor as a second origin.
 
 This is a **public-waters field catalog with fail-closed packets**. It is not a CMS, GIS, catch log, social map, or crowdsourced spots app. Expansion is more Destination records and tighter review — not a different product type.
 
@@ -43,7 +43,7 @@ Schema: `SCHEMA_VERSION` 0.6.0 in `src/lib/catalog.ts` (optional provenance fiel
 - Now (~500–2k waters, ~1.5 MB JSON): single file is fine for the client; GitHub already struggles to *render* the file.
 - After enrichment PRs are on `main`: shard by jurisdiction under `src/data/destinations/` and concatenate in `catalog.ts`. Same schema, same UI.
 - Around 2–3k waters: compact search index (id, name, state, tags); full record on the packet page.
-- Never: database or CMS as catalog SoT; ingest writing `destinations.json`; Lovable as origin.
+- Never: database or CMS as catalog SoT; ingest writing `destinations.json`; a hosted editor as origin.
 
 ## Catalog
 
@@ -58,7 +58,7 @@ Follow `ENRICHMENT-PASS-2026-08-19.md`. Apply source-backed field updates only. 
 
 ## Build
 
-`@lovable.dev/vite-tanstack-config` remains a **Vite config helper**, not an editor connection. Do not remove it without a verified replacement `vite.config.ts` that still builds on Vercel.
+The Vite plugin assembly lives in `vite.base.config.ts` in this repository — Tailwind, tsconfig paths, TanStack Start, Nitro, React, `VITE_*` inlining and the `@` alias. `vite.config.ts` carries only this project's options (the `src/server.ts` SSR entry and the pinned `vercel` Nitro preset). There is no third-party build service in the pipeline. Change either file only alongside a verified `npm run build` on Vercel.
 
 ```sh
 npm i

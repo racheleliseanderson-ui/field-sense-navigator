@@ -35,7 +35,7 @@ Both pages are currently built for a wide desk. They get rebuilt for the hand.
 - Feeds are fetched server-side through TanStack server functions with short caching, so no keys or cross-origin calls reach the browser; USGS and NWS are keyless public APIs.
 - Station mapping is a data file keyed by record ID, hand-verified — no automatic nearest-station guessing.
 - Live-data score contributions are pure functions in `src/lib/intelligence.ts` that return their inputs alongside the output.
-- The catalog stays a versioned JSON file through the Great Lakes/Northeast pass; the national sweep is the point at which Lovable Cloud takes over storage if the file outgrows it.
+- The catalog stays a versioned JSON file through the Great Lakes/Northeast pass; the national sweep is the point at which a hosted database takes over storage if the file outgrows it.
 
 ## Order of work
 
