@@ -8,13 +8,13 @@ import { useT } from "@/lib/i18n";
 import { CommandPalette } from "@/components/command-palette";
 
 const NAV = [
-  { to: "/", key: "nav.instrument", label: "Instrument" },
-  { to: "/plan", key: "nav.plan", label: "Plan a day" },
-  { to: "/explore", key: "nav.catalog", label: "Catalog" },
-  { to: "/compare", key: "nav.compare", label: "Compare" },
-  { to: "/watchlist", key: "nav.watchlist", label: "Watchlist" },
-  { to: "/pipeline", key: "nav.pipeline", label: "Pipeline" },
-  { to: "/boundary", key: "nav.boundary", label: "Boundary" },
+  { to: "/", label: "Check a water" },
+  { to: "/plan", label: "Plan a day" },
+  { to: "/explore", label: "Explore waters" },
+  { to: "/compare", label: "Compare" },
+  { to: "/watchlist", label: "Watchlist" },
+  { to: "/pipeline", label: "How a decision comes together" },
+  { to: "/boundary", label: "Limits & sources" },
 ] as const;
 
 const SWATCH: Record<Theme, string> = {
@@ -177,7 +177,7 @@ export function SiteHeader() {
             <span className="block truncate font-display text-[0.85rem] font-bold uppercase tracking-[0.18em] text-foreground sm:text-[0.95rem]">
               Field Sense
             </span>
-            <span className="tick mt-1 block text-[0.6rem]">Field intelligence</span>
+            <span className="tick mt-1 block text-[0.6rem]">Public-water planning</span>
           </span>
         </Link>
 
@@ -188,7 +188,7 @@ export function SiteHeader() {
               to={item.to}
               className="tap inline-flex min-h-11 items-center px-3 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-brass"
             >
-              {t(item.key, item.label)}
+              {item.label}
             </Link>
           ))}
         </nav>
@@ -227,16 +227,14 @@ export function SiteHeader() {
                   className="tap group flex min-h-14 items-center gap-4 font-display text-xl font-bold tracking-tight text-foreground/85 data-[status=active]:text-brass"
                 >
                   <span className="data text-[0.65rem] text-brass/70">{String(i + 1).padStart(2, "0")}</span>
-                  {t(item.key, item.label)}
+                  {item.label}
                 </Link>
               </li>
             ))}
           </ul>
           <div className="mt-6 flex items-center gap-3">
             <span className="h-px w-8 bg-brass" />
-            <p className="tick text-[0.58rem]">
-              {t("chrome.failClosed", "Public waters only · fail closed")}
-            </p>
+            <p className="tick text-[0.58rem]">Public waters only · uncertain information stays marked for confirmation</p>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
             <li><a href="https://species.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-brass">Species ↗</a></li>
@@ -264,37 +262,36 @@ export function SiteFooter() {
             <span className="tick text-brass">Hook the Horizon</span>
           </div>
           <p className="mt-6 font-display text-2xl font-bold tracking-tight text-foreground">
-            {t("footer.headline", "Named public waters. Nothing else.")}
+            Named public waters. Nothing else.
           </p>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-            {t(
-              "footer.blurb",
-              "No private spots, no coordinates, no live-condition claims, no catch guarantees. Where a check cannot be completed, the water is treated as not-go.",
-            )}
+            No private spots, exact coordinates, catch guarantees, or invented live conditions. If
+            current access or safety information cannot be confirmed, Field Sense tells you what
+            still needs checking instead of guessing.
           </p>
         </div>
         <div>
-          <p className="tick">{t("footer.instrument", "Instrument")}</p>
+          <p className="tick">Explore</p>
           <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
             <li>
               <Link to="/plan" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                {t("footer.planDay", "Plan a day")}
+                Plan a day
               </Link>
             </li>
             <li>
               <Link to="/explore" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                {t("footer.fullCatalog", "Full catalog")}
+                All waters
               </Link>
             </li>
             <li>
               <Link to="/boundary" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                {t("footer.boundaryMethod", "Boundary & method")}
+                Limits & sources
               </Link>
             </li>
           </ul>
         </div>
         <div>
-          <p className="tick">{t("footer.fleet", "The fleet")}</p>
+          <p className="tick">More Hook tools</p>
           <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
             <li>
               <a href="https://waterways.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-brass">
@@ -319,7 +316,7 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
-          <p className="tick">{t("footer.record", "Record")}</p>
+          <p className="tick">Coverage</p>
           <ul className="data mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               {NAMED_WATER_COUNT} {t("footer.watersUnit", "named waters")}
@@ -333,10 +330,8 @@ export function SiteFooter() {
       </div>
       <div className="relative border-t border-hairline">
         <p className="mx-auto max-w-7xl px-safe py-5 text-xs text-muted-foreground sm:px-8">
-          {t(
-            "footer.legal",
-            "Field Sense Navigator — built for Hook the Horizon. Official agency sources are authoritative; posted signage on the day wins over anything printed here.",
-          )}
+          Field Sense Navigator — built for Hook the Horizon. Official agency sources are authoritative;
+          posted signage on the day wins over anything printed here.
         </p>
       </div>
     </footer>
