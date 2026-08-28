@@ -1,0 +1,28 @@
+{
+  "schema": "0.1.0",
+  "source": "Manual same-water verification against USGS Water Data for the Nation on 2026-08-28.",
+  "doctrine": "Exact same-water official stations only. No nearby substitution.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-319",
+      "agency": "USGS",
+      "siteId": "02334400",
+      "siteName": "LAKE SIDNEY LANIER NEAR BUFORD, GA",
+      "note": "Verified same-reservoir USGS station. Continuous reservoir elevation and storage were current on 2026-08-27."
+    },
+    {
+      "destinationId": "HHI-DEST-359",
+      "agency": "USGS",
+      "siteId": "07190000",
+      "siteName": "Lake O' the Cherokees at Langley, OK",
+      "note": "Verified same-reservoir USGS station for Grand Lake o' the Cherokees. Continuous reservoir storage and gage height were current on 2026-08-27."
+    },
+    {
+      "destinationId": "HHI-DEST-377",
+      "agency": "USGS",
+      "siteId": "06442996",
+      "siteName": "LAKE FRANCIS CASE AT CHAMBERLAIN, SD",
+      "note": "Verified same-reservoir USGS station. Continuous lake/reservoir elevation and gage height were current on 2026-08-28."
+    }
+  ]
+}
