@@ -30,12 +30,12 @@ export const Route = createFileRoute("/packet/$id")({
     const name = loaderData ? displayName(loaderData) : "Field brief";
     return {
       meta: [
-        { title: `Field Brief — ${name} · Field Sense Navigator` },
+        { title: `Field brief — ${name} · Field Sense Navigator` },
         {
           name: "description",
-          content: `Printable same-day field brief for ${name}: the day you declared, the checks still open, hazard and crowding notes, and the standing rules. Public waters only.`,
+          content: `Printable same-day brief for ${name}: declared job, open verifications, hazard and capacity notes, and standing rules. Public waters only.`,
         },
-        { property: "og:title", content: `Field Brief — ${name}` },
+        { property: "og:title", content: `Field brief — ${name}` },
         {
           property: "og:description",
           content: `A one-page briefing document to carry into the field for ${name}.`,
@@ -92,7 +92,7 @@ function Packet() {
               href={encodeSpeciesPacket(d)}
               className="inline-flex min-h-12 flex-1 items-center justify-center gap-3 border border-brass/50 px-6 text-xs font-semibold uppercase tracking-[0.14em] text-brass hover:bg-brass/10 sm:flex-none"
             >
-              Use this water in Species ↗
+              Carry to Species ↗
             </a>
             <button
               type="button"
@@ -121,11 +121,10 @@ function Packet() {
           <div>
             <p className="packet-tick">Field Sense Navigator</p>
             <h1 className="mt-3 font-display text-[clamp(2rem,9vw,2.6rem)] font-bold leading-[0.95] tracking-[-0.04em]">
-              Field Brief
+              Field brief
             </h1>
           </div>
           <div className="text-[0.7rem] leading-relaxed text-packet-muted sm:text-right">
-            <p className="data">RECORD {d.id}</p>
             <p>Issued {issued}</p>
           </div>
         </header>
@@ -155,9 +154,9 @@ function Packet() {
 
           <dl className="mt-7 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             {[
-              ["The day you declared", jobLabel],
+              ["Declared job", jobLabel],
               ["Field readiness", `${r.score}/100`],
-              ["Readiness band", r.band],
+              ["Band", r.band],
               [
                 overdue ? "Review overdue" : "Last source check",
                 overdue ? `Due ${d.nextReviewAt}` : d.checkedAt.slice(0, 10),
@@ -219,7 +218,7 @@ function Packet() {
 
         {/* layer digest */}
         <section className="break-inside-avoid">
-          <h3 className="packet-tick">The five reads</h3>
+          <h3 className="packet-tick">Layer digest</h3>
           <div className="mt-5 divide-y divide-packet-rule border-y border-packet-rule">
             {layers.map((l) => (
               <div key={l.key} className="grid gap-1.5 py-4 sm:gap-2 sm:grid-cols-[10rem_1fr]">
@@ -227,8 +226,8 @@ function Packet() {
                 <div>
                   <p className="text-sm leading-relaxed">{l.readout}</p>
                   <p className="mt-1.5 text-[0.7rem] uppercase tracking-[0.08em] text-packet-muted">
-                    Confidence {l.confidence}% · {l.unknowns.length} thing
-                    {l.unknowns.length === 1 ? "" : "s"} this read still cannot see
+                    Confidence {l.confidence}% · {l.unknowns.length} residual unknown
+                    {l.unknowns.length === 1 ? "" : "s"}
                   </p>
                 </div>
               </div>
@@ -240,7 +239,7 @@ function Packet() {
 
         <section className="grid gap-8 sm:grid-cols-2">
           <div>
-            <h3 className="packet-tick">Recorded hazards</h3>
+            <h3 className="packet-tick">Recorded hazard families</h3>
             <p className="mt-2 text-sm leading-relaxed">
               {t.hazards.size ? [...t.hazards].map(humanize).join(", ") : "None recorded."}
             </p>
@@ -267,8 +266,8 @@ function Packet() {
             <h3 className="packet-tick mt-6">Season windows</h3>
             {datedWindows(d).length === 0 ? (
               <p className="mt-2 text-sm leading-relaxed">
-                No dated harvest closure is published. That is a finished check,
-                not a missing one. Do not assume harvest is open.
+                No dated harvest closure published. Empty windows are a completed
+                check, not a gap. Do not assume harvest is open. Confirm on the official page.
               </p>
             ) : (
               <ul className="mt-2 space-y-2">
@@ -296,19 +295,19 @@ function Packet() {
 
         <footer className="text-[0.72rem] leading-relaxed text-packet-muted">
           <p className="font-semibold uppercase tracking-[0.1em] text-packet-ink">
-            Limits of this brief
+            Boundary and limitations
           </p>
           <p className="mt-2">
-            Public, named destinations only. This brief carries no private
+            Public, named destinations only. This brief contains no private
             spots, no coordinates, no catch expectation, and no live gauge,
-            flow, tide, weather or hatch information. Conditions and regulations
-            change without notice; the official source above governs. If a check
-            cannot be cleared, the right answer is not to go.
+            flow, tide, weather or hatch data. Conditions and regulations change
+            without notice; the official source above governs. If a check cannot
+            be cleared, the correct answer is not to go.
           </p>
           {d.managingAgency && (
             <p className="mt-3">
               Managing agency recorded from the cited source: {d.managingAgency}.
-              {d.officialRegsUrl ? ` Regulations page: ${d.officialRegsUrl}` : ""}
+              {d.officialRegsUrl ? ` Regulations landing: ${d.officialRegsUrl}` : ""}
             </p>
           )}
         </footer>

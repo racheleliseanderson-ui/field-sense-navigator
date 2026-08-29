@@ -17,11 +17,11 @@ const ROUTES = [
   { to: "/explore", label: "Catalog" },
   { to: "/compare", label: "Compare waters" },
   { to: "/watchlist", label: "Watchlist" },
-  { to: "/pipeline", label: "How a decision comes together" },
+  { to: "/pipeline", label: "How it comes together" },
   { to: "/boundary", label: "Limits & sources" },
 ] as const;
 
-/** Keyboard jump: waters, states and sections of the site. Cmd/Ctrl-K. */
+/** Keyboard jump: waters, states and instrument sections. Cmd/Ctrl-K. */
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export function CommandPalette() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open quick search"
+        aria-label="Open command palette"
         className="tap hidden h-11 items-center gap-2 border border-hairline bg-panel/60 px-3 text-[0.65rem] uppercase tracking-[0.14em] text-muted-foreground hover:border-brass/50 md:inline-flex"
       >
         <Command className="h-3.5 w-3.5" aria-hidden="true" />
@@ -62,7 +62,7 @@ export function CommandPalette() {
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Jump to a water, a state, or a section" />
         <CommandList>
-          <CommandEmpty>No water on record carries that name. Try a state, a county or a species.</CommandEmpty>
+          <CommandEmpty>No record carries that name.</CommandEmpty>
           <CommandGroup heading="Sections">
             {ROUTES.map((r) => (
               <CommandItem

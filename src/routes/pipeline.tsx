@@ -22,17 +22,17 @@ import { bindingsFile } from "@/lib/bindings";
 export const Route = createFileRoute("/pipeline")({
   head: () => ({
     meta: [
-      { title: "How a decision comes together · Field Sense Navigator" },
+      { title: "How a water reading comes together · Field Sense Navigator" },
       {
         name: "description",
         content:
-          "How the catalog is kept honest, where the official numbers come from (USGS, NOAA, Water Survey of Canada, USBR, USACE, CDEC, National Weather Service), and how each water is matched to a gauge.",
+          "Official station sources and when a reading cannot be confirmed.",
       },
-      { property: "og:title", content: "How a decision comes together · Field Sense Navigator" },
+      { property: "og:title", content: "How a water reading comes together · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Where every number on a water record comes from, how often it is refreshed, and what happens when a source has nothing to say. Misses are printed as plainly as hits.",
+          "Official station sources and when a reading cannot be confirmed. Misses are printed as plainly as hits.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -46,18 +46,10 @@ type StatusFilter = "all" | "matched" | "unmatched" | "error";
 type Mode = "station" | "source";
 
 const SCOPE_LABEL: Record<Scope, string> = {
-  sample: "First waters in the catalog",
+  sample: "Catalog head",
   state: "One state",
   watchlist: "Watchlist",
   compare: "Comparison tray",
-};
-
-/** Reader-facing wording for the result filter. Keys stay as-is. */
-const STATUS_FILTER_LABEL: Record<StatusFilter, string> = {
-  all: "All",
-  matched: "Matched",
-  unmatched: "No match",
-  error: "Couldn't reach",
 };
 
 function Pipeline() {
@@ -114,7 +106,7 @@ function Pipeline() {
         status: "error",
         station: null,
         readings: 0,
-        note: "Couldn't reach the source this time. Treat the water as unmonitored and check the agency page yourself.",
+        note: "The agency feed could not be reached on this run. Treat the water as unmonitored.",
       };
     }
   }, []);
@@ -127,7 +119,7 @@ function Pipeline() {
         name: target.name,
         state: target.state,
         status: v.ok ? (v.redirected ? "unmatched" : "matched") : "error",
-        station: v.httpStatus ? "Page answered" : "No answer",
+        station: v.httpStatus ? `HTTP ${v.httpStatus}` : "no answer",
         readings: 0,
         note: v.note,
       };
@@ -139,14 +131,14 @@ function Pipeline() {
         status: "error",
         station: null,
         readings: 0,
-        note: "Couldn't finish checking this source. Treat the citation as not verified yet.",
+        note: "Source verification could not complete on this run. Treat the citation as unverified.",
       };
     }
   }, []);
 
   const probe = mode === "source" ? probeSource : probeStation;
   const run = useRunManager(probe);
-  const modeLabel = mode === "source" ? "Official source check" : "Gauge match check";
+  const modeLabel = mode === "source" ? "Source verification" : "Station resolution";
   const scopeLabel = `${modeLabel} · ${
     scope === "state" ? `${SCOPE_LABEL.state} · ${state}` : SCOPE_LABEL[scope]
   }`;
@@ -180,7 +172,7 @@ function Pipeline() {
         sourceUrl: d!.officialSourceUrl,
       }));
     if (retry.length > 0)
-      void run.start(retry, { concurrency, scope: `${scopeLabel} · second try`, append: true });
+      void run.start(retry, { concurrency, scope: `${scopeLabel} · retry`, append: true });
   };
 
   const visible = run.results.filter((r) => filter === "all" || r.status === filter);
@@ -189,13 +181,13 @@ function Pipeline() {
   const busy = run.state === "running" || run.state === "paused";
   const statusLine =
     run.state === "running"
-      ? "Checking"
+      ? "Running"
       : run.state === "paused"
-        ? "Paused — nothing is being checked"
+        ? "Paused — checks on hold"
         : run.state === "stopped"
-          ? `Stopped — ${run.counts.unreached} water(s) not checked`
+          ? `Stopped — ${run.counts.unreached} target(s) never reached`
           : run.state === "complete"
-            ? "Check complete"
+            ? "Run complete"
             : "Ready to start";
 
   const bind = pulse?.bindings ?? bindingsFile.stats;
@@ -209,29 +201,29 @@ function Pipeline() {
       <section className="border-b border-hairline bg-abyss">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:py-16">
           <div className="flex items-center gap-4">
-            <span className="data text-xs text-brass">HOW IT WORKS</span>
+            <span className="data text-xs text-brass">SOURCES</span>
             <span className="h-px flex-1 bg-hairline" />
           </div>
           <h1 className="mt-6 max-w-3xl font-display text-[clamp(2rem,5vw,3.8rem)] font-bold leading-[0.94] tracking-[-0.04em] text-foreground">
-            How a decision
+            How a water reading
             <br />
             comes together.
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Every night, each water is matched to its official gauge (USGS,
-            NOAA CO-OPS, Water Survey of Canada, USBR, USACE, CA DWR CDEC),
-            placed on the map, given a weather station, and its agency page is
-            read for closure wording. Western and coastal gauges refresh every
-            10 minutes; the whole catalog every 30. A slow agency cannot hold up
-            the others. Where a match cannot be made, we say so — misses are
-            never quietly dropped.
+            Official gauge stations are matched to each named water on a nightly
+            schedule (USGS, NOAA CO-OPS, Water Survey of Canada, USBR, USACE,
+            CA DWR CDEC). Every record is located, given a weather station,
+            scanned for agency-page language, and offered a gauge. Interior-west,
+            pinned, and NOAA CO-OPS gauges refresh every 10 minutes; the full
+            set every 30. USBR is isolated so a timeout cannot stall the rest.
+            Misses stay misses — they are not omitted.
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { k: "Records", v: destinations.length },
               { k: "Jurisdictions", v: rows.length },
-              { k: "Quality checks", v: checks.length },
-              { k: "Needing attention", v: checks.filter((c) => c.severity === "flagged").length },
+              { k: "Checks", v: checks.length },
+              { k: "Flagged", v: checks.filter((c) => c.severity === "flagged").length },
             ].map((s) => (
               <div key={s.k}>
                 <dt className="tick text-[0.55rem]">{s.k}</dt>
@@ -244,30 +236,30 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Where the numbers come from
+          Official sources
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-          Gauge matches are settled in advance and held on file, so every water
-          gets the same four reads — where it is, its gauge, its weather
-          station, and the wording on its agency page. Numbers come from the
-          most recent scheduled refresh, or straight from the agency if that is
-          more than 45 minutes old. A silent source is recorded as a miss, never
-          skipped over. What decides whether a number counts as current is when
-          it was observed, not when we collected it — 48 hours for level, flow
-          and weather, 7 days for reservoir elevation. Older official values are
-          still shown, with the time they were actually taken.
+          Matched stations are a committed source list. Every record is run through
+          the same four live layers — location, gauge, weather observation, agency
+          page language. Live numbers come from the last published reading, then a
+          direct agency pull if that snapshot is older than 45 minutes. A silent
+          feed is a miss, not a skip. Observation time, not fetch time, decides
+          whether a value is current (48 h stage/flow/weather, 7 d reservoir
+          elevation). Last official values may be retained with their original
+          observed time when a fetch times out or when the last official
+          observation is older than that window.
         </p>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
-              <p className="font-display text-base font-bold text-foreground">Gauge matching</p>
+              <p className="font-display text-base font-bold text-foreground">Matched stations</p>
               <GradeChip grade="clear" label="Nightly" />
             </div>
             <p className="data mt-3 text-sm text-foreground">
-              {bind.located ?? 0}/{bind.records ?? destinations.length} placed on the map · {bind.nwsBound ?? 0} weather stations
+              {bind.located ?? 0}/{bind.records ?? destinations.length} located · {bind.nwsBound ?? 0} weather stations
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Gauges {bind.matched} matched · {bind.unmatched} with no official gauge
+              Gauges {bind.matched} matched · {bind.unmatched} unmatched
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               USGS {bind.byAgency?.USGS ?? 0} · NOAA {bind.byAgency?.["NOAA-COOPS"] ?? 0} · WSC{" "}
@@ -276,26 +268,25 @@ function Pipeline() {
               {bind.overrides ? ` · ${bind.overrides} pinned` : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Last matched {pulse?.bindings.generatedAt
+              Generated {pulse?.bindings.generatedAt
                 ? new Date(pulse.bindings.generatedAt).toUTCString()
                 : new Date(bindingsFile.generatedAt).toUTCString()}
-              . A gauge pinned by hand always wins. The published name and the
-              water type must both agree, and a nearby gauge is never
-              substituted for the right one.
+              . Pinned matches win. Name and water-type must both align. No nearby
+              gauge is substituted.
             </p>
           </li>
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
-              <p className="font-display text-base font-bold text-foreground">Scheduled refresh</p>
+              <p className="font-display text-base font-bold text-foreground">Latest readings</p>
               <GradeChip
                 grade={!ingest || ingest.stale ? "watch" : ingest.degraded ? "watch" : "clear"}
                 label={
                   !ingest
-                    ? "Not refreshed yet"
+                    ? "Waiting"
                     : ingest.stale
-                      ? "Out of date"
+                      ? "Stale"
                       : ingest.degraded
-                        ? "Partial"
+                        ? "Degraded"
                         : "Current"
                 }
               />
@@ -303,38 +294,38 @@ function Pipeline() {
             <p className="data mt-3 text-sm text-foreground">
               {ingest
                 ? `${ingest.withReadings}/${ingest.boundStations} gauges with current readings`
-                : "No refresh has run yet"}
+                : "Snapshot not published yet"}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Weather observations {ingest?.nwsWithObs ?? 0}/{ingest?.nwsStations ?? 0}
+              NWS observations {ingest?.nwsWithObs ?? 0}/{ingest?.nwsStations ?? 0}
               {(ingest?.withStaleOnly ?? 0) > 0
-                ? ` · ${ingest!.withStaleOnly} showing an older official reading instead`
+                ? ` · ${ingest!.withStaleOnly} last official observation${ingest!.withStaleOnly === 1 ? "" : "s"} older than the window`
                 : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Refreshed every {ingest?.criticalCadenceMinutes ?? 10} min for the
-              fastest-moving waters · every {ingest?.fullCadenceMinutes ?? 30} min
-              for the whole catalog
+              Clocks {ingest?.criticalCadenceMinutes ?? 10} min critical ·{" "}
+              {ingest?.fullCadenceMinutes ?? 30} min full
+              {ingest?.mode ? ` · last pass ${ingest.mode}` : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Bureau of Reclamation {ingest?.usbr?.withReadings ?? 0}/{ingest?.usbr?.bound ?? 0} with readings
+              USBR {ingest?.usbr?.withReadings ?? 0}/{ingest?.usbr?.bound ?? 0} with readings
               {ingest?.usbr?.timeouts
-                ? ` · ${ingest.usbr.timeouts} did not answer in time`
+                ? ` · ${ingest.usbr.timeouts} timeout${ingest.usbr.timeouts === 1 ? "" : "s"} this pass`
                 : ""}
-              . Read separately, so a slow answer here cannot hold up USGS or NOAA.
+              . Isolated sequential fetch; a RISE miss cannot stall USGS or NOAA.
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               {ingest?.ingestedAt
-                ? `Last refreshed ${ingest.ageMinutes} min ago · the past ${ingest.archiveRetentionHours ?? 24} hours are kept`
-                : "The scheduled refresh has not run yet."}
+                ? `Last reading ${ingest.ageMinutes} min ago · ${ingest.archiveRetentionHours ?? 24} hourly archives on live-snapshot`
+                : "A scheduled check has not published a snapshot to the live-snapshot branch yet."}
             </p>
             {(ingest?.errorCount ?? 0) > 0 && (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                {ingest!.errorCount} source{ingest!.errorCount === 1 ? "" : "s"} did not answer
+                {ingest!.errorCount} feed miss{ingest!.errorCount === 1 ? "" : "es"}
                 {ingest!.hardErrorCount
-                  ? ` · ${ingest!.hardErrorCount} with no earlier official value to fall back on`
-                  : " · the last official value is shown where one exists"}
-                . The time it was taken is always printed.
+                  ? ` · ${ingest!.hardErrorCount} with no last official value to retain`
+                  : " · last official values retained where a prior observation existed"}
+                . Age is printed.
               </p>
             )}
           </li>
@@ -345,18 +336,18 @@ function Pipeline() {
               </p>
               <GradeChip
                 grade={!pulse?.closures || pulse.closures.stale ? "watch" : "clear"}
-                label={!pulse?.closures?.scannedAt ? "Not read yet" : pulse.closures.stale ? "Out of date" : "Current"}
+                label={!pulse?.closures?.scannedAt ? "Waiting" : pulse.closures.stale ? "Stale" : "Current"}
               />
             </div>
             <p className="data mt-3 text-sm text-foreground">
               {pulse?.closures
                 ? `${pulse.closures.hit} pages with closure language · ${pulse.closures.none} none · ${pulse.closures.unreachable} unread`
-                : "Agency pages have not been read yet"}
+                : "Scan not published yet"}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               {pulse?.closures?.scannedAt
-                ? `Last read ${pulse.closures.scanAgeMinutes} min ago · nightly. A match is wording found on the agency page, not a ruling that the water is closed.`
-                : "The nightly read of agency pages has not run yet."}
+                ? `Last scan ${pulse.closures.scanAgeMinutes} min ago · nightly. A hit is language on the agency page, not a determination that the water is closed.`
+                : "The nightly scan has not published closures.json yet."}
             </p>
           </li>
         </ul>
@@ -364,7 +355,7 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          How the catalog is kept honest
+          Record completeness
         </h2>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {checks.map((c) => (
@@ -375,7 +366,7 @@ function Pipeline() {
                 </p>
                 <GradeChip
                   grade={c.severity === "flagged" ? "flagged" : c.severity === "watch" ? "watch" : "clear"}
-                  label={c.severity === "clear" ? "Clear" : c.severity === "watch" ? "Watch" : "Needs attention"}
+                  label={c.severity === "clear" ? "Pass" : c.severity === "watch" ? "Watch" : "Flagged"}
                 />
               </div>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.detail}</p>
@@ -384,7 +375,7 @@ function Pipeline() {
               </p>
               {c.examples.length > 0 && (
                 <p className="mt-2 text-[0.68rem] leading-relaxed text-muted-foreground">
-                  Records to fix: {c.examples.join(", ")}
+                  Needs attention: {c.examples.join(", ")}
                   {c.count > c.examples.length ? ` +${c.count - c.examples.length} more` : ""}
                 </p>
               )}
@@ -395,18 +386,18 @@ function Pipeline() {
 
       <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8">
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
-          Check a source or a gauge match yourself
+          Check a station or official page
         </h2>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
           {mode === "source"
-            ? "Each check opens the agency page a record cites and reports what came back. A page that has moved is reported as moved; a page that does not answer leaves the citation not verified yet."
-            : "Water records always use the nightly gauge match. This is here for spot-checking a handful of waters yourself, not for the scheduled work."}
+            ? "Each run reads the agency page the record cites and reports what the host returned. A page that has moved is reported as moved; a host that does not answer leaves the citation unverified."
+            : "Manual checks still work. The published station list is what this guide uses on every water record — this page is for spot-checks, not the clock."}
         </p>
 
         <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
           <div>
             <label className="tick text-[0.55rem]" htmlFor="mode">
-              What to check
+              Check type
             </label>
             <select
               id="mode"
@@ -415,13 +406,13 @@ function Pipeline() {
               disabled={busy}
               className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground disabled:opacity-50 md:w-48"
             >
-              <option value="station">Gauge match</option>
-              <option value="source">Official source page</option>
+              <option value="station">Station resolution</option>
+              <option value="source">Source verification</option>
             </select>
           </div>
           <div>
             <label className="tick text-[0.55rem]" htmlFor="scope">
-              Which waters
+              Scope
             </label>
             <select
               id="scope"
@@ -429,7 +420,7 @@ function Pipeline() {
               onChange={(e) => setScope(e.target.value as Scope)}
               className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground md:w-48"
             >
-              <option value="sample">First waters in the catalog</option>
+              <option value="sample">Catalog head</option>
               <option value="state">One state</option>
               <option value="watchlist">Watchlist</option>
               <option value="compare">Comparison tray</option>
@@ -456,7 +447,7 @@ function Pipeline() {
           )}
           <div>
             <label className="tick text-[0.55rem]" htmlFor="limit">
-              How many
+              Batch size
             </label>
             <select
               id="limit"
@@ -473,7 +464,7 @@ function Pipeline() {
           </div>
           <div>
             <label className="tick text-[0.55rem]" htmlFor="concurrency">
-              Checks at a time
+              Checks at once
             </label>
             <select
               id="concurrency"
@@ -497,7 +488,7 @@ function Pipeline() {
               className="tap inline-flex min-h-11 items-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
             >
               <Play className="h-4 w-4" aria-hidden="true" />
-              Check ({targets.length})
+              {targets.length ? `Check sources (${targets.length})` : "Check sources"}
             </button>
             <button
               type="button"
@@ -524,7 +515,7 @@ function Pipeline() {
           className="mt-4"
           aria-live="polite"
           role="status"
-          aria-label="Check progress"
+          aria-label="Run progress"
         >
           <div
             className="h-[2px] w-full bg-border/60"
@@ -538,8 +529,8 @@ function Pipeline() {
           <p className="data mt-2 text-xs text-muted-foreground">
             {statusLine} · {run.counts.probed}/{run.planned || targets.length} checked ·{" "}
             {mode === "source"
-              ? `${run.counts.matched} verified · ${run.counts.unmatched} moved · ${run.counts.errors} not verified`
-              : `${run.counts.matched} matched · ${run.counts.unmatched} no match · ${run.counts.errors} couldn't reach`}
+              ? `${run.counts.matched} verified · ${run.counts.unmatched} moved · ${run.counts.errors} unverified`
+              : `${run.counts.matched} matched · ${run.counts.unmatched} unmatched · ${run.counts.errors} error`}
           </p>
         </div>
 
@@ -557,7 +548,7 @@ function Pipeline() {
                     : "border-hairline text-muted-foreground hover:border-brass/40"
                 }`}
               >
-                {STATUS_FILTER_LABEL[f]}
+                {f}
               </button>
             ))}
             <span className="h-px flex-1 bg-hairline" />
@@ -568,7 +559,7 @@ function Pipeline() {
               className="tap inline-flex min-h-11 items-center gap-2 border border-hairline px-4 text-[0.65rem] uppercase tracking-[0.14em] text-foreground disabled:opacity-50"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-              Try the misses again
+              Retry unconfirmed
             </button>
             <button
               type="button"
@@ -585,7 +576,7 @@ function Pipeline() {
 
         {run.results.length > 0 && visible.length === 0 && (
           <p className="mt-6 border border-hairline p-6 text-xs text-muted-foreground">
-            Nothing in this check has that result.
+            No rows in this run carry that status.
           </p>
         )}
 
@@ -602,8 +593,8 @@ function Pipeline() {
                 <div className="flex items-center gap-3 md:justify-end">
                   <span className="data text-xs text-muted-foreground">
                     {mode === "source"
-                      ? (r.station ?? "No answer")
-                      : `${r.station ?? "No gauge matched"} · ${r.readings} readings`}
+                      ? (r.station ?? "no answer")
+                      : `${r.station ?? "no station"} · ${r.readings} readings`}
                   </span>
                   <GradeChip
                     grade={r.status === "matched" ? "clear" : r.status === "unmatched" ? "watch" : "flagged"}
@@ -613,12 +604,12 @@ function Pipeline() {
                           ? "Verified"
                           : r.status === "unmatched"
                             ? "Moved"
-                            : "Not verified yet"
+                            : "Unverified"
                         : r.status === "matched"
                           ? "Matched"
                           : r.status === "unmatched"
-                            ? "No match"
-                            : "Couldn't reach"
+                            ? "Unmatched"
+                            : "Error"
                     }
                   />
                 </div>
@@ -629,7 +620,7 @@ function Pipeline() {
 
         {run.history.length > 0 && (
           <div className="mt-8">
-            <h3 className="tick text-[0.55rem]">Recent checks · last {run.history.length}</h3>
+            <h3 className="tick text-[0.55rem]">Check history · last {run.history.length}</h3>
             <ul className="data mt-3 divide-y divide-hairline border border-hairline text-xs">
               {run.history.map((h) => (
                 <li
@@ -637,11 +628,10 @@ function Pipeline() {
                   className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
                 >
                   <span className="truncate text-foreground/90">
-                    {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} ·{" "}
-                    {h.outcome === "complete" ? "finished" : "stopped early"}
+                    {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} · {h.outcome}
                   </span>
                   <span className="text-muted-foreground sm:text-right">
-                    {h.probed}/{h.planned} checked · {h.matched} matched · {h.errors} unreachable ·{" "}
+                    {h.probed}/{h.planned} checked · {h.matched} matched · {h.errors} error ·{" "}
                     {(h.durationMs / 1000).toFixed(1)}s
                   </span>
                 </li>
@@ -660,7 +650,7 @@ function Pipeline() {
             <thead>
               <tr className="border-b border-hairline">
                 <th scope="col" className="tick px-4 py-3 text-left text-[0.55rem]">State</th>
-                <th scope="col" className="tick px-4 py-3 text-right text-[0.55rem]">Waters</th>
+                <th scope="col" className="tick px-4 py-3 text-right text-[0.55rem]">Records</th>
                 <th scope="col" className="tick px-4 py-3 text-right text-[0.55rem]">Median readiness</th>
                 <th scope="col" className="tick px-4 py-3 text-right text-[0.55rem]">Review overdue</th>
               </tr>

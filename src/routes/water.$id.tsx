@@ -46,12 +46,12 @@ export const Route = createFileRoute("/water/$id")({
         { title: `${name} · Field Sense Navigator` },
         {
           name: "description",
-          content: `Five reads on ${name} in ${place}: access and legality, hazards, crowding, rules that move with the date, and the same-day checks you have to clear.`,
+          content: `Layered public-waters intelligence for ${name} in ${place}: access and legality, hazards, capacity, regulatory pressure and same-day field checks.`,
         },
         { property: "og:title", content: `${name} · Field Sense Navigator` },
         {
           property: "og:description",
-          content: `Field readiness, what the record documents and what it still cannot see, for ${name}. Public waters only.`,
+          content: `Field readiness, documented signals and residual unknowns for ${name}. Public waters only.`,
         },
       ],
     };
@@ -116,6 +116,7 @@ function WaterRecord() {
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-2 sm:mt-8 sm:gap-3">
+            <span className="data text-xs text-brass">{d.id}</span>
             <span className="tick text-[0.55rem]">{d.waterType}</span>
             <GradeChip grade={r.grade} label={r.band} />
             {overdue && <GradeChip grade="restricted" label="Review overdue" />}
@@ -125,7 +126,7 @@ function WaterRecord() {
                 label={`${dated.length} dated closure${dated.length === 1 ? "" : "s"}`}
               />
             ) : (
-              <GradeChip grade="clear" label="No dated closure" />
+              <GradeChip grade="clear" label="None dated" />
             )}
             <WatchButton id={d.id} name={displayName(d)} />
           </div>
@@ -151,7 +152,7 @@ function WaterRecord() {
               <p className="tick text-alert">Review overdue</p>
               <p className="mt-2 text-sm leading-relaxed text-foreground">
                 This record was due for review on {d.nextReviewAt}. That date
-                has passed. Every read below is provisional. Re-read the
+                has passed. Every layer below is provisional. Re-read the
                 official source before you treat any of it as current.
               </p>
             </div>
@@ -231,7 +232,7 @@ function WaterRecord() {
             },
             {
               k: "Managing agency",
-              v: d.managingAgency ?? "Not named on the cited source",
+              v: d.managingAgency ?? "Not recorded from the cited source",
             },
           ] as Array<{ k: string; v: string }>).map((s) => (
             <div key={s.k} className="min-w-0 px-5 py-5 sm:px-8 sm:py-6">
@@ -281,14 +282,14 @@ function WaterRecord() {
         <div className="min-w-0">
           <div className="flex items-center gap-4">
             <span className="h-px w-10 bg-brass" />
-            <p className="tick text-brass">What we read</p>
+            <p className="tick text-brass">Intelligence stack</p>
           </div>
           <h2 className="mt-5 font-display text-[clamp(1.7rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
-            Five reads on this water
+            Five layers on this water
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Open a read to see what the record actually says behind it, and
-            what it still cannot tell you.
+            Open a layer to see the documented signals behind it and the
+            unknowns it cannot close.
           </p>
 
           <div className="mt-8 border-y border-hairline">
@@ -327,7 +328,7 @@ function WaterRecord() {
             <div className="mt-14">
               <p className="tick text-brass">Related public waters</p>
               <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                Only links the catalog states outright. Records are never merged; each water keeps its own source and review date.
+                Explicit catalog links only. Records are not merged; each water keeps its own source and review date.
               </p>
               <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
                 {relatedRecords(d).map((rel) => (
@@ -344,6 +345,9 @@ function WaterRecord() {
                         <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
                           {RELATION_LABEL[rel.relation]} · {rel.destination.state}
                         </span>
+                      </span>
+                      <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
+                        {rel.id}
                       </span>
                     </Link>
                   </li>
@@ -401,13 +405,13 @@ function WaterRecord() {
           <div className="panel p-6">
             <p className="tick text-brass">Carry this water forward</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Send this water to Species & Presentation, Horizon Desk or Trip Prep with its
-              open items, its limits and its source date attached. Nothing moves until you
-              press carry, and nothing is posted automatically.
+              Hand the record to Species & Presentation, Horizon Desk or Trip Prep with its open
+              items, boundary note and source date attached. Notes move only when you press
+              carry — nothing is posted automatically.
             </p>
 
             <label className="tick mt-5 block text-[0.55rem]" htmlFor="job">
-              Attach the kind of day you are planning
+              Attach a declared job
             </label>
             <select
               id="job"
@@ -438,11 +442,11 @@ function WaterRecord() {
               >
                 {copied ? (
                   <>
-                    <Check className="h-4 w-4" aria-hidden="true" /> Copied
+                    <Check className="h-4 w-4" aria-hidden="true" /> Copied handoff
                   </>
                 ) : (
                   <>
-                    <Copy className="h-4 w-4" aria-hidden="true" /> Copy carry-forward text
+                    <Copy className="h-4 w-4" aria-hidden="true" /> Copy handoff block
                   </>
                 )}
               </button>
@@ -568,7 +572,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
                 </p>
                 {destination.lastHumanReviewedAt ? (
                   <p className="data mt-3 text-[0.65rem] text-muted-foreground">
-                    Reviewed by hand {destination.lastHumanReviewedAt}
+                    Bench {destination.lastHumanReviewedAt}
                     {destination.lastHumanReviewedBy
                       ? ` · ${destination.lastHumanReviewedBy}`
                       : ""}
@@ -581,7 +585,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
             ) : null}
             {questions.length > 0 ? (
               <div>
-                <p className="tick">Still to settle on the day</p>
+                <p className="tick">Same-day unresolved</p>
                 <ul className="mt-2 space-y-2">
                   {questions.map((q) => (
                     <li

@@ -135,7 +135,7 @@ export function readTags(d: Destination): WaterTags {
 }
 
 /* ------------------------------------------------------------------ *
- * The five reads on a water
+ * Intelligence layers
  * ------------------------------------------------------------------ */
 
 export type LayerKey =
@@ -177,7 +177,7 @@ function clamp(n: number, lo: number, hi: number) {
 }
 
 const OVERDUE_UNKNOWN =
-  "This record is past its review date. Treat this read as out of date until the official source has been read again.";
+  "This record is past its review date. Treat this layer as stale until the official source is re-read.";
 
 export function buildLayers(d: Destination): IntelLayer[] {
   const t = readTags(d);
@@ -208,23 +208,23 @@ export function buildLayers(d: Destination): IntelLayer[] {
       ? "watch"
       : "clear";
   const accessReadout = t.hasClosedLaunch
-    ? "Published access exists, but at least one launch is documented closed. Treat the water as partly open."
+    ? "Published access exists, but at least one launch is documented closed. Treat the water as partially open."
     : t.directoryOnly
-      ? "Access is published as an official list of sites, not a single one. Choose one named site before you travel."
+      ? "Access is documented as an official directory, not a single site. One named site must be chosen before travel."
       : `${t.namedSites} named public facilit${t.namedSites === 1 ? "y" : "ies"} documented on the official source.`;
 
   const hazardCount = t.hazards.size;
   const conditionsGrade: Grade =
     hazardCount >= 4 ? "flagged" : hazardCount >= 2 ? "watch" : "clear";
   const conditionsReadout = hazardCount
-    ? `${hazardCount} documented kind${hazardCount === 1 ? "" : "s"} of hazard on record. These are standing characteristics of the water, not a forecast.`
-    : "No standing hazards recorded on the official notices. Weather still governs the day.";
+    ? `${hazardCount} documented hazard famil${hazardCount === 1 ? "y" : "ies"} on record. These are standing characteristics of the water, not a forecast.`
+    : "No standing hazard families recorded on the official notices. Weather still governs the day.";
 
   const crowdCount = t.crowd.size;
   const capacityGrade: Grade =
     crowdCount >= 4 ? "flagged" : crowdCount >= 2 ? "watch" : "clear";
   const capacityReadout = crowdCount
-    ? `${crowdCount} documented pressure${crowdCount === 1 ? "" : "s"} on capacity. These describe the usual load, never how busy it is right now.`
+    ? `${crowdCount} capacity pressure signal${crowdCount === 1 ? "" : "s"} documented. Signals describe typical load, never live occupancy.`
     : "No documented capacity pressure. Expect ordinary parking and launch behaviour, unverified.";
 
   const seasonalCount = t.seasonal.size + t.datedClosures;
@@ -238,7 +238,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
     ? `${t.datedClosures} dated harvest closure${t.datedClosures === 1 ? "" : "s"} on the official standing season. Bag, size and gear still apply outside these windows. Same-day agency check required.`
     : t.seasonal.size
       ? `${t.seasonal.size} regulatory pressure point${t.seasonal.size === 1 ? "" : "s"}. Rules here move with date, section and vessel.`
-      : "The official source for this record publishes no dated harvest closure. That is a finished check, not a missing one. Bag, size and gear rules still apply.";
+      : "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Bag, size and gear rules still apply.";
 
   const checkCount = d.directVerification.length;
   const fieldGrade: Grade = checkCount >= 4 ? "flagged" : checkCount >= 2 ? "watch" : "clear";
@@ -257,10 +257,10 @@ export function buildLayers(d: Destination): IntelLayer[] {
       confidenceLabel: "Moderate",
       signals: accessSignals,
       unknowns: stale([
-        "Same-day gate hours, fees and closures are set locally and are not repeated here.",
+        "Same-day gate hours, fees and closures are set locally and are not mirrored here.",
         t.directoryOnly
-          ? "The specific site you will use has not been chosen yet — this record covers the whole set of sites, not one ramp."
-          : "Facility condition — surface, whether a dock is there, accessibility — is not tracked on this record.",
+          ? "The specific site you will use has not been chosen yet — this record covers the network, not one ramp."
+          : "Facility condition (surface, dock presence, ADA status) is not tracked at record level.",
         "Landowner boundaries adjacent to public corridors are outside this dataset.",
       ]),
     },
@@ -275,8 +275,8 @@ export function buildLayers(d: Destination): IntelLayer[] {
       signals: hazardSignals,
       unknowns: stale([
         "No live gauge height, discharge, tide table or wind reading is held in this record.",
-        "Water clarity, temperature and hatch activity are not worked out here and will not be estimated.",
-        "Hazards describe what the water is known to do, not what it is doing today.",
+        "Water clarity, temperature and hatch activity are not modelled and will not be estimated.",
+        "Hazard families describe what the water is known to do, not what it is doing today.",
       ]),
     },
     {
@@ -290,7 +290,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
       signals: crowdSignals,
       unknowns: stale([
         "Live lot occupancy, ramp queue length and trailer counts are not observable from here.",
-        "Event, tournament and regatta calendars are not collected here.",
+        "Event, tournament and regatta calendars are not ingested.",
         "Crowding language reflects documented patterns, not a prediction for your date.",
       ]),
     },
@@ -306,9 +306,9 @@ export function buildLayers(d: Destination): IntelLayer[] {
       unknowns: stale([
         ...(d.unresolvedQuestions ?? []),
         t.datedClosures
-          ? "These are standing month-and-day closures from the agency page cited here. An emergency order can override them the same day."
-          : "No season windows means the source for this record published no dated harvest closure we could stand behind — not that harvest is assumed open.",
-        "The regulation booklet is the authority; this read points to where the rules vary, it does not restate them.",
+          ? "These windows are standing MM-DD closures from the cited agency page. Emergency orders can supersede them the same day."
+          : "Empty season windows mean no defensible dated harvest closure was published at the source used for this record — not that harvest is assumed open.",
+        "The regulation booklet is authoritative; this layer flags where variance exists, it does not restate the rule.",
         "Emergency orders and in-season rule changes can post after the last source check.",
         "Species presence is context, never a catch expectation.",
       ]),
@@ -327,7 +327,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
       })),
       unknowns: stale([
         "Checks are yours to complete; nothing here completes them for you.",
-        "If a check cannot be completed, treat the water as don't-go.",
+        "If a check cannot be completed, the water is treated as not-go by default.",
       ]),
     },
   ].map((l) => ({
@@ -388,7 +388,7 @@ export function readiness(d: Destination): Readiness {
       note: t.hasClosedLaunch
         ? "Documented closure on at least one launch."
         : t.directoryOnly
-          ? "A named site still has to be chosen from the official list."
+          ? "A named site still has to be selected from the official directory."
           : `${t.namedSites} named public facilities on record.`,
     },
     {
@@ -404,8 +404,8 @@ export function readiness(d: Destination): Readiness {
       value: hazardValue,
       max: 20,
       note: t.hazards.size
-        ? `${t.hazards.size} standing kinds of hazard documented.`
-        : "No standing hazards on record.",
+        ? `${t.hazards.size} standing hazard families documented.`
+        : "No standing hazard families on record.",
     },
     {
       label: "Capacity headroom",
@@ -583,7 +583,7 @@ export function fitFor(
       if (t.hasShoreAccess) score += 10;
       if (d.waterType === "river") score += 4;
       if (t.directoryOnly) {
-        cautions.push("Shore-fishing quality varies from site to site across this set of access points.");
+        cautions.push("Shore-fishing quality varies site to site across this network.");
         score -= 6;
       }
       break;
@@ -616,7 +616,7 @@ export function fitFor(
     case "scouting":
       score += Math.min(12, d.publicAccess.length * 3 + d.currentNotices.length);
       if (t.directoryOnly) {
-        reasons.push("An official list of access sites — plenty to compare.");
+        reasons.push("Official directory access — many candidate sites to compare.");
         score += 6;
       }
       if (t.restricted) {
@@ -663,7 +663,7 @@ export function fitFor(
   if (c.timeWindow === "short") {
     if (t.directoryOnly) {
       score -= 10;
-      cautions.push("You will need to pick a site in advance for a short window to work.");
+      cautions.push("Site selection research is required before a short window can work.");
     }
     if (t.restricted) score -= 6;
     if (d.directVerification.length >= 4) score -= 4;
@@ -673,11 +673,11 @@ export function fitFor(
   }
 
   if (t.restricted && !blocked) {
-    cautions.push("Restricted-access notice on record — read Access & legality before you commit.");
+    cautions.push("Restricted-access notice on record — read Access & legality before committing.");
   }
 
   if (reviewOverdue(d)) {
-    cautions.push("Record is past its review date; treat every read as provisional.");
+    cautions.push("Record is past its review date; treat every layer as provisional.");
     score -= 10;
   }
 
@@ -749,8 +749,8 @@ export function buildChecklist(
   if (t.directoryOnly) {
     add(
       "Before you leave",
-      "Choose ONE named public access site from the official list and write it down. Do not set off against a whole list of sites.",
-      "Access: official site list",
+      "Select ONE named public access site from the official directory and write it down. Do not depart against a network.",
+      "Access: directory-level",
     );
   }
   if (t.hasClosedLaunch) {
@@ -796,7 +796,7 @@ export function buildChecklist(
   } else {
     add(
       "Standing rules",
-      "No dated harvest closure is published on this record. Confirm bag, size and gear on the current agency page before you keep anything. Do not assume harvest is open.",
+      "No dated harvest closure is published on this record. Confirm bag, size and gear on the current agency page before harvest. Do not assume harvest is open. Confirm on the official page.",
       "Record: no dated closure published",
     );
   }
@@ -846,7 +846,7 @@ export function buildChecklist(
 
   add(
     "Standing rules",
-    "If any check above cannot be completed, this water is a DON'T GO for the day.",
+    "Not ready for today. Confirm the open checks before going.",
     "Standing policy",
   );
 
@@ -861,7 +861,7 @@ export const CHECK_GROUPS: CheckItem["group"][] = [
 ];
 
 /* ------------------------------------------------------------------ *
- * Carry-forward block for Horizon Desk / Trip Prep
+ * Handoff to Horizon Desk / Trip Prep
  * ------------------------------------------------------------------ */
 
 export function buildHandoff(
@@ -878,7 +878,7 @@ export function buildHandoff(
     `Record: ${d.id}`,
     `Water: ${d.waterbody}${d.accessSite ? ` — ${d.accessSite}` : ""}`,
     `Place: ${d.region}, ${d.state}${d.county ? ` (${d.county} County)` : ""}`,
-    `Type: ${d.waterType} · Scope: public waters only`,
+    `Type: ${d.waterType} · Boundary: public waters only`,
     `Job: ${jobLabel}${c ? ` · Gear: ${humanize(c.gear)} · Window: ${c.timeWindow} · Wind tolerance: ${c.wind}` : ""}`,
     `Field Readiness: ${r.score}/100 — ${r.band}`,
     `Status: ${humanize(d.status)}`,
@@ -892,7 +892,7 @@ export function buildHandoff(
     "OPEN ITEMS (must clear before departure):",
     ...d.directVerification.map((v, i) => `  ${i + 1}. ${v}`),
     "",
-    `Hazards: ${t.hazards.size ? [...t.hazards].join(", ") : "none recorded"}`,
+    `Hazard families: ${t.hazards.size ? [...t.hazards].join(", ") : "none recorded"}`,
     `Capacity pressure: ${t.crowd.size ? [...t.crowd].join(", ") : "none recorded"}`,
     `Season windows: ${
       datedWindows(d).length

@@ -4,10 +4,24 @@ on:
   schedule:
     - cron: "17 6 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/data/destinations.json"
+      - "src/data/destinations/**"
+      - "src/data/location-overrides.json"
+      - "src/data/station-overrides.json"
+      - "src/data/station-overrides/**"
+      - "scripts/resolve-locations.mjs"
+      - "scripts/resolve-stations.mjs"
+      - "scripts/assemble-resolver-catalog.mjs"
+      - "scripts/assemble-resolver-overrides.mjs"
+      - "scripts/preserve-resolver-bindings.mjs"
+      - ".github/workflows/resolve-stations.yml"
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   resolve:
@@ -17,28 +31,33 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Save prior verified bindings for outage protection
+        run: cp src/data/station-bindings.json .resolver-station-bindings-prior.json
+      - name: Assemble base + jurisdiction-shard catalog
+        run: node scripts/assemble-resolver-catalog.mjs
+      - name: Assemble base + verified station-override shards
+        run: node scripts/assemble-resolver-overrides.mjs
       - name: Locate every water by published name
         run: node scripts/resolve-locations.mjs --retry-misses
       - name: Resolve USGS / NOAA / WSC bindings and NWS stations
         run: node scripts/resolve-stations.mjs
-      - name: Open PR if bindings or locations changed
-        uses: peter-evans/create-pull-request@v7
-        with:
-          commit-message: "data: refresh locations and station bindings from official indexes"
-          committer: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
-          author: "Rachel Elise Anderson <Rachel.Elise.Anderson@gmail.com>"
-          branch: data/station-bindings
-          title: "Refresh locations and multi-agency station bindings"
-          body: |
-            Nightly resolve of the 494-water catalog.
-
-            Same contract on every record:
-            1. Gazetteer location of the published water (not a neighbor gauge)
-            2. Gauge attempt — overrides, then USGS, then NOAA CO-OPS, then WSC
-            3. NWS observation station on every located US water
-            4. Agency-page language is scanned by the nightly closure workflow
-
-            Fail-closed: name + water-type must align. Ambiguous multi-matches
-            stay unmatched so they can be pinned. No nearby station is substituted.
-            Review the diff before merge — this file is what the instrument trusts.
-          labels: data,pipeline
+      - name: Preserve prior exact bindings across transient index outages
+        run: node scripts/preserve-resolver-bindings.mjs
+      - name: Restore sharded resolver sources
+        if: always()
+        run: |
+          node scripts/assemble-resolver-catalog.mjs --restore
+          node scripts/assemble-resolver-overrides.mjs --restore
+          rm -f .resolver-station-bindings-prior.json
+      - name: Publish refreshed data branch
+        run: |
+          if git diff --quiet -- src/data/locations.json src/data/station-bindings.json; then
+            echo "No location or binding changes to publish."
+            exit 0
+          fi
+          git config user.name "Rachel Elise Anderson"
+          git config user.email "Rachel.Elise.Anderson@gmail.com"
+          git add src/data/locations.json src/data/station-bindings.json
+          git commit -m "data: refresh locations and station bindings from official indexes"
+          git push --force origin HEAD:data/station-bindings
+          echo "Published refreshed resolver data to data/station-bindings for review."

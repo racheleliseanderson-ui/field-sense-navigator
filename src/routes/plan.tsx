@@ -50,13 +50,13 @@ export const Route = createFileRoute("/plan")({
       {
         name: "description",
         content:
-          "Say what kind of day you are planning — bank, kayak, small boat, scouting, tournament-adjacent or family — see the named public waters that actually fit, then print a field brief.",
+          "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a same-day brief.",
       },
       { property: "og:title", content: "Plan a Day · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Named public waters ranked for the day you are actually planning, with anything the record cannot support set aside, and a printable same-day field brief.",
+          "Situation-aware ranking of named public waters, with required-check exclusions and a printable same-day brief.",
       },
     ],
   }),
@@ -153,8 +153,8 @@ function Plan() {
     }));
 
   const STEPS = [
-    { n: 1 as const, label: "Your day", done: Boolean(job) },
-    { n: 2 as const, label: "Your limits", done: step > 2 },
+    { n: 1 as const, label: "Job", done: Boolean(job) },
+    { n: 2 as const, label: "Constraints", done: step > 2 },
     { n: 3 as const, label: "Ranked waters", done: false },
   ];
 
@@ -168,9 +168,9 @@ function Plan() {
       {search.job ? (
         <div className="border-b border-hairline bg-brass/10">
           <p className="mx-auto max-w-7xl px-5 py-3 text-sm leading-relaxed text-foreground sm:px-8">
-            Quick readiness check. Your day is set{jobLabel ? ` (${jobLabel})` : ""}.
-            Everything else stays optional. Ranking uses the documented record
-            only — same-day checks are never invented.
+            Quick readiness check. Job is declared{jobLabel ? ` (${jobLabel})` : ""}.
+            Constraints stay optional. Ranked waters use documented records only —
+            same-day checks are not invented.
           </p>
         </div>
       ) : null}
@@ -264,7 +264,7 @@ function Plan() {
               onClick={() => setStep(2)}
               className="tap mt-8 inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass"
             >
-              Continue to your limits
+              Continue to constraints
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           )}
@@ -279,11 +279,11 @@ function Plan() {
             <span className="h-px flex-1 bg-hairline" />
           </div>
           <h2 className="mt-6 font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
-            Your limits
+            Constraints
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Optional. Rank with these defaults if you want the first useful list
-            now. Widening later will not conjure records that do not exist.
+            now. Widening later does not invent missing records.
           </p>
 
           <div className="mt-9 grid gap-9 lg:grid-cols-3">
@@ -340,7 +340,7 @@ function Plan() {
               className="tap inline-flex min-h-12 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Change the day
+              Change the job
             </button>
             <button
               type="button"
@@ -365,12 +365,12 @@ function Plan() {
         {!job ? (
           <div className="mt-8">
             <EmptyState
-              title="Ready to start"
-              body="Nothing has been ranked yet. Pick the kind of day you are planning — bank, kayak or small boat — and the waters that fit it will be ranked here. Or browse the whole catalog instead."
+              title="Declare a job to begin the ranking"
+              body="Nothing is ranked until the instrument knows what you are trying to do. We will not invent a job to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
               action={
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link to="/plan" search={{ job: "bank" }} className="tick text-brass">
-                    Start with a bank day →
+                    Start with a bank job →
                   </Link>
                   <Link to="/explore" className="tick text-primary hover:text-brass">
                     Or browse the full catalog →
@@ -382,15 +382,15 @@ function Plan() {
         ) : result && result.fits.length === 0 ? (
           <div className="mt-8">
             <EmptyState
-              title="No water meets these constraints"
-              body="Every water we checked is missing something the record would have to confirm for this day — so none can be recommended as-is. Widen the gear, the states or the water type and we will check again."
+              title="No water meets these requirements"
+              body="With these constraints no record can be recommended without inventing something we do not hold. Widen the gear mode, the states, or the water type — this guide will not soften a required check to fill the page."
               action={
                 <button
                   type="button"
                   onClick={() => setStep(2)}
                   className="tick text-brass"
                 >
-                  Change a limit →
+                  Change a constraint →
                 </button>
               }
             />
@@ -402,7 +402,8 @@ function Plan() {
                 Ranked for {JOBS.find((j) => j.id === job)?.label.toLowerCase()}
               </h2>
               <p className="data text-xs text-muted-foreground">
-                {result.fits.length} fit · {result.excluded.length} set aside
+                {result.fits.length} fit · {result.excluded.length} excluded by
+                required checks
               </p>
             </div>
 
@@ -438,12 +439,12 @@ function Plan() {
             {result.excluded.length > 0 && (
               <div className="mt-16">
                 <p className="tick text-alert">
-                  Set aside ({result.excluded.length})
+                  Not a match for this plan ({result.excluded.length})
                 </p>
                 <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-                  These waters are not ranked because something this day
-                  requires is not confirmed on the record. They are shown so you
-                  can see what was left out and why.
+                  These waters are not ranked because a required check could not be
+                  cleared from the record. They are shown so the exclusion is
+                  visible rather than silent.
                 </p>
                 <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {result.excluded.slice(0, 9).map((f) => (

@@ -10,17 +10,17 @@ import { useReveal, useParallax, useCountUp } from "@/lib/motion";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Field Sense Navigator · Read Public Waters Before You Go" },
+      { title: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
         name: "description",
         content:
-          `A field guide to ${NAMED_WATER_COUNT} named public waters: access, hazards, crowding, rules that move with the date, and the same-day checks you have to clear before you go. No private spots.`,
+          `A field guide for ${NAMED_WATER_COUNT} named public waters: readiness, ranking, and a printable brief.`,
       },
-      { property: "og:title", content: "Field Sense Navigator · Read Public Waters Before You Go" },
+      { property: "og:title", content: "Field Sense Navigator · Public-Waters Field Instrument" },
       {
         property: "og:description",
         content:
-          "Say what kind of day you are planning, see the waters that actually fit it, print a field brief. Public waters only; where the record runs out, we say so.",
+          "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — we will not guess when a check cannot be confirmed.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -39,11 +39,11 @@ const REFUSALS = [
 ];
 
 const LAYERS = [
-  ["Access & legality", "Published facilities, closures, official site directories, and the line where the public corridor ends."],
-  ["Conditions & hazards", "Standing hazards the water is known for — wind fetch, tide, level swing, traffic. Never a forecast."],
+  ["Access & legality", "Published facilities, closures, directory-level networks, and the line where public corridor ends."],
+  ["Conditions & hazards", "Standing hazard families the water is known for — wind fetch, tide, level swing, traffic. Never a forecast."],
   ["Capacity & crowding", "Documented pressure on parking, ramps and hours. Patterns, never live occupancy."],
   ["Seasonal & regulatory pressure", "Where rules move with date, section and vessel — and where jurisdiction changes under you."],
-  ["Field-check requirement", "The same-day work you have to complete. Incomplete means don't go."],
+  ["Field-check requirement", "The same-day work you must complete. Incomplete means not-go."],
 ] as const;
 
 function Readout({ k, v, delay }: { k: string; v: number; delay: number }) {
@@ -79,7 +79,7 @@ function Home() {
       <SiteHeader />
       <main id="content">
 
-      {/* ---------- HERO ---------- */}
+      {/* ---------- HERO: the instrument face ---------- */}
       <section className="relative isolate overflow-hidden">
         <Art
           plate={PLATES.hero}
@@ -111,10 +111,10 @@ function Home() {
             data-reveal
             style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
           >
-            Five reads on each of {NAMED_WATER_COUNT} named public waters. Say
-            what kind of day you are actually planning, and we rank the water
-            that fits it — then print the same-day checks you have to clear
-            before you go.
+            Five intelligence layers over {NAMED_WATER_COUNT} named public
+            waters. Declare the job you are actually doing, and the instrument
+            ranks the water that fits it — then prints the same-day checks you
+            have to clear before you go.
           </p>
 
           <div
@@ -147,25 +147,25 @@ function Home() {
           <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-hairline sm:px-0 md:grid-cols-4 md:divide-y-0">
             <Readout k="Named waters" v={NAMED_WATER_COUNT} delay={0} />
             <Readout k="States & provinces" v={states.length} delay={60} />
-            <Readout k="Reads per water" v={5} delay={120} />
+            <Readout k="Intelligence layers" v={5} delay={120} />
             <Readout k="Private spots" v={0} delay={180} />
           </dl>
         </div>
       </section>
 
-      {/* ---------- THE FIVE READS: dark editorial band ---------- */}
+      {/* ---------- THE LAYERS: dark editorial band ---------- */}
       <section className="relative isolate overflow-hidden bg-abyss">
         <div className="halo absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
         <div className="mx-auto max-w-7xl px-safe py-24 sm:px-8 md:py-32">
           <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="tick text-brass" data-reveal>The five reads</p>
+              <p className="tick text-brass" data-reveal>The stack</p>
               <h2
                 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.8rem)] font-bold leading-[0.95] tracking-[-0.04em] text-foreground"
                 data-reveal
                 style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
               >
-                Five reads,
+                Five layers,
                 <br />
                 each one honest
                 <br />
@@ -176,8 +176,8 @@ function Home() {
                 data-reveal
                 style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
               >
-                Every read carries a confidence figure and a list of what it
-                still cannot see. Nothing is invented to fill a gap.
+                Every layer carries a confidence figure and a list of what it
+                still cannot see. Nothing is inferred to fill a gap.
               </p>
 
               <div
@@ -185,7 +185,7 @@ function Home() {
                 data-reveal-crop
                 style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
               >
-                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="Plate 06 · The field brief" />
+                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="Plate 06 · The brief" />
               </div>
             </div>
 
@@ -298,7 +298,7 @@ function Home() {
         <Art plate={PLATES.ramp} scrim="band" opacity={0.75} />
         <div className="mx-auto grid max-w-7xl gap-12 px-safe py-24 sm:px-8 md:grid-cols-[1fr_1.1fr] md:py-32">
           <div>
-            <p className="tick text-alert" data-reveal>What this will not tell you</p>
+            <p className="tick text-alert" data-reveal>What this instrument will not tell you</p>
             <h2
               className="mt-5 font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[0.96] tracking-[-0.04em] text-foreground"
               data-reveal
@@ -314,7 +314,7 @@ function Home() {
               data-reveal
               style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
             >
-              Read the limits →
+              Read the boundary →
             </Link>
           </div>
           <ul className="surface grid gap-px self-start bg-hairline sm:grid-cols-2" data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
@@ -366,11 +366,11 @@ function Home() {
             data-reveal
             style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
           >
-            One field. Several tools.
+            One field. Several instruments.
           </h2>
           <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
             {[
-              ["Waterways", "This tool. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
+              ["Waterways", "This instrument. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
               ["Species", "Behavior hypotheses and presentation families — not bite scores.", "https://species.hookthehorizon.blog/", false],
               ["Knot", "Decide, diagnose and compare the knot for the job.", "https://knot.hookthehorizon.blog/", false],
               ["The blog", "Long-form field notes from Hook the Horizon.", "https://hookthehorizon.blog/", false],

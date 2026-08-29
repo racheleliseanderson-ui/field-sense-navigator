@@ -172,10 +172,43 @@ export function finalizeSnapshot(payload, now = Date.now()) {
   };
 }
 
+function pruneMergedStations(stations, nextStations, mode) {
+  if (mode === "all") {
+    const currentIds = new Set(Object.keys(nextStations ?? {}));
+    const slowIncluded = Object.values(nextStations ?? {}).some((s) =>
+      SLOW_AGENCIES.has(s?.agency),
+    );
+    return Object.fromEntries(
+      Object.entries(stations ?? {}).filter(
+        ([id, row]) => currentIds.has(id) || (!slowIncluded && SLOW_AGENCIES.has(row?.agency)),
+      ),
+    );
+  }
+  if (mode === "slow") {
+    const currentSlowIds = new Set(Object.keys(nextStations ?? {}));
+    return Object.fromEntries(
+      Object.entries(stations ?? {}).filter(
+        ([id, row]) => !SLOW_AGENCIES.has(row?.agency) || currentSlowIds.has(id),
+      ),
+    );
+  }
+  return stations;
+}
+
+function pruneMergedObservations(observations, nextObservations, mode) {
+  if (mode !== "all") return observations;
+  const currentIds = new Set(Object.keys(nextObservations ?? {}));
+  return Object.fromEntries(
+    Object.entries(observations ?? {}).filter(([id]) => currentIds.has(id)),
+  );
+}
+
 export function mergeSnapshot(prev, next, meta) {
   const now = Date.parse(meta.ingestedAt) || Date.now();
-  const stations = mergeStations(prev?.stations, next.stations, now);
-  const observations = mergeObservations(prev?.observations, next.observations, now);
+  let stations = mergeStations(prev?.stations, next.stations, now);
+  let observations = mergeObservations(prev?.observations, next.observations, now);
+  stations = pruneMergedStations(stations, next.stations, meta.mode);
+  observations = pruneMergedObservations(observations, next.observations, meta.mode);
   const destinationBindings =
     next.stats?.destinationBindings ?? prev?.stats?.destinationBindings ?? 0;
   return {

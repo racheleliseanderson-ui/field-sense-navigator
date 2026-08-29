@@ -15,7 +15,7 @@ export const Route = createFileRoute("/watchlist")({
       {
         name: "description",
         content:
-          "Waters you are tracking, held with their readiness band and source date, exportable as one field brief covering all of them.",
+          "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field brief.",
       },
       { property: "og:title", content: "Watchlist · Field Sense Navigator" },
       {
@@ -65,8 +65,8 @@ function WatchlistPage() {
             Waters you are tracking
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Saved on this device only. Nothing is uploaded, and the same limits
-            apply — public waters with published access, nothing else.
+            Saved on this device only. Nothing is uploaded, and the boundary is
+            unchanged — public waters with published access, nothing else.
           </p>
 
           {records.length > 0 && (

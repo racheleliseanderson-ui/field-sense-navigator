@@ -1,6 +1,7 @@
 import { displayName, type Destination, type WaterType } from "@/lib/catalog";
 
 export const SPECIES_URL = "https://species.hookthehorizon.blog/";
+export const FLEET_CONTRACT = "HTH-FLEET-1.0" as const;
 
 export function mapWaterType(waterType: WaterType): "flowing" | "stillwater" | undefined {
   if (waterType === "river") return "flowing";
@@ -11,11 +12,17 @@ export function mapWaterType(waterType: WaterType): "flowing" | "stillwater" | u
 /** Public-safe Field Sense → Species packet. Named water only; no coordinates, no auto-POST. */
 export function encodeSpeciesPacket(d: Destination): string {
   const waterType = mapWaterType(d.waterType);
+  const createdAt = new Date().toISOString();
   const packet = {
     packetVersion: "HTH-1.0",
     origin: "field-sense",
-    createdAt: new Date().toISOString(),
+    createdAt,
     instrumentId: "HTH-HH-001",
+    fleet: {
+      contract: FLEET_CONTRACT,
+      trail: [{ origin: "field-sense", at: createdAt }],
+      lastUpdatedBy: "field-sense",
+    },
     water: {
       waterId: d.id,
       waterName: displayName(d),
@@ -29,6 +36,13 @@ export function encodeSpeciesPacket(d: Destination): string {
       tempF: null,
       tempSource: "unknown",
     },
+    provenance: [
+      {
+        source: "Field Sense named-public-water record",
+        evidenceClass: "declared",
+        reviewedAt: createdAt.slice(0, 10),
+      },
+    ],
     privacy: {
       containsCoordinates: false,
       containsPrivateWater: false,

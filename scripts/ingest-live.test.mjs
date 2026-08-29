@@ -241,6 +241,137 @@ test("mergeSnapshot rebuilds stats across the combined catalog", () => {
   assert.equal(snap.stats.nwsStations, 1);
 });
 
+test("full merge prunes retired stations and observations but preserves omitted slow stations", () => {
+  const prev = {
+    stats: { destinationBindings: 2 },
+    stations: {
+      A: {
+        siteId: "A",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "1", unit: "ft³/s", observedAt: FRESH }],
+      },
+      retired: {
+        siteId: "retired",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "8", unit: "ft³/s", observedAt: FRESH }],
+      },
+      B: {
+        siteId: "B",
+        agency: "USBR",
+        readings: [
+          {
+            label: "Reservoir elevation",
+            value: "9",
+            unit: "ft",
+            observedAt: "2026-08-18T00:00:00Z",
+          },
+        ],
+      },
+    },
+    observations: {
+      KNEW: {
+        stationId: "KNEW",
+        readings: [{ label: "Weather", value: "clear", unit: "", observedAt: FRESH }],
+      },
+      KOLD: {
+        stationId: "KOLD",
+        readings: [{ label: "Weather", value: "clear", unit: "", observedAt: FRESH }],
+      },
+    },
+  };
+  const next = {
+    schema: "0.6.0",
+    stations: {
+      A: {
+        siteId: "A",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "2", unit: "ft³/s", observedAt: FRESH }],
+      },
+    },
+    observations: {
+      KNEW: {
+        stationId: "KNEW",
+        readings: [{ label: "Weather", value: "clear", unit: "", observedAt: FRESH }],
+      },
+    },
+    stats: { destinationBindings: 2 },
+  };
+  const snap = mergeSnapshot(prev, next, {
+    ingestedAt: "2026-08-19T21:10:00Z",
+    cadenceMinutes: 30,
+    mode: "all",
+  });
+  assert.deepEqual(Object.keys(snap.stations).sort(), ["A", "B"]);
+  assert.deepEqual(Object.keys(snap.observations), ["KNEW"]);
+  assert.equal(snap.stats.boundStations, 2);
+  assert.equal(snap.stats.nwsStations, 1);
+});
+
+test("slow merge prunes retired slow stations without dropping fast agencies", () => {
+  const prev = {
+    stats: { destinationBindings: 2 },
+    stations: {
+      A: {
+        siteId: "A",
+        agency: "USGS",
+        readings: [{ label: "Streamflow", value: "1", unit: "ft³/s", observedAt: FRESH }],
+      },
+      OLD: {
+        siteId: "OLD",
+        agency: "USBR",
+        readings: [
+          {
+            label: "Reservoir elevation",
+            value: "7",
+            unit: "ft",
+            observedAt: "2026-08-18T00:00:00Z",
+          },
+        ],
+      },
+      B: {
+        siteId: "B",
+        agency: "USBR",
+        readings: [
+          {
+            label: "Reservoir elevation",
+            value: "9",
+            unit: "ft",
+            observedAt: "2026-08-18T00:00:00Z",
+          },
+        ],
+      },
+    },
+    observations: {},
+  };
+  const next = {
+    schema: "0.6.0",
+    stations: {
+      B: {
+        siteId: "B",
+        agency: "USBR",
+        readings: [
+          {
+            label: "Reservoir elevation",
+            value: "10",
+            unit: "ft",
+            observedAt: "2026-08-19T00:00:00Z",
+          },
+        ],
+      },
+    },
+    observations: {},
+    stats: { destinationBindings: 2 },
+  };
+  const snap = mergeSnapshot(prev, next, {
+    ingestedAt: "2026-08-19T21:10:00Z",
+    cadenceMinutes: 30,
+    mode: "slow",
+  });
+  assert.deepEqual(Object.keys(snap.stations).sort(), ["A", "B"]);
+  assert.equal(snap.stations.B.readings[0].value, "10");
+  assert.equal(snap.stats.boundStations, 2);
+});
+
 test("rebuildStats counts only current observations; fossils are stale-only", () => {
   const stations = {
     BNK: {

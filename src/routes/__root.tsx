@@ -78,17 +78,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Field Sense Navigator — Public-water field guide" },
+      { title: "Field Sense Navigator — Public-water field instrument" },
       {
         name: "description",
         content:
-          "A field guide to named public waters: what the official record says about access, hazards, crowding and rules, how ready each water is to plan from, ranking that fits the day you have in mind, and a printable field brief. Where the record runs out, we say so.",
+          "A field guide for named public waters: readiness, ranking, and a printable brief.",
       },
       { name: "author", content: "Hook the Horizon" },
       { property: "og:title", content: "Field Sense Navigator" },
       {
         property: "og:description",
-        content: "Read named public waters before you drive to them. No private spots, no invented conditions.",
+        content: "Layered intelligence for named public waters. No private spots, no invented conditions.",
       },
       { property: "og:type", content: "website" },
       {
