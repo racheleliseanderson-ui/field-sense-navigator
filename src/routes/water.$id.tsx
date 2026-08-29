@@ -46,12 +46,12 @@ export const Route = createFileRoute("/water/$id")({
         { title: `${name} · Field Sense Navigator` },
         {
           name: "description",
-          content: `Layered public-waters intelligence for ${name} in ${place}: access and legality, hazards, capacity, regulatory pressure and same-day field checks.`,
+          content: `Five reads on ${name} in ${place}: access and legality, hazards, crowding, rules that move with the date, and the same-day checks you have to clear.`,
         },
         { property: "og:title", content: `${name} · Field Sense Navigator` },
         {
           property: "og:description",
-          content: `Field readiness, documented signals and residual unknowns for ${name}. Public waters only.`,
+          content: `Field readiness, what the record documents and what it still cannot see, for ${name}. Public waters only.`,
         },
       ],
     };
@@ -116,7 +116,6 @@ function WaterRecord() {
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-2 sm:mt-8 sm:gap-3">
-            <span className="data text-xs text-brass">{d.id}</span>
             <span className="tick text-[0.55rem]">{d.waterType}</span>
             <GradeChip grade={r.grade} label={r.band} />
             {overdue && <GradeChip grade="restricted" label="Review overdue" />}
@@ -126,7 +125,7 @@ function WaterRecord() {
                 label={`${dated.length} dated closure${dated.length === 1 ? "" : "s"}`}
               />
             ) : (
-              <GradeChip grade="clear" label="None dated" />
+              <GradeChip grade="clear" label="No dated closure" />
             )}
             <WatchButton id={d.id} name={displayName(d)} />
           </div>
@@ -152,7 +151,7 @@ function WaterRecord() {
               <p className="tick text-alert">Review overdue</p>
               <p className="mt-2 text-sm leading-relaxed text-foreground">
                 This record was due for review on {d.nextReviewAt}. That date
-                has passed. Every layer below is provisional. Re-read the
+                has passed. Every read below is provisional. Re-read the
                 official source before you treat any of it as current.
               </p>
             </div>
@@ -174,7 +173,7 @@ function WaterRecord() {
               className="inline-flex items-center gap-3 bg-brass px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground transition-transform hover:-translate-y-0.5"
             >
               <Printer className="h-4 w-4" aria-hidden="true" />
-              Build field packet
+              Build field brief
             </Link>
             <button
               type="button"
@@ -232,7 +231,7 @@ function WaterRecord() {
             },
             {
               k: "Managing agency",
-              v: d.managingAgency ?? "Not recorded from the cited source",
+              v: d.managingAgency ?? "Not named on the cited source",
             },
           ] as Array<{ k: string; v: string }>).map((s) => (
             <div key={s.k} className="min-w-0 px-5 py-5 sm:px-8 sm:py-6">
@@ -282,14 +281,14 @@ function WaterRecord() {
         <div className="min-w-0">
           <div className="flex items-center gap-4">
             <span className="h-px w-10 bg-brass" />
-            <p className="tick text-brass">Intelligence stack</p>
+            <p className="tick text-brass">What we read</p>
           </div>
           <h2 className="mt-5 font-display text-[clamp(1.7rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
-            Five layers on this water
+            Five reads on this water
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Open a layer to see the documented signals behind it and the
-            unknowns it cannot close.
+            Open a read to see what the record actually says behind it, and
+            what it still cannot tell you.
           </p>
 
           <div className="mt-8 border-y border-hairline">
@@ -328,7 +327,7 @@ function WaterRecord() {
             <div className="mt-14">
               <p className="tick text-brass">Related public waters</p>
               <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                Explicit catalog links only. Records are not merged; each water keeps its own source and review date.
+                Only links the catalog states outright. Records are never merged; each water keeps its own source and review date.
               </p>
               <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
                 {relatedRecords(d).map((rel) => (
@@ -345,9 +344,6 @@ function WaterRecord() {
                         <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
                           {RELATION_LABEL[rel.relation]} · {rel.destination.state}
                         </span>
-                      </span>
-                      <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
-                        {rel.id}
                       </span>
                     </Link>
                   </li>
@@ -405,13 +401,13 @@ function WaterRecord() {
           <div className="panel p-6">
             <p className="tick text-brass">Carry this water forward</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Hand the record to Species & Presentation, Horizon Desk or Trip Prep with its open
-              items, boundary note and source date attached. Packets move only when you press
-              carry — nothing is posted automatically.
+              Send this water to Species & Presentation, Horizon Desk or Trip Prep with its
+              open items, its limits and its source date attached. Nothing moves until you
+              press carry, and nothing is posted automatically.
             </p>
 
             <label className="tick mt-5 block text-[0.55rem]" htmlFor="job">
-              Attach a declared job
+              Attach the kind of day you are planning
             </label>
             <select
               id="job"
@@ -442,11 +438,11 @@ function WaterRecord() {
               >
                 {copied ? (
                   <>
-                    <Check className="h-4 w-4" aria-hidden="true" /> Copied handoff
+                    <Check className="h-4 w-4" aria-hidden="true" /> Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="h-4 w-4" aria-hidden="true" /> Copy handoff block
+                    <Copy className="h-4 w-4" aria-hidden="true" /> Copy carry-forward text
                   </>
                 )}
               </button>
@@ -456,7 +452,7 @@ function WaterRecord() {
                 search={job ? { job } : {}}
                 className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
               >
-                <Printer className="h-4 w-4" aria-hidden="true" /> Field packet
+                <Printer className="h-4 w-4" aria-hidden="true" /> Field brief
               </Link>
               <WatchButton id={d.id} name={displayName(d)} variant="full" />
               <button
@@ -495,7 +491,7 @@ function WaterRecord() {
             className="flex min-h-14 flex-col items-center justify-center gap-1 text-[0.6rem] uppercase tracking-[0.12em] text-foreground"
           >
             <Printer className="h-4 w-4" aria-hidden="true" />
-            Packet
+            Brief
           </Link>
           <button
             type="button"
@@ -572,7 +568,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
                 </p>
                 {destination.lastHumanReviewedAt ? (
                   <p className="data mt-3 text-[0.65rem] text-muted-foreground">
-                    Bench {destination.lastHumanReviewedAt}
+                    Reviewed by hand {destination.lastHumanReviewedAt}
                     {destination.lastHumanReviewedBy
                       ? ` · ${destination.lastHumanReviewedBy}`
                       : ""}
@@ -585,7 +581,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
             ) : null}
             {questions.length > 0 ? (
               <div>
-                <p className="tick">Same-day unresolved</p>
+                <p className="tick">Still to settle on the day</p>
                 <ul className="mt-2 space-y-2">
                   {questions.map((q) => (
                     <li

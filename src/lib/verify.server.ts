@@ -26,7 +26,7 @@ export async function verifySource(url: string): Promise<SourceVerification> {
   };
 
   if (!/^https?:\/\//i.test(url)) {
-    return { ...base, note: "Record does not cite an http(s) source URL." };
+    return { ...base, note: "This record does not name an official web page to check." };
   }
 
   const attempt = async (method: "HEAD" | "GET") => {
@@ -66,8 +66,8 @@ export async function verifySource(url: string): Promise<SourceVerification> {
         finalUrl,
         redirected,
         note: redirected
-          ? `Reachable, but the agency now serves this page at ${finalUrl}`
-          : "Agency page reachable at the cited URL.",
+          ? `The agency has moved this page to ${finalUrl}`
+          : "The agency page opened at the address on record.",
       };
     }
     return {
@@ -77,13 +77,13 @@ export async function verifySource(url: string): Promise<SourceVerification> {
       redirected,
       note:
         res.status === 403 || res.status === 429
-          ? `Agency host answered ${res.status} and blocks automated checks. Confirm the page by hand.`
-          : `Agency host answered ${res.status}. The cited page could not be confirmed.`,
+          ? "The agency site turns away automated checks. Open the page yourself to confirm it."
+          : "The agency site answered, but not with the page on record. It could not be confirmed.",
     };
   } catch {
     return {
       ...base,
-      note: "No answer from the agency host within the timeout. Source left unverified.",
+      note: "Couldn't reach the agency site in time. This source is not verified yet.",
     };
   }
 }

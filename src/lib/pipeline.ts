@@ -45,13 +45,13 @@ function check(
   };
 }
 
-/** Catalog integrity, computed from the records themselves. Nothing is inferred. */
+/** Catalog quality checks, computed from the records themselves. Nothing is inferred. */
 export function integrity(pool: Destination[] = destinations): IntegrityCheck[] {
   const total = pool.length;
   return [
     check(
       "source",
-      "Official source URL present",
+      "Official source named",
       "Every record must name the agency page it was read from.",
       pool.filter((d) => !/^https?:\/\//.test(d.officialSourceUrl)),
       total,
@@ -69,8 +69,8 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
     ),
     check(
       "freshness",
-      "Verified within 60 days",
-      "Verification age drives the freshness component of every readiness score.",
+      "Checked within 60 days",
+      "How recently the official source was read feeds straight into every readiness score.",
       pool.filter((d) => daysSince(d.checkedAt) > 60),
       total,
       15,
@@ -106,7 +106,7 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
     check(
       "privacy",
       "Public classification only",
-      "Any record carrying a sensitive location is withheld by the doctrine.",
+      "Any record carrying a sensitive location is withheld.",
       pool.filter(
         (d) =>
           d.privacy.sensitiveLocationIncluded ||
@@ -118,8 +118,8 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
     ),
     check(
       "located",
-      "Published location resolved",
-      "Every record is sent to the gazetteer under its own name. A miss stays a miss — no neighbor coordinate is substituted.",
+      "Location found",
+      "Every water is looked up under its own published name. Where the lookup finds nothing, it stays a miss — a neighbouring place is never substituted.",
       pool.filter((d) => {
         const b = bindingFor(d.id);
         return b == null || b.lat == null || b.lon == null;
@@ -130,8 +130,8 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
     ),
     check(
       "weather",
-      "Weather observation station attempted",
-      "US waters with a location are bound to the NWS observation station for that point. Canadian waters print an official miss until an MSC station is pinned. Unlocated waters stay unlocated.",
+      "Weather station matched",
+      "US waters with a known location are matched to the National Weather Service observation station for that point. Canadian waters show an open miss until a Meteorological Service of Canada station is pinned by hand. A water we could not place stays unplaced.",
       pool.filter((d) => {
         if (isProvince(d.state)) return false;
         const b = bindingFor(d.id);

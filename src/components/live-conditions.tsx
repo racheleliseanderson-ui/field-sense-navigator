@@ -41,10 +41,10 @@ function formatObservedDate(iso: string) {
 
 function sourceLine(source: string, age: number | null, agency: string | null) {
   if (source === "scheduled-snapshot") {
-    return `Scheduled ingest · ${age ?? "?"} min old`;
+    return `From the scheduled refresh · ${age ?? "?"} min old`;
   }
   if (source === "agency-live") {
-    return `Live ${agency ?? "agency"} pull · binding used`;
+    return `Read from ${agency ?? "the agency"} just now`;
   }
   return null;
 }
@@ -89,18 +89,18 @@ function ReadingRows({
 
 function gaugeEmptyCopy(station: boolean, retainedCount: number) {
   if (station && retainedCount > 0) {
-    return "No current official reading. The last agency observation is older than the freshness window and is printed below with its original time.";
+    return "No current official reading. The last agency observation is older than we treat as current, and is shown below with the time it was actually taken.";
   }
   if (station) {
-    return "The matched station returned no current values; the feed may be offline.";
+    return "The matched station returned nothing current. Its feed may be down.";
   }
-  return "No official gauge reading on this record. The pipeline will not invent a nearby station.";
+  return "No official gauge reading on this record. A nearby station is never substituted for the right one.";
 }
 
 /**
- * Same four layers on every water: gauge, observation, forecast, agency-page
- * language. Fetch stays off until the reader asks — raw attributed
- * observations only, never a bite or behaviour forecast.
+ * The same four reads on every water: gauge, weather observation, forecast and
+ * the wording on the agency page. Nothing is fetched until the reader asks —
+ * attributed official observations only, never a bite or behaviour forecast.
  */
 export function LiveConditions({ destination }: { destination: Destination }) {
   const [open, setOpen] = useState(false);
@@ -166,10 +166,10 @@ export function LiveConditions({ destination }: { destination: Destination }) {
       {!open && (
         <div className="mt-4">
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Every record carries the same four layers — gauge, weather
-            observation, forecast, and agency-page language. They load only when
-            you request them. Raw station observations, never a bite or
-            behaviour forecast.
+            Every record carries the same four reads — gauge, weather
+            observation, forecast, and the wording on the agency page. They load
+            only when you ask for them. Official station observations, never a
+            bite or behaviour forecast.
           </p>
           <button
             type="button"
@@ -196,7 +196,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
         <div className="mt-5 space-y-3" aria-live="polite">
           {queuedReplay && (
             <p className="text-xs uppercase tracking-[0.12em] text-brass">
-              Queued — loading official readings…
+              Loading official readings…
             </p>
           )}
           <div className="shimmer h-3 w-2/3" />
@@ -207,8 +207,8 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
       {open && isError && (
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          The official feeds could not be reached. Treat this water as unmonitored
-          and verify conditions directly.
+          Couldn't reach the official sources. Try again, and in the meantime
+          treat this water as unmonitored and check conditions yourself.
         </p>
       )}
 
@@ -261,7 +261,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                   NWS {data.observation.stationId} — {data.observation.stationName}
                 </p>
                 <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                  Bound observation station for this water's published location.
+                  The weather station matched to this water's published location.
                 </p>
                 {data.observation.readings.length > 0 ? (
                   <ReadingRows
@@ -270,8 +270,8 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                   />
                 ) : (
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                    No current official observation. The last agency observation
-                    is printed below with its original time.
+                    No current official observation. The last one the agency
+                    published is shown below, with the time it was taken.
                   </p>
                 )}
                 {obsRetained.length > 0 && (
@@ -289,7 +289,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
               </>
             ) : (
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                No official observation station is bound, or the station is silent.
+No weather station is matched to this water, or the matched station is silent.
               </p>
             )}
           </div>
@@ -314,7 +314,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
           <div className="mt-5 border-t border-hairline pt-4">
             <p className="tick text-[0.55rem]">
-              Agency page language
+              Wording on the agency page
               {data.closures.scannedAt ? ` · scanned ${ago(data.closures.scannedAt)}` : ""}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

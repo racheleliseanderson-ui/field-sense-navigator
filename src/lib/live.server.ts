@@ -515,7 +515,7 @@ function closureFor(id: string | undefined, file: ClosureFile | null): ClosureSc
   if (!id || !file) {
     return {
       status: "unscanned",
-      note: "Agency-page closure language has not been scanned yet.",
+      note: "The agency page for this water has not been read yet.",
       hits: [],
       scannedAt: file?.scannedAt ?? null,
     };
@@ -524,7 +524,7 @@ function closureFor(id: string | undefined, file: ClosureFile | null): ClosureSc
   if (!row) {
     return {
       status: "unscanned",
-      note: "This water was not in the last closure scan.",
+      note: "This water was not covered by the last read of agency pages.",
       hits: [],
       scannedAt: file.scannedAt,
     };
@@ -555,8 +555,8 @@ export async function readLive(input: {
   if (!bind) {
     return emptyLive(
       [
-        "This water has no station binding yet. It will be resolved on the next scheduled resolve run.",
-        "Conditions must be verified in person or through the agency page.",
+        "No official gauge is matched to this water yet. The next nightly match will try again.",
+        "Check conditions in person or on the agency page.",
       ],
       {
         status: "missing",
@@ -577,7 +577,7 @@ export async function readLive(input: {
   if (bind.status !== "matched" || !bind.siteId) {
     const unknowns = [
       bind.note,
-      "The scheduled pipeline will not invent a nearby gauge.",
+      "A nearby gauge is never substituted for the right one.",
     ];
     const snapshot = await loadSnapshot();
     const snapAge = snapshot
@@ -608,16 +608,16 @@ export async function readLive(input: {
         ? await nwsForecast(bind.lat, bind.lon).catch(() => null)
         : null;
     if (!bind.nwsStationId) {
-      unknowns.push("No official weather observation station is bound to this record.");
+      unknowns.push("No official weather station is matched to this record.");
     } else if (!observation) {
       unknowns.push(
-        `Observation station ${bind.nwsStationId} is bound but returned no current values.`,
+        "The matched weather station returned nothing current.",
       );
     }
     if (!forecast) {
       unknowns.push("No official forecast was returned for this water's published location.");
     }
-    unknowns.push("Conditions must be verified in person or through the agency page.");
+    unknowns.push("Check conditions in person or on the agency page.");
     return {
       station: null,
       readings: [],
@@ -658,7 +658,7 @@ export async function readLive(input: {
     source = from;
     if (row.carriedForward || /last agency observation retained/i.test(row.error ?? "")) {
       unknowns.push(
-        row.error ?? "The last official observation was retained after a silent feed. Age is printed.",
+        row.error ?? "The source went quiet, so the last official observation is shown instead. The time it was taken is printed.",
       );
     }
   };
@@ -675,7 +675,7 @@ export async function readLive(input: {
       takeRow(snapRow, "scheduled-snapshot");
       if (!unknowns.some((u) => /retained after a silent feed/i.test(u))) {
         unknowns.push(
-          "The live agency feed returned no current values; showing the last scheduled snapshot instead.",
+          "The agency returned nothing current just now, so the last scheduled reading is shown instead.",
         );
       }
     }
@@ -707,23 +707,23 @@ export async function readLive(input: {
       unknowns.push(STALE_WINDOW_NOTE);
     }
   } else if (readings.length === 0) {
-    unknowns.push("The matched station returned no current values; the feed may be offline.");
+    unknowns.push("The matched station returned nothing current. Its feed may be down.");
   }
   if (bind.nwsStationId && !observation) {
     unknowns.push(
-      `NWS observation station ${bind.nwsStationId} is bound but returned no current values.`,
+      "The matched National Weather Service station returned nothing current.",
     );
   }
   if (!bind.nwsStationId) {
-    unknowns.push("No NWS observation station is bound to this record.");
+    unknowns.push("No National Weather Service station is matched to this record.");
   }
   if (!forecast) {
-    unknowns.push("No National Weather Service forecast was returned for the station location.");
+    unknowns.push("No National Weather Service forecast came back for the station's location.");
   }
   unknowns.push(
     bind.source === "override"
-      ? "This station was pinned in the override file. Confirm the reach before trusting the number."
-      : "The station is bound on published water name and type only. It may sit on a different reach or basin arm than your access — read the station name before trusting the number.",
+      ? "This station was pinned by hand. Confirm it covers the reach you are fishing before trusting the number."
+      : "The station is matched on the published water name and type only. It may sit on a different reach or arm of the water than your access — read the station name before trusting the number.",
   );
   unknowns.push("Agency observations only. Nothing here predicts fish behavior.");
 

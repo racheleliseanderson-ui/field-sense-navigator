@@ -8,13 +8,13 @@ import { useT } from "@/lib/i18n";
 import { CommandPalette } from "@/components/command-palette";
 
 const NAV = [
-  { to: "/", key: "nav.instrument", label: "Instrument" },
+  { to: "/", key: "nav.instrument", label: "Overview" },
   { to: "/plan", key: "nav.plan", label: "Plan a day" },
   { to: "/explore", key: "nav.catalog", label: "Catalog" },
   { to: "/compare", key: "nav.compare", label: "Compare" },
   { to: "/watchlist", key: "nav.watchlist", label: "Watchlist" },
-  { to: "/pipeline", key: "nav.pipeline", label: "Pipeline" },
-  { to: "/boundary", key: "nav.boundary", label: "Boundary" },
+  { to: "/pipeline", key: "nav.pipeline", label: "How it works" },
+  { to: "/boundary", key: "nav.boundary", label: "Limits & sources" },
 ] as const;
 
 const SWATCH: Record<Theme, string> = {
@@ -235,7 +235,7 @@ export function SiteHeader() {
           <div className="mt-6 flex items-center gap-3">
             <span className="h-px w-8 bg-brass" />
             <p className="tick text-[0.58rem]">
-              {t("chrome.failClosed", "Public waters only · fail closed")}
+              {t("chrome.failClosed", "Public waters only · nothing invented")}
             </p>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
@@ -274,7 +274,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div>
-          <p className="tick">{t("footer.instrument", "Instrument")}</p>
+          <p className="tick">{t("footer.instrument", "Field tools")}</p>
           <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
             <li>
               <Link to="/plan" className="tap inline-flex min-h-11 items-center hover:text-foreground">
@@ -288,7 +288,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link to="/boundary" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                {t("footer.boundaryMethod", "Boundary & method")}
+                {t("footer.boundaryMethod", "Limits & sources")}
               </Link>
             </li>
           </ul>

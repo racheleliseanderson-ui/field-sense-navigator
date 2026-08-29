@@ -24,7 +24,7 @@ export const Route = createFileRoute("/compare")({
       {
         name: "description",
         content:
-          "Hold up to four named public waters side by side: readiness, access anatomy, hazard and capacity layers, verification age and the unknowns each record still carries.",
+          "Hold up to four named public waters side by side: readiness, how you get on the water, hazards and crowding, how recently each was checked, and what each record still cannot tell you.",
       },
       { property: "og:title", content: "Compare waters · Field Sense Navigator" },
       {
@@ -75,14 +75,14 @@ function Picker({
         value={q}
         onChange={(e) => setQ(e.target.value)}
         disabled={disabled}
-        placeholder={disabled ? "Four columns is the limit" : "Water, county, state or species"}
+        placeholder={disabled ? "Four waters is the limit" : "Water, county, state or species"}
         className="tap mt-2 h-11 w-full border border-hairline bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-brass/60 focus:outline-none disabled:opacity-50"
       />
       {!disabled && q.trim().length > 0 && (
         <ul className="mt-2 max-h-64 divide-y divide-hairline overflow-y-auto border border-hairline">
           {hits.length === 0 && (
             <li className="px-3 py-3 text-xs text-muted-foreground">
-              No record carries that name. Nothing is invented to fill the column.
+              No water on record carries that name. Nothing is invented to fill the column.
             </li>
           )}
           {hits.map((d) => (
@@ -259,7 +259,6 @@ function Compare() {
                   <p className="mt-1 truncate text-xs text-muted-foreground">
                     {c.d.region} · {c.d.state}
                   </p>
-                  <p className="data mt-1 text-[0.62rem] text-muted-foreground">{c.d.id}</p>
                 </div>
               ))}
             </Row>
@@ -293,14 +292,14 @@ function Compare() {
                 <Row
                   key={key}
                   label={cols[0]!.layers.find((l) => l.key === key)?.title ?? key}
-                  note="Grade, confidence, and what the layer still cannot see."
+                  note="Grade, confidence, and what this read still cannot see."
                 >
                   {cols.map((c) => {
                     const l = c.layers.find((x) => x.key === key);
                     if (!l)
                       return (
                         <p key={c.d.id} className="text-xs text-muted-foreground">
-                          Layer not built for this record.
+                          Not recorded for this water.
                         </p>
                       );
                     return (
@@ -377,7 +376,7 @@ function Compare() {
                     }`}
                   >
                     {reviewOverdue(c.d)
-                      ? "Review overdue — re-verify before travel."
+                      ? "Review overdue — check again before you travel."
                       : `Next review ${c.d.nextReviewAt}`}
                   </p>
                 </div>
@@ -406,7 +405,7 @@ function Compare() {
               ))}
             </Row>
 
-            <Row label="Record" note="Open the full instrument readout.">
+            <Row label="Full record" note="Open all five reads on this water.">
               {cols.map((c) => (
                 <Link
                   key={c.d.id}

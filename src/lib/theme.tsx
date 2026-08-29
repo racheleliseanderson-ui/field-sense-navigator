@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-/** Five grounds. Dark instrument is the signature and the default. */
+/** Five grounds. Deep water is the signature and the default. */
 export type Theme = "dark" | "light" | "black" | "white" | "cvd";
 export type Motion = "on" | "off";
 export type Lang = "en" | "es";
@@ -17,8 +17,8 @@ export const MOTION_STORAGE_KEY = "hhi-motion";
 export const LANG_STORAGE_KEY = "hhi-lang";
 
 export const THEMES: Array<{ id: Theme; label: string; hint: string }> = [
-  { id: "dark", label: "Dark instrument", hint: "Deep-water navy" },
-  { id: "light", label: "Field daylight", hint: "Printed-packet paper" },
+  { id: "dark", label: "Deep water", hint: "Dark navy, low glare" },
+  { id: "light", label: "Field daylight", hint: "Warm paper white" },
   { id: "black", label: "High-contrast black", hint: "Pure black, white ink" },
   { id: "white", label: "High-contrast white", hint: "Pure white, black ink" },
   { id: "cvd", label: "Color-blind safe", hint: "Blue / orange signal scale" },
@@ -34,7 +34,7 @@ export const themeClasses = (t: Theme) => ({
   cvd: t === "cvd",
 });
 
-/** Runs before hydration so the instrument never flashes the wrong ground. */
+/** Runs before hydration so the page never flashes the wrong ground. */
 export const themeBootstrapScript = `(function(){try{var v=["dark","light","black","white","cvd"];var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(v.indexOf(t)<0){t="dark"}var e=document.documentElement;e.classList.toggle("dark",t==="dark"||t==="black"||t==="cvd");e.classList.toggle("mode-black",t==="black");e.classList.toggle("mode-white",t==="white");e.classList.toggle("mode-cvd",t==="cvd");e.dataset.theme=t;var m=localStorage.getItem("${MOTION_STORAGE_KEY}");if(m!=="off"&&m!=="on"){m=window.matchMedia("(prefers-reduced-motion: reduce)").matches?"off":"on"}e.dataset.motion=m;var l=localStorage.getItem("${LANG_STORAGE_KEY}");if(l!=="es"){l="en"}e.lang=l;e.dataset.lang=l}catch(_){document.documentElement.classList.add("dark")}})();`;
 
 interface ThemeCtx {

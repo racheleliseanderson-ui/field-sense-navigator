@@ -75,7 +75,7 @@ export const Route = createFileRoute("/explore")({
       {
         name: "description",
         content:
-          `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with layered access, hazard, capacity and regulatory intelligence.`,
+          `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with five reads on each: access, hazards, crowding, rules and the same-day checks.`,
       },
       { property: "og:title", content: "Catalog · Field Sense Navigator" },
       {

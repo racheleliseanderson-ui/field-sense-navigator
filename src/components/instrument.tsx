@@ -188,11 +188,11 @@ export function LayerPanel({
       {open && (
         <div className="grid gap-7 pb-8 sm:pl-8 md:grid-cols-2">
           <div>
-            <p className="tick">Documented signals</p>
+            <p className="tick">What the record says</p>
             <ul className="mt-3 space-y-3">
               {layer.signals.length === 0 && (
                 <li className="text-sm text-muted-foreground">
-                  Nothing recorded in this layer for this water.
+                  Nothing is recorded here for this water yet.
                 </li>
               )}
               {layer.signals.map((s, i) => (
@@ -206,7 +206,7 @@ export function LayerPanel({
             </ul>
           </div>
           <div>
-            <p className="tick">Residual unknowns</p>
+            <p className="tick">What this read cannot tell you</p>
             <ul className="mt-3 space-y-2.5">
               {layer.unknowns.map((u, i) => (
                 <li

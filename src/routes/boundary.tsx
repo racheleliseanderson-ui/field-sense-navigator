@@ -6,17 +6,17 @@ import { PLATES } from "@/lib/imagery";
 export const Route = createFileRoute("/boundary")({
   head: () => ({
     meta: [
-      { title: "Boundary & Method · Field Sense Navigator" },
+      { title: "Limits & Sources · Field Sense Navigator" },
       {
         name: "description",
         content:
-          "What Field Sense Navigator includes, what it refuses to hold, and how the fail-closed field-check doctrine works for named public waters.",
+          "What Field Sense Navigator holds, what it deliberately leaves out, and why an incomplete same-day check means do not go.",
       },
-      { property: "og:title", content: "Boundary & Method · Field Sense Navigator" },
+      { property: "og:title", content: "Limits & Sources · Field Sense Navigator" },
       {
         property: "og:description",
         content:
-          "Public waters only. No private spots, no coordinates, no live-condition claims. The scope rules behind every record.",
+          "Public waters only. No private spots, no coordinates, no live-condition claims. What sits behind every record.",
       },
     ],
   }),
@@ -49,15 +49,17 @@ function BoundaryPage() {
       <section className="relative isolate overflow-hidden border-b border-hairline">
         <Art plate={PLATES.still} scrim="band" opacity={0.8} priority />
         <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-          <p className="tick text-brass">Doctrine</p>
+          <p className="tick text-brass">Limits &amp; sources</p>
           <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.4rem,6vw,4.6rem)] font-bold leading-[0.94] tracking-[-0.04em] text-foreground">
-            The boundary is the product.
+            What we will not say
+            <br />
+            matters as much.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            Everything this instrument is willing to say is bounded by what a
-            public agency has already published. Where the record runs out, we
-            say so and stop. That refusal is not a limitation of the tool — it is
-            the tool.
+            Everything on this site is bounded by what a public agency has
+            already published. Where the record runs out, we say so and stop.
+            Knowing exactly where the information ends is what makes the rest of
+            it usable.
           </p>
         </div>
       </section>
@@ -75,7 +77,7 @@ function BoundaryPage() {
           </ul>
         </div>
         <div className="bg-abyss p-8 sm:p-12">
-          <p className="tick text-alert">Refused, permanently</p>
+          <p className="tick text-alert">Never held, by design</p>
           <ul className="mt-6 space-y-5">
             {OUT_OF_SCOPE.map((x) => (
               <li key={x} className="flex gap-4">
@@ -93,9 +95,9 @@ function BoundaryPage() {
         <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[1] tracking-[-0.035em] text-foreground">
-              Fail closed,
+              An incomplete check
               <br />
-              every time.
+              means don't go.
             </h2>
           </div>
           <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
@@ -103,24 +105,24 @@ function BoundaryPage() {
               A water is only <span className="text-foreground">go</span> when
               every same-day check has been completed by the person travelling.
               If a check cannot be completed — the phone rings out, the page is
-              down, the sign is missing — the default answer is not-go. The
-              instrument never fills that gap with an inference.
+              down, the sign is missing — the answer is don't go. We never fill
+              that gap with a guess.
             </p>
             <p>
-              Confidence figures describe how well documented a layer is, not how
+              Confidence figures describe how well documented a read is, not how
               likely a day is to go well. They never reach 100, because the
               record is always older than the water.
             </p>
             <p>
               Posted signage and the managing authority outrank anything printed
-              from this system, including a field packet you carried in your
+              from this site, including a field brief you carried in your
               pocket.
             </p>
             <Link
               to="/plan"
               className="inline-flex items-center gap-3 border border-brass/50 bg-brass/10 px-6 py-3 text-sm font-medium text-brass transition-colors hover:bg-brass/20"
             >
-              Plan a day within the boundary
+              Plan a day within these limits
             </Link>
           </div>
         </div>

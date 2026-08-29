@@ -54,7 +54,7 @@ export function WaterCard({
   const overdue = reviewOverdue(destination);
   const age = daysSince(destination.checkedAt);
   const dated = datedWindows(destination);
-  const layerCounts = [
+  const readCounts = [
     { k: "Access", v: destination.publicAccess.length },
     { k: "Hazards", v: t.hazards.size },
     { k: "Capacity", v: t.crowd.size },
@@ -104,9 +104,6 @@ export function WaterCard({
             </span>
           )}
           <TypeMark type={destination.waterType} />
-          <span className="data text-[0.65rem] text-muted-foreground">
-            {destination.id}
-          </span>
         </div>
         <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brass" />
       </div>
@@ -138,7 +135,7 @@ export function WaterCard({
 
       {overdue && (
         <p className="mt-3 text-xs font-medium leading-relaxed text-alert">
-          Review overdue — this record is past {destination.nextReviewAt}. Treat it as not-go until the official source is re-read.
+          Review overdue — this record is past {destination.nextReviewAt}. Treat it as don't-go until the official source has been read again.
         </p>
       )}
 
@@ -166,7 +163,7 @@ export function WaterCard({
       )}
 
       <dl className="rule-top mt-5 grid grid-cols-5 gap-1 pt-4">
-        {layerCounts.map((l) => (
+        {readCounts.map((l) => (
           <div key={l.k}>
             <dt className="tick text-[0.5rem]">{l.k}</dt>
             <dd className="data mt-1 text-sm text-foreground/90">{l.v}</dd>
@@ -216,7 +213,7 @@ export function BlockedCard({ fit }: { fit: Fit }) {
         <p className="font-display text-base font-bold text-foreground">
           {displayName(d)}
         </p>
-        <GradeChip grade="restricted" label="Excluded" />
+        <GradeChip grade="restricted" label="Set aside" />
       </div>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
         {fit.blocked}

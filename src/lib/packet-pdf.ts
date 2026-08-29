@@ -141,7 +141,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
   doc.setTextColor(...INK);
-  doc.text("Field Packet", M, ctx.y);
+  doc.text("Field Brief", M, ctx.y);
   ctx.y += 8;
   rule(ctx, 12);
 
@@ -166,16 +166,16 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
     ctx.y += 8;
     paragraph(
       ctx,
-      `Review overdue since ${d.nextReviewAt}. Re-read the official source before you treat this packet as current.`,
+      `Review overdue since ${d.nextReviewAt}. Re-read the official source before you treat this brief as current.`,
       { style: "bold", size: 9.5 },
     );
   }
 
   ctx.y += 8;
   const cols: Array<[string, string]> = [
-    ["Declared job", jobLabel],
+    ["The day you declared", jobLabel],
     ["Field readiness", `${r.score}/100`],
-    ["Band", r.band],
+    ["Readiness band", r.band],
     overdue
       ? ["Review overdue", `Due ${d.nextReviewAt}`]
       : ["Last source check", d.checkedAt.slice(0, 10)],
@@ -220,14 +220,14 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
   rule(ctx);
 
   /* layer digest */
-  tick(ctx, "Layer digest");
+  tick(ctx, "The five reads");
   for (const l of layers) {
     need(ctx, 44);
     paragraph(ctx, l.title, { style: "bold", size: 10 });
     paragraph(ctx, l.readout, { size: 9 });
     paragraph(
       ctx,
-      `Confidence ${l.confidence}% · ${l.unknowns.length} residual unknown${l.unknowns.length === 1 ? "" : "s"}`,
+      `Confidence ${l.confidence}% · ${l.unknowns.length} thing${l.unknowns.length === 1 ? "" : "s"} this read still cannot see`,
       { size: 7.5, color: MUTED },
     );
     ctx.y += 6;
@@ -235,7 +235,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
 
   rule(ctx);
 
-  tick(ctx, "Recorded hazard families");
+  tick(ctx, "Recorded hazards");
   paragraph(ctx, t.hazards.size ? [...t.hazards].map(humanize).join(", ") : "None recorded.");
   ctx.y += 8;
   tick(ctx, "Capacity pressure");
@@ -250,7 +250,7 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
     if (dated.length === 0) {
       paragraph(
         ctx,
-        "No dated harvest closure published at the official source used for this record. Empty windows are a completed check, not a gap. Fail closed — do not assume harvest is open.",
+        "The official source for this record publishes no dated harvest closure. That is a finished check, not a missing one. Do not assume harvest is open.",
       );
     } else {
       for (const w of dated) {
@@ -287,10 +287,10 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
 
   rule(ctx);
 
-  tick(ctx, "Boundary and limitations");
+  tick(ctx, "Limits of this brief");
   paragraph(
     ctx,
-    "Public, named destinations only. This packet contains no private spots, no coordinates, no catch expectation, and no live gauge, flow, tide, weather or hatch data. Conditions and regulations change without notice; the official source above governs. If a check cannot be cleared, the correct answer is not to go.",
+    "Public, named destinations only. This brief carries no private spots, no coordinates, no catch expectation, and no live gauge, flow, tide, weather or hatch information. Conditions and regulations change without notice; the official source above governs. If a check cannot be cleared, the right answer is not to go.",
     { size: 8.5, color: MUTED },
   );
 }
@@ -306,8 +306,8 @@ export function downloadPacketPdf(d: Destination, job: JobId | null = null) {
   record(ctx, d, job);
   footer(ctx);
   doc.setProperties({
-    title: `Field Packet — ${displayName(d)}`,
-    subject: "Field Sense Navigator field packet",
+    title: `Field Brief — ${displayName(d)}`,
+    subject: "Field Sense Navigator field brief",
     creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-${fileSafe(displayName(d))}-${issued}.pdf`);
@@ -330,7 +330,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
   doc.setTextColor(...INK);
-  doc.text("Shortlist Packet", M, ctx.y);
+  doc.text("Shortlist Brief", M, ctx.y);
   ctx.y += 10;
   rule(ctx, 12);
   paragraph(
@@ -355,7 +355,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
   }
   footer(ctx);
   doc.setProperties({
-    title: `Shortlist Packet — ${list.length} waters`,
+    title: `Shortlist Brief — ${list.length} waters`,
     creator: "Field Sense Navigator",
   });
   doc.save(`field-packet-shortlist-${issued}.pdf`);

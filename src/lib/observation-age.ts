@@ -1,12 +1,12 @@
 /**
- * Observation-age fail-closed. Ingest time is not freshness.
- * Keep in lockstep with scripts/observation-age.mjs.
+ * Freshness is decided by when a value was observed, never by when we collected
+ * it. Keep in lockstep with scripts/observation-age.mjs.
  */
 
 export const LIVE_FRESH_MS = 48 * 60 * 60 * 1000;
 export const DAILY_FRESH_MS = 7 * 24 * 60 * 60 * 1000;
 export const STALE_WINDOW_NOTE =
-  "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.";
+  "The last official observation is older than we treat as current — 48 hours for level, flow and weather, 7 days for reservoir elevation. The time it was taken is printed.";
 
 export type Freshness = "fresh" | "stale" | "unknown-age";
 
