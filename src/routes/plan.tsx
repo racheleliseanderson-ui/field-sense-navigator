@@ -365,8 +365,8 @@ function Plan() {
         {!job ? (
           <div className="mt-8">
             <EmptyState
-              title="Declare a job to begin the ranking"
-              body="Nothing is ranked until the instrument knows what you are trying to do. We will not invent a job to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
+              title="Ready to start"
+              body="Nothing has been ranked yet. Tell us what kind of day you are planning — we will not invent one to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
               action={
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link to="/plan" search={{ job: "bank" }} className="tick text-brass">

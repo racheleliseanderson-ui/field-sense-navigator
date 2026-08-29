@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Field Sense Navigator — Public-water field instrument" },
+      { title: "Field Sense Navigator — Read Public Waters Before You Go" },
       {
         name: "description",
         content:

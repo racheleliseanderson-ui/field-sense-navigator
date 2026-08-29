@@ -10,7 +10,7 @@ import { useReveal, useParallax, useCountUp } from "@/lib/motion";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Field Sense Navigator · Public-Waters Field Instrument" },
+      { title: "Field Sense Navigator · Read Public Waters Before You Go" },
       {
         name: "description",
         content:
@@ -298,7 +298,7 @@ function Home() {
         <Art plate={PLATES.ramp} scrim="band" opacity={0.75} />
         <div className="mx-auto grid max-w-7xl gap-12 px-safe py-24 sm:px-8 md:grid-cols-[1fr_1.1fr] md:py-32">
           <div>
-            <p className="tick text-alert" data-reveal>What this instrument will not tell you</p>
+            <p className="tick text-alert" data-reveal>What this will not tell you</p>
             <h2
               className="mt-5 font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[0.96] tracking-[-0.04em] text-foreground"
               data-reveal
@@ -370,7 +370,7 @@ function Home() {
           </h2>
           <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
             {[
-              ["Waterways", "This instrument. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
+              ["Waterways", "This tool. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
               ["Species", "Behavior hypotheses and presentation families — not bite scores.", "https://species.hookthehorizon.blog/", false],
               ["Knot", "Decide, diagnose and compare the knot for the job.", "https://knot.hookthehorizon.blog/", false],
               ["The blog", "Long-form field notes from Hook the Horizon.", "https://hookthehorizon.blog/", false],

@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-/** Five grounds. Dark instrument is the signature and the default. */
+/** Five grounds. Deep water is the signature and the default. */
 export type Theme = "dark" | "light" | "black" | "white" | "cvd";
 export type Motion = "on" | "off";
 export type Lang = "en" | "es";
@@ -17,7 +17,7 @@ export const MOTION_STORAGE_KEY = "hhi-motion";
 export const LANG_STORAGE_KEY = "hhi-lang";
 
 export const THEMES: Array<{ id: Theme; label: string; hint: string }> = [
-  { id: "dark", label: "Dark instrument", hint: "Deep-water navy" },
+  { id: "dark", label: "Deep water", hint: "Dark navy, low glare" },
   { id: "light", label: "Field daylight", hint: "Printed-brief paper" },
   { id: "black", label: "High-contrast black", hint: "Pure black, white ink" },
   { id: "white", label: "High-contrast white", hint: "Pure white, black ink" },
