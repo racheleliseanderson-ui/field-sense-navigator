@@ -16,11 +16,11 @@ export const Route = createFileRoute("/")({
         content:
           `A field guide for ${NAMED_WATER_COUNT} named public waters: readiness, ranking, and a printable brief.`,
       },
-      { property: "og:title", content: "Field Sense Navigator · Public-Waters Field Instrument" },
+      { property: "og:title", content: "Field Sense Navigator · Read Public Waters Before You Go" },
       {
         property: "og:description",
         content:
-          "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — we will not guess when a check cannot be confirmed.",
+          "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — if a check cannot be confirmed, this guide stops.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,7 +43,7 @@ const LAYERS = [
   ["Conditions & hazards", "Standing hazard families the water is known for — wind fetch, tide, level swing, traffic. Never a forecast."],
   ["Capacity & crowding", "Documented pressure on parking, ramps and hours. Patterns, never live occupancy."],
   ["Seasonal & regulatory pressure", "Where rules move with date, section and vessel — and where jurisdiction changes under you."],
-  ["Field-check requirement", "The same-day work you must complete. Incomplete means not-go."],
+  ["Field-check requirement", "The same-day work you must complete. If a check is incomplete, treat the water as not ready to go."],
 ] as const;
 
 function Readout({ k, v, delay }: { k: string; v: number; delay: number }) {
@@ -111,9 +111,9 @@ function Home() {
             data-reveal
             style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
           >
-            Five intelligence layers over {NAMED_WATER_COUNT} named public
-            waters. Declare the job you are actually doing, and the instrument
-            ranks the water that fits it — then prints the same-day checks you
+            Five planning layers over {NAMED_WATER_COUNT} named public
+            waters. Name the job you are actually doing, and this guide
+            ranks the water that fits it — then lists the same-day checks you
             have to clear before you go.
           </p>
 
@@ -138,7 +138,7 @@ function Home() {
           </div>
 
           <p className="tick mt-14 hidden text-[0.55rem] text-foreground/50 md:block" data-reveal>
-            Plate 01 · Open water · First light under a storm shelf
+            Open water · First light under a storm shelf
           </p>
         </div>
 
@@ -147,7 +147,7 @@ function Home() {
           <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-hairline sm:px-0 md:grid-cols-4 md:divide-y-0">
             <Readout k="Named waters" v={NAMED_WATER_COUNT} delay={0} />
             <Readout k="States & provinces" v={states.length} delay={60} />
-            <Readout k="Intelligence layers" v={5} delay={120} />
+            <Readout k="Planning layers" v={5} delay={120} />
             <Readout k="Private spots" v={0} delay={180} />
           </dl>
         </div>
@@ -159,7 +159,7 @@ function Home() {
         <div className="mx-auto max-w-7xl px-safe py-24 sm:px-8 md:py-32">
           <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="tick text-brass" data-reveal>The stack</p>
+              <p className="tick text-brass" data-reveal>What's in a reading</p>
               <h2
                 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.8rem)] font-bold leading-[0.95] tracking-[-0.04em] text-foreground"
                 data-reveal
@@ -176,7 +176,7 @@ function Home() {
                 data-reveal
                 style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
               >
-                Every layer carries a confidence figure and a list of what it
+                Every layer carries how sure we are and a list of what it
                 still cannot see. Nothing is inferred to fill a gap.
               </p>
 
@@ -185,7 +185,7 @@ function Home() {
                 data-reveal-crop
                 style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
               >
-                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="Plate 06 · The brief" />
+                <Plate plate={PLATES.still} sizes={HALF_BLEED} ratio="aspect-[16/10]" caption="The brief" />
               </div>
             </div>
 
@@ -366,7 +366,7 @@ function Home() {
             data-reveal
             style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
           >
-            One field. Several instruments.
+            One field. Several tools.
           </h2>
           <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
             {[
