@@ -282,7 +282,7 @@ function WaterRecord() {
         <div className="min-w-0">
           <div className="flex items-center gap-4">
             <span className="h-px w-10 bg-brass" />
-            <p className="tick text-brass">Intelligence stack</p>
+            <p className="tick text-brass">What's in this reading</p>
           </div>
           <h2 className="mt-5 font-display text-[clamp(1.7rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
             Five layers on this water

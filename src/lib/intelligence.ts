@@ -327,7 +327,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
       })),
       unknowns: stale([
         "Checks are yours to complete; nothing here completes them for you.",
-        "If a check cannot be completed, the water is treated as not-go by default.",
+        "If a check cannot be completed, treat the water as not ready to go.",
       ]),
     },
   ].map((l) => ({

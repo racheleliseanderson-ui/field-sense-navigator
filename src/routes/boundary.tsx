@@ -10,7 +10,7 @@ export const Route = createFileRoute("/boundary")({
       {
         name: "description",
         content:
-          "What Field Sense Navigator includes, what it will not hold, and when we will not guess for named public waters.",
+          "What Field Sense Navigator includes, what it will not hold, and where this guide stops for named public waters.",
       },
       { property: "og:title", content: "Limits & sources · Field Sense Navigator" },
       {
@@ -93,7 +93,7 @@ function BoundaryPage() {
         <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[1] tracking-[-0.035em] text-foreground">
-              When we will not guess.
+              Where this guide stops.
             </h2>
           </div>
           <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
