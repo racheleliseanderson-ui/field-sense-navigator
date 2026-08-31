@@ -2,9 +2,9 @@
   "schema": "0.1.0",
   "ok": true,
   "degraded": true,
-  "mode": "critical",
-  "ingestedAt": "2026-08-31T10:07:44.873Z",
-  "cadenceMinutes": 10,
+  "mode": "all",
+  "ingestedAt": "2026-08-31T13:30:38.864Z",
+  "cadenceMinutes": 30,
   "criticalCadenceMinutes": 10,
   "fullCadenceMinutes": 30,
   "stats": {
@@ -46,10 +46,10 @@
       }
     },
     "nwsStations": 354,
-    "nwsWithObs": 347
+    "nwsWithObs": 349
   },
-  "errorCount": 80,
-  "hardErrorCount": 7,
+  "errorCount": 25,
+  "hardErrorCount": 3,
   "errors": [
     {
       "kind": "station",
@@ -133,242 +133,122 @@
     },
     {
       "kind": "station",
-      "agency": "WSC",
-      "siteId": "08NM083",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "agency": "USACE",
+      "siteId": "SAS:Jocassee.Stage.Inst.1Hour.0.Rev-SHEF_SAS",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
+    },
+    {
+      "kind": "station",
+      "agency": "USBR",
+      "siteId": "rise:341",
+      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
       "kind": "station",
-      "agency": "WSC",
-      "siteId": "08HA002",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "agency": "USBR",
+      "siteId": "rise:6128",
+      "error": "USBR RISE 504; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05FA013",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "D3277",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05HF003",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "BOGI1",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "02DD006",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "UT224",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05PD008",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KGVQ",
+      "error": "Last official observation is older than the freshness window (48 h for stage, flow, and weather; 7 d for reservoir elevation). Age is printed.",
+      "carriedForward": false,
+      "staleOnly": true
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "02RG020",
-      "error": "fetch failed",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "K3W7",
+      "error": "NWS K3W7 404",
       "carriedForward": false,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "01BO001",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "TSILI",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "01AD004",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "ODT78",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "02ZG003",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "SDFRV",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "02YO011",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "E3174",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "09AB010",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "09AB001",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "07SB001",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "10UH001",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "08HD022",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "08NH064",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "08KH011",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "08EB003",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05BD003",
-      "error": "fetch failed",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "ZEPNV",
+      "error": "NWS ZEPNV 404",
       "carriedForward": false,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05CC003",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "KW22",
+      "error": "Feed silent this cycle; last agency observation retained. Age is printed.",
       "carriedForward": true,
       "staleOnly": false
     },
     {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "07BJ006",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05JH004",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05KD004",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "06DB004",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05LK002",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05LD002",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05UF006",
-      "error": "fetch failed",
+      "kind": "nws",
+      "agency": "NWS",
+      "siteId": "K7W6",
+      "error": "NWS K7W6 404",
       "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "02MB007",
-      "error": "fetch failed",
-      "carriedForward": false,
-      "staleOnly": false
-    },
-    {
-      "kind": "station",
-      "agency": "WSC",
-      "siteId": "05PB007",
-      "error": "fetch failed; last agency observation retained. Age is printed.",
-      "carriedForward": true,
       "staleOnly": false
     }
   ],
@@ -378,7 +258,7 @@
     "withStaleOnly": 0,
     "timeouts": 0
   },
-  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/33380956559",
+  "runUrl": "https://github.com/racheleliseanderson-ui/field-sense-navigator/actions/runs/33397295315",
   "archiveRetentionHours": 24,
   "doctrine": "Agency observations only. Age is printed. A silent feed is a miss, not a default. Observation time, not ingest time, decides whether a value is current."
 }
