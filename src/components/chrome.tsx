@@ -253,7 +253,7 @@ export function SiteFooter() {
     <footer data-print="hide" className="relative mt-24 overflow-hidden border-t border-hairline bg-abyss">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brass/60 to-transparent" />
       <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-safe py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-safe py-14 sm:px-8 md:grid-cols-[1.6fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center border border-brass/40 bg-brass/10 text-brass">
@@ -274,6 +274,11 @@ export function SiteFooter() {
           <p className="tick">Explore</p>
           <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
             <li>
+              <Link to="/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Check a water
+              </Link>
+            </li>
+            <li>
               <Link to="/plan" className="tap inline-flex min-h-11 items-center hover:text-foreground">
                 Plan a day
               </Link>
@@ -284,34 +289,24 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link to="/compare" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Compare
+              </Link>
+            </li>
+            <li>
+              <Link to="/watchlist" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                Watchlist
+              </Link>
+            </li>
+            <li>
+              <Link to="/pipeline" className="tap inline-flex min-h-11 items-center hover:text-foreground">
+                How a decision comes together
+              </Link>
+            </li>
+            <li>
               <Link to="/boundary" className="tap inline-flex min-h-11 items-center hover:text-foreground">
                 Limits & sources
               </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p className="tick">More Hook tools</p>
-          <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-            <li>
-              <a href="https://waterways.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center text-brass">
-                Waterways
-              </a>
-            </li>
-            <li>
-              <a href="https://species.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                Species ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://knot.hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                Knot ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://hookthehorizon.blog/" className="tap inline-flex min-h-11 items-center hover:text-foreground">
-                Hook the Horizon ↗
-              </a>
             </li>
           </ul>
         </div>
