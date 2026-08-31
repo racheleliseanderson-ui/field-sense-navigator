@@ -1,0 +1,14 @@
+{
+  "schema": "0.1.0",
+  "source": "Manual same-water verification against USGS Water Data for the Nation on 2026-08-30.",
+  "doctrine": "Exact same-water official stations only. No nearby substitution.",
+  "records": [
+    {
+      "destinationId": "HHI-DEST-139",
+      "agency": "USGS",
+      "siteId": "13309220",
+      "siteName": "MF SALMON RIVER AT MF LODGE NR YELLOW PINE ID",
+      "note": "Verified same-river USGS station on the wilderness float corridor. Continuous streamflow and gage height were current on 2026-08-30. 13310199 at the mouth near Shoup also publishes under this name; this pin is the mid-canyon lodge reach."
+    }
+  ]
+}
