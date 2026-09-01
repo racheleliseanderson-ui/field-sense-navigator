@@ -82,6 +82,11 @@ SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… bun run publish:catalog
 Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as repository secrets to turn
 the workflow on. Without them it skips with a notice.
 
+The workflow itself lives at `.github/workflows/publish-catalog.yml`. A staged
+copy is kept at `docs/ci/publish-catalog.yml` for tooling that is not allowed to
+write into `.github/workflows/` — if the two ever drift, the one under
+`.github/` is the one that runs.
+
 ## Development
 
 Requires Node.js 20+ and [Bun](https://bun.sh) (production installs and builds
