@@ -33,6 +33,7 @@ scope. Read it before changing the data layer, the build or the ingest.
 | Access, launches and logistics | `src/lib/access.ts` |
 | Search, facets and suggestions | `src/lib/search.ts` |
 | Hook the Horizon handoffs | `src/lib/handoff.ts` + `src/lib/fleet.ts` |
+| Postgres read replica (generated) | `scripts/publish-catalog.ts` |
 | Live official readings | `src/lib/live.server.ts`, `src/lib/live.functions.ts` |
 | Field brief (screen and PDF) | `src/routes/packet.$id.tsx`, `src/lib/packet-pdf.ts` |
 
@@ -59,6 +60,27 @@ current (48 h stage/flow/weather, 7 d reservoir elevation). Fossils stay
 retained with the original `observedAt`. The app consumes that snapshot
 fail-closed: a silent or unbound gauge is reported as silent, never replaced
 with a nearby station.
+
+## The catalog replica
+
+The catalog also publishes to Postgres as a **generated read replica** — server
+side search across the whole corpus, faceted counts, and bench queries for
+enrichment, without shipping the catalog to the browser to get them.
+
+git stays the source of truth. `publish-catalog.yml` regenerates the replica on
+merge to `main`; nothing reads back from it into the repository, and the
+application renders from the bundled catalog whenever the replica is stale,
+unconfigured or unreachable. Reads are anonymous and read-only — there is no
+sign-in anywhere in this application.
+
+```sh
+bun run publish:catalog -- --dry-run              # derive and check, write nothing
+bun run publish:catalog -- --emit-sql .tmp/sql    # offline: emit applyable SQL
+SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… bun run publish:catalog
+```
+
+Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as repository secrets to turn
+the workflow on. Without them it skips with a notice.
 
 ## Development
 

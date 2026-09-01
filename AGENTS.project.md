@@ -31,6 +31,37 @@ Keep the records that have operational issues (low water, ramp closures, fire re
 | **Catalog** | `src/data/destinations.json` on `main` | Human PR. Official page actually read. Provenance only when a source was read. | Invent access, seasons, or private spots. Overlay-only "fixes" that never land in git. |
 | **Bindings** | `station-bindings.json` + `station-overrides.json` | `resolve-stations.mjs` — override wins; name + water-type must align | Nearby-gauge substitution |
 | **Live** | `live-snapshot` branch (`snapshot.json`, `status.json`, `closures.json`, `archive/`) | 10 min critical / 30 min full / nightly closures | Write Destination records. Deploy this branch as the app. |
+| **Replica** | Postgres, GENERATED from the catalog | `publish-catalog.yml` on merge to `main` | Be authoritative. Be edited by hand. Be required for the app to render. |
+
+## The Postgres replica
+
+`ww_*` tables in the Hook the Horizon Supabase project hold a generated copy of
+the catalog. This is the sanctioned answer to "the JSON is getting big" — it is
+**not** the exception to "never a database as catalog SoT", because nothing
+writes it but CI and nothing reads back from it into the repository.
+
+- Generator: `scripts/publish-catalog.ts`, run by **bun** so it imports
+  `catalog.ts`, `intelligence.ts`, `access.ts` and `water-reading.ts` directly.
+  The derived columns (readiness, hazard families, access kinds, logistics) are
+  produced by the application's own engine. Never reimplement that scoring in
+  SQL or in a `.mjs` — a second implementation drifts within a month.
+- Every publish stamps a row in `ww_catalog_versions` with the commit sha and
+  marks it current; rows carrying an older `version_id` are pruned, which is how
+  a record removed from the catalog leaves the replica.
+- Reads are anonymous and read-only (`ww_search`, `ww_facets`, RLS `using
+  (published)`). There is no sign-in and no per-user row in any `ww_` table.
+- `ww_search_gaps` is anonymous, write-only telemetry: no owner column, no
+  select policy, a length cap and CHECK constraints that reject anything
+  containing `@` or a long digit run. `ww_search_gaps_ranked` is the enrichment
+  queue — what the catalog was asked for and could not answer.
+- Bench views (`ww_needs_agency`, `ww_review_overdue`, `ww_unbound_gauges`,
+  `ww_jurisdiction_coverage`, `ww_source_health`) are `security_invoker` and
+  granted to nobody but the service role. Use them instead of writing another
+  script in `scripts/`.
+- **Fail closed:** the application must render from the bundled catalog when the
+  replica is stale, unconfigured or unreachable. Never make a page depend on it.
+- Secrets: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Without them the
+  workflow skips with a notice rather than failing — the app does not need it.
 
 The app (`src/lib/catalog.ts`) imports the catalog as one in-memory array. `NAMED_WATER_COUNT` is `destinations.length` — do not hardcode it. Search, packets, pipeline, and watchlist all read that array. Live readings are joined at request time via bindings + observation-age (`src/lib/observation-age.ts`).
 

@@ -20,6 +20,7 @@
     "test": "node --test 'scripts/**/*.test.mjs'",
     "scan:closures": "node scripts/scan-closures.mjs",
     "assert:catalog": "node scripts/assert-catalog.mjs",
+    "publish:catalog": "bun run scripts/publish-catalog.ts",
     "prebuild": "node scripts/apply-plan-carefully-overlay.mjs && node scripts/assert-catalog.mjs"
   },
   "dependencies": {

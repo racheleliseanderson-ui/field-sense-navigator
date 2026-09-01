@@ -21,7 +21,15 @@ export type Grade = "clear" | "watch" | "flagged" | "restricted";
 
 const HAZARD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
   { tag: "wind", label: "Wind & fetch", rx: /wind|fetch|small.craft|gust|chop|squall|rough water/i },
-  { tag: "tide", label: "Tide stage", rx: /\btide|tidal|flats\b/i },
+  // "flats" matched place names ("Plese Flats put-in" on an inland river) and
+  // bare "tidal" matched the provincial licensing boilerplate ("any tidal or
+  // federal licence requirements are separate"), which put a tide hazard on
+  // every Canadian record. Match the tide, not the licence or the place name.
+  {
+    tag: "tide",
+    label: "Tide stage",
+    rx: /\btides?\b|\btidewater\b|\btidal\b(?!\s+(?:or\s+federal\s+)?licen[cs])/i,
+  },
   { tag: "fog", label: "Visibility / fog", rx: /\bfog\b|visibility/i },
   { tag: "fire", label: "Wildfire & smoke", rx: /wildfire|smoke|fire restriction|fire danger/i },
   { tag: "algae", label: "Algal advisory", rx: /\bhab\b|algal|algae|blue-?green|toxin/i },
