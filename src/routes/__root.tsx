@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { BuyMeACoffeeWidget } from "../components/BuyMeACoffeeWidget";
 import { reportClientError } from "../lib/error-reporting";
 import { ThemeProvider, themeBootstrapScript } from "../lib/theme";
 
@@ -144,6 +145,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <BuyMeACoffeeWidget />
         <Scripts />
       </body>
     </html>
