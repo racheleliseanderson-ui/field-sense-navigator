@@ -3,9 +3,13 @@ import { useState } from "react";
 import { useParallax, useReveal } from "@/lib/motion";
 import { ArrowUpRight, Check, Copy, Download, Printer } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
+import { DockOffset } from "@/components/display-control";
 import { GradeChip, LayerPanel, ReadinessMeter } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
 import { LiveConditions } from "@/components/live-conditions";
+import { AccessPanel } from "@/components/access-panel";
+import { WaterReadingPanel } from "@/components/water-reading";
+import { HookHandoff } from "@/components/hook-handoff";
 import {
   destinationById,
   displayName,
@@ -28,9 +32,10 @@ import {
   readiness,
   type JobId,
 } from "@/lib/intelligence";
+import { nearbyWaters } from "@/lib/nearby";
+import { useReadLevel } from "@/lib/read-level";
 import { Art } from "@/components/art";
 import { plateFor } from "@/lib/imagery";
-import { encodeSpeciesPacket } from "@/lib/species-handoff";
 
 export const Route = createFileRoute("/water/$id")({
   loader: ({ params }) => {
@@ -46,12 +51,12 @@ export const Route = createFileRoute("/water/$id")({
         { title: `${name} · Field Sense Navigator` },
         {
           name: "description",
-          content: `Layered public-waters intelligence for ${name} in ${place}: access and legality, hazards, capacity, regulatory pressure and same-day field checks.`,
+          content: `Layered public-waters intelligence for ${name} in ${place}: access and launches, how to read this water, hazards, capacity, regulatory pressure and same-day field checks.`,
         },
         { property: "og:title", content: `${name} · Field Sense Navigator` },
         {
           property: "og:description",
-          content: `Field readiness, documented signals and residual unknowns for ${name}. Public waters only.`,
+          content: `Field readiness, how to read the water, documented signals and residual unknowns for ${name}. Public waters only.`,
         },
       ],
     };
@@ -59,11 +64,23 @@ export const Route = createFileRoute("/water/$id")({
   component: WaterRecord,
 });
 
+/** Jump links, so a long record stays navigable on a phone. */
+const SECTIONS = [
+  { id: "layers", label: "Five layers" },
+  { id: "reading", label: "Reading the water" },
+  { id: "access", label: "Access & launches" },
+  { id: "species", label: "Species" },
+  { id: "nearby", label: "Nearby water" },
+  { id: "handoff", label: "Next step" },
+] as const;
+
 function WaterRecord() {
   const d = Route.useLoaderData();
   const layers = buildLayers(d);
   const r = readiness(d);
+  const { level } = useReadLevel();
   const [job, setJob] = useState<JobId | null>(null);
+  const [species, setSpecies] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
   const [openLayer, setOpenLayer] = useState<string | null>(
@@ -71,12 +88,14 @@ function WaterRecord() {
   );
   const overdue = reviewOverdue(d);
   const dated = datedWindows(d);
+  const nearby = nearbyWaters(d);
+  const related = relatedRecords(d);
 
   const downloadPdf = async () => {
     setPdfBusy(true);
     try {
       const { downloadPacketPdf } = await import("@/lib/packet-pdf");
-      downloadPacketPdf(d, job);
+      downloadPacketPdf(d, job, level);
     } finally {
       setPdfBusy(false);
     }
@@ -98,6 +117,8 @@ function WaterRecord() {
   return (
     <div ref={reveal as React.Ref<HTMLDivElement>} className="page-in min-h-dvh bg-background">
       <SiteHeader />
+      {/* Lift the floating display control clear of the phone action bar. */}
+      <DockOffset />
       <main id="content">
 
       {/* masthead */}
@@ -111,7 +132,7 @@ function WaterRecord() {
           imgRef={heroRef as React.Ref<HTMLImageElement>}
         />
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-8 sm:pt-16 md:pb-20 md:pt-24">
-          <Link to="/explore" className="tick text-primary hover:text-brass">
+          <Link to="/explore" className="tick tap inline-flex min-h-11 items-center text-primary hover:text-brass">
             ← Catalog
           </Link>
 
@@ -171,7 +192,7 @@ function WaterRecord() {
               to="/packet/$id"
               params={{ id: d.id }}
               search={job ? { job } : {}}
-              className="inline-flex items-center gap-3 bg-brass px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground transition-transform hover:-translate-y-0.5"
+              className="tap inline-flex min-h-12 items-center gap-3 bg-brass px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground transition-transform hover:-translate-y-0.5"
             >
               <Printer className="h-4 w-4" aria-hidden="true" />
               Build field brief
@@ -180,7 +201,7 @@ function WaterRecord() {
               type="button"
               onClick={downloadPdf}
               disabled={pdfBusy}
-              className="inline-flex items-center gap-2 border border-brass/50 bg-brass/10 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-brass backdrop-blur transition-colors hover:bg-brass/20 disabled:opacity-60"
+              className="tap inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-brass backdrop-blur transition-colors hover:bg-brass/20 disabled:opacity-60"
             >
               <Download className="h-4 w-4" aria-hidden="true" />
               {pdfBusy ? "Preparing PDF…" : "Download PDF"}
@@ -189,7 +210,7 @@ function WaterRecord() {
               href={d.officialSourceUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 border border-hairline bg-abyss/60 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur hover:border-brass/50"
+              className="tap inline-flex min-h-12 items-center gap-2 border border-hairline bg-abyss/60 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur hover:border-brass/50"
             >
               Official source
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -199,7 +220,7 @@ function WaterRecord() {
                 href={d.officialRegsUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 border border-hairline bg-abyss/60 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur hover:border-brass/50"
+                className="tap inline-flex min-h-12 items-center gap-2 border border-hairline bg-abyss/60 px-6 py-3.5 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur hover:border-brass/50"
               >
                 Official regulations
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -212,7 +233,7 @@ function WaterRecord() {
             target="_blank"
             rel="noreferrer noopener"
             data-print="hide"
-            className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 border border-hairline bg-abyss/60 px-6 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur sm:hidden"
+            className="tap mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 border border-hairline bg-abyss/60 px-6 text-xs uppercase tracking-[0.14em] text-foreground backdrop-blur sm:hidden"
           >
             Official source
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -251,6 +272,26 @@ function WaterRecord() {
         </dl>
       </section>
 
+      {/* in-record jump links */}
+      <nav
+        aria-label="On this record"
+        data-print="hide"
+        className="border-b border-hairline bg-background/60"
+      >
+        <ul className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-5 sm:px-8">
+          {SECTIONS.map((s) => (
+            <li key={s.id} className="shrink-0">
+              <a
+                href={`#${s.id}`}
+                className="tap inline-flex min-h-11 items-center whitespace-nowrap px-3 text-xs text-muted-foreground hover:text-brass"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       {catalogTags(d).length > 0 && (
         <section className="border-b border-hairline bg-background/40">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-5 py-3 sm:px-8">
@@ -277,84 +318,160 @@ function WaterRecord() {
 
       <SeasonWindowsBand destination={d} />
 
-      <section className="mx-auto grid max-w-7xl gap-12 overflow-x-hidden px-5 pb-28 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr] lg:pb-16">
+      <section className="mx-auto grid grid-cols-1 max-w-7xl gap-12 overflow-x-hidden px-5 pb-16 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[1.55fr_1fr]">
         {/* layers */}
         <div className="min-w-0">
-          <div className="flex items-center gap-4">
-            <span className="h-px w-10 bg-brass" />
-            <p className="tick text-brass">What's in this reading</p>
-          </div>
-          <h2 className="mt-5 font-display text-[clamp(1.7rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
-            Five layers on this water
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Open a layer to see the documented signals behind it and the
-            unknowns it cannot close.
-          </p>
+          <div id="layers" className="scroll-mt-24">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-10 bg-brass" />
+              <p className="tick text-brass">What's in this reading</p>
+            </div>
+            <h2 className="mt-5 font-display text-[clamp(1.7rem,3.4vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground">
+              Five layers on this water
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+              Open a layer to see the documented signals behind it and the
+              unknowns it cannot close. Every layer reports what an agency
+              published — none of it is an observation of the water today.
+            </p>
 
-          <div className="mt-8 border-y border-hairline">
-            {layers.map((l) => (
-              <LayerPanel
-                key={l.key}
-                layer={l}
-                open={openLayer === l.key}
-                onToggle={() =>
-                  setOpenLayer((cur) => (cur === l.key ? null : l.key))
-                }
-              />
-            ))}
+            <div className="mt-8 border-y border-hairline">
+              {layers.map((l) => (
+                <LayerPanel
+                  key={l.key}
+                  layer={l}
+                  open={openLayer === l.key}
+                  onToggle={() =>
+                    setOpenLayer((cur) => (cur === l.key ? null : l.key))
+                  }
+                />
+              ))}
+            </div>
           </div>
 
           {/* species context */}
-          <div className="mt-14">
-            <p className="tick text-brass">Species context</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {d.speciesContext.map((s: string) => (
-                <span
-                  key={s}
-                  className="border border-hairline px-3 py-1.5 text-xs text-muted-foreground"
-                >
-                  {s}
-                </span>
-              ))}
+          <div id="species" className="mt-16 scroll-mt-24">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-10 bg-brass" />
+              <p className="tick text-brass">Species context</p>
             </div>
-            <p className="mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
-              Presence context only. This is never an expectation of catch, and
-              carries no statement about timing, forage or activity.
-            </p>
+            <h2 className="mt-5 font-display text-[clamp(1.4rem,2.6vw,2rem)] font-bold tracking-[-0.035em] text-foreground">
+              What the agency documents here
+            </h2>
+            {d.speciesContext.length > 0 ? (
+              <>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {d.speciesContext.map((s: string) => (
+                    <li key={s}>
+                      <Link
+                        to="/explore"
+                        search={{ species: s }}
+                        className="tap inline-flex min-h-11 items-center border border-hairline px-3 text-xs text-muted-foreground hover:border-brass/50 hover:text-brass"
+                      >
+                        {s}
+                        <span className="ml-2 text-[0.6rem] opacity-60">
+                          other water →
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
+                  Presence context only. This is never an expectation of catch,
+                  and carries no statement about timing, forage or activity.
+                  Behaviour and presentation are the next instrument's question —
+                  carry a species forward from the section below.
+                </p>
+              </>
+            ) : (
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                No species is published on the official source used for this
+                record. That is a completed check, not a gap, and nothing is
+                assumed in its place.
+              </p>
+            )}
           </div>
 
-          {relatedRecords(d).length > 0 && (
-            <div className="mt-14">
-              <p className="tick text-brass">Related public waters</p>
-              <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                Explicit catalog links only. Records are not merged; each water keeps its own source and review date.
-              </p>
-              <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
-                {relatedRecords(d).map((rel) => (
-                  <li key={`${rel.relation}-${rel.id}`}>
-                    <Link
-                      to="/water/$id"
-                      params={{ id: rel.id }}
-                      className="tap flex min-h-12 items-center justify-between gap-4 py-3"
-                    >
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm text-foreground">
-                          {displayName(rel.destination)}
-                        </span>
-                        <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
-                          {RELATION_LABEL[rel.relation]} · {rel.destination.state}
-                        </span>
-                      </span>
-                      <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
-                        {rel.id}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* related and nearby */}
+          <div id="nearby" className="mt-16 scroll-mt-24">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-10 bg-brass" />
+              <p className="tick text-brass">Where else to look</p>
             </div>
-          )}
+
+            {related.length > 0 && (
+              <div className="mt-6">
+                <p className="tick text-[0.55rem]">Related public waters</p>
+                <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+                  Explicit catalog links only. Records are not merged; each water
+                  keeps its own source and review date.
+                </p>
+                <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
+                  {related.map((rel) => (
+                    <li key={`${rel.relation}-${rel.id}`}>
+                      <Link
+                        to="/water/$id"
+                        params={{ id: rel.id }}
+                        className="tap flex min-h-12 items-center justify-between gap-4 py-3"
+                      >
+                        <span className="min-w-0">
+                          <span className="block truncate text-sm text-foreground">
+                            {displayName(rel.destination)}
+                          </span>
+                          <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
+                            {RELATION_LABEL[rel.relation]} · {rel.destination.state}
+                          </span>
+                        </span>
+                        <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
+                          {rel.id}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {nearby.map((g) => (
+              <div key={g.key} className="mt-8">
+                <p className="tick text-[0.55rem]">{g.label}</p>
+                <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+                  {g.note}
+                </p>
+                <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
+                  {g.waters.map((w) => (
+                    <li key={w.id}>
+                      <Link
+                        to="/water/$id"
+                        params={{ id: w.id }}
+                        className="tap flex min-h-12 items-center justify-between gap-4 py-3"
+                      >
+                        <span className="min-w-0">
+                          <span className="block truncate text-sm text-foreground">
+                            {displayName(w)}
+                          </span>
+                          <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
+                            {w.waterType} · {w.region}
+                          </span>
+                        </span>
+                        <span className="data shrink-0 text-[0.62rem] text-muted-foreground">
+                          {readiness(w).score}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <Link
+              to="/explore"
+              search={{ state: d.state }}
+              className="tick tap mt-6 inline-flex min-h-11 items-center text-primary hover:text-brass"
+            >
+              Every catalogued water in {d.state} →
+            </Link>
+          </div>
         </div>
 
         {/* rail */}
@@ -401,13 +518,84 @@ function WaterRecord() {
             </ul>
           </div>
 
-          {/* handoff */}
+          {/* source and freshness, in one place */}
           <div className="panel p-6">
+            <p className="tick text-brass">Source &amp; freshness</p>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="tick text-[0.5rem]">Managing agency</dt>
+                <dd className="mt-1 leading-snug text-foreground">
+                  {d.managingAgency ?? "Not recorded from the cited source."}
+                </dd>
+              </div>
+              <div>
+                <dt className="tick text-[0.5rem]">Official source</dt>
+                <dd className="mt-1">
+                  <a
+                    href={d.officialSourceUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="tap inline-flex min-h-11 items-center break-all text-[0.72rem] text-primary hover:text-brass"
+                  >
+                    {d.officialSourceUrl}
+                  </a>
+                </dd>
+              </div>
+              {d.officialRegsUrl && (
+                <div>
+                  <dt className="tick text-[0.5rem]">Official regulations</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={d.officialRegsUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="tap inline-flex min-h-11 items-center break-all text-[0.72rem] text-primary hover:text-brass"
+                    >
+                      {d.officialRegsUrl}
+                    </a>
+                  </dd>
+                </div>
+              )}
+              <div>
+                <dt className="tick text-[0.5rem]">Source read</dt>
+                <dd className={`mt-1 leading-snug ${overdue ? "text-alert" : "text-foreground"}`}>
+                  {d.checkedAt.slice(0, 10)} ({daysSince(d.checkedAt)}d ago) ·{" "}
+                  {overdue ? `review overdue since ${d.nextReviewAt}` : `next review ${d.nextReviewAt}`}
+                </dd>
+              </div>
+              {(d.regsReviewedDate || d.accessReviewedDate) && (
+                <div>
+                  <dt className="tick text-[0.5rem]">Field checks</dt>
+                  <dd className="mt-1 leading-snug text-muted-foreground">
+                    {d.regsReviewedDate ? `Regulations ${d.regsReviewedDate}` : ""}
+                    {d.regsReviewedDate && d.accessReviewedDate ? " · " : ""}
+                    {d.accessReviewedDate ? `Access ${d.accessReviewedDate}` : ""}
+                  </dd>
+                </div>
+              )}
+              {d.lastHumanReviewedAt && (
+                <div>
+                  <dt className="tick text-[0.5rem]">Bench review</dt>
+                  <dd className="mt-1 leading-snug text-muted-foreground">
+                    {d.lastHumanReviewedAt}
+                    {d.lastHumanReviewedBy ? ` · ${d.lastHumanReviewedBy}` : ""}
+                  </dd>
+                </div>
+              )}
+            </dl>
+            <p className="mt-4 text-[0.68rem] leading-relaxed text-muted-foreground">
+              The agency page is authoritative. Anything printed here is a
+              reading of that page on the date shown, not a substitute for it.
+            </p>
+          </div>
+
+          {/* carry forward */}
+          <div className="panel p-6" data-print="hide">
             <p className="tick text-brass">Carry this water forward</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Hand the record to Species & Presentation, Horizon Desk or Trip Prep with its open
-              items, boundary note and source date attached. Notes move only when you press
-              carry — nothing is posted automatically.
+              Declare the job and it travels with everything you press below —
+              the brief, the PDF and every Hook handoff. Nothing is posted
+              automatically.
             </p>
 
             <label className="tick mt-5 block text-[0.55rem]" htmlFor="job">
@@ -417,7 +605,7 @@ function WaterRecord() {
               id="job"
               value={job ?? ""}
               onChange={(e) => setJob((e.target.value || null) as JobId | null)}
-              className="mt-2 min-h-12 w-full border border-hairline bg-card px-3 text-sm text-foreground outline-none"
+              className="tap mt-2 min-h-12 w-full border border-hairline bg-card px-3 text-sm text-foreground outline-none focus:border-brass/60"
             >
               <option value="">Not declared</option>
               {JOBS.map((j) => (
@@ -428,17 +616,19 @@ function WaterRecord() {
             </select>
 
             <div className="mt-4 flex flex-col gap-2">
-              <a
-                href={encodeSpeciesPacket(d)}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass transition-colors hover:bg-brass/20"
+              <Link
+                to="/packet/$id"
+                params={{ id: d.id }}
+                search={job ? { job } : {}}
+                className="tap inline-flex min-h-12 items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/20"
               >
-                Carry to Species & Presentation ↗
-              </a>
+                <Printer className="h-4 w-4" aria-hidden="true" /> Field brief
+              </Link>
               <button
                 type="button"
                 onClick={copyHandoff}
                 aria-live="polite"
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass transition-colors hover:bg-brass/20"
+                className="tap inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
               >
                 {copied ? (
                   <>
@@ -450,27 +640,51 @@ function WaterRecord() {
                   </>
                 )}
               </button>
-              <Link
-                to="/packet/$id"
-                params={{ id: d.id }}
-                search={job ? { job } : {}}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
-              >
-                <Printer className="h-4 w-4" aria-hidden="true" /> Field brief
-              </Link>
               <WatchButton id={d.id} name={displayName(d)} variant="full" />
               <button
                 type="button"
                 onClick={downloadPdf}
                 disabled={pdfBusy}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 disabled:opacity-60"
+                className="tap inline-flex min-h-12 items-center justify-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50 disabled:opacity-60"
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
                 {pdfBusy ? "Preparing PDF…" : "Download PDF"}
               </button>
+              <a
+                href="#handoff"
+                className="tick tap inline-flex min-h-11 items-center justify-center text-primary hover:text-brass"
+              >
+                Where this goes next ↓
+              </a>
             </div>
           </div>
         </aside>
+      </section>
+
+      {/* reading the water */}
+      <section className="border-t border-hairline bg-abyss/40">
+        <div id="reading" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-16 sm:px-8">
+          <WaterReadingPanel destination={d} />
+        </div>
+      </section>
+
+      {/* access and launches */}
+      <section className="border-t border-hairline">
+        <div id="access" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-16 sm:px-8">
+          <AccessPanel destination={d} />
+        </div>
+      </section>
+
+      {/* fleet handoff */}
+      <section className="border-t border-hairline bg-abyss/40">
+        <div id="handoff" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-16 sm:px-8">
+          <HookHandoff
+            destination={d}
+            context={{ job, level }}
+            species={species}
+            onSpecies={setSpecies}
+          />
+        </div>
       </section>
 
       {/* thumb bar — phones only */}
@@ -542,7 +756,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
         </p>
 
         {dated.length > 0 ? (
-          <ul className="mt-6 grid gap-3 md:grid-cols-2">
+          <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
             {dated.map((w) => (
               <li
                 key={`${w.label}-${w.start}-${w.end}`}
@@ -563,7 +777,7 @@ function SeasonWindowsBand({ destination }: { destination: Destination }) {
         ) : null}
 
         {(destination.provenanceNotes || questions.length > 0) && (
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
             {destination.provenanceNotes ? (
               <div>
                 <p className="tick">Provenance</p>

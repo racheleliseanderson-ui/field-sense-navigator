@@ -10,27 +10,53 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { BuyMeACoffeeWidget } from "../components/BuyMeACoffeeWidget";
+import { SupportLink } from "../components/support-link";
+import { DisplayControl } from "../components/display-control";
 import { reportClientError } from "../lib/error-reporting";
 import { ThemeProvider, themeBootstrapScript } from "../lib/theme";
 
+/** Every dead end offers the same three ways back into the instrument. */
+const WAYS_BACK = [
+  { to: "/", label: "Check a water" },
+  { to: "/explore", label: "Explore the catalog" },
+  { to: "/plan", label: "Plan a day" },
+] as const;
+
+function WaysBack() {
+  return (
+    <ul className="mt-7 flex flex-wrap justify-center gap-2">
+      {WAYS_BACK.map((w, i) => (
+        <li key={w.to}>
+          <Link
+            to={w.to}
+            className={`tap inline-flex min-h-12 items-center border px-5 text-xs uppercase tracking-[0.14em] transition-colors ${
+              i === 0
+                ? "border-brass/60 bg-brass/15 text-brass hover:bg-brass/25"
+                : "border-hairline text-foreground hover:border-brass/50"
+            }`}
+          >
+            {w.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <div className="flex min-h-dvh items-center justify-center bg-background px-5 py-16">
+      <div className="w-full max-w-md text-center">
+        <p className="tick text-brass">No record at this address</p>
+        <h1 className="mt-4 font-display text-[clamp(2rem,7vw,3rem)] font-bold leading-[0.95] tracking-[-0.04em] text-foreground">
+          That water is not on the catalog.
+        </h1>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          Either the address is wrong, or the record was never here. Nothing is
+          invented to fill the page — start again from a search or from a
+          declared job.
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+        <WaysBack />
       </div>
     </div>
   );
@@ -44,31 +70,29 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+    <div className="flex min-h-dvh items-center justify-center bg-background px-5 py-16">
+      <div className="w-full max-w-md text-center">
+        <p className="tick text-alert">This page did not load</p>
+        <h1 className="mt-4 font-display text-[clamp(1.8rem,6vw,2.6rem)] font-bold leading-[1] tracking-[-0.04em] text-foreground">
+          Something broke on our side.
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          Nothing on this screen should be treated as a reading. Try again, and
+          if it keeps failing, go to the official source for the water directly.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-7 flex flex-wrap justify-center gap-2">
           <button
+            type="button"
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="tap inline-flex min-h-12 items-center border border-brass/60 bg-brass/15 px-5 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/25"
           >
             Try again
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
         </div>
+        <WaysBack />
       </div>
     </div>
   );
@@ -83,9 +107,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "A field guide for named public waters: readiness, ranking, and a printable brief.",
+          "A field guide for named public waters: readiness, how to read the water, access and launches, and a printable brief.",
       },
       { name: "author", content: "Hook the Horizon" },
+      { name: "theme-color", content: "#10141b" },
+      { property: "og:site_name", content: "Hook the Horizon" },
       { property: "og:title", content: "Field Sense Navigator" },
       {
         property: "og:description",
@@ -145,7 +171,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
-        <BuyMeACoffeeWidget />
+        <SupportLink />
         <Scripts />
       </body>
     </html>
@@ -160,6 +186,8 @@ function RootComponent() {
       <ThemeProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
+        {/* The instrument's ONE appearance and accessibility control. */}
+        <DisplayControl />
       </ThemeProvider>
     </QueryClientProvider>
   );

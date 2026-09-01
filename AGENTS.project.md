@@ -48,13 +48,56 @@ Schema: `SCHEMA_VERSION` 0.6.0 in `src/lib/catalog.ts` (optional provenance fiel
 ## Catalog
 
 - Data: `src/data/destinations.json` (count = `NAMED_WATER_COUNT`)
-- Schema: `src/lib/catalog.ts`
-- Intelligence: `src/lib/intelligence.ts`
+- Schema and jurisdictions: `src/lib/catalog.ts` (also the single source for
+  postal codes and per-jurisdiction counts — do not redeclare them)
+- Documented intelligence (five layers, readiness, job ranking, checklists):
+  `src/lib/intelligence.ts`
 - Station bindings: `scripts/resolve-stations.mjs`
+
+## Reading layers — what may claim what
+
+Three layers reach the reader, and they must never be blurred together.
+
+| Layer | Module | Claims |
+| --- | --- | --- |
+| **Documented** | `intelligence.ts` | Only what an agency published, with confidence and residual unknowns. Five layers — that number is a contract; a sixth scored layer is not the way to add anything. |
+| **Access** | `access.ts` | Only the named facilities, published status and the agency's own amenity wording. A missing amenity is reported as unpublished, never as absent. |
+| **Craft** | `water-reading.ts` | Standing water-reading for the CLASS of water, ordered by what the record documents. Never an observation of this water today, never a spot. Every surface that shows it must say so. |
+
+`water-reading.ts` also carries the beginner → competent → advanced setting
+(`ReadLevel`, held per device by `read-level.ts`). It is one setting shared by
+every record, not a separate product tier.
+
+## Fleet handoffs
+
+`src/lib/fleet.ts` is the byte-identical fleet registry — the only place
+cross-app URLs are enumerated. `src/lib/handoff.ts` builds the
+Water → Species → Forage/Hatch → Presentation → Rig/Tackle → Knot → Field Ops
+chain from it and encodes the `HTH-FLEET-1.0` packet. Rules: the packet travels
+in the URL fragment (never sent to a server), nothing is posted automatically,
+and the packet carries no coordinates and no private water. Add fields to the
+packet; do not repurpose existing ones — other instruments read them.
+
+## UI house rules
+
+- **One appearance control.** `src/components/display-control.tsx` is mounted
+  once by the root shell as the floating control in the lower-right corner and
+  covers light, dark, colour-blind-safe, high-contrast and motion. No second
+  theme, contrast, motion or language switch anywhere in the app. A page that
+  fixes its own bar to the bottom of the viewport renders `<DockOffset />` so
+  the control lifts clear of it.
+- **No translation layer.** The interface is English; agency wording is
+  reproduced, never restated. Do not reintroduce an i18n dictionary.
+- **No pin map.** Geography is given as jurisdiction and neighbourhood
+  (`coverage-map.tsx`, `nearby.ts`) because this instrument publishes no
+  coordinates.
+- **shadcn is not the design system.** Only `ui/command` and `ui/dialog`
+  survive, for the jump palette. Build new UI from the instrument utilities in
+  `styles.css`, not from scaffold components.
 
 ## Enrichment
 
-Follow `ENRICHMENT-PASS-2026-08-19.md`. Apply source-backed field updates only. Leave REVIEW OVERDUE banners in place until `nextReviewAt` is in the future. One jurisdiction (or one official-source family) per PR. Do not mix overlay/build fixes with lake seeds.
+Follow `docs/enrichment-2026-08-19.md`. Apply source-backed field updates only. Leave REVIEW OVERDUE banners in place until `nextReviewAt` is in the future. One jurisdiction (or one official-source family) per PR. Do not mix overlay/build fixes with lake seeds.
 
 ## Build
 

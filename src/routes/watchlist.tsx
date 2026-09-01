@@ -7,6 +7,7 @@ import { WaterCard } from "@/components/water-card";
 import { useWatchlist } from "@/lib/watchlist";
 import { displayName } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
+import { useReadLevel } from "@/lib/read-level";
 
 export const Route = createFileRoute("/watchlist")({
   head: () => ({
@@ -32,13 +33,14 @@ export const Route = createFileRoute("/watchlist")({
 
 function WatchlistPage() {
   const { records, clear, toggle } = useWatchlist();
+  const { level } = useReadLevel();
   const [busy, setBusy] = useState(false);
 
   const exportAll = async () => {
     setBusy(true);
     try {
       const { downloadShortlistPdf } = await import("@/lib/packet-pdf");
-      downloadShortlistPdf(records, null);
+      downloadShortlistPdf(records, null, level);
     } finally {
       setBusy(false);
     }

@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 export const getLiveConditions = createServerFn({ method: "GET" })
-  .inputValidator((input: { id?: string; state: string; waterbody: string }) => ({
+  .validator((input: { id?: string; state: string; waterbody: string }) => ({
     ...(input.id ? { id: String(input.id).slice(0, 40) } : {}),
     state: String(input.state).slice(0, 60),
     waterbody: String(input.waterbody).slice(0, 160),

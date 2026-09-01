@@ -1,6 +1,6 @@
 // Build config for this app. The plugin assembly lives in ./vite.base.config.ts;
 // this file only carries the options that are specific to this project.
-import { defineConfig } from "./vite.base.config";
+import { defineConfig } from "./vite.base.config.ts";
 
 export default defineConfig({
   tanstackStart: {

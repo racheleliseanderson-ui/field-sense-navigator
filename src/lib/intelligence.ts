@@ -26,7 +26,15 @@ const HAZARD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
   { tag: "fire", label: "Wildfire & smoke", rx: /wildfire|smoke|fire restriction|fire danger/i },
   { tag: "algae", label: "Algal advisory", rx: /\bhab\b|algal|algae|blue-?green|toxin/i },
   { tag: "level", label: "Water level & submerged hazards", rx: /low water|water level|drawdown|stump|unmarked hazard|shoal|shallow|sandbar/i },
-  { tag: "current", label: "Current & flow", rx: /\bcurrent\b|\bflows?\b|rapids|whitewater|dam release|discharge|swift/i },
+  // "current" is almost always the adjective in agency prose ("current rules",
+  // "current registration", "current_with_..." statuses), which flagged a
+  // current-and-flow hazard on every record in the catalog and put "read the
+  // current before wading" on still waters. Match the noun, not the adjective.
+  {
+    tag: "current",
+    label: "Current & flow",
+    rx: /\bcurrents\b|(?:swift|strong|heavy|fast|river|tidal|reversing|cross)[- ]current|current (?:break|seam|line|speed|velocit)|\bflows?\b|rapids|whitewater|dam release|discharge|\bswift\b/i,
+  },
   { tag: "traffic", label: "Commercial & vessel traffic", rx: /commercial shipping|shipping traffic|barge|freighter|navigation planning|boat traffic/i },
   { tag: "ice", label: "Ice & cold exposure", rx: /\bice\b|frozen|cold water|hypotherm/i },
   { tag: "remote", label: "Remoteness & comms", rx: /remote|no cell|backcountry|wilderness|long walk|primitive/i },

@@ -1,4 +1,10 @@
-import { destinations, displayName, isProvince, type Destination } from "@/lib/catalog";
+import {
+  destinations,
+  displayName,
+  isProvince,
+  REGION_ABBR,
+  type Destination,
+} from "@/lib/catalog";
 
 /** Facets a plain-text query can resolve into on its own. */
 export interface Token {
@@ -22,29 +28,8 @@ const norm = (s: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-const STATE_ABBR: Record<string, string> = {
-  al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
-  co: "Colorado", ct: "Connecticut", de: "Delaware", fl: "Florida", ga: "Georgia",
-  hi: "Hawaii", id: "Idaho", il: "Illinois", in: "Indiana", ia: "Iowa",
-  ks: "Kansas", ky: "Kentucky", la: "Louisiana", me: "Maine", md: "Maryland",
-  ma: "Massachusetts", mi: "Michigan", mn: "Minnesota", ms: "Mississippi",
-  mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada", nh: "New Hampshire",
-  nj: "New Jersey", nm: "New Mexico", ny: "New York", nc: "North Carolina",
-  nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon", pa: "Pennsylvania",
-  ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota", tn: "Tennessee",
-  tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia", wa: "Washington",
-  wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
-};
-
-/** Canadian provinces and territories, by postal code. No code collides with a state. */
-const PROVINCE_ABBR: Record<string, string> = {
-  ab: "Alberta", bc: "British Columbia", mb: "Manitoba", nb: "New Brunswick",
-  nl: "Newfoundland and Labrador", nt: "Northwest Territories", ns: "Nova Scotia",
-  nu: "Nunavut", on: "Ontario", pe: "Prince Edward Island", qc: "Quebec",
-  sk: "Saskatchewan", yt: "Yukon",
-};
-
-const REGION_ABBR: Record<string, string> = { ...STATE_ABBR, ...PROVINCE_ABBR };
+/* Jurisdiction postal-code tables live in catalog.ts — one source for search,
+ * the coverage map and anything else that needs to name a jurisdiction. */
 
 const TYPE_WORDS: Record<string, string> = {
   lake: "lake", lakes: "lake", lago: "lake",

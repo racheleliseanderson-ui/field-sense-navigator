@@ -2,9 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard } from "@/components/water-card";
 import { Art, Plate } from "@/components/art";
+import { CoverageMap } from "@/components/coverage-map";
 import { destinations, NAMED_WATER_COUNT, states } from "@/lib/catalog";
+import { WORKFLOW } from "@/lib/handoff";
 import { readiness } from "@/lib/intelligence";
-import { PLATES, HALF_BLEED, CARD } from "@/lib/imagery";
+import { PLATES, HALF_BLEED } from "@/lib/imagery";
 import { useReveal, useParallax, useCountUp } from "@/lib/motion";
 
 export const Route = createFileRoute("/")({
@@ -37,6 +39,14 @@ const REFUSALS = [
   "Private or user-supplied spots",
   "Exact coordinates",
 ];
+
+/** What "reading the water" means, one line per class the catalog holds. */
+const READS = [
+  ["River", "Current first.", "Seams, riffle-run-pool, outside bends, eddies and the wood that breaks the flow."],
+  ["Lake", "Structure and edges.", "Points and bars, weed lines, the first drop-off, and any moving water at all."],
+  ["Reservoir", "The drowned valley.", "The old river channel, standing timber, creek arms — and the level, which decides all of it."],
+  ["Marine", "The tide, then the ground.", "Channels and guts, hard structure, rips and the bottom transitions the stage moves across."],
+] as const;
 
 const LAYERS = [
   ["Access & legality", "Published facilities, closures, directory-level networks, and the line where public corridor ends."],
@@ -157,7 +167,7 @@ function Home() {
       <section className="relative isolate overflow-hidden bg-abyss">
         <div className="halo absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
         <div className="mx-auto max-w-7xl px-safe py-24 sm:px-8 md:py-32">
-          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <p className="tick text-brass" data-reveal>What's in a reading</p>
               <h2
@@ -215,8 +225,50 @@ function Home() {
         </div>
       </section>
 
+      {/* ---------- READING THE WATER ---------- */}
+      <section className="mx-auto max-w-7xl px-safe py-24 sm:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.15fr]">
+          <div>
+            <p className="tick text-brass" data-reveal>Once you get there</p>
+            <h2
+              className="mt-5 font-display text-[clamp(1.9rem,4vw,3.2rem)] font-bold leading-[0.96] tracking-[-0.04em] text-foreground"
+              data-reveal
+              style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
+            >
+              Choosing the water
+              <br />
+              is only half of it.
+            </h2>
+            <p
+              className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground"
+              data-reveal
+              style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
+            >
+              Every record carries a standing read for its class of water —
+              current and seams on a river, structure and edges on a lake, the
+              old channel and the level on a reservoir, the tide across
+              everything on the coast. It is craft, not a claim about
+              conditions today, and it grows with you: three levels of detail,
+              from the few features that matter most to the subtle reads.
+            </p>
+          </div>
+
+          <ul className="grid grid-cols-1 gap-px self-start bg-hairline sm:grid-cols-2" data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+            {READS.map(([kind, first, rest]) => (
+              <li key={kind} className="bg-card px-5 py-6">
+                <p className="tick text-[0.55rem] text-brass">{kind}</p>
+                <p className="mt-2 font-display text-lg font-bold tracking-tight text-foreground">
+                  {first}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{rest}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ---------- SPLIT: two ways in ---------- */}
-      <section className="grid border-y border-hairline md:grid-cols-2">
+      <section className="grid grid-cols-1 border-y border-hairline md:grid-cols-2">
         <Link
           to="/plan"
           className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden p-7 sm:min-h-[28rem] sm:p-12"
@@ -284,7 +336,7 @@ function Home() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
           {featured.map(({ d }, i) => (
             <div key={d.id} data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}>
               <WaterCard destination={d} art />
@@ -293,10 +345,34 @@ function Home() {
         </div>
       </section>
 
+      {/* ---------- COVERAGE ---------- */}
+      <section className="border-y border-hairline bg-abyss/50">
+        <div className="mx-auto max-w-7xl px-safe py-20 sm:px-8 md:py-24">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="tick text-brass" data-reveal>Coverage</p>
+              <h2
+                className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.6rem)] font-bold tracking-[-0.035em] text-foreground"
+                data-reveal
+                style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
+              >
+                Where the catalog reaches
+              </h2>
+            </div>
+            <p className="max-w-sm text-xs leading-relaxed text-muted-foreground" data-reveal>
+              Pick a jurisdiction to open the catalog there. Coverage is uneven
+              on purpose — a record only exists where an agency published enough
+              to support one.
+            </p>
+          </div>
+          <CoverageMap className="mt-10" />
+        </div>
+      </section>
+
       {/* ---------- REFUSALS ---------- */}
       <section className="relative isolate overflow-hidden border-y border-hairline bg-abyss">
         <Art plate={PLATES.ramp} scrim="band" opacity={0.75} />
-        <div className="mx-auto grid max-w-7xl gap-12 px-safe py-24 sm:px-8 md:grid-cols-[1fr_1.1fr] md:py-32">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 px-safe py-24 sm:px-8 md:grid-cols-[1fr_1.1fr] md:py-32">
           <div>
             <p className="tick text-alert" data-reveal>What this will not tell you</p>
             <h2
@@ -317,7 +393,7 @@ function Home() {
               Read the boundary →
             </Link>
           </div>
-          <ul className="surface grid gap-px self-start bg-hairline sm:grid-cols-2" data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+          <ul className="surface grid grid-cols-1 gap-px self-start bg-hairline sm:grid-cols-2" data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
             {REFUSALS.map((r) => (
               <li key={r} className="bg-abyss/90 px-5 py-6 text-sm text-muted-foreground">
                 <span className="mb-3 block h-px w-6 bg-alert" />
@@ -331,7 +407,7 @@ function Home() {
       {/* ---------- CONSTRAINED EXAMPLE ---------- */}
       {constrained && (
         <section className="mx-auto max-w-7xl px-safe py-24 sm:px-8">
-          <div className="grid gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1fr] md:items-center">
             <div>
               <p className="tick text-watch" data-reveal>Worked example</p>
               <h2
@@ -368,27 +444,59 @@ function Home() {
           >
             One field. Several tools.
           </h2>
-          <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
-            {[
-              ["Waterways", "This tool. Public waters, read before you drive.", "https://waterways.hookthehorizon.blog/", true],
-              ["Species", "Behavior hypotheses and presentation families — not bite scores.", "https://species.hookthehorizon.blog/", false],
-              ["Knot", "Decide, diagnose and compare the knot for the job.", "https://knot.hookthehorizon.blog/", false],
-              ["The blog", "Long-form field notes from Hook the Horizon.", "https://hookthehorizon.blog/", false],
-            ].map(([name, body, href, current]) => (
-              <a
-                key={name as string}
-                href={href as string}
-                aria-current={current ? "page" : undefined}
-                className="tap group flex min-h-36 flex-col justify-between bg-abyss/85 p-6 backdrop-blur transition-colors hover:bg-abyss/70"
-              >
-                <span className="tick text-[0.55rem] text-brass">{current ? "You are here" : "Open"}</span>
-                <span>
-                  <span className="block font-display text-xl font-bold tracking-tight text-foreground">{name}</span>
-                  <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">{body}</span>
-                </span>
-              </a>
-            ))}
-          </div>
+          <p
+            className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground"
+            data-reveal
+            style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
+          >
+            Field Sense answers the first question in the Hook workflow. Open a
+            record and every step below can be reached with this water's class,
+            documented species, standing read and declared job already attached.
+          </p>
+          <ol className="mt-10 grid grid-cols-1 gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-4" data-reveal style={{ "--reveal-delay": "160ms" } as React.CSSProperties}>
+            {WORKFLOW.map((w, i) => {
+              const body = (
+                <>
+                  <span className="flex items-center gap-2">
+                    <span className="data text-[0.62rem] text-brass">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="tick text-[0.55rem] text-brass">
+                      {w.here ? "You are here" : "Open"}
+                    </span>
+                  </span>
+                  <span>
+                    <span className="block font-display text-xl font-bold tracking-tight text-foreground">
+                      {w.step}
+                    </span>
+                    <span className="tick mt-1 block text-[0.55rem]">{w.app}</span>
+                    <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
+                      {w.question}
+                    </span>
+                  </span>
+                </>
+              );
+              return (
+                <li key={w.id} className="contents">
+                  {w.here ? (
+                    <div
+                      aria-current="page"
+                      className="flex min-h-36 flex-col justify-between bg-abyss/95 p-6 backdrop-blur"
+                    >
+                      {body}
+                    </div>
+                  ) : (
+                    <a
+                      href={w.url}
+                      className="tap group flex min-h-36 flex-col justify-between bg-abyss/85 p-6 backdrop-blur transition-colors hover:bg-abyss/70"
+                    >
+                      {body}
+                    </a>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
 

@@ -13,9 +13,13 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { buildLayers, readTags, readiness } from "@/lib/intelligence";
+import { readAccess } from "@/lib/access";
+import { HandoffLink } from "@/components/hook-handoff";
+import { cuesFor, readWater } from "@/lib/water-reading";
 import { COMPARE_LIMIT, useCompareTray } from "@/lib/compare-tray";
 import { search } from "@/lib/search";
 import { useReveal } from "@/lib/motion";
+import { useReadLevel } from "@/lib/read-level";
 
 export const Route = createFileRoute("/compare")({
   head: () => ({
@@ -44,6 +48,8 @@ interface Column {
   r: ReturnType<typeof readiness>;
   layers: ReturnType<typeof buildLayers>;
   tags: ReturnType<typeof readTags>;
+  access: ReturnType<typeof readAccess>;
+  read: ReturnType<typeof readWater>;
 }
 
 function Picker({
@@ -121,7 +127,7 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rule-top grid gap-3 py-5 md:grid-cols-[13rem_minmax(0,1fr)]" data-reveal>
+    <div className="rule-top grid grid-cols-1 gap-3 py-5 md:grid-cols-[13rem_minmax(0,1fr)]" data-reveal>
       <div className="min-w-0">
         <p className="tick text-[0.55rem]">{label}</p>
         {note && (
@@ -138,6 +144,7 @@ function Row({
 function Compare() {
   const { ids, records, remove, toggle, clear, full } = useCompareTray();
   const reveal = useReveal();
+  const { level } = useReadLevel();
   const [busy, setBusy] = useState(false);
 
   const cols: Column[] = useMemo(
@@ -147,6 +154,8 @@ function Compare() {
         r: readiness(d),
         layers: buildLayers(d),
         tags: readTags(d),
+        access: readAccess(d),
+        read: readWater(d),
       })),
     [records],
   );
@@ -161,7 +170,7 @@ function Compare() {
     setBusy(true);
     try {
       const { downloadShortlistPdf } = await import("@/lib/packet-pdf");
-      downloadShortlistPdf(records, null);
+      downloadShortlistPdf(records, null, level);
     } finally {
       setBusy(false);
     }
@@ -192,7 +201,7 @@ function Compare() {
             the gap.
           </p>
 
-          <div className="mt-8 grid gap-3 md:max-w-xl">
+          <div className="mt-8 grid grid-cols-1 gap-3 md:max-w-xl">
             <Picker onPick={toggle} disabled={full} taken={ids} />
             {ids.length > 0 && (
               <div className="flex flex-wrap gap-2">
@@ -206,7 +215,7 @@ function Compare() {
                       type="button"
                       onClick={() => remove(c.d.id)}
                       aria-label={`Remove ${displayName(c.d)} from the comparison`}
-                      className="tap grid h-8 w-8 place-items-center"
+                      className="tap grid grid-cols-1 h-8 w-8 place-items-center"
                     >
                       <X className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>
@@ -287,6 +296,30 @@ function Compare() {
               ))}
             </Row>
 
+            <Row
+              label="Reading the water"
+              note="Standing craft for the class of water, not conditions today."
+            >
+              {cols.map((c) => (
+                <div key={c.d.id} className="min-w-0">
+                  <p className="text-xs font-medium leading-relaxed text-foreground">
+                    {c.read.headline}
+                  </p>
+                  <p className="mt-2 text-[0.68rem] leading-relaxed text-muted-foreground">
+                    {cuesFor(c.read, level)
+                      .slice(0, 4)
+                      .map((x) => x.title)
+                      .join(" · ")}
+                  </p>
+                  {c.read.shaped[0] && (
+                    <p className="mt-2 text-[0.68rem] leading-relaxed text-brass">
+                      {c.read.shaped[0]}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </Row>
+
             {(["access", "conditions", "capacity", "seasonal", "fieldcheck"] as const).map(
               (key) => (
                 <Row
@@ -325,23 +358,76 @@ function Compare() {
               ),
             )}
 
-            <Row label="Published access" note="Named public facilities on the official source.">
+            <Row label="How you get on" note="Access kinds documented on the official source.">
               {cols.map((c) => (
                 <div key={c.d.id} className="min-w-0">
-                  <p className="data text-lg text-foreground">{c.d.publicAccess.length}</p>
+                  <p className="data text-lg text-foreground">{c.access.namedSites}</p>
                   <ul className="mt-1 space-y-1">
-                    {c.d.publicAccess.slice(0, 4).map((a, i) => (
-                      <li key={i} className="truncate text-[0.7rem] text-muted-foreground">
-                        {a.name} · {humanize(a.type)}
+                    {(
+                      [
+                        ["Trailer launch", c.access.counts.trailer_launch],
+                        ["Hand launch", c.access.counts.hand_launch],
+                        ["Pier or dock", c.access.counts.pier],
+                        ["Shore or walk-in", c.access.counts.shore],
+                      ] as Array<[string, number]>
+                    ).map(([label, n]) => (
+                      <li
+                        key={label}
+                        className={`flex justify-between gap-2 text-[0.7rem] ${
+                          n > 0 ? "text-foreground/85" : "text-muted-foreground/60"
+                        }`}
+                      >
+                        <span className="truncate">{label}</span>
+                        <span className="data shrink-0">{n || "—"}</span>
                       </li>
                     ))}
-                    {c.d.publicAccess.length === 0 && (
-                      <li className="text-[0.7rem] text-muted-foreground">
-                        No named site published.
-                      </li>
-                    )}
                   </ul>
+                  {c.access.anyClosed && (
+                    <p className="mt-2 text-[0.68rem] leading-relaxed text-alert">
+                      At least one site documented closed.
+                    </p>
+                  )}
+                  {c.access.directoryOnly && (
+                    <p className="mt-2 text-[0.68rem] leading-relaxed text-watch">
+                      Directory only — a site still has to be chosen.
+                    </p>
+                  )}
                 </div>
+              ))}
+            </Row>
+
+            <Row
+              label="Logistics"
+              note="Read from the amenity wording the agency published. Silence is not absence."
+            >
+              {cols.map((c) => (
+                <p key={c.d.id} className="text-[0.7rem] leading-relaxed text-foreground/85">
+                  {c.access.logistics.length
+                    ? c.access.logistics.map((l) => l.label).join(", ")
+                    : "No amenity wording published on the record."}
+                </p>
+              ))}
+            </Row>
+
+            <Row label="Named sites" note="Facility names reproduced from the official source.">
+              {cols.map((c) => (
+                <ul key={c.d.id} className="min-w-0 space-y-1">
+                  {c.d.publicAccess.slice(0, 5).map((a, i) => (
+                    <li key={i} className="truncate text-[0.7rem] text-muted-foreground">
+                      {a.name} · {humanize(a.type)}
+                    </li>
+                  ))}
+                  {c.d.publicAccess.length > 5 && (
+                    <li className="text-[0.7rem] text-muted-foreground/70">
+                      +{c.d.publicAccess.length - 5} more on the record
+                    </li>
+                  )}
+                  {c.d.publicAccess.length === 0 && (
+                    <li className="text-[0.7rem] text-muted-foreground">
+                      No named site published.
+                    </li>
+                  )}
+                </ul>
               ))}
             </Row>
 
@@ -402,6 +488,20 @@ function Compare() {
                 >
                   {c.d.officialSourceUrl}
                 </a>
+              ))}
+            </Row>
+
+            <Row label="Carry forward" note="Hand the column to the next Hook instrument.">
+              {cols.map((c) => (
+                <HandoffLink
+                  key={c.d.id}
+                  destination={c.d}
+                  target="species"
+                  context={{ level }}
+                  className="tap inline-flex min-h-11 items-center border border-brass/50 bg-brass/10 px-4 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/20"
+                >
+                  Species ↗
+                </HandoffLink>
               ))}
             </Row>
 

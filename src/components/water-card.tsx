@@ -41,12 +41,15 @@ export function WaterCard({
   fit,
   rank,
   art = false,
+  matched,
 }: {
   destination: Destination;
   fit?: Fit;
   rank?: number;
   /** show the water-type plate as a masthead strip */
   art?: boolean;
+  /** why this record answered the current search, in the reader's own terms */
+  matched?: string[];
 }) {
   const plate = plateFor(destination.waterType);
   const r = fit?.readiness ?? readiness(destination);
@@ -156,16 +159,25 @@ export function WaterCard({
         </ul>
       )}
 
+      {!fit && matched && matched.length > 0 && (
+        <p className="mt-4 text-xs leading-relaxed text-brass">
+          <span className="tick text-[0.5rem] text-brass/80">Matched</span>{" "}
+          {matched.join(" · ")}
+        </p>
+      )}
+
       {!fit && destination.currentNotices[0] && (
         <p className="mt-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
           {destination.currentNotices[0]}
         </p>
       )}
 
-      <dl className="rule-top mt-5 grid grid-cols-5 gap-1 pt-4">
+      {/* Five readouts at instrument width; three on a phone, where five
+          uppercase labels cannot fit without pushing the card off-screen. */}
+      <dl className="rule-top mt-5 grid grid-cols-3 gap-x-3 gap-y-3 pt-4 sm:grid-cols-5 sm:gap-1">
         {readCounts.map((l) => (
-          <div key={l.k}>
-            <dt className="tick text-[0.5rem]">{l.k}</dt>
+          <div key={l.k} className="min-w-0">
+            <dt className="tick truncate text-[0.5rem]">{l.k}</dt>
             <dd className="data mt-1 text-sm text-foreground/90">{l.v}</dd>
           </div>
         ))}

@@ -437,6 +437,21 @@ html[data-motion="off"] [data-reveal] {
   padding-right: max(1.25rem, env(safe-area-inset-right));
 }
 
+/*
+ * The single floating display / accessibility control (lower right).
+ * `--dock-h` is set by a page that fixes its own action bar to the bottom of
+ * the viewport, so the control lifts clear of it instead of overlapping.
+ */
+.display-dock {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem + var(--dock-h, 0px));
+}
+
+@media (min-width: 640px) {
+  .display-dock {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
+  }
+}
+
 :root {
   --grain-opacity: 0.1;
 }

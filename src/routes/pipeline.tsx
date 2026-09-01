@@ -249,7 +249,7 @@ function Pipeline() {
           observed time when a fetch times out or when the last official
           observation is older than that window.
         </p>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+        <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           <li className="panel p-5">
             <div className="flex items-start justify-between gap-3">
               <p className="font-display text-base font-bold text-foreground">Matched stations</p>
@@ -357,7 +357,7 @@ function Pipeline() {
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
           Record completeness
         </h2>
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+        <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           {checks.map((c) => (
             <li key={c.id} className="panel p-5">
               <div className="flex items-start justify-between gap-3">
@@ -394,7 +394,7 @@ function Pipeline() {
             : "Manual checks still work. The published station list is what this guide uses on every water record — this page is for spot-checks, not the clock."}
         </p>
 
-        <div className="panel mt-6 grid gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
+        <div className="panel mt-6 grid grid-cols-1 gap-4 p-5 md:grid-cols-[auto_auto_auto_auto_1fr] md:items-end">
           <div>
             <label className="tick text-[0.55rem]" htmlFor="mode">
               Check type
@@ -583,7 +583,7 @@ function Pipeline() {
         {visible.length > 0 && (
           <ul className="mt-4 divide-y divide-hairline border border-hairline">
             {visible.map((r) => (
-              <li key={r.id} className="grid gap-2 p-4 md:grid-cols-[minmax(0,1fr)_auto]">
+              <li key={r.id} className="grid grid-cols-1 gap-2 p-4 md:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="min-w-0">
                   <p className="truncate text-sm text-foreground">{r.name}</p>
                   <p className="mt-1 text-[0.68rem] leading-relaxed text-muted-foreground">
@@ -625,7 +625,7 @@ function Pipeline() {
               {run.history.map((h) => (
                 <li
                   key={h.id}
-                  className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                  className="grid grid-cols-1 gap-1 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
                 >
                   <span className="truncate text-foreground/90">
                     {new Date(h.startedAt).toLocaleTimeString()} · {h.scope} · {h.outcome}

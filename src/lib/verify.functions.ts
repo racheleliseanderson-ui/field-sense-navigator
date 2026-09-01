@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 export const checkSourceUrl = createServerFn({ method: "GET" })
-  .inputValidator((input: { url: string }) => ({
+  .validator((input: { url: string }) => ({
     url: String(input.url).slice(0, 500),
   }))
   .handler(async ({ data }) => {

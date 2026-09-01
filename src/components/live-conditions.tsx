@@ -153,7 +153,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
             }}
             disabled={isFetching}
             aria-label="Refresh official readings"
-            className="tap grid h-9 w-9 place-items-center text-muted-foreground hover:text-brass disabled:opacity-50"
+            className="tap grid grid-cols-1 h-9 w-9 place-items-center text-muted-foreground hover:text-brass disabled:opacity-50"
           >
             <RefreshCw
               className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}

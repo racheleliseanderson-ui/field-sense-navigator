@@ -17,6 +17,9 @@ import {
 } from "@/lib/intelligence";
 import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
+import { useCompareTray, COMPARE_LIMIT } from "@/lib/compare-tray";
+import { HandoffLink } from "@/components/hook-handoff";
+import { useReadLevel } from "@/lib/read-level";
 
 const JOB_IDS: JobId[] = JOBS.map((j) => j.id);
 
@@ -26,10 +29,12 @@ type PlanSearch = {
 };
 
 function parsePlanSearch(s: Record<string, unknown>): PlanSearch {
-  const raw = typeof s.job === "string" ? s.job : undefined;
+  const raw = typeof s['job'] === "string" ? (s['job'] as string) : undefined;
   const job = raw && JOB_IDS.includes(raw as JobId) ? (raw as JobId) : undefined;
   const guided =
-    s.guided === true || s.guided === "1" || s.guided === "true" ? true : undefined;
+    s['guided'] === true || s['guided'] === "1" || s['guided'] === "true"
+      ? true
+      : undefined;
   const out: PlanSearch = {};
   if (job) out.job = job;
   if (guided) out.guided = guided;
@@ -95,7 +100,7 @@ function Selector<T extends string>({
   return (
     <fieldset>
       <legend className="tick">{label}</legend>
-      <div className="mt-3 grid gap-px bg-hairline sm:grid-cols-3">
+      <div className="mt-3 grid grid-cols-1 gap-px bg-hairline sm:grid-cols-3">
         {options.map((o) => {
           const active = value === o.id;
           return (
@@ -135,6 +140,8 @@ function Plan() {
   }));
   const [shown, setShown] = useState(9);
   const [step, setStep] = useState<1 | 2 | 3>(search.job ? (search.guided ? 3 : 2) : 1);
+  const { set: setCompare } = useCompareTray();
+  const { level } = useReadLevel();
 
   const result = useMemo(
     () => (job ? rank(destinations, job, c) : null),
@@ -226,7 +233,7 @@ function Plan() {
             a family afternoon.
           </p>
 
-          <div className="mt-10 grid gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-px bg-hairline sm:grid-cols-2 lg:grid-cols-3">
             {JOBS.map((j) => {
               const active = job === j.id;
               return (
@@ -286,13 +293,13 @@ function Plan() {
             now. Widening later does not invent missing records.
           </p>
 
-          <div className="mt-9 grid gap-9 lg:grid-cols-3">
+          <div className="mt-9 grid grid-cols-1 gap-9 lg:grid-cols-3">
             <Selector label="Time window" options={TIME_OPTIONS} value={c.timeWindow} onChange={(v) => set("timeWindow", v)} />
             <Selector label="Wind tolerance" options={WIND_OPTIONS} value={c.wind} onChange={(v) => set("wind", v)} />
             <Selector label="Gear" options={GEAR_OPTIONS} value={c.gear} onChange={(v) => set("gear", v)} />
           </div>
 
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
             <div>
               <p className="tick">Water type (optional)</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -436,6 +443,56 @@ function Plan() {
               </div>
             )}
 
+            {/* what to do with the ranking */}
+            {result.fits[0] && (
+              <div className="rule-top mt-12 pt-8">
+                <p className="tick text-brass">Take it forward</p>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  A ranking is not a decision. Put the shortlist side by side,
+                  or take the top record straight to a same-day brief — then
+                  hand the water to the instrument that answers the next
+                  question.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCompare(
+                        result.fits
+                          .slice(0, COMPARE_LIMIT)
+                          .map((f) => f.destination.id),
+                      )
+                    }
+                    className="tap inline-flex min-h-12 items-center border border-brass/50 bg-brass/10 px-5 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/20"
+                  >
+                    Compare the top {Math.min(COMPARE_LIMIT, result.fits.length)}
+                  </button>
+                  <Link
+                    to="/compare"
+                    className="tap inline-flex min-h-12 items-center border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
+                  >
+                    Open the comparison
+                  </Link>
+                  <Link
+                    to="/packet/$id"
+                    params={{ id: result.fits[0].destination.id }}
+                    search={job ? { job } : {}}
+                    className="tap inline-flex min-h-12 items-center border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
+                  >
+                    Brief for the top record
+                  </Link>
+                  <HandoffLink
+                    destination={result.fits[0].destination}
+                    target="ops"
+                    context={{ job, level }}
+                    className="tap inline-flex min-h-12 items-center border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
+                  >
+                    Turn it into a trip ↗
+                  </HandoffLink>
+                </div>
+              </div>
+            )}
+
             {result.excluded.length > 0 && (
               <div className="mt-16">
                 <p className="tick text-alert">
@@ -446,7 +503,7 @@ function Plan() {
                   cleared from the record. They are shown so the exclusion is
                   visible rather than silent.
                 </p>
-                <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {result.excluded.slice(0, 9).map((f) => (
                     <BlockedCard key={f.destination.id} fit={f} />
                   ))}

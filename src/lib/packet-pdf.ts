@@ -11,6 +11,8 @@ import {
   readiness,
   type JobId,
 } from "@/lib/intelligence";
+import { readAccess } from "@/lib/access";
+import { cuesFor, readWater, type ReadLevel } from "@/lib/water-reading";
 
 /* Letter, points. A paged briefing document rendered as vector text so it
  * stays selectable, searchable and small — not a screenshot of the page. */
@@ -123,10 +125,17 @@ function checkbox(ctx: Ctx, text: string, source: string) {
   ctx.y += 13;
 }
 
-function record(ctx: Ctx, d: Destination, job: JobId | null) {
+function record(
+  ctx: Ctx,
+  d: Destination,
+  job: JobId | null,
+  level: ReadLevel = "working",
+) {
   const r = readiness(d);
   const layers = buildLayers(d);
   const t = readTags(d);
+  const access = readAccess(d);
+  const read = readWater(d);
   const items = buildChecklist(d, job, job ? DEFAULT_CONSTRAINTS : null);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   const { doc } = ctx;
@@ -235,6 +244,69 @@ function record(ctx: Ctx, d: Destination, job: JobId | null) {
 
   rule(ctx);
 
+  /* access, launches and logistics */
+  tick(ctx, "Access & launches");
+  paragraph(ctx, access.readout, { size: 9 });
+  if (access.sites.length) {
+    ctx.y += 4;
+    for (const s of access.sites) {
+      need(ctx, 26);
+      const status =
+        s.open === false
+          ? " — DOCUMENTED CLOSED"
+          : s.statusLabel
+            ? ` — ${s.statusLabel}`
+            : "";
+      paragraph(ctx, `${s.name} (${s.typeLabel})${status}`, { size: 9 });
+      if (s.amenities.length) {
+        paragraph(ctx, s.amenities.join(" · "), {
+          size: 7.5,
+          color: MUTED,
+          indent: 12,
+        });
+      }
+    }
+  }
+  if (access.logistics.length) {
+    ctx.y += 6;
+    tick(ctx, "Logistics named on the source");
+    paragraph(ctx, access.logistics.map((l) => l.label).join(" · "), { size: 9 });
+  }
+  paragraph(
+    ctx,
+    "An amenity that is not listed is one the source did not publish, not one that is absent. Gate hours, fees and same-day closures are set locally.",
+    { size: 7.5, color: MUTED },
+  );
+
+  rule(ctx);
+
+  /* reading the water — craft, not observation */
+  tick(ctx, `Reading this water — ${read.waterClass}`);
+  paragraph(ctx, read.headline, { style: "bold", size: 10 });
+  paragraph(ctx, read.summary, { size: 9 });
+  paragraph(
+    ctx,
+    "Standing craft for this class of water. Not an observation of this water today: no clarity, temperature, level, flow, tide or hatch is held here, and no spot is named.",
+    { size: 7.5, color: MUTED },
+  );
+  if (read.shaped.length) {
+    ctx.y += 6;
+    tick(ctx, "What this record changes about the read");
+    for (const s of read.shaped) paragraph(ctx, `— ${s}`, { size: 9 });
+  }
+  ctx.y += 6;
+  tick(ctx, "What to look for");
+  for (const c of cuesFor(read, level)) {
+    need(ctx, 40);
+    paragraph(ctx, c.title, { style: "bold", size: 9.5 });
+    paragraph(ctx, c.what, { size: 8.5 });
+    paragraph(ctx, `Why: ${c.why}`, { size: 8.5, color: MUTED });
+    paragraph(ctx, `Find it: ${c.look}`, { size: 8.5, color: MUTED });
+    ctx.y += 4;
+  }
+
+  rule(ctx);
+
   tick(ctx, "Recorded hazard families");
   paragraph(ctx, t.hazards.size ? [...t.hazards].map(humanize).join(", ") : "None recorded.");
   ctx.y += 8;
@@ -299,11 +371,15 @@ function fileSafe(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-export function downloadPacketPdf(d: Destination, job: JobId | null = null) {
+export function downloadPacketPdf(
+  d: Destination,
+  job: JobId | null = null,
+  level: ReadLevel = "working",
+) {
   const doc = newDoc();
   const issued = new Date().toISOString().slice(0, 10);
   const ctx: Ctx = { doc, y: M, page: 1, issued };
-  record(ctx, d, job);
+  record(ctx, d, job, level);
   footer(ctx);
   doc.setProperties({
     title: `Field brief — ${displayName(d)}`,
@@ -314,9 +390,13 @@ export function downloadPacketPdf(d: Destination, job: JobId | null = null) {
 }
 
 /** Shortlist export: contents page, then one record per page run. */
-export function downloadShortlistPdf(list: Destination[], job: JobId | null = null) {
+export function downloadShortlistPdf(
+  list: Destination[],
+  job: JobId | null = null,
+  level: ReadLevel = "working",
+) {
   if (list.length === 0) return;
-  if (list.length === 1) return downloadPacketPdf(list[0]!, job);
+  if (list.length === 1) return downloadPacketPdf(list[0]!, job, level);
 
   const doc = newDoc();
   const issued = new Date().toISOString().slice(0, 10);
@@ -351,7 +431,7 @@ export function downloadShortlistPdf(list: Destination[], job: JobId | null = nu
 
   for (const d of list) {
     breakPage(ctx);
-    record(ctx, d, job);
+    record(ctx, d, job, level);
   }
   footer(ctx);
   doc.setProperties({

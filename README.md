@@ -1,50 +1,79 @@
-# Precision Field Planner
+# Field Sense Navigator — Waterways
 
-Improve this existing live application: https://honey-hole-intelligence.vercel.app/
+The Hook the Horizon intelligence layer for **understanding and choosing water**.
 
-https://github.com/racheleliseanderson-ui/honey-hole-intelligence     Upgrade Field Sense Navigator into a high-end field intelligence instrument while strictly preserving the public-waters-only, no-private-spots, fail-closed philosophy.
+- Live: <https://waterways.hookthehorizon.blog>
+- Publication: [Hook the Horizon](https://hookthehorizon.blog)
 
-Intelligence upgrades:
+Field Sense answers the first question in the Hook workflow: *where should I
+fish, what kind of water is it, what should I look for there, which species are
+relevant, and where does this go next?* It is a catalog of **named public
+waters** with published access, read through five documented layers, a standing
+water-reading craft layer, and an access-and-logistics layer — then handed
+forward to the instrument that answers the next question.
 
-- Add a true multi-layer intelligence engine for each waterbody: Access & Legality, Conditions & Hazards, Capacity & Crowding signals, Seasonal/Regulatory pressure, and Field-Check requirements. Each layer must show confidence and residual unknowns.
+## Doctrine
 
-- Situation-aware ranking: let the user declare a job (bank, kayak, small boat, scouting, tournament-adjacent, family, etc.) + constraints (time window, gear limitations, wind tolerance, etc.). Rank and surface waters that actually fit the job instead of pure alphabetical/catalog listing.
+Public waters only. Fail closed. Accuracy outranks completeness.
 
-- Introduce a lightweight “Field Readiness Score” that is transparent about what it can and cannot know (never invent live gauge or hatch data).
+No private spots. No coordinates. No catch guarantees. No invented gauge, flow,
+tide, weather or hatch data. Where a check cannot be completed, the water is
+treated as not ready to go, and the tool says so rather than filling the gap.
 
-- Smarter field-check engine: generate a concise, printable same-day checklist tailored to the specific water + job + known risks.
+`AGENTS.project.md` is the governing document for architecture, cadence and
+scope. Read it before changing the data layer, the build or the ingest.
 
-Visual & experience upgrades (high-end):
+## What the application holds
 
-- Transform from dense catalog list into a refined instrument. Hero area should feel like a precision tool, not a database browser.
+| Area | Where |
+| --- | --- |
+| Catalog contract and jurisdictions | `src/lib/catalog.ts` (+ `src/data/`) |
+| Five documented layers, readiness, job ranking, checklists | `src/lib/intelligence.ts` |
+| Water-reading craft by water class | `src/lib/water-reading.ts` |
+| Access, launches and logistics | `src/lib/access.ts` |
+| Search, facets and suggestions | `src/lib/search.ts` |
+| Hook the Horizon handoffs | `src/lib/handoff.ts` + `src/lib/fleet.ts` |
+| Live official readings | `src/lib/live.server.ts`, `src/lib/live.functions.ts` |
+| Field brief (screen and PDF) | `src/routes/packet.$id.tsx`, `src/lib/packet-pdf.ts` |
 
-- Destination cards become elegant, scannable instruments with clear visual hierarchy, subtle status language, and progressive disclosure of layers.
+### House rules for the UI
 
-- Beautiful empty and loading states. Premium PDF export of a waterbody “Field Packet” that looks like a high-end briefing document.
+- **One appearance control.** Light, dark, colour-blind-safe, high-contrast and
+  motion live in `src/components/display-control.tsx`, mounted once by the root
+  shell as the floating control in the lower-right corner. Do not add a second
+  theme, contrast, motion or language switch anywhere.
+- **No translation layer.** The interface is English. Waterbody names and
+  agency notices are reproduced in their published wording, never restated.
+- **Craft is labelled as craft.** Anything not read from an official source —
+  the water-reading layer in particular — says so where it is shown.
 
-Workflow upgrades:
+## Live data
 
-- Guided “Plan a day” path that starts with job + constraints, then surfaces ranked waters, then produces a ready-to-print field packet.
-
-- Keep the ability to freely explore the full catalog, but make exploration feel luxurious rather than overwhelming.
-
-- Explicit “Carry this water forward” handoff to Horizon Desk / Trip Prep.
-
-Do not add private spots, exact coordinates, catch guarantees, or live real-time claims that cannot be verified. Keep the tone precise, honest, and field-first.
-
-Use the current live version as the baseline. Do not start from scratch — elevate what already exists.
-
-Scheduled ingest lives in GitHub Actions (`.github/workflows/ingest-live.yml` and `ingest-critical.yml`) and publishes `snapshot.json` + `status.json` to the `live-snapshot` branch. Interior-west / override / NOAA CO-OPS gauges refresh every 10 minutes; the full catalog every 30. USBR is isolated so a RISE timeout cannot stall USGS or NOAA. The last 24 hourly snapshots are kept under `archive/`. Observation time, not ingest time, decides whether a value is current (48 h stage/flow/weather, 7 d reservoir elevation). Fossils stay retained with the original observedAt. The app consumes that snapshot fail-closed.
-
-**Live app**: https://waterways.hookthehorizon.blog
+Scheduled ingest lives in GitHub Actions (`.github/workflows/ingest-live.yml`
+and `ingest-critical.yml`) and publishes `snapshot.json` + `status.json` to the
+`live-snapshot` branch. Interior-west / override / NOAA CO-OPS gauges refresh
+every 10 minutes; the full catalog every 30. USBR is isolated so a RISE timeout
+cannot stall USGS or NOAA. The last 24 hourly snapshots are kept under
+`archive/`. Observation time, not ingest time, decides whether a value is
+current (48 h stage/flow/weather, 7 d reservoir elevation). Fossils stay
+retained with the original `observedAt`. The app consumes that snapshot
+fail-closed: a silent or unbound gauge is reported as silent, never replaced
+with a nearby station.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires Node.js 20+ and [Bun](https://bun.sh) (production installs and builds
+on Vercel with `bun install` / `bun run build`).
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev        # http://localhost:8080
+bun run typecheck
+bun run lint
+bun run build      # applies the overlay, asserts the catalog, then builds
+bun run test       # node:test over scripts/
 ```
+
+The build asserts the catalog before bundling: it rejects empty or placeholder
+JSON and requires at least 500 `HHI-DEST-*` records. That assertion lives inside
+the `build` script on purpose — Bun skips npm-style `prebuild`.

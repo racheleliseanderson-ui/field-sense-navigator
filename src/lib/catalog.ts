@@ -175,6 +175,52 @@ export const provinces = states.filter(isProvince);
 
 export const usStates = states.filter((s) => !isProvince(s));
 
+/**
+ * Jurisdiction postal codes — the single source of truth for both search
+ * ("tx", "bc") and the coverage map. No provincial code collides with a state
+ * code, so one lookup covers North America.
+ */
+export const STATE_ABBR: Readonly<Record<string, string>> = {
+  al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+  co: "Colorado", ct: "Connecticut", de: "Delaware", fl: "Florida", ga: "Georgia",
+  hi: "Hawaii", id: "Idaho", il: "Illinois", in: "Indiana", ia: "Iowa",
+  ks: "Kansas", ky: "Kentucky", la: "Louisiana", me: "Maine", md: "Maryland",
+  ma: "Massachusetts", mi: "Michigan", mn: "Minnesota", ms: "Mississippi",
+  mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada", nh: "New Hampshire",
+  nj: "New Jersey", nm: "New Mexico", ny: "New York", nc: "North Carolina",
+  nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon", pa: "Pennsylvania",
+  ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota", tn: "Tennessee",
+  tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia", wa: "Washington",
+  wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
+};
+
+export const PROVINCE_ABBR: Readonly<Record<string, string>> = {
+  ab: "Alberta", bc: "British Columbia", mb: "Manitoba", nb: "New Brunswick",
+  nl: "Newfoundland and Labrador", nt: "Northwest Territories", ns: "Nova Scotia",
+  nu: "Nunavut", on: "Ontario", pe: "Prince Edward Island", qc: "Quebec",
+  sk: "Saskatchewan", yt: "Yukon",
+};
+
+export const REGION_ABBR: Readonly<Record<string, string>> = {
+  ...STATE_ABBR,
+  ...PROVINCE_ABBR,
+};
+
+const ABBR_BY_NAME: ReadonlyMap<string, string> = new Map(
+  Object.entries(REGION_ABBR).map(([code, name]) => [name, code.toUpperCase()]),
+);
+
+/** "Texas" -> "TX". Falls back to the first two letters for an unlisted name. */
+export const abbrFor = (name: string) =>
+  ABBR_BY_NAME.get(name) ?? name.slice(0, 2).toUpperCase();
+
+/** How many catalog records each jurisdiction holds. */
+export const countByState: ReadonlyMap<string, number> = (() => {
+  const m = new Map<string, number>();
+  for (const d of destinations) m.set(d.state, (m.get(d.state) ?? 0) + 1);
+  return m;
+})();
+
 export const waterTypes: WaterType[] = ["lake", "reservoir", "river", "marine"];
 
 export const humanize = (value: string) =>

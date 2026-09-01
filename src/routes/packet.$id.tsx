@@ -2,7 +2,10 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
 import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
-import { encodeSpeciesPacket } from "@/lib/species-handoff";
+import { readAccess } from "@/lib/access";
+import { useReadLevel } from "@/lib/read-level";
+import { cuesFor, readWater } from "@/lib/water-reading";
+import { useHandoffSteps, useHandoffUrl } from "@/lib/use-handoff";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -53,10 +56,16 @@ function Rule() {
 function Packet() {
   const d = Route.useLoaderData();
   const { job } = Route.useSearch();
+  const { level } = useReadLevel();
   const [pdfBusy, setPdfBusy] = useState(false);
   const r = readiness(d);
   const layers = buildLayers(d);
   const t = readTags(d);
+  const access = readAccess(d);
+  const read = readWater(d);
+  const cues = cuesFor(read, level);
+  const steps = useHandoffSteps(d, { job: job ?? null, level });
+  const speciesUrl = useHandoffUrl(d, "species", { job: job ?? null, level });
   const items = buildChecklist(d, job ?? null, job ? DEFAULT_CONSTRAINTS : null);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   const issued = new Date().toISOString().slice(0, 10);
@@ -66,7 +75,7 @@ function Packet() {
     setPdfBusy(true);
     try {
       const { downloadPacketPdf } = await import("@/lib/packet-pdf");
-      downloadPacketPdf(d, job ?? null);
+      downloadPacketPdf(d, job ?? null, level);
     } finally {
       setPdfBusy(false);
     }
@@ -89,8 +98,8 @@ function Packet() {
           </Link>
           <div className="flex flex-1 gap-2 sm:flex-none">
             <a
-              href={encodeSpeciesPacket(d)}
-              className="inline-flex min-h-12 flex-1 items-center justify-center gap-3 border border-brass/50 px-6 text-xs font-semibold uppercase tracking-[0.14em] text-brass hover:bg-brass/10 sm:flex-none"
+              href={speciesUrl}
+              className="tap inline-flex min-h-12 flex-1 items-center justify-center gap-3 border border-brass/50 px-6 text-xs font-semibold uppercase tracking-[0.14em] text-brass hover:bg-brass/10 sm:flex-none"
             >
               Carry to Species ↗
             </a>
@@ -117,7 +126,7 @@ function Packet() {
 
       {/* sheet */}
       <main><article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">
-        <header className="grid gap-4 sm:flex sm:flex-wrap sm:items-start sm:justify-between sm:gap-6">
+        <header className="grid grid-cols-1 gap-4 sm:flex sm:flex-wrap sm:items-start sm:justify-between sm:gap-6">
           <div>
             <p className="packet-tick">Field Sense Navigator</p>
             <h1 className="mt-3 font-display text-[clamp(2rem,9vw,2.6rem)] font-bold leading-[0.95] tracking-[-0.04em]">
@@ -216,12 +225,88 @@ function Packet() {
 
         <Rule />
 
+        {/* access and launches */}
+        <section className="break-inside-avoid">
+          <h3 className="packet-tick">Access &amp; launches</h3>
+          <p className="mt-2 text-sm leading-relaxed">{access.readout}</p>
+          {access.sites.length > 0 && (
+            <ul className="mt-4 space-y-2">
+              {access.sites.map((s, i) => (
+                <li key={`${s.name}-${i}`} className="text-sm leading-relaxed">
+                  <span className="font-medium">{s.name}</span>
+                  <span className="text-packet-muted"> — {s.typeLabel}</span>
+                  {s.open === false && (
+                    <span className="font-semibold"> · documented closed</span>
+                  )}
+                  {s.amenities.length > 0 && (
+                    <span className="block text-[0.72rem] text-packet-muted">
+                      {s.amenities.join(" · ")}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+          {access.logistics.length > 0 && (
+            <p className="mt-4 text-sm leading-relaxed">
+              <span className="font-medium">Logistics named on the source: </span>
+              {access.logistics.map((l) => l.label).join(", ")}.
+            </p>
+          )}
+          <p className="mt-3 text-[0.72rem] leading-relaxed text-packet-muted">
+            An amenity that is not listed is one the source did not publish, not
+            one that is absent. Gate hours, fees and same-day closures are set
+            locally and are not mirrored here.
+          </p>
+        </section>
+
+        <Rule />
+
+        {/* reading the water */}
+        <section>
+          <h3 className="packet-tick">Reading this water — {read.waterClass}</h3>
+          <p className="mt-2 text-sm font-medium leading-relaxed">{read.headline}</p>
+          <p className="mt-2 text-sm leading-relaxed">{read.summary}</p>
+          <p className="mt-2 text-[0.72rem] leading-relaxed text-packet-muted">
+            Standing craft for this class of water, not an observation of this
+            water today. No clarity, temperature, level, flow, tide or hatch is
+            held here, and no spot is named.
+          </p>
+
+          {read.shaped.length > 0 && (
+            <ul className="mt-4 space-y-2">
+              {read.shaped.map((s) => (
+                <li key={s} className="text-sm leading-relaxed">
+                  {s}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-5 divide-y divide-packet-rule border-y border-packet-rule">
+            {cues.map((c) => (
+              <div key={c.id} className="break-inside-avoid py-4">
+                <p className="font-display text-sm font-bold tracking-tight">{c.title}</p>
+                <p className="mt-1 text-sm leading-relaxed">{c.what}</p>
+                <p className="mt-1 text-[0.78rem] leading-relaxed text-packet-muted">
+                  Why: {c.why}
+                </p>
+                <p className="mt-1 text-[0.78rem] leading-relaxed text-packet-muted">
+                  Find it: {c.look}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <Rule />
+
         {/* layer digest */}
         <section className="break-inside-avoid">
           <h3 className="packet-tick">Layer digest</h3>
           <div className="mt-5 divide-y divide-packet-rule border-y border-packet-rule">
             {layers.map((l) => (
-              <div key={l.key} className="grid gap-1.5 py-4 sm:gap-2 sm:grid-cols-[10rem_1fr]">
+              <div key={l.key} className="grid grid-cols-1 gap-1.5 py-4 sm:gap-2 sm:grid-cols-[10rem_1fr]">
                 <p className="font-display text-sm font-bold tracking-tight">{l.title}</p>
                 <div>
                   <p className="text-sm leading-relaxed">{l.readout}</p>
@@ -237,7 +322,7 @@ function Packet() {
 
         <Rule />
 
-        <section className="grid gap-8 sm:grid-cols-2">
+        <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
           <div>
             <h3 className="packet-tick">Recorded hazard families</h3>
             <p className="mt-2 text-sm leading-relaxed">
@@ -289,6 +374,36 @@ function Packet() {
               </>
             )}
           </div>
+        </section>
+
+        <Rule />
+
+        <section data-print="hide" className="print:hidden">
+          <h3 className="packet-tick">Where this goes next</h3>
+          <p className="mt-2 text-[0.78rem] leading-relaxed text-packet-muted">
+            Each link carries this record forward into the Hook instrument that
+            answers the next question. Screen only — it is not part of the
+            printed brief.
+          </p>
+          <ol className="mt-4 divide-y divide-packet-rule border-y border-packet-rule">
+            {steps.map((s, i) => (
+              <li key={s.id}>
+                <a
+                  href={s.url}
+                  className="flex min-h-12 items-center gap-3 py-3 text-packet-ink"
+                >
+                  <span className="shrink-0 text-[0.72rem] font-semibold text-packet-muted">
+                    {String(i + 2).padStart(2, "0")}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-medium">{s.step}</span>
+                    <span className="block text-[0.72rem] text-packet-muted">{s.app}</span>
+                  </span>
+                  <span aria-hidden="true" className="shrink-0 text-packet-muted">↗</span>
+                </a>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <Rule />

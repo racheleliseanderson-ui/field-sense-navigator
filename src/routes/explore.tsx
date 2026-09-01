@@ -20,6 +20,8 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
+import { LOGISTICS_FACETS, matchesLogistics } from "@/lib/access";
+import { CoverageMap } from "@/components/coverage-map";
 import {
   search,
   suggest,
@@ -32,7 +34,6 @@ import {
   type Suggestion,
 } from "@/lib/search";
 import { useReveal, useParallax } from "@/lib/motion";
-import { useT } from "@/lib/i18n";
 import { useWatchlist } from "@/lib/watchlist";
 import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
@@ -46,6 +47,7 @@ const searchSchema = z.object({
   species: fallback(z.string(), "").default(""),
   access: fallback(z.string(), "").default(""),
   tag: fallback(z.string(), "").default(""),
+  logistics: fallback(z.string(), "").default(""),
   fresh: fallback(z.number(), 0).default(0),
   min: fallback(z.number(), 0).default(0),
   watch: fallback(z.boolean(), false).default(false),
@@ -61,6 +63,7 @@ interface CatalogSearch {
   species: string;
   access: string;
   tag: string;
+  logistics: string;
   fresh: number;
   min: number;
   watch: boolean;
@@ -90,13 +93,14 @@ export const Route = createFileRoute("/explore")({
 
 const BANDS = ["Ready to plan", "Plan with checks", "Plan carefully", "Constrained"] as const;
 const SORTS = [
-  { id: "readiness", key: "catalog.sort.readiness", label: "Readiness" },
-  { id: "verified", key: "catalog.sort.verified", label: "Recently verified" },
-  { id: "alpha", key: "catalog.sort.alpha", label: "Alphabetical" },
-  { id: "state", key: "catalog.sort.state", label: "State" },
+  { id: "readiness", label: "Readiness" },
+  { id: "verified", label: "Recently verified" },
+  { id: "alpha", label: "Alphabetical" },
+  { id: "state", label: "State" },
 ] as const;
 
 const PAGE = 24;
+const INDEX_CAP = 150;
 const RECENT_KEY = "hhi-recent-searches";
 
 function Chip({
@@ -137,7 +141,6 @@ function readRecent(): string[] {
 function Explore() {
   const params = Route.useSearch() as CatalogSearch;
   const navigate = useNavigate({ from: "/explore" });
-  const t = useT();
   const reveal = useReveal();
   const heroImg = useParallax(0.22);
   const { ids: watched } = useWatchlist();
@@ -145,6 +148,9 @@ function Explore() {
   const [draft, setDraft] = useState(params.q);
   const [focused, setFocused] = useState(false);
   const [sheet, setSheet] = useState(false);
+  /* Filters are a panel, not permanent chrome: seven rows of facets pinned to
+     the top of a desktop viewport leaves almost nothing for the results. */
+  const [panel, setPanel] = useState(true);
   const [count, setCount] = useState(PAGE);
   const [recent, setRecent] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -193,7 +199,12 @@ function Explore() {
 
   const results = useMemo(() => {
     const rows = found.hits
-      .map((h) => ({ d: h.destination, score: h.score, r: scores.get(h.destination.id)! }))
+      .map((h) => ({
+        d: h.destination,
+        score: h.score,
+        matched: [...new Set(h.matched)],
+        r: scores.get(h.destination.id)!,
+      }))
       .filter(({ d, r }) => {
         if (params.juris && jurisdictionOf(d) !== params.juris) return false;
         if (params.state && d.state !== params.state) return false;
@@ -202,6 +213,7 @@ function Explore() {
         if (params.species && !matchesSpecies(d, params.species)) return false;
         if (params.access && !matchesAccess(d, params.access)) return false;
         if (params.tag && !matchesTag(d, params.tag)) return false;
+        if (params.logistics && !matchesLogistics(d, params.logistics)) return false;
         if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
         if (params.min > 0 && r.score < params.min) return false;
         if (params.watch && !watched.includes(d.id)) return false;
@@ -227,6 +239,7 @@ function Explore() {
     params.species,
     params.access,
     params.tag,
+    params.logistics,
     params.fresh,
     params.min,
     params.watch,
@@ -244,6 +257,7 @@ function Explore() {
       params.species,
       params.access,
       params.tag,
+      params.logistics,
       params.fresh,
       params.min,
       params.watch,
@@ -264,24 +278,28 @@ function Explore() {
     Number(Boolean(params.species)) +
     Number(Boolean(params.access)) +
     Number(Boolean(params.tag)) +
+    Number(Boolean(params.logistics)) +
     Number(params.fresh > 0) +
     Number(params.min > 0) +
     Number(params.watch);
   const anything = Boolean(params.q) || activeFilters > 0;
-  const visible: Destination[] = results.slice(0, count).map((x) => x.d);
+  const visible = results.slice(0, count);
+  /* The full index is a navigation aid, not a data dump — a phone should not
+   * be asked to lay out five hundred links to reach the twentieth record. */
+  const indexRows: Destination[] = results.slice(0, INDEX_CAP).map((x) => x.d);
 
   const clearAll = () =>
     navigate({
       search: {
         q: "", juris: "", state: "", type: "", band: "", species: "", access: "", tag: "",
-        fresh: 0, min: 0, watch: false, sort: "readiness",
+        logistics: "", fresh: 0, min: 0, watch: false, sort: "readiness",
       },
     });
 
   const filterControls = (
     <>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">{t("catalog.type", "Water type")}</span>
+        <span className="tick mr-1 text-[0.55rem]">Water type</span>
         {waterTypes.map((w) => (
           <Chip
             key={w}
@@ -293,7 +311,7 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">{t("catalog.band", "Readiness band")}</span>
+        <span className="tick mr-1 text-[0.55rem]">Readiness band</span>
         {BANDS.map((b) => (
           <Chip
             key={b}
@@ -306,12 +324,12 @@ function Explore() {
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <span className="tick mr-1 text-[0.55rem]">
-          {t("catalog.jurisdiction", "Jurisdiction")}
+          Jurisdiction
         </span>
         {(
           [
-            { id: "us", label: t("catalog.us", "United States") },
-            { id: "ca", label: t("catalog.ca", "Canada") },
+            { id: "us", label: "United States" },
+            { id: "ca", label: "Canada" },
           ] as const
         ).map((j) => (
           <Chip
@@ -337,7 +355,7 @@ function Explore() {
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <span className="tick mr-1 text-[0.55rem]">
-          {t("catalog.state", "State, province or territory")}
+          State, province or territory
         </span>
         <select
           value={params.state}
@@ -345,7 +363,7 @@ function Explore() {
             const v = e.target.value;
             set({ state: v, juris: v ? (isProvince(v) ? "ca" : "us") : params.juris });
           }}
-          aria-label={t("catalog.state", "State, province or territory")}
+          aria-label="State, province or territory"
           className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
         >
           <option value="">All jurisdictions</option>
@@ -368,16 +386,16 @@ function Explore() {
             </optgroup>
           )}
         </select>
-        <span className="tick ml-2 mr-1 text-[0.55rem]">{t("catalog.sort", "Sort")}</span>
+        <span className="tick ml-2 mr-1 text-[0.55rem]">Sort</span>
         <select
           value={params.sort}
           onChange={(e) => set({ sort: e.target.value })}
-          aria-label={t("catalog.sort", "Sort")}
+          aria-label="Sort"
           className="tap min-h-11 border border-hairline bg-card px-3 text-xs text-foreground outline-none"
         >
           {SORTS.map((s) => (
             <option key={s.id} value={s.id}>
-              {t(s.key, s.label)}
+              {s.label}
             </option>
           ))}
         </select>
@@ -403,6 +421,20 @@ function Explore() {
             onClick={() => set({ tag: params.tag === a.id ? "" : a.id })}
           >
             {a.label}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tick mr-1 text-[0.55rem]" title="Read from the amenity wording the agency published">
+          Logistics
+        </span>
+        {LOGISTICS_FACETS.map((l) => (
+          <Chip
+            key={l.id}
+            active={params.logistics === l.id}
+            onClick={() => set({ logistics: params.logistics === l.id ? "" : l.id })}
+          >
+            {l.label}
           </Chip>
         ))}
       </div>
@@ -474,7 +506,7 @@ function Explore() {
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-24">
           <div className="flex items-center gap-4" data-reveal>
             <span className="h-px w-10 bg-brass" data-reveal-rule />
-            <p className="tick text-brass">{t("catalog.title", "Catalog")}</p>
+            <p className="tick text-brass">Catalog</p>
           </div>
           <h1
             className="mt-6 max-w-3xl font-display text-[clamp(2rem,5.4vw,4.2rem)] font-bold leading-[0.92] tracking-[-0.04em] text-foreground"
@@ -520,11 +552,8 @@ function Explore() {
                   if (e.key === "Escape") setFocused(false);
                 }}
                 enterKeyHint="search"
-                placeholder={t(
-                  "catalog.search",
-                  "Search waters, counties, states, species, access",
-                )}
-                aria-label={t("catalog.search", "Search the catalog")}
+                placeholder="Search waters, counties, states, species, access"
+                aria-label="Search the catalog"
                 className="min-h-12 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
               />
               {draft && (
@@ -536,7 +565,7 @@ function Explore() {
                     inputRef.current?.focus();
                   }}
                   aria-label="Clear search"
-                  className="tap grid h-11 w-11 shrink-0 place-items-center text-muted-foreground hover:text-foreground"
+                  className="tap grid grid-cols-1 h-11 w-11 shrink-0 place-items-center text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -544,10 +573,24 @@ function Explore() {
               <button
                 type="button"
                 onClick={() => setSheet(true)}
+                aria-haspopup="dialog"
                 className="tap -mr-2 flex min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-1 text-xs uppercase tracking-[0.12em] text-muted-foreground lg:hidden"
               >
                 <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-                {t("catalog.filters", "Filters")}
+                Filters
+                {activeFilters > 0 && (
+                  <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPanel((v) => !v)}
+                aria-expanded={panel}
+                aria-controls="catalog-filters"
+                className="tap -mr-2 hidden min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-3 text-xs uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground lg:flex"
+              >
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                {panel ? "Hide filters" : "Filters"}
                 {activeFilters > 0 && (
                   <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
                 )}
@@ -559,7 +602,7 @@ function Explore() {
                 {draft.length < 2 && recent.length > 0 && (
                   <>
                     <p className="tick px-3 py-2 text-[0.55rem]">
-                      {t("catalog.recent", "Recent searches")}
+                      Recent searches
                     </p>
                     {recent.map((r) => (
                       <button
@@ -629,6 +672,11 @@ function Explore() {
                   ["species", params.species, params.species],
                   ["access", params.access, params.access],
                   ["tag", params.tag, params.tag ? tagLabel(params.tag) : ""],
+                  [
+                    "logistics",
+                    params.logistics,
+                    LOGISTICS_FACETS.find((l) => l.id === params.logistics)?.label ?? "",
+                  ],
                   ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
                   ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
                   ["watch", params.watch, params.watch ? "watchlist only" : ""],
@@ -657,42 +705,39 @@ function Explore() {
                   onClick={clearAll}
                   className="tick tap inline-flex min-h-9 items-center text-[0.55rem] text-primary hover:text-brass"
                 >
-                  {t("catalog.clearAll", "Clear all")}
+                  Clear all
                 </button>
               )}
             </div>
           )}
 
-          <div className="hidden flex-wrap items-center gap-x-4 gap-y-3 lg:flex">
-            {filterControls}
-            <span className="data ml-auto text-xs text-muted-foreground" aria-live="polite">
-              {results.length}{" "}
-              {results.length === 1
-                ? t("catalog.result", "result")
-                : t("catalog.results", "results")}
-            </span>
-          </div>
-
-          <p className="data text-xs text-muted-foreground lg:hidden" aria-live="polite">
-            {results.length}{" "}
-            {results.length === 1
-              ? t("catalog.result", "result")
-              : t("catalog.results", "results")}
+          <p className="data text-xs text-muted-foreground" aria-live="polite">
+            {results.length} {results.length === 1 ? "result" : "results"}
           </p>
+        </div>
+      </div>
+
+      {/* Desktop facets live below the sticky bar so they scroll out of the
+          way — seven rows of pinned chrome leaves no room for the results. */}
+      <div
+        id="catalog-filters"
+        data-print="hide"
+        hidden={!panel}
+        className="border-b border-hairline bg-abyss/40 max-lg:hidden"
+      >
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-3 px-5 py-5 sm:px-8">
+          {filterControls}
         </div>
       </div>
 
       <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12">
         {results.length === 0 ? (
           <EmptyState
-            title={t("catalog.noMatch", "No record matches that read")}
+            title="No record matches that read"
             body={
               found.suggestion
                 ? `Nothing matched. The closest water name on record is "${found.suggestion}".`
-                : t(
-                    "catalog.noMatchBody",
-                    "The catalog holds only named public waters with published access. Widen the search, or clear it and let readiness sort the field for you.",
-                  )
+                : "The catalog holds only named public waters with published access. Widen the search, or clear it and let readiness sort the field for you."
             }
             action={
               <div className="flex flex-wrap justify-center gap-2">
@@ -713,7 +758,7 @@ function Explore() {
                   onClick={clearAll}
                   className="tap min-h-12 border border-hairline px-6 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
                 >
-                  {t("catalog.clearAll", "Clear all filters")}
+                  Clear all filters
                 </button>
               </div>
             }
@@ -721,8 +766,14 @@ function Explore() {
         ) : (
           <>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {visible.map((d) => (
-                <WaterCard key={d.id} destination={d} />
+              {visible.map((row) => (
+                <WaterCard
+                  key={row.d.id}
+                  destination={row.d}
+                  {...(params.q && row.matched.length > 0
+                    ? { matched: row.matched.slice(0, 4) }
+                    : {})}
+                />
               ))}
             </div>
             {count < results.length && (
@@ -732,23 +783,24 @@ function Explore() {
                   onClick={() => setCount((c) => c + PAGE)}
                   className="tap min-h-14 border border-hairline px-8 text-xs uppercase tracking-[0.16em] text-foreground transition-colors hover:border-brass/50 hover:text-brass"
                 >
-                  {t("catalog.loadMore", "Show")} {Math.min(PAGE, results.length - count)} more
+                  Show {Math.min(PAGE, results.length - count)} more
                 </button>
               </div>
             )}
-            <nav aria-label="Full catalog index" className="mt-16 border-t border-hairline pt-10">
-              <p className="tick text-brass">Full catalog index</p>
+            <nav aria-label="Catalog index" className="mt-16 border-t border-hairline pt-10">
+              <p className="tick text-brass">Catalog index</p>
               <p className="mt-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
-                Every named water on this read, as a link. The cards above are a
-                page of the same list.
+                {results.length > INDEX_CAP
+                  ? `The first ${INDEX_CAP} of ${results.length} waters on this read, as links. Narrow the search or pick a jurisdiction below to see the rest.`
+                  : "Every named water on this read, as a link. The cards above are a page of the same list."}
               </p>
               <ul className="mt-6 columns-1 gap-x-10 sm:columns-2 lg:columns-3">
-                {results.map(({ d }) => (
+                {indexRows.map((d) => (
                   <li key={`idx-${d.id}`} className="break-inside-avoid py-1">
                     <Link
                       to="/water/$id"
                       params={{ id: d.id }}
-                      className="text-sm text-foreground hover:text-brass"
+                      className="tap inline-block min-h-9 text-sm leading-9 text-foreground hover:text-brass"
                     >
                       {displayName(d)}
                       <span className="text-muted-foreground"> · {d.state}</span>
@@ -759,6 +811,25 @@ function Explore() {
             </nav>
           </>
         )}
+      </section>
+
+      {/* browse by jurisdiction */}
+      <section className="border-t border-hairline bg-abyss/40">
+        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+          <div className="flex items-center gap-4">
+            <span className="h-px w-10 bg-brass" />
+            <p className="tick text-brass">Browse by jurisdiction</p>
+          </div>
+          <h2 className="mt-4 font-display text-[clamp(1.5rem,3vw,2.2rem)] font-bold tracking-[-0.035em] text-foreground">
+            Start from where you are
+          </h2>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Jurisdiction decides the licence, the regulation booklet and who you
+            call when a check cannot be cleared. It is the first geographic
+            question worth asking.
+          </p>
+          <CoverageMap className="mt-8" activeState={params.state} />
+        </div>
       </section>
 
       {/* mobile filter sheet */}
@@ -774,14 +845,14 @@ function Explore() {
             <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-border" aria-hidden="true" />
             <div className="flex items-center justify-between gap-4">
               <p className="font-display text-lg font-bold text-foreground">
-                {t("catalog.filters", "Filters")}
+                Filters
               </p>
               <button
                 type="button"
                 onClick={clearAll}
                 className="tick tap inline-flex min-h-11 items-center text-[0.55rem] text-primary"
               >
-                {t("catalog.clearAll", "Clear all")}
+                Clear all
               </button>
             </div>
             <div className="mt-5 space-y-5">{filterControls}</div>
@@ -790,10 +861,10 @@ function Explore() {
               onClick={() => setSheet(false)}
               className="tap mt-7 min-h-14 w-full bg-brass text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground"
             >
-              {t("catalog.apply", "Show")} {results.length}{" "}
+              Show {results.length}{" "}
               {results.length === 1
-                ? t("catalog.result", "result")
-                : t("catalog.results", "results")}
+                ? "result"
+                : "results"}
             </button>
           </div>
         </div>

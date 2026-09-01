@@ -3,7 +3,7 @@
  *
  * This repository owns its build. It assembles the full plugin set and the
  * resolved options for local development and for production builds — Tailwind,
- * tsconfig path aliases, TanStack Start (with server-only import protection),
+ * TanStack Start (with server-only import protection),
  * Nitro on build, React Fast Refresh, `VITE_*` env inlining, the `@` -> `src`
  * alias and React/TanStack deduping — with no third-party build service,
  * sandbox hooks, telemetry or devtools source injection in the pipeline.
@@ -48,9 +48,6 @@ export function defineConfig(options: AppViteConfigOptions = {}) {
     const tailwindcss = (await import("@tailwindcss/vite")).default;
     plugins.push(tailwindcss());
 
-    const tsConfigPaths = (await import("vite-tsconfig-paths")).default;
-    plugins.push(tsConfigPaths({ projects: ["./tsconfig.json"] }));
-
     const { tanstackStart } = await import("@tanstack/react-start/plugin/vite");
     plugins.push(
       tanstackStart(
@@ -93,7 +90,9 @@ export function defineConfig(options: AppViteConfigOptions = {}) {
     const base: UserConfig = {
       define,
       css: { transformer: "lightningcss" },
-      resolve: { alias: { "@": SRC_DIR }, dedupe: DEDUPE },
+      // Vite resolves tsconfig `paths` natively; the explicit alias stays as the
+      // belt-and-braces mapping the app has always relied on.
+      resolve: { alias: { "@": SRC_DIR }, dedupe: DEDUPE, tsconfigPaths: true },
       optimizeDeps: {
         include: [
           "react",

@@ -186,7 +186,7 @@ export function LayerPanel({
       </button>
 
       {open && (
-        <div className="grid gap-7 pb-8 sm:pl-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-7 pb-8 sm:pl-8 md:grid-cols-2">
           <div>
             <p className="tick">What the record says</p>
             <ul className="mt-3 space-y-3">

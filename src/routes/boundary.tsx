@@ -62,7 +62,7 @@ function BoundaryPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-px bg-hairline px-0 sm:mx-auto md:grid-cols-2">
+      <section className="mx-auto grid grid-cols-1 max-w-7xl gap-px bg-hairline px-0 sm:mx-auto md:grid-cols-2">
         <div className="bg-background p-8 sm:p-12">
           <p className="tick text-clear">Held on record</p>
           <ul className="mt-6 space-y-5">
@@ -90,7 +90,7 @@ function BoundaryPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[1] tracking-[-0.035em] text-foreground">
               Where this guide stops.
