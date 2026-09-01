@@ -1,11 +1,3 @@
-# STAGED COPY — move this into .github/workflows/ to activate it:
-#
-#   git mv docs/ci/publish-catalog.yml .github/workflows/publish-catalog.yml
-#
-# It is staged here because .github/workflows/ is deliberately protected against
-# writes from tooling: a workflow runs with the repository's secrets, so putting
-# one in place is a decision a person makes, not an agent.
-#
 name: Publish catalog replica
 
 # git is the source of truth for the catalog. This workflow GENERATES the
