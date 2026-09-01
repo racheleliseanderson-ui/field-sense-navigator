@@ -82,6 +82,23 @@ SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… bun run publish:catalog
 Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as repository secrets to turn
 the workflow on. Without them it skips with a notice.
 
+### Reading from it
+
+`/explore` asks the replica to rank text queries and does everything else on the
+device. Give the deployment two environment variables to switch that on:
+
+| Variable | Value |
+| --- | --- |
+| `SUPABASE_URL` | `https://<project>.supabase.co` |
+| `SUPABASE_PUBLISHABLE_KEY` | the project's publishable (anon) key — reads only |
+
+Leave them unset and search runs entirely on the device, which is the default
+and is not an error state. The replica is asked only when there is text to
+match, is never awaited before paint, is abandoned after 2.5 seconds, and is
+ignored unless the database itself reports a current publish of at least 500
+records. Filters, sorts and paging never leave the device, so results cannot
+change shape depending on whether Postgres is reachable.
+
 The workflow itself lives at `.github/workflows/publish-catalog.yml`. A staged
 copy is kept at `docs/ci/publish-catalog.yml` for tooling that is not allowed to
 write into `.github/workflows/` — if the two ever drift, the one under

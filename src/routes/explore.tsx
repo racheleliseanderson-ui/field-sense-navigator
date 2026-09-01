@@ -2,6 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard } from "@/components/water-card";
@@ -20,6 +22,7 @@ import {
   type Destination,
 } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
+import { matchCatalog } from "@/lib/catalog.functions";
 import { LOGISTICS_FACETS, matchesLogistics } from "@/lib/access";
 import { CoverageMap } from "@/components/coverage-map";
 import {
@@ -195,16 +198,63 @@ function Explore() {
     return m;
   }, []);
 
+  const byId = useMemo(
+    () => new Map(destinations.map((d) => [d.id, d])),
+    [],
+  );
+
+  /* This device always searches. It is the answer until something better
+     arrives, and it is the answer again the moment that stops arriving. */
   const found = useMemo(() => search(params.q), [params.q]);
 
+  /* The replica ranks the text match — full text plus trigram, across the whole
+     corpus. It is asked only when there is text to match, never awaited before
+     paint, and never retried: a miss costs ranking quality and nothing else. */
+  const askReplica = useServerFn(matchCatalog);
+  const { data: replica } = useQuery({
+    queryKey: ["catalog-match", params.q],
+    queryFn: () => askReplica({ data: { q: params.q } }),
+    enabled: params.q.trim().length > 1,
+    staleTime: 5 * 60_000,
+    retry: 0,
+    // Hold the previous ranking while the next one is in flight, so typing
+    // never blanks the list.
+    placeholderData: (prev) => prev,
+  });
+  const rankedByReplica = Boolean(params.q.trim() && replica?.ids?.length);
+
   const results = useMemo(() => {
-    const rows = found.hits
-      .map((h) => ({
-        d: h.destination,
-        score: h.score,
-        matched: [...new Set(h.matched)],
-        r: scores.get(h.destination.id)!,
-      }))
+    // Why a record matched is the reader's own words, so it comes from the
+    // local tokeniser either way — the replica returns ids, not explanations.
+    const matchedById = new Map(
+      found.hits.map((h) => [h.destination.id, [...new Set(h.matched)]]),
+    );
+
+    const ranked =
+      replica?.ids && replica.ids.length > 0
+        ? replica.ids
+            .map((id, i) => {
+              const d = byId.get(id);
+              // An id the replica knows and this build does not is simply
+              // dropped: the bundled catalog is what this deploy can render.
+              return d
+                ? {
+                    d,
+                    score: replica.ids.length - i,
+                    matched: matchedById.get(id) ?? [],
+                    r: scores.get(id)!,
+                  }
+                : null;
+            })
+            .filter((row): row is NonNullable<typeof row> => row !== null)
+        : found.hits.map((h) => ({
+            d: h.destination,
+            score: h.score,
+            matched: matchedById.get(h.destination.id) ?? [],
+            r: scores.get(h.destination.id)!,
+          }));
+
+    const rows = ranked
       .filter(({ d, r }) => {
         if (params.juris && jurisdictionOf(d) !== params.juris) return false;
         if (params.state && d.state !== params.state) return false;
@@ -230,6 +280,8 @@ function Explore() {
     return rows.sort(bySort[params.sort] ?? bySort['readiness']!);
   }, [
     found,
+    replica,
+    byId,
     scores,
     watched,
     params.juris,
@@ -713,6 +765,14 @@ function Explore() {
 
           <p className="data text-xs text-muted-foreground" aria-live="polite">
             {results.length} {results.length === 1 ? "result" : "results"}
+            {rankedByReplica && (
+              <span
+                className="ml-2 text-muted-foreground/70"
+                title="Ranked by the catalog index, which searches the whole corpus and tolerates typos. When it cannot be reached this device ranks instead, using the same records."
+              >
+                · ranked by the catalog index
+              </span>
+            )}
           </p>
         </div>
       </div>

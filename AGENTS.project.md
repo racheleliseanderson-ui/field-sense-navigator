@@ -58,8 +58,20 @@ writes it but CI and nothing reads back from it into the repository.
   `ww_jurisdiction_coverage`, `ww_source_health`) are `security_invoker` and
   granted to nobody but the service role. Use them instead of writing another
   script in `scripts/`.
+- **The read path is text ranking only.** `/explore` asks the replica *which
+  records match these words, best first* (`ww_match_ids`) and does everything
+  else itself — every facet, sort, page and the watchlist stay on the device.
+  That is deliberate: an unreachable replica may cost ranking quality, but it
+  must never change which records a filter returns. Do not move a filter into
+  the replica without moving its fallback too.
+- Reader: `catalog.server.ts` (server-only, key never reaches the client) behind
+  the `matchCatalog` server function. It returns `null` — never throws — for
+  missing config, timeout (2.5 s), HTTP error, malformed body, or `ready:false`.
+  The route treats `null` as "keep what this device already computed".
 - **Fail closed:** the application must render from the bundled catalog when the
   replica is stale, unconfigured or unreachable. Never make a page depend on it.
+  Verified: with the replica hung, results are on screen in ~0.6 s and no late
+  swap occurs when the request is abandoned.
 - Secrets: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Without them the
   workflow skips with a notice rather than failing — the app does not need it.
 
