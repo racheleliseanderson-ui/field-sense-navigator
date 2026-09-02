@@ -312,7 +312,7 @@ function Home() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/80" data-reveal style={{ "--reveal-delay": "140ms" } as React.CSSProperties}>
             {NAMED_WATER_COUNT} records across {states.length} states,
             provinces and territories, filtered by jurisdiction, water type and
-            readiness band. Exploration without the spreadsheet.
+            readiness band. Filter it down, or just read through it.
           </p>
           <span className="tick mt-6 inline-flex min-h-11 items-center text-primary group-hover:text-brass">Open the catalog →</span>
         </Link>

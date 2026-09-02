@@ -109,8 +109,8 @@ function BoundaryPage() {
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
             Everything this guide is willing to say is bounded by what a
             public agency has already published. Where the record runs out, we
-            say so and stop. That pause is not a limitation of the tool — it is
-            the tool.
+            say so and stop. Stopping there is the point. A guide that filled the gap
+            would be easier to read and worse to travel on.
           </p>
         </div>
       </section>

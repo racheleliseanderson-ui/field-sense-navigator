@@ -421,7 +421,7 @@ function whyFor(d: Destination, target: HandoffTarget, ctx: HandoffContext): str
           ? `Line and terminal tackle sized to ${species.toLowerCase()} and to this water's cover.`
           : "Line and terminal tackle sized to this water's cover and species context.";
     case "knot":
-      return "The connection is the part that fails. Line class and the structure you are fishing decide it.";
+      return "The knot is usually where it lets go. Line class and the structure you are fishing decide which one to tie.";
     case "ops":
       return d.directVerification.length
         ? `${d.directVerification.length} same-day check${d.directVerification.length === 1 ? "" : "s"} still open, plus ${access.namedSites} named access site${access.namedSites === 1 ? "" : "s"}. Turn it into a trip.`

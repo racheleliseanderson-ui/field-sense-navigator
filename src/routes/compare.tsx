@@ -485,7 +485,7 @@ function Compare() {
                   key={c.d.id}
                   href={c.d.officialSourceUrl}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   className="tap inline-flex min-h-11 items-center break-all text-[0.7rem] text-primary hover:text-brass"
                 >
                   {c.d.officialSourceUrl}

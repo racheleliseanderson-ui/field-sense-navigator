@@ -355,7 +355,7 @@ function Packet() {
                 <p className="mt-2 break-words text-sm leading-relaxed">{d.officialRegsUrl}</p>
               </>
             )}
-            <h3 className="packet-tick">Species context</h3>
+            <h3 className="packet-tick mt-6">Species context</h3>
             <p className="mt-2 text-sm leading-relaxed">{d.speciesContext.join(", ")}</p>
             <h3 className="packet-tick mt-6">Season windows</h3>
             {datedWindows(d).length === 0 ? (

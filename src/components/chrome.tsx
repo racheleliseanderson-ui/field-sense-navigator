@@ -25,7 +25,7 @@ const PRIMARY_NAV = [
 
 /** Method and scope — reachable everywhere, but not competing for the header. */
 const SECONDARY_NAV = [
-  { to: "/pipeline", label: "How a decision comes together" },
+  { to: "/pipeline", label: "Where the readings come from" },
   { to: "/boundary", label: "Limits & sources" },
 ] as const;
 

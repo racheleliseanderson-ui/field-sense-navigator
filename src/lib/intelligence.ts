@@ -862,7 +862,7 @@ export function buildChecklist(
 
   add(
     "Standing rules",
-    "Not ready for today. Confirm the open checks before going.",
+    "Until every check above is cleared, this is a plan and not a go.",
     "Standing policy",
   );
 

@@ -143,7 +143,7 @@ export function DisplayControl() {
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-label={`Display and accessibility settings — currently ${active?.label ?? "Dark"}`}
-        title="Display &amp; accessibility"
+        title="Display and accessibility"
         className="tap grid grid-cols-1 h-12 w-12 place-items-center border border-hairline bg-panel/95 text-foreground shadow-lg backdrop-blur transition-colors hover:border-brass/60 hover:text-brass"
       >
         <Contrast className="h-5 w-5" aria-hidden="true" />

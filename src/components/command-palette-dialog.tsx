@@ -16,7 +16,7 @@ const ROUTES = [
   { to: "/explore", label: "Catalog" },
   { to: "/compare", label: "Compare waters" },
   { to: "/watchlist", label: "Watchlist" },
-  { to: "/pipeline", label: "How a decision comes together" },
+  { to: "/pipeline", label: "Where the readings come from" },
   { to: "/boundary", label: "Limits & sources" },
 ] as const;
 
