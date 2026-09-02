@@ -49,7 +49,7 @@ export const VANITY: FleetGroup = {
   publication: { name: "Vanity or Vice", url: "https://vanityvice.blog" },
   apps: [
     { name: "Makeup Intelligence", url: "https://makeup.vanityvice.blog" },
-    { name: "Skincare Desk", url: "https://skincare.vanityvice.blog" },
+    { name: "Skincare Intelligence", url: "https://skincare.vanityvice.blog" },
     { name: "Spa Intelligence", url: "https://spa.vanityvice.blog" },
   ],
 };
