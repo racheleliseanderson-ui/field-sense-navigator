@@ -20,8 +20,7 @@
       "Same-day FWC check required at https://myfwc.com/fishing/saltwater/recreational/snook/"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-fl-atlantic-snook",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-fl-atlantic-snook"
   },
   "fwc-none": {
     "seasonWindows": [],
@@ -31,8 +30,7 @@
       "Same-day FWC check required at https://myfwc.com/fishing/"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-fwc",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-fwc"
   },
   "fwp-west-river": {
     "seasonWindows": [
@@ -49,8 +47,7 @@
       "Same-day FWP check required at https://fwp.mt.gov/fish/licensing-basics"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-fwp-western-river",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-fwp-western-river"
   },
   "fwp-open": {
     "seasonWindows": [],
@@ -60,8 +57,7 @@
       "Same-day FWP check required at https://fwp.mt.gov/fish/licensing-basics"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-fwp",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-fwp"
   },
   "tpwd-flounder": {
     "seasonWindows": [
@@ -78,8 +74,7 @@
       "Same-day TPWD check required at https://tpwd.texas.gov/regulations/outdoor-annual/"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-tpwd-marine",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-tpwd-marine"
   },
   "tpwd-fresh": {
     "seasonWindows": [],
@@ -89,8 +84,7 @@
       "Same-day TPWD check required at https://tpwd.texas.gov/regulations/outdoor-annual/"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-tpwd-fresh",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-tpwd-fresh"
   },
   "mn-gamefish": {
     "seasonWindows": [
@@ -107,8 +101,7 @@
       "Same-day MN DNR check required at https://www.dnr.state.mn.us/fishing/seasons.html"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-mn-dnr",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-mn-dnr"
   },
   "mn-gamefish-muskie": {
     "seasonWindows": [
@@ -131,8 +124,7 @@
       "Same-day MN DNR check required at https://www.dnr.state.mn.us/fishing/seasons.html"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-mn-dnr",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-mn-dnr"
   },
   "idfg-river": {
     "seasonWindows": [
@@ -149,8 +141,7 @@
       "Same-day IDFG check required at https://idfg.idaho.gov/rules"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-idfg-river",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-idfg-river"
   },
   "idfg-lakes": {
     "seasonWindows": [],
@@ -160,8 +151,7 @@
       "Same-day IDFG check required at https://idfg.idaho.gov/rules"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-idfg-lakes",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-idfg-lakes"
   },
   "wdfw": {
     "seasonWindows": [],
@@ -171,8 +161,7 @@
       "Same-day WDFW check required at https://www.wdfw.wa.gov/fishing/regulations"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-wdfw",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-wdfw"
   },
   "cdfw": {
     "seasonWindows": [],
@@ -182,8 +171,7 @@
       "Same-day CDFW check required at https://wildlife.ca.gov/Fishing"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-cdfw",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-cdfw"
   },
   "cpw": {
     "seasonWindows": [],
@@ -193,8 +181,7 @@
       "Same-day CPW check required at https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-cpw",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-cpw"
   },
   "bc": {
     "provenanceNotes": "2026-08-20 bench: BC Freshwater Fishing Regulations Synopsis 2025–2027 (and DFO tidal if marine). No additional dated harvest closure applied beyond the MU table. Water-specific shard windows, if any, remain on the destination record.",
@@ -203,8 +190,7 @@
       "Same-day check required at https://www2.gov.bc.ca/gov/content/sports-culture/recreation/fishing-hunting/fishing/fishing-regulations"
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-bc",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-bc"
   },
   "general": {
     "seasonWindows": [],
@@ -214,7 +200,6 @@
       "Same-day agency check required; in-season orders can change."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-level-complete-jurisdiction-general",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-level-complete-jurisdiction-general"
   }
 }

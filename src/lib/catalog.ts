@@ -115,10 +115,52 @@ const allSeasonWindowEnrichments: DestinationEnrichment[] = [
   ...expandLevelComplete(),
 ];
 
+/* ------------------------------------------------------------------ *
+ * Review scheduling
+ *
+ * The enrichment layer used to stamp every record with the same
+ * nextReviewAt. That is a scheduling artefact, not a fact about any
+ * water: it meant the whole catalog fell due in the same minute and
+ * every page in the instrument would read "review due" on one morning,
+ * which is the same as none of them saying it.
+ *
+ * A review date is now derived from the record's own last source check
+ * plus a deterministic offset, so the queue arrives at a workable rate
+ * and no record's date implies a check that did not happen. The offset
+ * is a hash of the id — stable across renders, servers and builds, so
+ * the server and the client always agree, and a record keeps its slot
+ * between deploys.
+ * ------------------------------------------------------------------ */
+
+/** Days after a source check that a record is due to be read again. */
+export const REVIEW_CADENCE_DAYS = 40;
+/** Width of the deterministic spread, in days. */
+export const REVIEW_SPREAD_DAYS = 30;
+
+/** FNV-1a over the id. Deterministic everywhere; never random. */
+function reviewOffset(id: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < id.length; i += 1) {
+    h ^= id.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return Math.abs(h) % REVIEW_SPREAD_DAYS;
+}
+
+/** The day this record is next due to be read, as YYYY-MM-DD. */
+export function scheduleReview(d: Destination): string {
+  const checked = printedDay(d.checkedAt);
+  if (Number.isNaN(checked)) return d.nextReviewAt;
+  const due =
+    checked +
+    (REVIEW_CADENCE_DAYS + reviewOffset(d.id)) * 86_400_000;
+  return new Date(due).toISOString().slice(0, 10);
+}
+
 export const destinations = applyEnrichments(
   assembled,
   allSeasonWindowEnrichments,
-);
+).map((d) => ({ ...d, nextReviewAt: scheduleReview(d) }));
 
 export const NAMED_WATER_COUNT = destinations.length;
 

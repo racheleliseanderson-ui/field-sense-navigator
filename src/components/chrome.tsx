@@ -276,10 +276,22 @@ export function SiteFooter() {
         </nav>
       </div>
       <div className="relative border-t border-hairline">
-        <p className="mx-auto max-w-7xl px-safe py-5 text-xs leading-relaxed text-muted-foreground sm:px-8">
-          Field Sense Navigator — built for Hook the Horizon. Official agency sources
-          are authoritative; posted signage on the day wins over anything printed here.
-        </p>
+        <div className="mx-auto max-w-7xl px-safe py-5 sm:px-8">
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Field Sense Navigator — built for Hook the Horizon. Official agency sources
+            are authoritative; posted signage on the day wins over anything printed here.
+            This is a planning guide, not a safety service:{" "}
+            <Link to="/boundary" className="underline hover:text-brass">
+              what it will not tell you
+            </Link>
+            .
+          </p>
+          <p className="mt-2 text-[0.7rem] leading-relaxed text-dim-foreground">
+            Observations are published by USGS, NOAA CO-OPS, the National Weather
+            Service, USBR, USACE, CDEC and the Water Survey of Canada. Contains
+            information licensed under the Open Government Licence – Canada.
+          </p>
+        </div>
       </div>
     </footer>
   );

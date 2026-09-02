@@ -33,8 +33,11 @@ else
   done
 fi
 
-git config user.email "${GIT_AUTHOR_EMAIL:-Rachel.Elise.Anderson@gmail.com}"
-git config user.name "${GIT_AUTHOR_NAME:-Rachel Elise Anderson}"
+# These commits are made by the scheduled ingest, not by a person, so they are
+# authored as a bot. A private address should not be stamped on every automated
+# commit in a public repository. Override with GIT_AUTHOR_EMAIL / _NAME.
+git config user.email "${GIT_AUTHOR_EMAIL:-41898282+github-actions[bot]@users.noreply.github.com}"
+git config user.name "${GIT_AUTHOR_NAME:-field-sense ingest}"
 
 mkdir -p /tmp/live-pub
 if [ "$WANT_SNAP" -eq 1 ]; then

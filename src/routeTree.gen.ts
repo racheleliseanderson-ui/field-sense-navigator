@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoundaryRouteImport } from './routes/boundary'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as HealthRouteImport } from './routes/health'
 import { Route as PipelineRouteImport } from './routes/pipeline'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
@@ -37,6 +38,11 @@ const CompareRoute = CompareRouteImport.update({
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthRoute = HealthRouteImport.update({
+  id: '/health',
+  path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PipelineRoute = PipelineRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/boundary': typeof BoundaryRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/health': typeof HealthRoute
   '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/boundary': typeof BoundaryRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/health': typeof HealthRoute
   '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/boundary': typeof BoundaryRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
+  '/health': typeof HealthRoute
   '/pipeline': typeof PipelineRoute
   '/plan': typeof PlanRoute
   '/watchlist': typeof WatchlistRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/boundary'
     | '/compare'
     | '/explore'
+    | '/health'
     | '/pipeline'
     | '/plan'
     | '/watchlist'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/boundary'
     | '/compare'
     | '/explore'
+    | '/health'
     | '/pipeline'
     | '/plan'
     | '/watchlist'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/boundary'
     | '/compare'
     | '/explore'
+    | '/health'
     | '/pipeline'
     | '/plan'
     | '/watchlist'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   BoundaryRoute: typeof BoundaryRoute
   CompareRoute: typeof CompareRoute
   ExploreRoute: typeof ExploreRoute
+  HealthRoute: typeof HealthRoute
   PipelineRoute: typeof PipelineRoute
   PlanRoute: typeof PlanRoute
   WatchlistRoute: typeof WatchlistRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pipeline': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoundaryRoute: BoundaryRoute,
   CompareRoute: CompareRoute,
   ExploreRoute: ExploreRoute,
+  HealthRoute: HealthRoute,
   PipelineRoute: PipelineRoute,
   PlanRoute: PlanRoute,
   WatchlistRoute: WatchlistRoute,

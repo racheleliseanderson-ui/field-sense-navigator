@@ -104,6 +104,79 @@ copy is kept at `docs/ci/publish-catalog.yml` for tooling that is not allowed to
 write into `.github/workflows/` — if the two ever drift, the one under
 `.github/` is the one that runs.
 
+## Tests
+
+`src/lib/__tests__` covers the derivation engine — the code that turns an
+agency's prose into every badge, facet, readiness score and replica column.
+It is table-driven, and the negative cases carry the weight: both bugs found
+by hand in this layer were patterns that matched, not patterns that failed
+to. `current` as an adjective must not raise a current-and-flow hazard, and a
+place name like "Plese Flats" must not raise a tide.
+
+The suite also fixes the packet contract — `reviewedAt` is the record's own
+source check and never the moment the link was pressed, air temperature is
+never substituted for water temperature, a carried-forward reading is always
+labelled as carried — and the review schedule, which must stay spread rather
+than collapsing back into a single cliff.
+
+Scripts stay on `node --test`; the TypeScript modules use `bun test`, because
+bun resolves the `@/*` path mapping natively.
+
+`bun run test:a11y` audits every route in all five display modes at phone and
+desktop width — 100 page views — and exits non-zero on any violation or any
+horizontal overflow. It starts its own dev server and needs a Chromium
+(`npx playwright install chromium`, or set `CHROMIUM_PATH`). Run it after any
+change to the token layer: the contrast failures it guards came from
+translucent surfaces compositing over whatever sat behind them, and the
+high-contrast modes were once the worst offenders — white bottomed out at
+1.78:1, on the setting a low-vision reader would deliberately choose.
+
+## Errors and health
+
+The data pipeline has always reported its own failures — a GitHub issue on every
+degraded ingest, plus Discord or Slack when those webhooks are set. The
+application serving that data reported nothing, so a reader could hit the error
+page and no one would know.
+
+Client-side breaks and SSR 500s now both reach `recordClientError` in
+`src/lib/errors.server.ts`. Every report is logged with a `[client-error]`
+prefix so a log drain can filter for it, and posted to a webhook when one is
+configured:
+
+| Variable | Value |
+| --- | --- |
+| `ERROR_WEBHOOK_URL` | a Discord or Slack incoming webhook. Optional — without it, reports are logged only. |
+
+A report carries the route path, the message, the stack and a coarse viewport.
+It never carries the query string — a search term is something the reader typed
+— and there is no identifier, no cookie and no third-party script, so the
+instrument still collects nothing about the person holding it. Identical
+reports are sent once and a page view sends at most five, so a broken render
+cannot become a flood.
+
+`/health` is a local-only heartbeat for an uptime monitor: it renders from the
+committed catalog and binding file, makes no network call, and answers in
+milliseconds. Match on `"status": "ok"`. It is deliberately not a live-data
+check — that question is answered in full on `/pipeline` — and it returns 200
+even when degraded, because a health endpoint that 500s tells you less than one
+that explains.
+
+## Contacting agencies
+
+Every request to USGS, NOAA CO-OPS, the National Weather Service, USBR, USACE,
+CDEC and the Water Survey of Canada carries a User-Agent naming the instrument
+and a contact. Agencies use it to reach whoever is generating the traffic, so
+it points at a support page rather than a person's inbox — a private address
+does not belong in a public repository or in a header sent to five agencies on
+every request. Override with `AGENCY_CONTACT_URL`.
+
+Attribution and licence for each source are on `/boundary`, along with the
+limits of what this instrument is. The Water Survey of Canada is the one source
+with a licence condition: its data is released under the Open Government
+Licence – Canada, which requires attribution wherever it is used, and 59 of the
+catalog's bindings are WSC. That attribution is in the site footer and on
+`/boundary`; do not remove it.
+
 ## Development
 
 Requires Node.js 20+ and [Bun](https://bun.sh) (production installs and builds
@@ -115,7 +188,9 @@ bun run dev        # http://localhost:8080
 bun run typecheck
 bun run lint
 bun run build      # applies the overlay, asserts the catalog, then builds
-bun run test       # node:test over scripts/
+bun run test       # node:test over scripts/, then bun:test over src/
+bun run test:unit  # just the derivation-engine suite
+bun run test:a11y  # axe over every route in all five display modes
 ```
 
 The build asserts the catalog before bundling: it rejects empty or placeholder

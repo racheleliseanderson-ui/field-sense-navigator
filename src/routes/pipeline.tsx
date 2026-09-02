@@ -648,7 +648,12 @@ function Pipeline() {
         <h2 className="font-display text-2xl font-bold tracking-[-0.03em] text-foreground">
           Jurisdiction coverage
         </h2>
-        <div className="mt-6 overflow-x-auto border border-hairline">
+        <div
+          className="mt-6 overflow-x-auto border border-hairline"
+          tabIndex={0}
+          role="region"
+          aria-label="Jurisdiction coverage table, scrolls sideways"
+        >
           <table className="w-full min-w-[34rem] border-collapse text-sm">
             <thead>
               <tr className="border-b border-hairline">

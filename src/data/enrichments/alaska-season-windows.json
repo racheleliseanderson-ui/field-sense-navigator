@@ -22,8 +22,7 @@
       "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/ — bag limits, gear, and openings change mid-season."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kenai-river",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kenai-river"
   },
   {
     "id": "HHI-DEST-419",
@@ -48,8 +47,7 @@
       "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-russian-river",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-russian-river"
   },
   {
     "id": "HHI-DEST-420",
@@ -68,8 +66,7 @@
       "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-ship-creek",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-ship-creek"
   },
   {
     "id": "HHI-DEST-421",
@@ -94,8 +91,7 @@
       "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/. Federal IPHC rules apply for Pacific halibut."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-resurrection-bay",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-resurrection-bay"
   },
   {
     "id": "HHI-DEST-514",
@@ -120,7 +116,6 @@
       "Same-day ADFG EO check required at https://www.adfg.alaska.gov/sf/EONR/. Federal IPHC rules apply for Pacifichalibut."
     ],
     "lastHumanReviewedAt": "2026-08-20",
-    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kachemak-bay",
-    "nextReviewAt": "2026-09-30"
+    "lastHumanReviewedBy": "bench-enrich-2026-08-20-kachemak-bay"
   }
 ]

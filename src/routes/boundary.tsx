@@ -42,6 +42,57 @@ const OUT_OF_SCOPE = [
   "Real-time parking, ramp queue, or facility staffing.",
 ];
 
+/**
+ * Attribution and the licence each source carries.
+ *
+ * USGS, NOAA and the National Weather Service publish as works of the United
+ * States government and carry no licence condition. The Water Survey of
+ * Canada does: its data is released under the Open Government Licence –
+ * Canada, which requires attribution wherever the data is used. Fifty-nine of
+ * this catalog's station bindings are WSC, so that attribution is a condition
+ * of use, not a courtesy.
+ */
+const SOURCES: Array<{ agency: string; used: string; licence: string; url: string }> = [
+  {
+    agency: "U.S. Geological Survey",
+    used: "Stage, discharge, water temperature and reservoir elevation.",
+    licence: "United States government work — public domain.",
+    url: "https://waterdata.usgs.gov/",
+  },
+  {
+    agency: "NOAA Tides & Currents (CO-OPS)",
+    used: "Water level, water temperature and wind at coastal stations.",
+    licence: "United States government work — public domain.",
+    url: "https://tidesandcurrents.noaa.gov/",
+  },
+  {
+    agency: "National Weather Service",
+    used: "Station observations and the point forecast for a bound location.",
+    licence: "United States government work — public domain.",
+    url: "https://www.weather.gov/",
+  },
+  {
+    agency: "Water Survey of Canada",
+    used: "Water level and discharge at Canadian stations.",
+    licence:
+      "Contains information licensed under the Open Government Licence – Canada. Attribution required.",
+    url: "https://wateroffice.ec.gc.ca/",
+  },
+  {
+    agency: "U.S. Bureau of Reclamation, U.S. Army Corps of Engineers, California Data Exchange Centre",
+    used: "Reservoir elevation and storage where those agencies are the operator of record.",
+    licence: "Agency-published operational data.",
+    url: "https://www.usbr.gov/",
+  },
+];
+
+const SAFETY = [
+  "This is a planning guide, not a safety service and not a substitute for the agency that manages the water. Nothing here is a determination that a water is safe, open, legal or fishable on the day you travel.",
+  "Access rights, closures, seasons, limits and gear rules change without notice, and a record is always older than the water it describes. The official source linked on every record governs; posted signage on the day outranks both.",
+  "Conditions on water can be dangerous. Current, cold, ice, tide, wind, wildfire smoke and algal advisories are noted where an agency has published them and are absent where it has not — an absence here is silence, never an all-clear.",
+  "You are responsible for your own decisions, your own licensing and your own safety. If a check cannot be completed, the answer this guide gives is not ready.",
+];
+
 function BoundaryPage() {
   return (
     <div className="min-h-dvh bg-background">
@@ -121,6 +172,65 @@ function BoundaryPage() {
               Plan a day within these limits
             </Link>
           </div>
+        </div>
+      </section>
+
+
+      <section
+        aria-labelledby="limits-heading"
+        className="border-t border-hairline bg-abyss"
+      >
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+          <p className="tick text-alert">Read this before you rely on it</p>
+          <h2
+            id="limits-heading"
+            className="mt-5 max-w-3xl font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[1] tracking-[-0.035em] text-foreground"
+          >
+            What this guide is not.
+          </h2>
+          <ul className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {SAFETY.map((line) => (
+              <li key={line} className="flex gap-4">
+                <span className="mt-2.5 h-px w-6 shrink-0 bg-alert" />
+                <span className="text-base leading-relaxed text-muted-foreground">{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="sources-heading"
+        className="border-t border-hairline"
+      >
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+          <p className="tick text-brass">Sources and licence</p>
+          <h2
+            id="sources-heading"
+            className="mt-5 max-w-3xl font-display text-[clamp(1.8rem,3.6vw,3rem)] font-bold leading-[1] tracking-[-0.035em] text-foreground"
+          >
+            Whose readings these are.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            Every observation in this instrument is an agency's, published by the
+            agency, and reproduced with its own timestamp. None of it is modelled,
+            interpolated or estimated here.
+          </p>
+          <dl className="mt-10 grid grid-cols-1 gap-px bg-hairline md:grid-cols-2">
+            {SOURCES.map((s) => (
+              <div key={s.agency} className="bg-background p-6">
+                <dt className="font-display text-base font-bold tracking-tight text-foreground">
+                  <a href={s.url} className="hover:text-brass" rel="noreferrer">
+                    {s.agency}
+                  </a>
+                </dt>
+                <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.used}</dd>
+                <dd className="mt-2 text-[0.72rem] leading-relaxed text-dim-foreground">
+                  {s.licence}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 

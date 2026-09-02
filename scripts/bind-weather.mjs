@@ -17,7 +17,12 @@ const ROOT = resolve(__dirname, "..");
 const LOC_PATH = resolve(ROOT, "src/data/locations.json");
 const BIND_PATH = resolve(ROOT, "src/data/station-bindings.json");
 
-const UA = "HookTheHorizon-FieldSense/0.6 (rachel.elise.anderson@gmail.com)";
+// Agencies use this to reach whoever is generating the traffic. A private
+// address does not belong in a public repository or in a header sent to five
+// federal and provincial agencies on every run.
+const CONTACT =
+  process.env.AGENCY_CONTACT_URL || "https://northernlanternhouse.com/customer-support";
+const UA = `HookTheHorizon-FieldSense/0.6 (+https://waterways.hookthehorizon.blog; contact ${CONTACT})`;
 const PROVINCES = new Set([
   "Alberta", "British Columbia", "Manitoba", "New Brunswick",
   "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia",

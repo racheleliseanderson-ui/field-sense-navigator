@@ -10,7 +10,15 @@
 import { bindingFor, bindingsFile, type StationBinding } from "@/lib/bindings";
 import { presentReadings, STALE_WINDOW_NOTE, type AgeReading } from "@/lib/observation-age";
 
-const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
+/**
+ * Agencies use this to reach whoever is generating the traffic, so it names
+ * the instrument and a contact that will outlive any one person's inbox.
+ * A private address does not belong in a public repository or in a header
+ * sent to five federal and provincial agencies on every request.
+ */
+const CONTACT =
+  process.env["AGENCY_CONTACT_URL"] ?? "https://northernlanternhouse.com/customer-support";
+const UA = `HookTheHorizon-FieldSense/0.5 (+https://waterways.hookthehorizon.blog; contact ${CONTACT})`;
 const SNAPSHOT_STALE_MS = 45 * 60_000;
 const SNAPSHOT_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";

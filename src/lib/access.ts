@@ -243,15 +243,31 @@ export function logisticsLine(read: AccessRead): string {
 /* ---------------- logistics as a catalog facet ---------------- */
 
 /** The logistics worth filtering a catalog on. Order is the order shown. */
-export const LOGISTICS_FACETS = [
-  { id: "parking", label: "Parking" },
-  { id: "restrooms", label: "Restrooms" },
-  { id: "camping", label: "Camping" },
-  { id: "accessible", label: "Accessible" },
-  { id: "dock", label: "Dock or slip" },
-  { id: "cleaning", label: "Fish cleaning" },
-  { id: "fee", label: "Fee or permit" },
-] as const;
+/**
+ * Short labels for the filter row, keyed by signal id.
+ *
+ * This used to be a hand-kept second list, and it had drifted: `boat_in`,
+ * `day_use` and `surface` were being read off 178 records and printed on
+ * the record page, but were missing here, so no reader could ever filter
+ * for them and the replica's logistics column carried ids the interface
+ * could not ask for. The facet list is now derived from the signals, so
+ * the two cannot fall out of step again.
+ */
+const FACET_LABELS: Record<string, string> = {
+  parking: "Parking",
+  restrooms: "Restrooms",
+  camping: "Camping",
+  accessible: "Accessible",
+  dock: "Dock or slip",
+  cleaning: "Fish cleaning",
+  fee: "Fee or permit",
+  surface: "Ramp surface",
+  boat_in: "Boat-in only",
+  day_use: "Day use",
+};
+
+export const LOGISTICS_FACETS: ReadonlyArray<{ id: string; label: string }> =
+  LOGISTICS.map((s) => ({ id: s.id, label: FACET_LABELS[s.id] ?? s.label }));
 
 /**
  * Amenity wording is agency free text, so this index is built once and reused.

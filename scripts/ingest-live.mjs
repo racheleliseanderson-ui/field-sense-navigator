@@ -37,7 +37,12 @@ const STATUS_PATH = resolve(ROOT, "public/live/status.json");
 const PRIOR_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/snapshot.json";
 
-const UA = "HookTheHorizon-FieldSense/0.5 (rachel.elise.anderson@gmail.com)";
+// Agencies use this to reach whoever is generating the traffic. A private
+// address does not belong in a public repository or in a header sent to five
+// federal and provincial agencies on every run.
+const CONTACT =
+  process.env.AGENCY_CONTACT_URL || "https://northernlanternhouse.com/customer-support";
+const UA = `HookTheHorizon-FieldSense/0.5 (+https://waterways.hookthehorizon.blog; contact ${CONTACT})`;
 const USGS_PARAMS = {
   "00060": { label: "Streamflow", unit: "ft³/s" },
   "00065": { label: "Gage height", unit: "ft" },

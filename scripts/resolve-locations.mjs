@@ -21,7 +21,12 @@ const DEST_PATH = resolve(ROOT, "src/data/destinations.json");
 const OVERRIDE_PATH = resolve(ROOT, "src/data/location-overrides.json");
 const OUT_PATH = resolve(ROOT, "src/data/locations.json");
 
-const UA = "HookTheHorizon-FieldSense/0.6 (rachel.elise.anderson@gmail.com)";
+// Agencies use this to reach whoever is generating the traffic. A private
+// address does not belong in a public repository or in a header sent to five
+// federal and provincial agencies on every run.
+const CONTACT =
+  process.env.AGENCY_CONTACT_URL || "https://northernlanternhouse.com/customer-support";
+const UA = `HookTheHorizon-FieldSense/0.6 (+https://waterways.hookthehorizon.blog; contact ${CONTACT})`;
 const RETRY_MISSES = process.argv.includes("--retry-misses");
 
 const PROVINCES = new Set([
