@@ -8,26 +8,28 @@ import { useWatchlist } from "@/lib/watchlist";
 import { displayName } from "@/lib/catalog";
 import { readiness } from "@/lib/intelligence";
 import { useReadLevel } from "@/lib/read-level";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/watchlist")({
-  head: () => ({
-    meta: [
-      { title: "Watchlist · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field brief.",
-      },
-      { property: "og:title", content: "Watchlist · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "A saved shortlist of public waters, ready to export as one briefing document.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/watchlist", noindex: true }, {
+      meta: [
+        { title: "Watchlist · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            "Waters you are tracking, held with their readiness band and source date, exportable as a single multi-water field brief.",
+        },
+        { property: "og:title", content: "Watchlist · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "A saved shortlist of public waters, ready to export as one briefing document.",
+        },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    }),
   component: WatchlistPage,
 });
 

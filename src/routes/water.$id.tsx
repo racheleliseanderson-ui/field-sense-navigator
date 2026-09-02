@@ -36,6 +36,7 @@ import { nearbyWaters } from "@/lib/nearby";
 import { useReadLevel } from "@/lib/read-level";
 import { Art } from "@/components/art";
 import { plateFor } from "@/lib/imagery";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/water/$id")({
   loader: ({ params }) => {
@@ -43,10 +44,10 @@ export const Route = createFileRoute("/water/$id")({
     if (!d) throw notFound();
     return d;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const name = loaderData ? displayName(loaderData) : "Water record";
     const place = loaderData ? `${loaderData.region}, ${loaderData.state}` : "";
-    return {
+    return withIdentity({ path: `/water/${params.id}` }, {
       meta: [
         { title: `${name} · Field Sense Navigator` },
         {
@@ -59,7 +60,7 @@ export const Route = createFileRoute("/water/$id")({
           content: `Field readiness, how to read the water, documented signals and residual unknowns for ${name}. Public waters only.`,
         },
       ],
-    };
+    });
   },
   component: WaterRecord,
 });
@@ -369,7 +370,7 @@ function WaterRecord() {
                         className="tap inline-flex min-h-11 items-center border border-hairline px-3 text-xs text-muted-foreground hover:border-brass/50 hover:text-brass"
                       >
                         {s}
-                        <span className="ml-2 text-[0.6rem] opacity-60">
+                        <span className="ml-2 text-[0.6rem] text-dim-foreground">
                           other water →
                         </span>
                       </Link>
@@ -481,23 +482,28 @@ function WaterRecord() {
             <ReadinessMeter readiness={r} compact />
             <dl className="mt-6 space-y-4">
               {r.parts.map((p) => (
-                <div key={p.label}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="text-sm text-foreground">{p.label}</dt>
-                    <dd className="data text-sm text-muted-foreground">
-                      {p.value}
-                      <span className="opacity-50">/{p.max}</span>
-                    </dd>
-                  </div>
-                  <div className="mt-1.5 h-[2px] w-full bg-border/50">
-                    <div
-                      className="h-full bg-brass"
-                      style={{ width: `${(p.value / p.max) * 100}%` }}
-                    />
-                  </div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                    {p.note}
-                  </p>
+                <div
+                  key={p.label}
+                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-4"
+                >
+                  {/* A description list may only hold dt/dd pairs, so the bar and
+                      the note live inside a second dd rather than as loose siblings. */}
+                  <dt className="text-sm text-foreground">{p.label}</dt>
+                  <dd className="data text-right text-sm text-muted-foreground">
+                    {p.value}
+                    <span className="text-dim-foreground">/{p.max}</span>
+                  </dd>
+                  <dd className="col-span-2">
+                    <div className="mt-1.5 h-[2px] w-full bg-border/50">
+                      <div
+                        className="h-full bg-brass"
+                        style={{ width: `${(p.value / p.max) * 100}%` }}
+                      />
+                    </div>
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                      {p.note}
+                    </p>
+                  </dd>
                 </div>
               ))}
             </dl>

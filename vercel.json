@@ -2,12 +2,6 @@
   "framework": null,
   "installCommand": "bun install",
   "buildCommand": "bun run build",
-  "crons": [
-    {
-      "path": "/api/pipeline/ingest",
-      "schedule": "0 */6 * * *"
-    }
-  ],
   "git": {
     "deploymentEnabled": {
       "live-snapshot": false

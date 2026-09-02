@@ -8,26 +8,28 @@ import { WORKFLOW } from "@/lib/handoff";
 import { readiness } from "@/lib/intelligence";
 import { PLATES, HALF_BLEED } from "@/lib/imagery";
 import { useReveal, useParallax, useCountUp } from "@/lib/motion";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Field Sense Navigator · Read Public Waters Before You Go" },
-      {
-        name: "description",
-        content:
-          `A field guide for ${NAMED_WATER_COUNT} named public waters: readiness, ranking, and a printable brief.`,
-      },
-      { property: "og:title", content: "Field Sense Navigator · Read Public Waters Before You Go" },
-      {
-        property: "og:description",
-        content:
-          "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — if a check cannot be confirmed, this guide stops.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/" }, {
+      meta: [
+        { title: "Field Sense Navigator · Read Public Waters Before You Go" },
+        {
+          name: "description",
+          content:
+            `A field guide for ${NAMED_WATER_COUNT} named public waters: readiness, ranking, and a printable brief.`,
+        },
+        { property: "og:title", content: "Field Sense Navigator · Read Public Waters Before You Go" },
+        {
+          property: "og:description",
+          content:
+            "Declare the job, rank the waters that actually fit, print a same-day brief. Public waters only — if a check cannot be confirmed, this guide stops.",
+        },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    }),
   component: Home,
 });
 
@@ -339,7 +341,7 @@ function Home() {
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
           {featured.map(({ d }, i) => (
             <div key={d.id} data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}>
-              <WaterCard destination={d} art />
+              <WaterCard destination={d} art headingLevel={3} />
             </div>
           ))}
         </div>
@@ -426,7 +428,7 @@ function Home() {
               </p>
             </div>
             <div data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
-              <WaterCard destination={constrained.d} art />
+              <WaterCard destination={constrained.d} art headingLevel={3} />
             </div>
           </div>
         </section>

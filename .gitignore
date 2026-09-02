@@ -37,3 +37,12 @@ dist-ssr
 # scratch (safe to delete)
 _to_delete/
 
+
+# Generated at build time from the catalog (scripts/build-sitemap.mjs)
+public/sitemap.xml
+
+# Ingest working directory. The scheduled run writes snapshot/status/closures
+# here and publishes them to the live-snapshot branch; nothing here belongs on
+# main. A committed copy can never satisfy the 45-minute freshness gate, so it
+# would be dead weight that reads like a fallback.
+public/live/

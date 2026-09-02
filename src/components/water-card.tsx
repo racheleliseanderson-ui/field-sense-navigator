@@ -22,7 +22,7 @@ function CompareButton({ id, name }: { id: string; name: string }) {
       disabled={!on && full}
       aria-label={on ? `Remove ${name} from the comparison` : `Add ${name} to the comparison`}
       className={`tap grid h-11 w-11 shrink-0 place-items-center border border-hairline bg-card/80 backdrop-blur transition-colors disabled:opacity-40 ${
-        on ? "border-brass/60 bg-brass/15 text-brass" : "text-muted-foreground hover:text-brass"
+        on ? "border-brass/60 bg-selected text-selected-foreground" : "text-muted-foreground hover:text-brass"
       }`}
     >
       <Columns3 className="h-4 w-4" aria-hidden="true" />
@@ -42,6 +42,7 @@ export function WaterCard({
   rank,
   art = false,
   matched,
+  headingLevel = 2,
 }: {
   destination: Destination;
   fit?: Fit;
@@ -50,7 +51,15 @@ export function WaterCard({
   art?: boolean;
   /** why this record answered the current search, in the reader's own terms */
   matched?: string[];
+  /**
+   * Depth of this card's name in the page outline. A grid of cards directly
+   * under the page h1 is level 2; a grid nested inside a titled section is
+   * level 3. Hard-coding it produced a skipped level and an outline a screen
+   * reader could not walk.
+   */
+  headingLevel?: 2 | 3 | 4;
 }) {
+  const Heading = `h${headingLevel}` as "h2" | "h3" | "h4";
   const plate = plateFor(destination.waterType);
   const r = fit?.readiness ?? readiness(destination);
   const t = readTags(destination);
@@ -111,9 +120,9 @@ export function WaterCard({
         <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brass" />
       </div>
 
-      <h3 className="mt-4 font-display text-xl font-bold leading-tight tracking-tight text-foreground">
+      <Heading className="mt-4 font-display text-xl font-bold leading-tight tracking-tight text-foreground">
         {displayName(destination)}
-      </h3>
+      </Heading>
       <p className="mt-1.5 text-sm text-muted-foreground">
         {destination.region} · {destination.state}
       </p>

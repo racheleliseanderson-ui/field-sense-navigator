@@ -6,6 +6,7 @@ import { readAccess } from "@/lib/access";
 import { useReadLevel } from "@/lib/read-level";
 import { cuesFor, readWater } from "@/lib/water-reading";
 import { useHandoffSteps, useHandoffTemperature, useHandoffUrl } from "@/lib/use-handoff";
+import { withIdentity } from "@/lib/seo";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -29,10 +30,15 @@ export const Route = createFileRoute("/packet/$id")({
     if (!d) throw notFound();
     return d;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const name = loaderData ? displayName(loaderData) : "Field brief";
-    return {
-      meta: [
+    // A printable brief is a derived view of the record, not a second
+    // document: it points its canonical at the water page and stays out
+    // of the index so the two never compete.
+    return withIdentity(
+      { path: `/packet/${params.id}`, canonicalPath: `/water/${params.id}`, noindex: true },
+      {
+        meta: [
         { title: `Field brief — ${name} · Field Sense Navigator` },
         {
           name: "description",
@@ -43,8 +49,9 @@ export const Route = createFileRoute("/packet/$id")({
           property: "og:description",
           content: `A one-page briefing document to carry into the field for ${name}.`,
         },
-      ],
-    };
+        ],
+      },
+    );
   },
   component: Packet,
 });
@@ -85,7 +92,8 @@ function Packet() {
   return (
     <div className="min-h-dvh bg-abyss py-0 print:bg-white print:py-0 md:py-12">
       {/* toolbar */}
-      <div
+      <nav
+        aria-label="Brief actions"
         data-print="hide"
         className="sticky top-0 z-40 mb-6 border-b border-hairline bg-abyss/95 backdrop-blur-xl print:hidden sm:static sm:mb-8 sm:border-0 sm:bg-transparent sm:backdrop-blur-none"
       >
@@ -123,7 +131,7 @@ function Packet() {
             </button>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* sheet */}
       <main><article className="packet mx-auto max-w-[54rem] bg-packet px-5 py-9 text-packet-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] sm:px-14 sm:py-16 print:max-w-none print:shadow-none">

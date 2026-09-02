@@ -27,15 +27,17 @@ export function ReadLevelControl({
               onClick={() => setLevel(l.id)}
               aria-pressed={active}
               className={`tap min-h-12 px-3 py-2 text-left transition-colors ${
-                active ? "bg-brass/15" : "bg-card hover:bg-panel"
+                active ? "bg-selected" : "bg-card hover:bg-panel"
               }`}
             >
               <span
-                className={`block text-sm font-medium ${active ? "text-brass" : "text-foreground"}`}
+                className={`block text-sm font-medium ${active ? "text-selected-foreground" : "text-foreground"}`}
               >
                 {l.label}
               </span>
-              <span className="mt-0.5 block text-[0.66rem] leading-snug text-muted-foreground">
+              <span
+                className={`mt-0.5 block text-[0.66rem] leading-snug ${active ? "text-selected-muted" : "text-muted-foreground"}`}
+              >
                 {l.note}
               </span>
             </button>

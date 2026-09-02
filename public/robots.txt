@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Tool surfaces and printable briefs are crawlable on purpose — each one
+# declares "noindex, follow" in its own head, which a crawler can only read
+# by fetching the page. Blocking them here would hide that instruction and
+# leave them indexable from inbound links.
+
+Sitemap: https://waterways.hookthehorizon.blog/sitemap.xml

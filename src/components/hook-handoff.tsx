@@ -102,7 +102,7 @@ export function HookHandoff({
                     aria-pressed={on}
                     className={`tap inline-flex min-h-11 items-center border px-3 text-xs transition-colors ${
                       on
-                        ? "border-brass/60 bg-brass/15 text-brass"
+                        ? "border-brass/60 bg-selected text-selected-foreground"
                         : "border-hairline text-muted-foreground hover:border-brass/40 hover:text-foreground"
                     }`}
                   >
@@ -120,7 +120,7 @@ export function HookHandoff({
       )}
 
       <ol className="mt-8 grid grid-cols-1 gap-px bg-hairline">
-        <li className="bg-abyss/60 px-5 py-4">
+        <li className="bg-abyss px-5 py-4">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <span className="data text-xs text-brass">01</span>
             <span className="font-display text-base font-bold tracking-tight text-foreground">

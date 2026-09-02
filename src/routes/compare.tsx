@@ -20,26 +20,28 @@ import { COMPARE_LIMIT, useCompareTray } from "@/lib/compare-tray";
 import { search } from "@/lib/search";
 import { useReveal } from "@/lib/motion";
 import { useReadLevel } from "@/lib/read-level";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/compare")({
-  head: () => ({
-    meta: [
-      { title: "Compare waters · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          "Hold up to four named public waters side by side: readiness, how you get on the water, hazards and crowding, how recently each was checked, and what each record still cannot tell you.",
-      },
-      { property: "og:title", content: "Compare waters · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "Aligned, row-by-row comparison of named public waters — with every unknown left visible.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/compare", noindex: true }, {
+      meta: [
+        { title: "Compare waters · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            "Hold up to four named public waters side by side: readiness, how you get on the water, hazards and crowding, how recently each was checked, and what each record still cannot tell you.",
+        },
+        { property: "og:title", content: "Compare waters · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "Aligned, row-by-row comparison of named public waters — with every unknown left visible.",
+        },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    }),
   component: Compare,
 });
 

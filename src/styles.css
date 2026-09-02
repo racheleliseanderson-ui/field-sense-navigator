@@ -38,6 +38,15 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-brass: var(--accent);
+  /* An opaque "chosen" surface. A translucent tint composites over whatever
+     sits behind it — a hairline grid gap, an image scrim — so its contrast
+     could never be reasoned about. These are solid in every mode. */
+  --color-selected: var(--selected);
+  --color-selected-foreground: var(--selected-foreground);
+  --color-selected-muted: var(--selected-muted);
+  /* A dimmer step than muted that still clears 4.5:1 on every ground, for
+     secondary text that used to be dimmed with opacity. */
+  --color-dim-foreground: var(--dim-foreground);
   --color-destructive: var(--alert);
   --color-destructive-foreground: var(--primary-foreground);
   --color-border: var(--border);
@@ -65,8 +74,13 @@
   --hairline: oklch(0.78 0.016 262 / 70%);
   --primary: oklch(0.455 0.108 251);
   --primary-foreground: oklch(0.985 0.005 85);
-  --accent: oklch(0.545 0.088 78);
+  /* Darkened from L 0.545: brass at 11px on --panel measured 4.31:1. */
+  --accent: oklch(0.5 0.095 74);
   --accent-foreground: oklch(0.985 0.005 85);
+  --selected: oklch(0.925 0.038 84);
+  --selected-foreground: oklch(0.36 0.09 72);
+  --selected-muted: oklch(0.45 0.045 74);
+  --dim-foreground: oklch(0.515 0.02 258);
   --ring: oklch(0.455 0.108 251 / 45%);
   --clear: oklch(0.5 0.108 165);
   --watch: oklch(0.545 0.11 88);
@@ -114,6 +128,10 @@
   --primary-foreground: oklch(0.16 0.015 262);
   --accent: oklch(0.755 0.068 78);
   --accent-foreground: oklch(0.16 0.015 262);
+  --selected: oklch(0.29 0.035 80);
+  --selected-foreground: oklch(0.83 0.09 82);
+  --selected-muted: oklch(0.74 0.035 80);
+  --dim-foreground: oklch(0.65 0.018 262);
   --ring: oklch(0.775 0.108 251 / 55%);
   --clear: oklch(0.79 0.115 165);
   --watch: oklch(0.8 0.115 88);
@@ -156,6 +174,10 @@
   --primary-foreground: oklch(0 0 0);
   --accent: oklch(0.87 0.16 88);
   --accent-foreground: oklch(0 0 0);
+  --selected: oklch(0.2 0.045 88);
+  --selected-foreground: oklch(0.93 0.16 90);
+  --selected-muted: oklch(0.86 0.02 88);
+  --dim-foreground: oklch(0.72 0 0);
   --ring: oklch(0.95 0.15 88 / 90%);
   --clear: oklch(0.92 0.16 150);
   --watch: oklch(0.9 0.17 92);
@@ -190,6 +212,10 @@
   --primary-foreground: oklch(1 0 0);
   --accent: oklch(0.32 0.08 78);
   --accent-foreground: oklch(1 0 0);
+  --selected: oklch(0.945 0.035 84);
+  --selected-foreground: oklch(0.24 0.08 70);
+  --selected-muted: oklch(0.33 0.03 76);
+  --dim-foreground: oklch(0.44 0 0);
   --ring: oklch(0.2 0.1 250 / 90%);
   --clear: oklch(0.38 0.12 160);
   --watch: oklch(0.42 0.11 80);
@@ -214,6 +240,9 @@
   --primary: oklch(0.79 0.12 245);
   --accent: oklch(0.82 0.14 72);
   --accent-foreground: oklch(0.16 0.015 262);
+  --selected: oklch(0.29 0.04 72);
+  --selected-foreground: oklch(0.86 0.12 74);
+  --selected-muted: oklch(0.76 0.03 74);
   --clear: oklch(0.84 0.11 235);
   --watch: oklch(0.86 0.13 92);
   --flagged: oklch(0.78 0.16 58);

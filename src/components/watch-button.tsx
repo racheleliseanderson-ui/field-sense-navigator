@@ -30,7 +30,7 @@ export function WatchButton({
         aria-pressed={on}
         className={`tap inline-flex min-h-12 items-center justify-center gap-2 border px-5 text-xs uppercase tracking-[0.14em] transition-colors ${
           on
-            ? "border-brass/60 bg-brass/15 text-brass"
+            ? "border-brass/60 bg-selected text-selected-foreground"
             : "border-hairline text-foreground hover:border-brass/50"
         } ${className}`}
       >
@@ -51,7 +51,7 @@ export function WatchButton({
       aria-pressed={on}
       aria-label={on ? `Remove ${name} from watchlist` : `Add ${name} to watchlist`}
       className={`tap grid h-11 w-11 shrink-0 place-items-center border border-hairline transition-colors ${
-        on ? "border-brass/60 bg-brass/15 text-brass" : "text-muted-foreground hover:text-brass"
+        on ? "border-brass/60 bg-selected text-selected-foreground" : "text-muted-foreground hover:text-brass"
       } ${className}`}
     >
       {on ? (

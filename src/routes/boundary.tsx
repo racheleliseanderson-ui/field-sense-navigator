@@ -2,24 +2,26 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/boundary")({
-  head: () => ({
-    meta: [
-      { title: "Limits & sources · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          "What Field Sense Navigator includes, what it will not hold, and where this guide stops for named public waters.",
-      },
-      { property: "og:title", content: "Limits & sources · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "Public waters only. No private spots, no coordinates, no live-condition claims. The scope rules behind every record.",
-      },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/boundary" }, {
+      meta: [
+        { title: "Limits & sources · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            "What Field Sense Navigator includes, what it will not hold, and where this guide stops for named public waters.",
+        },
+        { property: "og:title", content: "Limits & sources · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "Public waters only. No private spots, no coordinates, no live-condition claims. The scope rules behind every record.",
+        },
+      ],
+    }),
   component: BoundaryPage,
 });
 

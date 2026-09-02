@@ -31,7 +31,7 @@ function WaysBack() {
             to={w.to}
             className={`tap inline-flex min-h-12 items-center border px-5 text-xs uppercase tracking-[0.14em] transition-colors ${
               i === 0
-                ? "border-brass/60 bg-brass/15 text-brass hover:bg-brass/25"
+                ? "border-brass/60 bg-selected text-selected-foreground hover:bg-selected/85"
                 : "border-hairline text-foreground hover:border-brass/50"
             }`}
           >
@@ -87,7 +87,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="tap inline-flex min-h-12 items-center border border-brass/60 bg-brass/15 px-5 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/25"
+            className="tap inline-flex min-h-12 items-center border border-brass/60 bg-selected px-5 text-xs uppercase tracking-[0.14em] text-selected-foreground hover:bg-selected/85"
           >
             Try again
           </button>
@@ -130,7 +130,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Looking down on a river showing foam lines and current seams between faster and slower water",
       },
-      { property: "og:url", content: "https://waterways.hookthehorizon.blog/" },
       {
         name: "twitter:image",
         content:
@@ -150,7 +149,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "canonical", href: "https://waterways.hookthehorizon.blog/" },
     ],
   }),
   shellComponent: RootShell,

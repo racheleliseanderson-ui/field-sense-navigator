@@ -40,6 +40,7 @@ import { useReveal, useParallax } from "@/lib/motion";
 import { useWatchlist } from "@/lib/watchlist";
 import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
+import { withIdentity } from "@/lib/seo";
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
@@ -75,22 +76,23 @@ interface CatalogSearch {
 
 export const Route = createFileRoute("/explore")({
   validateSearch: zodValidator(searchSchema),
-  head: () => ({
-    meta: [
-      { title: "Catalog · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with five reads on each: access, hazards, crowding, rules and the same-day checks.`,
-      },
-      { property: "og:title", content: "Catalog · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "Search named public waters by name, county, species or access, then sort by field readiness.",
-      },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/explore" }, {
+      meta: [
+        { title: "Catalog · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with five reads on each: access, hazards, crowding, rules and the same-day checks.`,
+        },
+        { property: "og:title", content: "Catalog · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "Search named public waters by name, county, species or access, then sort by field readiness.",
+        },
+      ],
+    }),
   component: Explore,
 });
 
@@ -122,7 +124,7 @@ function Chip({
       aria-pressed={active}
       className={`tap inline-flex min-h-11 items-center border px-3.5 text-xs ${
         active
-          ? "border-brass/60 bg-brass/15 text-brass"
+          ? "border-brass/60 bg-selected text-selected-foreground"
           : "border-hairline text-muted-foreground hover:border-brass/40 hover:text-foreground"
       }`}
     >

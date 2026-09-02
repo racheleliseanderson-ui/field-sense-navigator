@@ -18,26 +18,28 @@ import { checkSourceUrl } from "@/lib/verify.functions";
 import { useCompareTray } from "@/lib/compare-tray";
 import { useWatchlist } from "@/lib/watchlist";
 import { bindingsFile } from "@/lib/bindings";
+import { withIdentity } from "@/lib/seo";
 
 export const Route = createFileRoute("/pipeline")({
-  head: () => ({
-    meta: [
-      { title: "How a water reading comes together · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          "Official station sources and when a reading cannot be confirmed.",
-      },
-      { property: "og:title", content: "How a water reading comes together · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "Official station sources and when a reading cannot be confirmed. Misses are printed as plainly as hits.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/pipeline" }, {
+      meta: [
+        { title: "How a water reading comes together · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            "Official station sources and when a reading cannot be confirmed.",
+        },
+        { property: "og:title", content: "How a water reading comes together · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "Official station sources and when a reading cannot be confirmed. Misses are printed as plainly as hits.",
+        },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    }),
   component: Pipeline,
 });
 
@@ -520,6 +522,7 @@ function Pipeline() {
           <div
             className="h-[2px] w-full bg-border/60"
             role="progressbar"
+            aria-label="Source check progress"
             aria-valuenow={progress}
             aria-valuemin={0}
             aria-valuemax={100}

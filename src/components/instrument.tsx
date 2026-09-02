@@ -109,23 +109,28 @@ export function ReadinessMeter({
       {!compact && (
         <dl className="mt-6 space-y-4">
           {parts.map((p) => (
-            <div key={p.label}>
-              <div className="flex items-baseline justify-between gap-4">
-                <dt className="text-sm text-foreground">{p.label}</dt>
-                <dd className="data text-sm text-muted-foreground">
-                  {p.value}
-                  <span className="opacity-50">/{p.max}</span>
-                </dd>
-              </div>
-              <div className="mt-1.5 h-[2px] w-full bg-border/50">
-                <div
-                  className="h-full bg-brass"
-                  style={{ width: `${(p.value / p.max) * 100}%` }}
-                />
-              </div>
-              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                {p.note}
-              </p>
+            <div
+              key={p.label}
+              className="grid grid-cols-[1fr_auto] items-baseline gap-x-4"
+            >
+              {/* A description list may only hold dt/dd pairs, so the bar and
+                  the note live inside a second dd rather than as loose siblings. */}
+              <dt className="text-sm text-foreground">{p.label}</dt>
+              <dd className="data text-right text-sm text-muted-foreground">
+                {p.value}
+                <span className="text-dim-foreground">/{p.max}</span>
+              </dd>
+              <dd className="col-span-2">
+                <div className="mt-1.5 h-[2px] w-full bg-border/50">
+                  <div
+                    className="h-full bg-brass"
+                    style={{ width: `${(p.value / p.max) * 100}%` }}
+                  />
+                </div>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  {p.note}
+                </p>
+              </dd>
             </div>
           ))}
         </dl>
@@ -240,11 +245,15 @@ export function EmptyState({
   title,
   body,
   action,
+  headingLevel = 2,
 }: {
   title: string;
   body: string;
   action?: React.ReactNode;
+  /** Depth of this state's title in the page outline. See WaterCard. */
+  headingLevel?: 2 | 3 | 4;
 }) {
+  const Heading = `h${headingLevel}` as "h2" | "h3" | "h4";
   return (
     <div className="panel relative overflow-hidden px-8 py-20 text-center">
       <div className="hairline-grid pointer-events-none absolute inset-0 opacity-40" />
@@ -252,9 +261,9 @@ export function EmptyState({
         <div className="mx-auto flex h-16 w-16 items-center justify-center border border-brass/40">
           <span className="h-2 w-2 rounded-full bg-brass" />
         </div>
-        <h3 className="mt-6 font-display text-2xl font-bold tracking-tight text-foreground">
+        <Heading className="mt-6 font-display text-2xl font-bold tracking-tight text-foreground">
           {title}
-        </h3>
+        </Heading>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
         {action && <div className="mt-7 flex justify-center">{action}</div>}
       </div>

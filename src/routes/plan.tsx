@@ -20,6 +20,7 @@ import { PLATES } from "@/lib/imagery";
 import { useCompareTray, COMPARE_LIMIT } from "@/lib/compare-tray";
 import { HandoffLink } from "@/components/hook-handoff";
 import { useReadLevel } from "@/lib/read-level";
+import { withIdentity } from "@/lib/seo";
 
 const JOB_IDS: JobId[] = JOBS.map((j) => j.id);
 
@@ -49,22 +50,23 @@ function gearForJob(job: JobId | undefined): GearMode {
 
 export const Route = createFileRoute("/plan")({
   validateSearch: parsePlanSearch,
-  head: () => ({
-    meta: [
-      { title: "Plan a Day · Field Sense Navigator" },
-      {
-        name: "description",
-        content:
-          "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a same-day brief.",
-      },
-      { property: "og:title", content: "Plan a Day · Field Sense Navigator" },
-      {
-        property: "og:description",
-        content:
-          "Situation-aware ranking of named public waters, with required-check exclusions and a printable same-day brief.",
-      },
-    ],
-  }),
+  head: () =>
+    withIdentity({ path: "/plan", noindex: true }, {
+      meta: [
+        { title: "Plan a Day · Field Sense Navigator" },
+        {
+          name: "description",
+          content:
+            "Declare your job and constraints — bank, kayak, small boat, scouting, tournament-adjacent or family — and rank named public waters that actually fit, then print a same-day brief.",
+        },
+        { property: "og:title", content: "Plan a Day · Field Sense Navigator" },
+        {
+          property: "og:description",
+          content:
+            "Situation-aware ranking of named public waters, with required-check exclusions and a printable same-day brief.",
+        },
+      ],
+    }),
   component: Plan,
 });
 
@@ -110,7 +112,7 @@ function Selector<T extends string>({
               onClick={() => onChange(o.id)}
               aria-pressed={active}
               className={`px-4 py-4 text-left transition-colors ${
-                active ? "bg-brass/15" : "bg-card hover:bg-panel"
+                active ? "bg-selected" : "bg-card hover:bg-panel"
               }`}
             >
               <span
@@ -248,7 +250,7 @@ function Plan() {
                   }}
                   aria-pressed={active}
                   className={`group relative px-6 py-7 text-left transition-colors ${
-                    active ? "bg-brass/15" : "bg-card hover:bg-panel"
+                    active ? "bg-selected" : "bg-card hover:bg-panel"
                   }`}
                 >
                   <span
@@ -310,7 +312,7 @@ function Plan() {
                     onClick={() => toggleList("waterTypes", t)}
                     className={`border px-3 py-1.5 text-xs transition-colors ${
                       c.waterTypes.includes(t)
-                        ? "border-brass/60 bg-brass/15 text-brass"
+                        ? "border-brass/60 bg-selected text-selected-foreground"
                         : "border-hairline text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -329,7 +331,7 @@ function Plan() {
                     onClick={() => toggleList("states", s)}
                     className={`border px-2.5 py-1.5 text-xs transition-colors ${
                       c.states.includes(s)
-                        ? "border-brass/60 bg-brass/15 text-brass"
+                        ? "border-brass/60 bg-selected text-selected-foreground"
                         : "border-hairline text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -372,6 +374,7 @@ function Plan() {
         {!job ? (
           <div className="mt-8">
             <EmptyState
+              headingLevel={3}
               title="Ready to start"
               body="Nothing has been ranked yet. Tell us what kind of day you are planning — we will not invent one to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
               action={
@@ -389,6 +392,7 @@ function Plan() {
         ) : result && result.fits.length === 0 ? (
           <div className="mt-8">
             <EmptyState
+              headingLevel={3}
               title="No water meets these requirements"
               body="With these constraints no record can be recommended without inventing something we do not hold. Widen the gear mode, the states, or the water type — this guide will not soften a required check to fill the page."
               action={
@@ -427,6 +431,7 @@ function Plan() {
                   destination={f.destination}
                   fit={f}
                   rank={i + 1}
+                  headingLevel={3}
                 />
               ))}
             </div>
