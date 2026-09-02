@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import type { Destination } from "@/lib/catalog";
 import type { HandoffContext, HandoffTarget } from "@/lib/handoff";
-import { useHandoffSteps, useHandoffUrl } from "@/lib/use-handoff";
+import { useHandoffSteps, useHandoffTemperature, useHandoffUrl } from "@/lib/use-handoff";
 
 /**
  * Water → Species → Forage/Hatch → Presentation → Rig/Tackle → Knot → Field Ops.
@@ -21,6 +21,7 @@ export function HookHandoff({
   species,
   onSpecies,
   compact = false,
+  live = true,
 }: {
   destination: Destination;
   context?: HandoffContext;
@@ -28,10 +29,17 @@ export function HookHandoff({
   species?: string | null;
   onSpecies?: (s: string | null) => void;
   compact?: boolean;
+  /**
+   * Attach the official temperature to every packet. On by default: this
+   * component only appears on a single-water page, where it shares the live
+   * query with the conditions panel and costs no extra request.
+   */
+  live?: boolean;
 }) {
+  const temperature = useHandoffTemperature(destination, live);
   const ctx: HandoffContext = useMemo(
-    () => ({ ...context, species: species ?? context.species ?? null }),
-    [context, species],
+    () => ({ ...context, species: species ?? context.species ?? null, temperature }),
+    [context, species, temperature],
   );
   const steps = useHandoffSteps(destination, ctx);
 
@@ -171,14 +179,25 @@ export function HandoffLink({
   context = {},
   className = "",
   children,
+  live = false,
 }: {
   destination: Destination;
   target: HandoffTarget;
   context?: HandoffContext;
   className?: string;
   children: React.ReactNode;
+  /**
+   * Off by default. List pages render one of these per record, and a live
+   * pull per card is not a trade worth making for a link the reader may
+   * never press. Single-record pages turn it on.
+   */
+  live?: boolean;
 }) {
-  const url = useHandoffUrl(destination, target, context);
+  const temperature = useHandoffTemperature(destination, live);
+  const url = useHandoffUrl(destination, target, {
+    ...context,
+    ...(live ? { temperature } : {}),
+  });
   return (
     <a href={url} className={className}>
       {children}

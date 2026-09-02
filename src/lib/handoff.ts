@@ -1,4 +1,4 @@
-import { displayName, type Destination, type WaterType } from "@/lib/catalog";
+import { daysSince, displayName, type Destination, type WaterType } from "@/lib/catalog";
 import { HORIZON } from "@/lib/fleet";
 import { JOBS, readTags, readiness, type JobId } from "@/lib/intelligence";
 import { readAccess } from "@/lib/access";
@@ -97,11 +97,160 @@ export function mapWaterType(waterType: WaterType): "flowing" | "stillwater" | u
   return undefined;
 }
 
+/**
+ * An official temperature reading, carried across exactly as the agency
+ * published it.
+ *
+ * Water and air are kept apart on purpose. An air temperature is not a
+ * substitute for a water temperature, and an instrument downstream must never
+ * be able to read one as the other. Either is null when no official station
+ * published it — the packet never estimates, interpolates or infers a
+ * temperature, and never borrows one from a neighbouring water.
+ */
+export interface PacketTemperature {
+  /** Degrees Fahrenheit, rounded to one decimal. Null when unpublished. */
+  waterTempF: number | null;
+  waterTempObservedAt: string | null;
+  /** True when the reading is outside the freshness window and carried forward. */
+  waterTempRetained: boolean;
+  airTempF: number | null;
+  airTempObservedAt: string | null;
+  airTempRetained: boolean;
+  station: { id: string; name: string | null; agency: string | null } | null;
+  observationStation: { id: string; name: string | null } | null;
+}
+
+export const NO_TEMPERATURE: PacketTemperature = {
+  waterTempF: null,
+  waterTempObservedAt: null,
+  waterTempRetained: false,
+  airTempF: null,
+  airTempObservedAt: null,
+  airTempRetained: false,
+  station: null,
+  observationStation: null,
+};
+
 export interface HandoffContext {
   job?: JobId | null;
   /** A single species the reader has picked out of the record's context list. */
   species?: string | null;
   level?: ReadLevel;
+  /**
+   * Official temperature for this water, when the live plane has one. Absent
+   * means "not looked up"; present with null values means "looked up, and no
+   * official station published one". Both travel as null temperatures — the
+   * difference is recorded in `tempSource`, not invented.
+   */
+  temperature?: PacketTemperature | null;
+}
+
+/* ------------------------------------------------------------------ *
+ * Official temperature, lifted out of the live plane
+ *
+ * The live plane already holds what the agencies published: USGS water
+ * temperature in Celsius, NOAA CO-OPS water temperature in Fahrenheit, NWS
+ * air temperature in Celsius. Until now the packet threw all of it away and
+ * sent `tempF: null, tempSource: "unknown"` to every instrument in the fleet.
+ *
+ * These types are structural on purpose. They describe only the shape the
+ * reader needs, so nothing server-only is pulled into a client bundle.
+ * ------------------------------------------------------------------ */
+
+export interface LiveReadingLike {
+  label: string;
+  value: string;
+  unit: string;
+  observedAt: string;
+}
+
+export interface LiveConditionsLike {
+  station: { id: string; name: string; agency: string } | null;
+  readings: LiveReadingLike[];
+  retainedReadings: LiveReadingLike[];
+  observation: {
+    stationId: string;
+    stationName: string;
+    readings: LiveReadingLike[];
+    retainedReadings: LiveReadingLike[];
+  } | null;
+}
+
+function pickTemp(
+  fresh: LiveReadingLike[] | undefined,
+  retained: LiveReadingLike[] | undefined,
+  rx: RegExp,
+): { f: number | null; observedAt: string | null; retained: boolean } {
+  for (const [list, isRetained] of [
+    [fresh ?? [], false],
+    [retained ?? [], true],
+  ] as const) {
+    for (const r of list) {
+      if (!rx.test(r.label)) continue;
+      const raw = Number.parseFloat(String(r.value).replace(/[^0-9.-]/g, ""));
+      const f = toF(raw, r.unit);
+      if (f == null) continue;
+      return { f, observedAt: r.observedAt ?? null, retained: isRetained };
+    }
+  }
+  return { f: null, observedAt: null, retained: false };
+}
+
+/**
+ * Read the official temperatures out of a live-conditions result.
+ *
+ * Returns NO_TEMPERATURE when nothing was published — which is a real answer,
+ * not a failure. Nothing here estimates, and a retained reading is always
+ * marked as retained so the receiving instrument can print its age.
+ */
+export function temperatureFrom(live: LiveConditionsLike | null | undefined): PacketTemperature {
+  if (!live) return NO_TEMPERATURE;
+  const water = pickTemp(live.readings, live.retainedReadings, /water\s*temp/i);
+  const air = pickTemp(
+    live.observation?.readings,
+    live.observation?.retainedReadings,
+    /air\s*temp/i,
+  );
+  return {
+    waterTempF: water.f,
+    waterTempObservedAt: water.observedAt,
+    waterTempRetained: water.retained,
+    airTempF: air.f,
+    airTempObservedAt: air.observedAt,
+    airTempRetained: air.retained,
+    station:
+      water.f != null && live.station
+        ? { id: live.station.id, name: live.station.name, agency: live.station.agency }
+        : null,
+    observationStation:
+      air.f != null && live.observation
+        ? { id: live.observation.stationId, name: live.observation.stationName }
+        : null,
+  };
+}
+
+/** An ISO date, or null. Never a substitute date. */
+function day(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : iso.slice(0, 10);
+}
+
+/** Whole days since an ISO stamp, or null when there is no usable stamp. */
+function age(iso: string | null | undefined): number | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return daysSince(iso);
+}
+
+/** Celsius → Fahrenheit, one decimal. Agencies publish both; the packet is F. */
+export function toF(value: number, unit: string): number | null {
+  if (!Number.isFinite(value)) return null;
+  const u = unit.trim().toUpperCase();
+  const f = u.includes("C") ? value * 1.8 + 32 : value;
+  if (!Number.isFinite(f)) return null;
+  return Math.round(f * 10) / 10;
 }
 
 /** Public-safe Field Sense → fleet packet. Named water only; no coordinates. */
@@ -112,6 +261,7 @@ export function buildPacket(d: Destination, target: HandoffTarget, ctx: HandoffC
   const r = readiness(d);
   const access = readAccess(d);
   const job = ctx.job ? JOBS.find((j) => j.id === ctx.job) : undefined;
+  const temp = ctx.temperature ?? NO_TEMPERATURE;
 
   return {
     packetVersion: PACKET_VERSION,
@@ -160,15 +310,68 @@ export function buildPacket(d: Destination, target: HandoffTarget, ctx: HandoffC
     openChecks: d.directVerification,
     conditions: {
       waterType,
-      tempF: null,
-      tempSource: "unknown",
+      /**
+       * Water temperature only. Never an air temperature, never an estimate.
+       * Null is the honest answer whenever no official station published one.
+       */
+      tempF: temp.waterTempF,
+      tempUnit: "F",
+      tempSource: temp.waterTempF == null ? "unknown" : "official-gauge",
+      tempObservedAt: temp.waterTempObservedAt,
+      tempRetained: temp.waterTempRetained,
+      tempStation: temp.station,
+      /** Kept separate so no instrument can mistake air for water. */
+      airTempF: temp.airTempF,
+      airTempSource: temp.airTempF == null ? "unknown" : "official-observation",
+      airTempObservedAt: temp.airTempObservedAt,
+      airTempRetained: temp.airTempRetained,
+      airTempStation: temp.observationStation,
     },
+    /**
+     * Provenance describes the RECORD, not the moment this link was pressed.
+     * `reviewedAt` is the record's own source check; `builtAt` is when the
+     * packet was assembled. Conflating the two would tell every downstream
+     * instrument that a month-old record was verified this morning.
+     */
     provenance: [
       {
         source: "Field Sense named-public-water record",
         evidenceClass: "declared",
-        reviewedAt: createdAt.slice(0, 10),
+        reviewedAt: day(d.checkedAt),
+        ageDays: age(d.checkedAt),
+        humanReviewedAt: day(d.lastHumanReviewedAt),
+        humanReviewedBy: d.lastHumanReviewedBy ?? null,
+        nextReviewAt: day(d.nextReviewAt),
+        builtAt: createdAt,
       },
+      ...(temp.station && temp.waterTempObservedAt
+        ? [
+            {
+              source: `${temp.station.agency ?? "Agency"} station ${temp.station.id}`,
+              evidenceClass: temp.waterTempRetained ? "observed-retained" : "observed",
+              reviewedAt: day(temp.waterTempObservedAt),
+              ageDays: age(temp.waterTempObservedAt),
+              humanReviewedAt: null,
+              humanReviewedBy: null,
+              nextReviewAt: null,
+              builtAt: createdAt,
+            },
+          ]
+        : []),
+      ...(temp.observationStation && temp.airTempObservedAt
+        ? [
+            {
+              source: `NWS station ${temp.observationStation.id}`,
+              evidenceClass: temp.airTempRetained ? "observed-retained" : "observed",
+              reviewedAt: day(temp.airTempObservedAt),
+              ageDays: age(temp.airTempObservedAt),
+              humanReviewedAt: null,
+              humanReviewedBy: null,
+              nextReviewAt: null,
+              builtAt: createdAt,
+            },
+          ]
+        : []),
     ],
     privacy: {
       containsCoordinates: false,

@@ -5,7 +5,7 @@ import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tag
 import { readAccess } from "@/lib/access";
 import { useReadLevel } from "@/lib/read-level";
 import { cuesFor, readWater } from "@/lib/water-reading";
-import { useHandoffSteps, useHandoffUrl } from "@/lib/use-handoff";
+import { useHandoffSteps, useHandoffTemperature, useHandoffUrl } from "@/lib/use-handoff";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -64,8 +64,9 @@ function Packet() {
   const access = readAccess(d);
   const read = readWater(d);
   const cues = cuesFor(read, level);
-  const steps = useHandoffSteps(d, { job: job ?? null, level });
-  const speciesUrl = useHandoffUrl(d, "species", { job: job ?? null, level });
+  const temperature = useHandoffTemperature(d);
+  const steps = useHandoffSteps(d, { job: job ?? null, level, temperature });
+  const speciesUrl = useHandoffUrl(d, "species", { job: job ?? null, level, temperature });
   const items = buildChecklist(d, job ?? null, job ? DEFAULT_CONSTRAINTS : null);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
   const issued = new Date().toISOString().slice(0, 10);
