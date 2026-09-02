@@ -7,10 +7,12 @@ import { readWater, cuesFor, type ReadLevel } from "@/lib/water-reading";
 /* ------------------------------------------------------------------ *
  * Hook the Horizon handoffs
  *
- * Water → Species → Forage/Hatch → Presentation → Rig/Tackle → Knot →
- * Field Ops. Field Sense answers the first question in that chain; these
- * handoffs carry what it knows into the instrument that answers the next
- * one, so the reader never restates the water they already chose.
+ * Water → Species → Forage/Hatch → Presentation → Tackle → Knot →
+ * Field Ops. Rig Signal is an optional device-validation sidecar, not a
+ * presentation engine. Field Sense answers the first question in the core
+ * chain; these handoffs carry what it knows into the focused instrument that
+ * answers the next question, so the reader never restates the water they
+ * already chose.
  *
  * The packet travels in the URL fragment, which is never sent to a server.
  * Nothing is posted automatically — a handoff is a link the reader presses.
@@ -68,8 +70,8 @@ const STEP_META: Record<HandoffTarget, { app: string; step: string; question: st
   },
   rig: {
     app: "Rig Signal",
-    step: "Presentation & rig",
-    question: "How do I present it in this current, depth and cover?",
+    step: "Optional · device validation",
+    question: "Do the electronics or device claims hold under the conditions you actually stated?",
   },
   tackle: {
     app: "Tackle Link Analyst",
@@ -205,10 +207,10 @@ function whyFor(d: Destination, target: HandoffTarget, ctx: HandoffContext): str
           : "Still water, so forage is tied to habitat rather than drift. The class and documented species go across.";
     case "rig":
       return t.hazards.has("current")
-        ? "Current is documented here, which is the first thing presentation has to answer. The read goes across with the record."
+        ? "Current is documented here. If you are relying on electronics or a device claim, carry the water context over and test whether that claim survives moving water."
         : t.hazards.has("level")
-          ? "Level swing is documented here, so depth is the variable presentation has to track."
-          : `The standing read for a ${d.waterType} — structure, edges and depth — goes across with the record.`;
+          ? "Level swing is documented here. Use Rig Signal only if a depth, mapping, sonar or device claim matters to the trip."
+          : "Rig Signal is optional here: use it only when the trip depends on a device or electronics claim that should be checked against the stated conditions.";
     case "tackle":
       return t.hazards.has("traffic") || t.hazards.has("current")
         ? "Heavy current or traffic is on record; line and terminal choices have to survive it."
@@ -226,7 +228,7 @@ function whyFor(d: Destination, target: HandoffTarget, ctx: HandoffContext): str
   }
 }
 
-/** The workflow, in order, for one water. */
+/** The workflow, in order, for one water. Rig Signal is optional even though it remains visible. */
 export const HANDOFF_ORDER: HandoffTarget[] = ["species", "hatch", "rig", "tackle", "knot", "ops"];
 
 /**
