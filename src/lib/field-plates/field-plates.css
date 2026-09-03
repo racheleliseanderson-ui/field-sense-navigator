@@ -1,0 +1,233 @@
+/*
+ * Hook the Horizon — field plate styles.
+ *
+ * BYTE-IDENTICAL ACROSS THE FLEET. Canonical copy lives in field-ops-desk.
+ *
+ * Self-contained on purpose. Four of the seven apps never defined --brass or
+ * --panel-border, so every value here falls back to something legible rather
+ * than inheriting a variable that does not exist and drawing in black on
+ * black. An app that has its own tokens overrides the --hthp-* layer once and
+ * every plate follows its theme from then on.
+ *
+ * Sizes are set for the field first: nothing interactive under 44px, body
+ * text no smaller than 12px, and contrast that survives direct sun.
+ */
+
+.hthp-plate {
+  --hthp-gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
+  background: var(--hthp-surface, var(--card, transparent));
+  color: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+@media (min-width: 768px) {
+  .hthp-plate {
+    padding: 1.25rem;
+  }
+}
+
+.hthp-plate__head {
+  margin-bottom: var(--hthp-gap);
+}
+
+.hthp-eyebrow {
+  margin: 0;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+.hthp-plate__title {
+  margin: 0.35rem 0 0;
+  font-family: var(--hthp-display, var(--font-display, inherit));
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .hthp-plate__title {
+    font-size: 1.125rem;
+  }
+}
+
+.hthp-plate__caption {
+  margin: 0.375rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+/*
+ * A wide plate scrolls sideways rather than shrinking. Squeezing an
+ * eight-link chain into 390px makes every label unreadable at exactly the
+ * moment the reader is standing in wind with wet hands.
+ */
+.hthp-plate__frame {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hthp-plate__legend {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+}
+
+.hthp-legend__row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-legend__badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.05rem;
+  border-radius: 999px;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, monospace));
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--hthp-paper, var(--background, #fff));
+}
+
+.hthp-legend__swatch {
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.3rem;
+  border-radius: 2px;
+}
+
+.hthp-legend__label {
+  color: var(--hthp-ink, var(--foreground, #16191c));
+  font-weight: 600;
+}
+
+.hthp-legend__body {
+  color: inherit;
+}
+
+/*
+ * What the drawing could not show. Never folded away: an unknown that is
+ * hidden behind a tap reads as an answer that does not exist.
+ */
+.hthp-plate__unknown {
+  margin: 0.875rem 0 0;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--hthp-watch, #a16207);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-plate__notes {
+  margin-top: 0.25rem;
+}
+
+.hthp-plate__summary {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, monospace));
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+.hthp-plate__summary::-webkit-details-marker {
+  display: none;
+}
+
+.hthp-chevron {
+  transition: transform 150ms ease;
+}
+
+.hthp-plate__notes[open] .hthp-chevron {
+  transform: rotate(180deg);
+}
+
+.hthp-plate__notesbody {
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-plate__notesbody p {
+  margin: 0 0 0.5rem;
+}
+
+.hthp-plate__notesbody p:last-child {
+  margin-bottom: 0;
+}
+
+/* On a wide screen the notes are always open, so the disclosure is noise. */
+@media (min-width: 768px) {
+  .hthp-plate__summary {
+    display: none;
+  }
+}
+
+/*
+ * Field mode: bigger, flatter, higher contrast. The app sets
+ * data-hthp-field="on" somewhere above the plate; nothing else changes.
+ */
+[data-hthp-field="on"] .hthp-plate__caption,
+[data-hthp-field="on"] .hthp-legend__row,
+[data-hthp-field="on"] .hthp-plate__unknown,
+[data-hthp-field="on"] .hthp-plate__notesbody {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+[data-hthp-field="on"] .hthp-plate {
+  --hthp-muted: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+/* Print: a plate is a field reference, so it has to survive a printer. */
+@media print {
+  .hthp-plate {
+    break-inside: avoid;
+    border-color: #999;
+  }
+
+  .hthp-plate__frame {
+    overflow: visible;
+  }
+
+  .hthp-plate__summary {
+    display: none;
+  }
+
+  .hthp-plate__notes {
+    display: block;
+  }
+
+  .hthp-plate__notesbody {
+    display: block !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hthp-chevron {
+    transition: none;
+  }
+}
