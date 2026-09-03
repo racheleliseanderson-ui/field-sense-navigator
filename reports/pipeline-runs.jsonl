@@ -48,3 +48,5 @@
 {"at":"2026-09-03T05:33:08.290Z","run":"repair-seeded","from":524,"scope":444,"kept":403,"renamed":0,"removed":41,"dry":false}
 {"at":"2026-09-03T05:33:57.559Z","run":"health","records":926,"overdue":94,"duplicates":9,"untrusted":10,"deadLinks":0,"links":false}
 {"at":"2026-09-03T05:34:06.703Z","run":"health","records":926,"overdue":94,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
+{"at":"2026-09-03T05:42:30.600Z","run":"health","records":926,"overdue":94,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
+{"at":"2026-09-03T05:45:07.332Z","run":"refresh","attempted":926,"refreshed":578,"changed":38,"issues":{"robots_disallow":17,"page_no_longer_names_water":197,"page_unreadable":124,"untrusted_source_host":5,"redirects_off_agency":5},"prune":false,"dry":false}
