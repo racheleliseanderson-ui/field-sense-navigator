@@ -135,16 +135,40 @@ export function isMarineWater(value: string): boolean {
   return (MARINE_TYPES as readonly string[]).includes(value);
 }
 
-/** Both spellings in circulation. See `Open<>` above for why both are listed. */
+/**
+ * The canonical temperature-source spellings. Kebab-case, one dialect only.
+ *
+ * The fleet shipped two spellings of the same idea — `official-gauge` beside
+ * `official_station`, `observed` beside `user_measured` — with nothing saying
+ * which was which, so anything switching on the string had to handle both. The
+ * kebab dialect wins because it is what the majority of senders already write
+ * and what `EVIDENCE_CLASSES` below already uses.
+ *
+ * The snake spellings are still ACCEPTED on read (see `TEMP_SOURCE_ALIASES`),
+ * normalised to these, and never emitted.
+ */
 export const TEMP_SOURCES = [
   "official-gauge",
   "official-observation",
-  "official_station",
-  "user_measured",
+  "official-station",
+  "user-measured",
   "estimated",
   "unknown",
 ] as const;
 export type TempSource = Open<(typeof TEMP_SOURCES)[number]>;
+
+/**
+ * Accepted-on-read spellings → the canonical one above.
+ *
+ * Read, normalised, and then gone: `normalizeVocabulary()` rewrites them so a
+ * consumer only ever sees one spelling, and nothing in this file emits an
+ * alias. Adding a row here is how the fleet absorbs a dialect instead of
+ * asking a repo to lie about its own domain.
+ */
+export const TEMP_SOURCE_ALIASES: Record<string, TempSource> = {
+  official_station: "official-station",
+  user_measured: "user-measured",
+};
 
 export const FLOW_CLASSES = ["very_low", "low", "moderate", "elevated", "high", "unknown"] as const;
 export type FlowClass = Open<(typeof FLOW_CLASSES)[number]>;
@@ -189,6 +213,32 @@ export const WEATHER_TRENDS = [
 ] as const;
 export type WeatherTrend = Open<(typeof WEATHER_TRENDS)[number]>;
 
+/**
+ * Rig Signal's pressure-trend spellings → the canonical trends above.
+ *
+ * Rig Signal describes the same axis as a barometer reading — `falling`,
+ * `rising`, `front_approaching` — and only `stable` and `post_front` overlap
+ * with the list above. A packet carrying one of its spellings therefore lost
+ * its pressure trend on the way into any instrument that switched on the
+ * canonical set.
+ *
+ * The mapping is the one Rig Signal's own reader already implies: it treats
+ * `front_approaching` and `falling` as the same falling-pressure case, and
+ * `post_front` and `rising` as the same rising-pressure case.
+ *
+ * It is not symmetric, and it is worth saying why. `warming` and `cooling` have
+ * no barometric spelling at all, and `falling` collapses into `frontal_change`,
+ * which is the coarser word. So a value that round-trips through Rig Signal's
+ * dialect and back comes home as `frontal_change`, not as whatever it started
+ * as. That loss is in the vocabularies, not in this table; absorbing the
+ * dialect is still better than dropping the axis on the floor.
+ */
+export const WEATHER_TREND_ALIASES: Record<string, WeatherTrend> = {
+  falling: "frontal_change",
+  front_approaching: "frontal_change",
+  rising: "post_front",
+};
+
 export const SEASONS = [
   "winter",
   "early_spring",
@@ -217,19 +267,30 @@ export const FORAGE_CLASSES = [
 ] as const;
 export type ForageClass = Open<(typeof FORAGE_CLASSES)[number]>;
 
-/** How a provenance entry was come by. `observed-retained` marks a real reading
- *  carried past its freshness window — kept, but never quietly relabelled. */
+/**
+ * How a provenance entry was come by. One dialect: kebab-case, same rule as
+ * `TEMP_SOURCES`.
+ *
+ * `observed-retained` marks a real reading carried past its freshness window —
+ * kept, but never quietly relabelled.
+ */
 export const EVIDENCE_CLASSES = [
   "probed",
   "declared",
   "device",
   "observed",
   "observed-retained",
-  "user_measured",
-  "official_station",
+  "user-measured",
+  "official-station",
   "unknown",
 ] as const;
 export type EvidenceClass = Open<(typeof EVIDENCE_CLASSES)[number]>;
+
+/** Accepted-on-read evidence spellings → the canonical one above. */
+export const EVIDENCE_CLASS_ALIASES: Record<string, EvidenceClass> = {
+  user_measured: "user-measured",
+  official_station: "official-station",
+};
 
 /* ========================================================================== *
  * The packet
@@ -315,6 +376,38 @@ export type ReadinessBlock = {
   band: string;
 };
 
+/** The one shape a temperature range is ever READ AS or WRITTEN AS. */
+export type TempRangeF = { low: number; high: number };
+
+/**
+ * The shapes a temperature range is ACCEPTED IN.
+ *
+ * Three of them were already travelling: `{ low, high }`, the `[low, high]`
+ * tuple Species & Presentation stores, and the `{ min, max }` pair Rig Signal's
+ * reader falls back to. A receiver that understood only one read the other two
+ * as "no range", which looks exactly like an angler who never took a reading.
+ */
+export type TempRangeFInput = TempRangeF | [number, number] | { min: number; max: number };
+
+/**
+ * Normalise any accepted range shape to `{ low, high }`, or null.
+ *
+ * Low and high are ordered rather than trusted — a sender that wrote them the
+ * other way round meant a range, not an empty one — and a pair that is not two
+ * finite numbers is dropped instead of being half-read.
+ */
+export function normalizeTempRangeF(value: unknown): TempRangeF | null {
+  const pair = (a: unknown, b: unknown): TempRangeF | null => {
+    if (typeof a !== "number" || typeof b !== "number") return null;
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+    return { low: Math.min(a, b), high: Math.max(a, b) };
+  };
+  if (Array.isArray(value)) return value.length === 2 ? pair(value[0], value[1]) : null;
+  if (!value || typeof value !== "object") return null;
+  const o = value as Record<string, unknown>;
+  return pair(o["low"] ?? o["min"], o["high"] ?? o["max"]);
+}
+
 export type ConditionsBlock = {
   waterType?: Opt<Open<FleetWaterType>>;
 
@@ -342,7 +435,11 @@ export type ConditionsBlock = {
   /* The wider conditions vocabulary other instruments read and write. Optional
    * everywhere: an instrument that does not model an axis simply omits it, and
    * a receiver treats a missing axis as "do not apply it" rather than guessing. */
-  tempRangeF?: Opt<{ low: number; high: number }>;
+  /** ALWAYS `{ low, high }` once it has been through `readPacket()`. A sender
+   *  may write the `[low, high]` tuple Species & Presentation uses, or the
+   *  `{ min, max }` pair Rig Signal's reader accepts; both normalise to this
+   *  and only this is ever emitted. See `normalizeTempRangeF()`. */
+  tempRangeF?: Opt<TempRangeF>;
   flow?: Opt<FlowClass>;
   stillState?: Opt<StillState>;
   tideMovement?: Opt<TideMovement>;
@@ -353,6 +450,17 @@ export type ConditionsBlock = {
   season?: Opt<Season>;
   holding?: Opt<string>;
   [key: string]: unknown;
+};
+
+/**
+ * A conditions block as a CALLER MAY WRITE IT, before normalisation.
+ *
+ * Identical to `ConditionsBlock` except that `tempRangeF` accepts every shape
+ * the fleet ships. `buildPacket()` normalises it, so what leaves is always the
+ * canonical block.
+ */
+export type ConditionsInput = Partial<Omit<ConditionsBlock, "tempRangeF">> & {
+  tempRangeF?: Opt<TempRangeFInput>;
 };
 
 /**
@@ -486,21 +594,134 @@ export function stripCoordinates<T>(value: T): T {
 }
 
 /**
- * Strip, then re-state the privacy claim as this file's own.
+ * Strip, then re-state the privacy claim.
  *
- * Once the walk above has run, `containsCoordinates: false` is no longer the
- * sender's word for it — it is a fact about the object being returned.
+ * TWO FIELDS, TWO DIFFERENT RULES, AND THE DIFFERENCE IS THE WHOLE POINT.
+ *
+ * `containsCoordinates: false` may be re-asserted here, because the walk above
+ * has just run and this is no longer the sender's word for it — it is a fact
+ * about the object being returned.
+ *
+ * `containsPrivateWater` may NOT. This file removes no private water; it has no
+ * idea what water is private. The flag is one sender's warning to everybody
+ * downstream, and an instrument that re-emits carries it whether or not it
+ * agrees. So it is OR-ed forward, never re-stated: an incoming `true` survives
+ * every hop after it. Writing `false` here unconditionally — which this
+ * function used to do — meant one re-emit anywhere in a five-app chain silently
+ * destroyed an upstream warning for every instrument after it.
+ *
+ * A warning may be raised. It may not be downgraded.
  */
 export function sanitizePacket(packet: HthPacket): HthPacket {
   const clean = stripCoordinates(packet) as HthPacket;
   const prior =
-    clean.privacy && typeof clean.privacy === "object" ? (clean.privacy as PrivacyBlock) : undefined;
+    clean.privacy && typeof clean.privacy === "object"
+      ? (clean.privacy as PrivacyBlock)
+      : undefined;
   clean.privacy = {
     ...(prior ?? {}),
     containsCoordinates: false,
-    containsPrivateWater: false,
+    containsPrivateWater: prior?.containsPrivateWater === true,
   };
   return clean;
+}
+
+/* ========================================================================== *
+ * One dialect out
+ *
+ * The fleet shipped two spellings of several ideas — `official_station` beside
+ * `official-gauge`, Rig Signal's `falling` beside `frontal_change`, a
+ * temperature range as a tuple in one repo and an object in another. Every
+ * consumer then had to know all of them, and the ones that did not silently
+ * dropped an axis.
+ *
+ * These run on the way IN and on the way OUT, so a caller of this file only
+ * ever sees the canonical spelling and only ever emits it.
+ * ========================================================================== */
+
+/** Rewrite one open vocabulary value through its alias table. */
+function canonical<T extends string>(value: unknown, aliases: Record<string, T>): T | null {
+  const key = str(value);
+  if (!key) return null;
+  const hit = aliases[key];
+  return hit === undefined || hit === key ? null : hit;
+}
+
+/**
+ * Normalise the vocabularies that drifted, in place on a copy.
+ *
+ * `notes` collects a plain sentence per axis actually rewritten, so a repair is
+ * reported rather than performed silently — the same rule the legacy envelope
+ * repair follows. An already-canonical packet adds no notes and is returned
+ * structurally unchanged.
+ */
+export function normalizeVocabulary(packet: HthPacket, notes: string[] = []): HthPacket {
+  const out = packet as HthPacket & Record<string, unknown>;
+
+  const rawConditions = out["conditions"];
+  if (isPlainObject(rawConditions)) {
+    const conditions: Record<string, unknown> = { ...rawConditions };
+    let touched = false;
+
+    for (const field of ["tempSource", "airTempSource"] as const) {
+      const fixed = canonical(conditions[field], TEMP_SOURCE_ALIASES);
+      if (fixed) {
+        notes.push(`Read ${String(conditions[field])} as ${fixed} (the fleet spelling).`);
+        conditions[field] = fixed;
+        touched = true;
+      }
+    }
+
+    const weather = canonical(conditions["weather"], WEATHER_TREND_ALIASES);
+    if (weather) {
+      notes.push(
+        `Read the pressure trend ${String(conditions["weather"])} as ${weather} (the fleet spelling).`,
+      );
+      conditions["weather"] = weather;
+      touched = true;
+    }
+
+    const range = conditions["tempRangeF"];
+    if (range !== undefined && range !== null) {
+      const fixed = normalizeTempRangeF(range);
+      const already =
+        isPlainObject(range) &&
+        typeof range["low"] === "number" &&
+        typeof range["high"] === "number" &&
+        Object.keys(range).length === 2;
+      if (fixed && !already) {
+        notes.push(
+          `Read the temperature range as ${fixed.low}–${fixed.high}°F; it arrived in an older shape.`,
+        );
+        conditions["tempRangeF"] = fixed;
+        touched = true;
+      } else if (!fixed) {
+        notes.push("Dropped a temperature range that was not a usable pair of numbers.");
+        delete conditions["tempRangeF"];
+        touched = true;
+      }
+    }
+
+    if (touched) out["conditions"] = conditions;
+  }
+
+  const provenance = out["provenance"];
+  if (Array.isArray(provenance)) {
+    let touched = false;
+    const fixedList = provenance.map((entry) => {
+      if (!isPlainObject(entry)) return entry;
+      const fixed = canonical(entry["evidenceClass"], EVIDENCE_CLASS_ALIASES);
+      if (!fixed) return entry;
+      notes.push(
+        `Read the evidence class ${String(entry["evidenceClass"])} as ${fixed} (the fleet spelling).`,
+      );
+      touched = true;
+      return { ...entry, evidenceClass: fixed };
+    });
+    if (touched) out["provenance"] = fixedList;
+  }
+
+  return out;
 }
 
 /* ========================================================================== *
@@ -580,10 +801,7 @@ function fragmentBody(input: string): string | null {
 /** Why a packet that was offered could not be honoured. Machine-readable
  *  companion to the human `reason`. */
 export type PacketInvalidCode =
-  | "unreadable"
-  | "not-an-object"
-  | "version-mismatch"
-  | "contract-mismatch";
+  "unreadable" | "not-an-object" | "version-mismatch" | "contract-mismatch";
 
 export type PacketRead =
   /** No packet was offered. The ordinary case, and NOT an error. */
@@ -779,8 +997,11 @@ export function readPacket(input?: string | null): PacketRead {
     };
   }
 
-  /* Rule 2, inbound. Whatever the sender's privacy block claimed. */
-  const packet = sanitizePacket(candidate as unknown as HthPacket);
+  /* Rule 2, inbound. Whatever the sender's privacy block claimed — except its
+   * private-water warning, which is carried forward rather than re-stated. */
+  const stripped = sanitizePacket(candidate as unknown as HthPacket);
+  /* One dialect out. Every rewrite is reported in `notes`, never silent. */
+  const packet = normalizeVocabulary(stripped, notes);
   return { state: "ok", packet, normalizations: notes };
 }
 
@@ -887,6 +1108,19 @@ export const INSTRUMENT_ORIGIN: Record<string, string> = {
   "HTH-SP-001": "species-presentation",
   "HTH-HM-001": "hatch-match",
   "HTH-RS-001": "rig-signal",
+  /* Registered from what these three actually emit, not from a guess: Tackle
+   * Link's `FLEET_INSTRUMENT_ID`, the id Knot Analyst stamps on its outbound
+   * packet, and the Field Ops Desk's `OPS_INSTRUMENT_ID`. Until they were
+   * listed here, a sender that emitted its id without an `origin` had the raw
+   * id written into the trail, where the next reader saw "HTH-TL-001" instead
+   * of a fleet name. */
+  "HTH-TL-001": "tackle-link-analyst",
+  "HTH-KN-001": "knot-analyst",
+  /* Knot Analyst's older engine-provenance stamp, which the Field Ops Desk's
+   * own tool registry still lists as that instrument's id. Same instrument. */
+  "HTH-KK-001": "knot-analyst",
+  /* Three letters, not two — the desk's id predates the two-letter pattern. */
+  "HTH-OPS-001": "field-ops-desk",
 };
 
 /**
@@ -908,16 +1142,25 @@ export const ORIGIN_TO_TOOL: Record<string, FleetToolKey> = {
   "HTH-HM-001": "hatch-match",
   "tackle-link": "tackle-link-analyst",
   "tackle-link-analyst": "tackle-link-analyst",
+  "HTH-TL-001": "tackle-link-analyst",
   "knot-analyst": "knot-analyst",
+  "HTH-KN-001": "knot-analyst",
+  "HTH-KK-001": "knot-analyst",
   "rig-signal": "rig-signal",
   "HTH-RS-001": "rig-signal",
   "field-ops": "field-ops-desk",
   "field-ops-desk": "field-ops-desk",
+  "HTH-OPS-001": "field-ops-desk",
 };
 
 /** Which tool last touched this packet, when it can be told. */
 export function toolKeyOf(packet: HthPacket): FleetToolKey | null {
-  const candidates = [lastHop(packet)?.origin, packet.fleet?.lastUpdatedBy, packet.origin, packet.instrumentId];
+  const candidates = [
+    lastHop(packet)?.origin,
+    packet.fleet?.lastUpdatedBy,
+    packet.origin,
+    packet.instrumentId,
+  ];
   for (const candidate of candidates) {
     const key = str(candidate);
     if (key && ORIGIN_TO_TOOL[key]) return ORIGIN_TO_TOOL[key] as FleetToolKey;
@@ -926,13 +1169,26 @@ export function toolKeyOf(packet: HthPacket): FleetToolKey | null {
 }
 
 export type FreshnessAssessment = {
-  /** The desk's gate vocabulary, so this drops straight into a gate list. */
+  /** The desk's gate vocabulary, so this drops straight into a gate list.
+   *  GATE ON THIS FIELD. See `expired` below for why it is not the one. */
   severity: "blocked" | "caution" | "clear";
   /** False when nothing datable travelled. Fails toward caution, never clear:
    *  the desk cannot grade what it has not measured. */
   measured: boolean;
   ageMs: number | null;
   windowMs: number;
+  /**
+   * DO NOT GATE ON THIS. Gate on `state`/`severity`, or on `measured`.
+   *
+   * `expired` answers one question only: did a measured age run past its
+   * window? A packet that carried no usable timestamp is not expired — there
+   * was nothing to expire — so this is `false` alongside `measured: false` and
+   * `severity: "caution"`. That combination is correct and it is also a trap:
+   * `expired` is the obvious field to reach for, and an ageless packet read
+   * through it alone looks fresh. It is only meaningful when `measured` is
+   * true. `severity` already folds both cases in, which is why it is the field
+   * to branch on.
+   */
   expired: boolean;
   label: string;
   detail: string;
@@ -957,6 +1213,13 @@ export function assessFreshness(
     options.windowMs ?? (toolKey ? CARRY_WINDOW_MS[toolKey] : DEFAULT_CARRY_WINDOW_MS);
   const ageMs = packetAge(packet, now);
   const minutes = (ms: number) => Math.round(ms / 60_000);
+  /* "1 minute", not "1 minute(s)". This string is shown to a person in every
+   * repo that renders the detail line, and a parenthesised plural is a log
+   * line, not something anyone writes on purpose. */
+  const minutesAgo = (ms: number) => {
+    const m = Math.max(1, minutes(ms));
+    return `${m} ${m === 1 ? "minute" : "minutes"}`;
+  };
   const from = str(lastHop(packet)?.origin) ?? str(packet.origin) ?? "the sending tool";
 
   if (ageMs == null) {
@@ -980,7 +1243,7 @@ export function assessFreshness(
       windowMs,
       expired: true,
       label: "Freshness",
-      detail: `This context was carried ${minutes(ageMs)} minutes ago, past its ${minutes(windowMs)}-minute window. Check again from ${from} before you rely on it.`,
+      detail: `This context was carried ${minutesAgo(ageMs)} ago, past its ${minutes(windowMs)}-minute window. Check again from ${from} before you rely on it.`,
     };
   }
   if (ageMs > windowMs * 0.7) {
@@ -991,7 +1254,7 @@ export function assessFreshness(
       windowMs,
       expired: false,
       label: "Freshness",
-      detail: `Carried ${minutes(ageMs)} minutes ago, near the end of its ${minutes(windowMs)}-minute window. Re-pull if the day has changed.`,
+      detail: `Carried ${minutesAgo(ageMs)} ago, near the end of its ${minutes(windowMs)}-minute window. Re-pull if the day has changed.`,
     };
   }
   return {
@@ -1001,7 +1264,7 @@ export function assessFreshness(
     windowMs,
     expired: false,
     label: "Freshness",
-    detail: `Carried ${Math.max(1, minutes(ageMs))} minute(s) ago, inside its ${minutes(windowMs)}-minute window.`,
+    detail: `Carried ${minutesAgo(ageMs)} ago, inside its ${minutes(windowMs)}-minute window.`,
   };
 }
 
@@ -1094,7 +1357,8 @@ export const FLEET_TARGETS: Record<FleetTargetKey, FleetTarget> = {
     toolKey: "field-ops-desk",
     role: "chain",
     step: "Field ops & debrief",
-    question: "How does this become a trip — travel, timing, kit, the open checks, and the debrief?",
+    question:
+      "How does this become a trip — travel, timing, kit, the open checks, and the debrief?",
   },
   rig: {
     key: "rig",
@@ -1155,7 +1419,9 @@ export type BuildPacketInput = {
   water?: Opt<Partial<WaterBlock>>;
   reading?: Opt<Partial<ReadingBlock>>;
   logistics?: Opt<Partial<LogisticsBlock>>;
-  conditions?: Opt<Partial<ConditionsBlock>>;
+  /** `tempRangeF` may be given in any accepted shape; it is emitted as
+   *  `{ low, high }`. Everything else is the canonical block. */
+  conditions?: Opt<ConditionsInput>;
   job?: Opt<JobRef>;
   readiness?: Opt<ReadinessBlock>;
   /** Replaces the incoming list when given, because open checks belong to the
@@ -1166,6 +1432,15 @@ export type BuildPacketInput = {
   /** Instrument-specific blocks — `claimEvaluation`, `tackleEvaluation`,
    *  `knotDecision`, `hypotheses`, and anything a future instrument adds. */
   blocks?: Opt<Record<string, unknown>>;
+  /**
+   * This instrument's own privacy claim.
+   *
+   * `containsCoordinates` is not taken from here — this file strips coordinates
+   * and states that one itself. `containsPrivateWater` IS: it is a claim only
+   * the sender can make, and it is OR-ed with whatever arrived. An instrument
+   * can raise the warning. Nothing can lower it.
+   */
+  privacy?: Opt<Partial<PrivacyBlock>>;
   /** Injectable clock, so a test can assert on a stamp. */
   now?: Opt<Date | string>;
 };
@@ -1186,10 +1461,7 @@ function incomingPacketOf(value: Opt<HthPacket | PacketRead>): HthPacket | null 
   return value as HthPacket;
 }
 
-function mergeBlock(
-  base: unknown,
-  patch: unknown,
-): Record<string, unknown> | undefined {
+function mergeBlock(base: unknown, patch: unknown): Record<string, unknown> | undefined {
   const a = isPlainObject(base) ? base : undefined;
   const b = isPlainObject(patch) ? patch : undefined;
   if (!a && !b) return undefined;
@@ -1224,10 +1496,17 @@ export function buildPacket(input: BuildPacketInput): HthPacket {
       : (str(input.now) ?? new Date().toISOString());
 
   const incoming = incomingPacketOf(input.incoming);
-  const base: Record<string, unknown> = incoming ? { ...(incoming as Record<string, unknown>) } : {};
+  const base: Record<string, unknown> = incoming
+    ? { ...(incoming as Record<string, unknown>) }
+    : {};
 
   /* Rule 1. `cleanTrail` drops half-formed entries so a later `packetAge()`
    * cannot read a hop with no stamp; everything well-formed is kept, in order. */
+  const basePrivacy: Record<string, unknown> = isPlainObject(base["privacy"])
+    ? base["privacy"]
+    : {};
+  const ownPrivacy: Record<string, unknown> = isPlainObject(input.privacy) ? input.privacy : {};
+
   const baseFleetRaw = base["fleet"];
   const baseFleet: Record<string, unknown> = isPlainObject(baseFleetRaw) ? baseFleetRaw : {};
   const trail: TrailEntry[] = [
@@ -1252,7 +1531,26 @@ export function buildPacket(input: BuildPacketInput): HthPacket {
       ...arrayOf<ProvenanceEntry>(base["provenance"]),
       ...arrayOf<ProvenanceEntry>(input.provenance),
     ],
-    privacy: { containsCoordinates: false, containsPrivateWater: false },
+    /*
+     * A private-water warning is OR-ed forward, never re-stated.
+     *
+     * This block used to be written flat, AFTER `...base`, which meant an
+     * instrument re-emitting somebody else's packet erased an upstream
+     * `containsPrivateWater: true` for every instrument after it. The contract
+     * calls privacy the sender's claim; that let one sender delete another's.
+     *
+     * `containsCoordinates` is different and may be re-asserted, because
+     * `sanitizePacket()` below has actually removed the coordinates and can say
+     * so. A claim this file can prove, it makes. A warning it cannot check, it
+     * carries.
+     */
+    privacy: {
+      ...basePrivacy,
+      ...ownPrivacy,
+      containsCoordinates: false,
+      containsPrivateWater:
+        basePrivacy["containsPrivateWater"] === true || ownPrivacy["containsPrivateWater"] === true,
+    },
   };
 
   const instrumentId = str(input.instrumentId) ?? str(base["instrumentId"]);
@@ -1281,8 +1579,10 @@ export function buildPacket(input: BuildPacketInput): HthPacket {
     for (const [key, value] of Object.entries(input.blocks)) out[key] = value;
   }
 
-  /* Rule 2, outbound. */
-  return sanitizePacket(out as unknown as HthPacket);
+  /* Rule 2, outbound, and one dialect out: an instrument that copies this file
+   * cannot become the reason a second spelling of `official-station` or a
+   * second shape of `tempRangeF` keeps circulating. */
+  return normalizeVocabulary(sanitizePacket(out as unknown as HthPacket));
 }
 
 /**
@@ -1296,5 +1596,11 @@ export function buildPacket(input: BuildPacketInput): HthPacket {
 export function packetUrl(target: FleetTargetKey | string, packet: HthPacket): string {
   const known = (FLEET_TARGETS as Record<string, FleetTarget | undefined>)[target];
   const base = (known?.url ?? target).replace(/\/+$/, "");
-  return `${base}${encodePacketHash(sanitizePacket(packet))}`;
+  /* `https://host/#packet=` rather than `https://host#packet=`. Both resolve to
+   * the same page, but a link checker normalises the first form into the
+   * second, so two copies of one handoff stop comparing equal. The slash is
+   * added only where the address is a bare host: a target that already names a
+   * route (`.../debrief`) keeps the path it was given. */
+  const root = /^https?:\/\/[^/]+$/.test(base) ? `${base}/` : base;
+  return `${root}${encodePacketHash(sanitizePacket(packet))}`;
 }

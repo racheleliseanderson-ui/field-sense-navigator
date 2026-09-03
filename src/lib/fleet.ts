@@ -9,6 +9,12 @@
  * instrument, update this file in every repo in the same pass — a drifted
  * footer is how the fleet stops looking like one company.
  *
+ * This file and `hth-packet.ts` are both copied by hand, so both must be
+ * PRETTIER-CLEAN before anyone copies them. A repo that reformats its copy has
+ * produced a second version of a file that is supposed to be one file, and the
+ * next diff between two repos is then unreadable. `PUBLICATIONS` sat on eight
+ * lines here and on one line in three sibling repos for exactly that reason.
+ *
  * Known traps, verified 2026-08-28:
  *   - Support is /customer-support, NOT /support (that path 404s).
  *   - Elsewhere, Apparently is a PUBLICATION on the house domain. Its
@@ -84,14 +90,7 @@ export const ELSEWHERE: FleetGroup = {
 };
 
 /** Every publication in the house, in house order. */
-export const PUBLICATIONS: FleetGroup[] = [
-  SALTY,
-  THISTLE,
-  VANITY,
-  DRAMA,
-  HORIZON,
-  ELSEWHERE,
-];
+export const PUBLICATIONS: FleetGroup[] = [SALTY, THISTLE, VANITY, DRAMA, HORIZON, ELSEWHERE];
 
 /** The app rendering this footer. Its entry gets aria-current and no link-out. */
 export const THIS_APP = "Field Sense Navigator";

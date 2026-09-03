@@ -41,12 +41,15 @@ any step, and nothing downstream may require it.
   "conditions": {
     "waterType",
     "tempF", "tempUnit", "tempSource", "tempObservedAt", "tempRetained", "tempStation",
-    "airTempF", "airTempSource", "airTempObservedAt", "airTempRetained", "airTempStation"
-    // plus the optional wider vocabulary: tempRangeF, flow, stillState,
-    // tideMovement, tideStrength, clarity, light, weather, season, holding
+    "airTempF", "airTempSource", "airTempObservedAt", "airTempRetained", "airTempStation",
+    "tempRangeF": { "low": 52, "high": 61 },   // this shape, always. See §7.
+    // plus the optional wider vocabulary: flow, stillState, tideMovement,
+    // tideStrength, clarity, light, weather, season, holding
   },
   "provenance": [{ "source", "evidenceClass", "reviewedAt", "ageDays",
                    "humanReviewedAt", "humanReviewedBy", "nextReviewAt", "builtAt" }],
+  // containsCoordinates is re-asserted false; containsPrivateWater is OR-ed
+  // forward and can never be downgraded. See §4.
   "privacy": { "containsCoordinates": false, "containsPrivateWater": false }
 }
 ```
@@ -114,6 +117,23 @@ receiver adopting a stranger's `lat`/`lon`, persisting it, and re-emitting it
 from a code path that never saw the original packet. `privacy` is the sender's
 *claim* — show it if you like, never rely on it.
 
+### The two privacy fields do not behave the same way
+
+| field | rule | why |
+| --- | --- | --- |
+| `containsCoordinates` | **re-asserted `false`** on every read and every write | the strip above has actually run, so this is no longer a claim — it is a fact about the object being returned |
+| `containsPrivateWater` | **OR-ed forward.** An incoming `true` survives every hop after it | this file removes no private water and cannot check the claim; it is one sender's warning to everybody downstream |
+
+**A warning may be raised. It may never be downgraded.** `buildPacket()` used to
+write `privacy: { containsCoordinates: false, containsPrivateWater: false }`
+flat, *after* spreading the incoming packet, which meant a single re-emit
+anywhere in a five-app chain silently destroyed an upstream private-water
+warning for every instrument after it.
+
+An instrument states its own claim through `buildPacket({ privacy: {
+containsPrivateWater: true } })`. That is OR-ed with whatever arrived; nothing a
+caller passes can turn an inherited `true` back into `false`.
+
 ## 5. The three-state read
 
 ```ts
@@ -133,9 +153,126 @@ parameters, and decodes **both** fleet dialects: URI-encoded JSON *and*
 base64url. It only ever **writes** URI-encoded JSON, so no application that
 adopts this file can spread a third dialect.
 
+## 6. The handoff URL
+
+`packetUrl(target, packet)` returns `https://host/#packet=…` — with the root
+slash. Both `https://host#packet=…` and `https://host/#packet=…` resolve to the
+same page, but a link checker normalises one into the other, so two copies of
+one handoff stop comparing equal. The slash is added **only where the address is
+a bare host**: a target that already names a route
+(`packetUrl("https://ops.hookthehorizon.blog/debrief", p)`) keeps the path it
+was given.
+
 ---
 
-## 6. Copying it into your repo
+## 7. One dialect out — the accepted spellings and what they normalise to
+
+The fleet shipped two spellings of several ideas, with nothing saying which was
+which, so anything switching on a source string had to handle both — and the
+consumers that did not silently dropped the axis.
+
+**Kebab-case is canonical**, because it is what the majority of senders already
+write and what `evidenceClass` already used. The other spellings are still
+**accepted on read**, normalised by `normalizeVocabulary()` on the way in *and*
+on the way out, and **never emitted**. Every rewrite is reported in
+`read.normalizations`, the same as the legacy-envelope repair; nothing is
+repaired silently.
+
+### `tempSource` / `airTempSource`
+
+| accepted | canonical |
+| --- | --- |
+| `official-gauge` | `official-gauge` |
+| `official-observation` | `official-observation` |
+| `official_station` | **`official-station`** |
+| `user_measured` | **`user-measured`** |
+| `estimated`, `unknown` | unchanged |
+
+### `evidenceClass`
+
+| accepted | canonical |
+| --- | --- |
+| `official_station` | **`official-station`** |
+| `user_measured` | **`user-measured`** |
+| `probed`, `declared`, `device`, `observed`, `observed-retained`, `unknown` | unchanged |
+
+### `weather` — the Rig Signal pressure-trend dialect
+
+The canonical trends are `stable`, `warming`, `cooling`, `frontal_change`,
+`post_front`, `unknown`. Rig Signal describes the same axis as a barometer
+reading, and only two values overlap, so a packet built with the shared
+vocabulary lost its pressure trend on the way in.
+
+| accepted (Rig Signal) | canonical |
+| --- | --- |
+| `falling` | **`frontal_change`** |
+| `front_approaching` | **`frontal_change`** |
+| `rising` | **`post_front`** |
+| `stable`, `post_front` | unchanged |
+
+The mapping is the one Rig Signal's own reader already implies: it treats
+`front_approaching` and `falling` as the same falling-pressure case, and
+`post_front` and `rising` as the same rising-pressure case. It is **not
+symmetric**, and it is worth saying so. `warming` and `cooling` have no
+barometric spelling at all, and `falling` collapses into the coarser
+`frontal_change`, so a value that round-trips through the Rig Signal dialect and
+back comes home as `frontal_change` rather than as whatever it started as. That
+loss lives in the two vocabularies, not in the table. Absorbing the dialect is
+still better than dropping the axis.
+
+### `tempRangeF` — the shape is pinned
+
+**Emitted shape, always: `{ "low": 52, "high": 61 }`.** This was previously
+listed in the contract with no shape at all, which is how two shapes ended up in
+circulation.
+
+Accepted on read: `{ low, high }`, the `[low, high]` tuple Species &
+Presentation stores, and the `{ min, max }` pair Rig Signal's reader falls back
+to. All three normalise to `{ low, high }` (`normalizeTempRangeF()`), low and
+high are ordered rather than trusted, and a pair that is not two finite numbers
+is **dropped** rather than half-read — a half-read range looks exactly like an
+angler who never took a reading.
+
+## 8. Freshness — gate on `state`, never on `expired`
+
+```ts
+const gate = assessFreshness(packet);
+if (gate.severity !== "clear") show(gate.detail);   // right
+if (gate.expired) show(gate.detail);                // WRONG
+```
+
+`assessFreshness()` returns `expired: false` when `measured` is `false`. That is
+correct — a packet that carried no usable timestamp has no age, so there was
+nothing to expire, and it fails to `caution` rather than to `clear`. It is also
+a trap: `expired` is the obvious field to reach for, and **an ageless packet
+read through `expired` alone looks fresh.**
+
+`severity` (and `readPacket()`'s `state`) already folds both cases in. `expired`
+is only meaningful alongside `measured: true`.
+
+---
+
+## 9. Copying it into your repo
+
+0. **Both shared files must be prettier-clean before you copy them.**
+   `src/lib/hth-packet.ts` and `src/lib/fleet.ts` are copied by hand, so a repo
+   that reformats its copy has produced a second version of a file that is
+   supposed to be one file — and the next diff between two repos is unreadable.
+   Every repo that adopted the module had to add it to `.prettierignore` to keep
+   CI green, on a file they are contractually forbidden to reformat. Both files
+   are now formatted with the fleet's own Prettier config (`printWidth: 100`,
+   double quotes, semicolons, trailing commas). **Remove them from
+   `.prettierignore` when you take this version.** Run
+   `npx prettier --check src/lib/hth-packet.ts src/lib/fleet.ts` before
+   committing a change to either.
+
+   One caveat worth knowing before it wastes anybody's afternoon: Prettier
+   changed how it formats a union type between 3.7 and 3.9, so the two versions
+   disagree about `PacketInvalidCode` and each rewrites what the other wrote.
+   The canonical copy is formatted with **the version this repo's lockfile
+   resolves (3.9.x)**, which is also the one `eslint-plugin-prettier` runs. If
+   your repo pins an older Prettier, pin 3.9 or later rather than reformatting
+   the file — reformatting is the thing this step exists to stop.
 
 1. **Copy the file.**
    `field-sense-navigator/src/lib/hth-packet.ts` → `<your-repo>/src/lib/hth-packet.ts`.
@@ -200,6 +337,17 @@ adopts this file can spread a third dialect.
    - `tackle-link-analyst`, `knot-horizon-craft` — same substitution; both
      already have the right shape, just a private copy of it.
 
-6. **Do not** change `PACKET_VERSION`, `FLEET_CONTRACT`, the trail rule, or the
+6. **Register your instrument id.** `INSTRUMENT_ORIGIN` and `ORIGIN_TO_TOOL`
+   resolve an id to a fleet name for a sender that emits an id but no `origin`.
+   An unregistered id is written into the trail raw, so the next reader sees
+   `HTH-TL-001` where it should see `tackle-link-analyst`, and
+   `assessFreshness()` falls back to the shortest carry window. Currently
+   registered: `HTH-HH-001` (Field Sense), `HTH-SP-001` (Species &
+   Presentation), `HTH-HM-001` (Hatch Match), `HTH-RS-001` (Rig Signal),
+   `HTH-TL-001` (Tackle Link), `HTH-KN-001` and `HTH-KK-001` (Knot Analyst —
+   the second is its older engine-provenance stamp), `HTH-OPS-001` (Field Ops
+   Desk, three letters rather than two).
+
+7. **Do not** change `PACKET_VERSION`, `FLEET_CONTRACT`, the trail rule, or the
    coordinate denylist in one repo only. Any change to those is a protocol
    change: edit this file, re-copy it to all seven, and bump the version.
