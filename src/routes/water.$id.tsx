@@ -11,6 +11,7 @@ import { AccessPanel } from "@/components/access-panel";
 import { WaterReadingPanel } from "@/components/water-reading";
 import { HookHandoff } from "@/components/hook-handoff";
 import {
+  reviewScheduleNote,
   destinationById,
   displayName,
   humanize,
@@ -173,9 +174,12 @@ function WaterRecord() {
             >
               <p className="tick text-alert">Review overdue</p>
               <p className="mt-2 text-sm leading-relaxed text-foreground">
-                This record was due for review on {d.nextReviewAt}. That date
+                This record was due for re-reading on {d.nextReviewAt}. That date
                 has passed. Every layer below is provisional. Re-read the
                 official source before you treat any of it as current.
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {reviewScheduleNote()}
               </p>
             </div>
           )}
@@ -249,7 +253,7 @@ function WaterRecord() {
             { k: "Status", v: humanize(d.status) },
             { k: "Last source check", v: `${daysSince(d.checkedAt)}d ago` },
             {
-              k: overdue ? "Review overdue" : "Next review",
+              k: overdue ? "Re-read overdue" : "Due for re-reading",
               v: overdue ? `Due ${d.nextReviewAt}` : d.nextReviewAt,
             },
             {
@@ -540,7 +544,9 @@ function WaterRecord() {
                 <dt className="tick text-[0.5rem]">Source read</dt>
                 <dd className={`mt-1 leading-snug ${overdue ? "text-alert" : "text-foreground"}`}>
                   {d.checkedAt.slice(0, 10)} ({daysSince(d.checkedAt)}d ago) ·{" "}
-                  {overdue ? `review overdue since ${d.nextReviewAt}` : `next review ${d.nextReviewAt}`}
+                  {overdue
+                    ? `re-read overdue since ${d.nextReviewAt}`
+                    : `due for re-reading around ${d.nextReviewAt}`}
                 </dd>
               </div>
               {(d.regsReviewedDate || d.accessReviewedDate) && (

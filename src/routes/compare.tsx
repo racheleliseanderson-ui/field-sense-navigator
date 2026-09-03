@@ -465,7 +465,7 @@ function Compare() {
                   >
                     {reviewOverdue(c.d)
                       ? "Review overdue — check again before you travel."
-                      : `Next review ${c.d.nextReviewAt}`}
+                      : `Due for re-reading ${c.d.nextReviewAt}`}
                   </p>
                 </div>
               ))}

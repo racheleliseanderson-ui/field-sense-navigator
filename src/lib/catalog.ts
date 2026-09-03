@@ -130,6 +130,15 @@ const allSeasonWindowEnrichments: DestinationEnrichment[] = [
  * is a hash of the id — stable across renders, servers and builds, so
  * the server and the client always agree, and a record keeps its slot
  * between deploys.
+ *
+ * One thing this date is NOT: a commitment anybody made. It is
+ * `checkedAt` plus a cadence plus a spread, and printing it bare as
+ * "Next review 2026-11-14" reads to a reader as an appointment in
+ * somebody's calendar. That is a stronger claim than the number can
+ * carry, and this instrument's whole argument is that it does not make
+ * claims it cannot support. So `reviewScheduleNote` exists, and every
+ * surface that prints the date is expected to say what kind of date it
+ * is at least once on the page.
  * ------------------------------------------------------------------ */
 
 /** Days after a source check that a record is due to be read again. */
@@ -321,6 +330,17 @@ export function daysSince(iso: string, now = new Date()): number {
   const then = printedDay(iso);
   if (Number.isNaN(then)) return 999;
   return Math.max(0, Math.round((utcToday(now) - then) / 86_400_000));
+}
+
+/**
+ * What the review date actually means, in one sentence.
+ *
+ * Say it wherever the date is printed. A reader who sees a precise day and
+ * no explanation will assume somebody scheduled it, and then read an overdue
+ * flag as a person having missed a deadline rather than as a cadence lapsing.
+ */
+export function reviewScheduleNote(): string {
+  return `A target, not an appointment: ${REVIEW_CADENCE_DAYS} days after this record's last source check, spread across ${REVIEW_SPREAD_DAYS} days so the whole catalog does not fall due on one morning.`;
 }
 
 export function reviewOverdue(d: Destination, now = new Date()): boolean {

@@ -412,7 +412,7 @@ export function readiness(d: Destination): Readiness {
       value: freshValue,
       max: 25,
       note: overdue
-        ? `Review overdue since ${d.nextReviewAt}. This score is capped until the official source is re-read.`
+        ? `Re-read overdue since ${d.nextReviewAt}. This score is capped until the official source is re-read.`
         : `Official source last checked ${age} day${age === 1 ? "" : "s"} ago.`,
     },
     {
@@ -900,7 +900,7 @@ export function buildHandoff(
     `Status: ${humanize(d.status)}`,
     overdue
       ? `Last source check: ${d.checkedAt.slice(0, 10)} · Review OVERDUE since ${d.nextReviewAt}`
-      : `Last source check: ${d.checkedAt.slice(0, 10)} · Next review: ${d.nextReviewAt}`,
+      : `Last source check: ${d.checkedAt.slice(0, 10)} · Due for re-reading: ${d.nextReviewAt}`,
     `Official source: ${d.officialSourceUrl}`,
     ...(d.managingAgency ? [`Managing agency: ${d.managingAgency}`] : []),
     ...(d.officialRegsUrl ? [`Official regulations: ${d.officialRegsUrl}`] : []),

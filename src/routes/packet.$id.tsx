@@ -166,7 +166,7 @@ function Packet() {
 
           {overdue && (
             <p className="mt-5 border border-packet-ink/40 px-3 py-2 text-sm font-medium leading-relaxed">
-              Review overdue since {d.nextReviewAt}. Re-read the official source
+              Re-read overdue since {d.nextReviewAt}. Re-read the official source
               before you treat this brief as current.
             </p>
           )}
@@ -178,7 +178,7 @@ function Packet() {
               ["Band", r.band],
               [
                 overdue ? "Review overdue" : "Last source check",
-                overdue ? `Due ${d.nextReviewAt}` : d.checkedAt.slice(0, 10),
+                overdue ? `Overdue since ${d.nextReviewAt}` : d.checkedAt.slice(0, 10),
               ],
             ].map(([k, v]) => (
               <div key={k}>
