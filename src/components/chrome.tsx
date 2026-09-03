@@ -3,7 +3,15 @@ import { Anchor, ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { NAMED_WATER_COUNT, provinces, usStates } from "@/lib/catalog";
-import { HOUSE_LEGAL_URL, HOUSE_NAME, HOUSE_URL, THIS_APP, THIS_PUBLICATION } from "@/lib/fleet";
+import {
+  ACROSS_FLEET,
+  HOUSE_LEGAL_URL,
+  HOUSE_NAME,
+  HOUSE_SUPPORT_URL,
+  HOUSE_URL,
+  THIS_APP,
+  THIS_PUBLICATION,
+} from "@/lib/fleet";
 import { CommandPalette } from "@/components/command-palette";
 
 /**
@@ -166,7 +174,43 @@ export function SiteHeader() {
   );
 }
 
-export function SiteFooter() {
+/* ------------------------------------------------------------------ *
+ * The fleet footer
+ *
+ * `fleet.ts` has exported `ACROSS_FLEET` and `HOUSE_SUPPORT_URL` since it was
+ * written, and nothing imported either of them. The footer therefore offered
+ * Hook the Horizon, the house and the legal page, and the other five
+ * publications and customer support were unreachable from this application at
+ * all — not hidden behind a menu, absent.
+ *
+ * This is the one place cross-app links are enumerated. Every href comes from
+ * `fleet.ts`; nothing here is typed by hand, so a moved instrument is fixed in
+ * that file and this component follows.
+ * ------------------------------------------------------------------ */
+
+/** Shared link shape: full-width row, 44px minimum, and a focus ring that is
+ *  actually visible against a dark ground. */
+const FLEET_LINK =
+  "tap inline-flex min-h-11 items-center gap-1.5 py-1 hover:text-brass focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+function FleetOut({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} className={`${FLEET_LINK} text-muted-foreground`}>
+      {children}
+      <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+    </a>
+  );
+}
+
+/**
+ * Every address in the house, on every page.
+ *
+ * `children` is whatever the page wants above the link columns — the identity
+ * block and section nav on a normal route, nothing on the printable brief.
+ * Keeping this the single `<footer>` landmark means a screen reader hears one
+ * footer per page rather than two competing ones.
+ */
+export function FleetFooter({ children }: { children?: React.ReactNode }) {
   return (
     <footer
       data-print="hide"
@@ -177,7 +221,103 @@ export function SiteFooter() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brass/60 to-transparent"
       />
       <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto grid grid-cols-1 max-w-7xl gap-10 px-safe py-14 sm:px-8 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+
+      {children}
+
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-10 px-safe pb-14 pt-4 sm:px-8 md:grid-cols-3">
+        <nav aria-label={THIS_PUBLICATION.publication.name}>
+          <p className="tick text-brass">{THIS_PUBLICATION.publication.name}</p>
+          <ul className="mt-3 space-y-1 text-sm">
+            <li>
+              <FleetOut href={THIS_PUBLICATION.publication.url}>The publication</FleetOut>
+            </li>
+            {THIS_PUBLICATION.apps.map((a) =>
+              a.name === THIS_APP ? (
+                /* Where you already are. A link back to this page is a link to
+                 * nowhere, so it is marked and left unpressable. */
+                <li key={a.url}>
+                  <span
+                    aria-current="page"
+                    className="inline-flex min-h-11 items-center gap-2 py-1 text-brass"
+                  >
+                    {a.name}
+                    <span className="tick text-[0.55rem] text-dim-foreground">You are here</span>
+                  </span>
+                </li>
+              ) : (
+                <li key={a.url}>
+                  <FleetOut href={a.url}>{a.name}</FleetOut>
+                </li>
+              ),
+            )}
+          </ul>
+        </nav>
+
+        <nav aria-label="Across the fleet">
+          <p className="tick">Across the fleet</p>
+          <p className="mt-3 max-w-xs text-[0.72rem] leading-relaxed text-dim-foreground">
+            Other publications in the same house. Different subjects, same rule about
+            not inventing what the sources do not say.
+          </p>
+          <ul className="mt-3 space-y-1 text-sm">
+            {ACROSS_FLEET.map((group) => (
+              <li key={group.publication.url}>
+                <FleetOut href={group.publication.url}>{group.publication.name}</FleetOut>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Northern Lantern House">
+          <p className="tick">The house</p>
+          <ul className="mt-3 space-y-1 text-sm">
+            <li>
+              <FleetOut href={HOUSE_URL}>{HOUSE_NAME}</FleetOut>
+            </li>
+            <li>
+              <FleetOut href={HOUSE_LEGAL_URL}>Legal &amp; accessibility</FleetOut>
+            </li>
+            <li>
+              {/* /customer-support, not /support. The short path 404s. */}
+              <FleetOut href={HOUSE_SUPPORT_URL}>Customer support</FleetOut>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div className="relative border-t border-hairline">
+        <div className="mx-auto max-w-7xl px-safe py-5 sm:px-8">
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Field Sense Navigator — built for Hook the Horizon. Official agency sources
+            are authoritative; posted signage on the day wins over anything printed here.
+            This is a planning guide, not a safety service:{" "}
+            <Link
+              to="/boundary"
+              className="underline hover:text-brass focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              what it will not tell you
+            </Link>
+            .
+          </p>
+          <p className="mt-2 text-[0.7rem] leading-relaxed text-dim-foreground">
+            Observations are published by USGS, NOAA CO-OPS, the National Weather
+            Service, USBR, USACE, CDEC and the Water Survey of Canada. Contains
+            information licensed under the Open Government Licence – Canada.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/**
+ * The footer on a normal route: this instrument's own identity and sections,
+ * then the whole house, inside the one `<footer>` landmark.
+ */
+export function SiteFooter() {
+  return (
+    <FleetFooter>
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-10 px-safe pb-4 pt-14 sm:px-8 md:grid-cols-[1.5fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center border border-brass/40 bg-brass/10 text-brass">
@@ -214,7 +354,7 @@ export function SiteFooter() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="tap inline-flex min-h-11 items-center hover:text-foreground"
+                  className="tap inline-flex min-h-11 items-center py-1 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   {item.label}
                 </Link>
@@ -222,77 +362,7 @@ export function SiteFooter() {
             ))}
           </ul>
         </nav>
-
-        <nav aria-label="Hook the Horizon instruments">
-          <p className="tick">Next in the workflow</p>
-          <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-            {THIS_PUBLICATION.apps
-              .filter((a) => a.name !== THIS_APP)
-              .map((a) => (
-                <li key={a.url}>
-                  <a
-                    href={a.url}
-                    className="tap inline-flex min-h-11 items-center gap-1.5 hover:text-brass"
-                  >
-                    {a.name}
-                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                  </a>
-                </li>
-              ))}
-          </ul>
-        </nav>
-
-        <nav aria-label="Publication and house">
-          <p className="tick">Elsewhere</p>
-          <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-            <li>
-              <a
-                href={THIS_PUBLICATION.publication.url}
-                className="tap inline-flex min-h-11 items-center gap-1.5 hover:text-brass"
-              >
-                {THIS_PUBLICATION.publication.name}
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a
-                href={HOUSE_URL}
-                className="tap inline-flex min-h-11 items-center gap-1.5 hover:text-brass"
-              >
-                {HOUSE_NAME}
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a
-                href={HOUSE_LEGAL_URL}
-                className="tap inline-flex min-h-11 items-center gap-1.5 hover:text-brass"
-              >
-                Legal &amp; accessibility
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
-      <div className="relative border-t border-hairline">
-        <div className="mx-auto max-w-7xl px-safe py-5 sm:px-8">
-          <p className="text-xs leading-relaxed text-muted-foreground">
-            Field Sense Navigator — built for Hook the Horizon. Official agency sources
-            are authoritative; posted signage on the day wins over anything printed here.
-            This is a planning guide, not a safety service:{" "}
-            <Link to="/boundary" className="underline hover:text-brass">
-              what it will not tell you
-            </Link>
-            .
-          </p>
-          <p className="mt-2 text-[0.7rem] leading-relaxed text-dim-foreground">
-            Observations are published by USGS, NOAA CO-OPS, the National Weather
-            Service, USBR, USACE, CDEC and the Water Survey of Canada. Contains
-            information licensed under the Open Government Licence – Canada.
-          </p>
-        </div>
-      </div>
-    </footer>
+    </FleetFooter>
   );
 }

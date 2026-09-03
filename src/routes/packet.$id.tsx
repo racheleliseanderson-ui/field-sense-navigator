@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
 import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
+import { FleetFooter } from "@/components/chrome";
 import { readAccess } from "@/lib/access";
 import { useReadLevel } from "@/lib/read-level";
 import { cuesFor, readWater } from "@/lib/water-reading";
@@ -436,6 +437,10 @@ function Packet() {
           )}
         </footer>
       </article></main>
+      {/* A shared brief link is a landing page for somebody who has never seen
+          the rest of the instrument. Without this the page is a dead end: no
+          header, no footer, and nothing but the browser's back button. */}
+      <FleetFooter />
     </div>
   );
 }
