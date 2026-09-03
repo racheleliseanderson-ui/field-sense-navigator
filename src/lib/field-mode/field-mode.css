@@ -1,0 +1,271 @@
+/*
+ * Hook the Horizon — field mode styles.
+ *
+ * BYTE-IDENTICAL ACROSS THE FLEET. Canonical copy lives in field-ops-desk.
+ *
+ * Everything here hangs off one attribute on the root element, so an app
+ * adopts field mode by importing this file and rendering the provider. No
+ * component needs to know it exists.
+ *
+ * The rules are physical rather than aesthetic. Each block says which fact
+ * about standing in water it is answering, because otherwise the next person
+ * to read this will "clean it up" into something that looks better on a
+ * monitor and works worse on a river.
+ */
+
+/* --------------------------------------------------------------------
+ * Bright sun flattens contrast until mid-grey vanishes.
+ *
+ * Muted text is the first thing to go, and in these apps muted text is where
+ * most of the reasoning lives. So in field mode muted stops being muted.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] {
+  --hthp-muted: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+/*
+ * The colour has to come from the app, not from a literal. An earlier version
+ * of this rule hardcoded a near-black ink as its last fallback, which is
+ * correct on paper and invisible on the dark grounds four of these apps ship.
+ * --hthp-ink is the token every app in the fleet maps to its own foreground;
+ * inherit is the honest last resort, since a container's own text colour is
+ * always a better guess than a colour picked here.
+ */
+[data-hthp-field="on"] .text-muted-foreground,
+[data-hthp-field="on"] .text-dim,
+[data-hthp-field="on"] .text-muted,
+[data-hthp-field="on"] .text-unknown {
+  color: var(--hthp-ink, var(--foreground, inherit)) !important;
+  opacity: 0.92;
+}
+
+/* --------------------------------------------------------------------
+ * Small type is unreadable at arm's length in wind.
+ *
+ * A floor rather than a scale: anything already large is left alone, and
+ * anything under the floor comes up to it. Scaling everything would break
+ * layouts that are working.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] body {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+[data-hthp-field="on"] p,
+[data-hthp-field="on"] li,
+[data-hthp-field="on"] dd,
+[data-hthp-field="on"] label,
+[data-hthp-field="on"] .text-xs,
+[data-hthp-field="on"] .text-sm,
+[data-hthp-field="on"] .text-\[0\.7rem\],
+[data-hthp-field="on"] .text-\[0\.75rem\],
+[data-hthp-field="on"] .text-\[0\.8125rem\] {
+  font-size: max(1em, 0.95rem);
+  line-height: 1.55;
+}
+
+/*
+ * The eyebrow labels stay small but must stay legible: they are the only
+ * thing telling a reader what a block is, and at 10px with letter-spacing in
+ * sun they are decoration.
+ */
+[data-hthp-field="on"] .tick,
+[data-hthp-field="on"] .micro,
+[data-hthp-field="on"] .desk-eyebrow,
+[data-hthp-field="on"] .hthp-eyebrow,
+[data-hthp-field="on"] .field-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+/*
+ * Tracking is the one typographic choice that gets worse as type gets bigger.
+ * An uppercase label set at 0.16em is already the widest thing on a phone; add
+ * two points of size on top and a one-line label becomes three, which is how a
+ * masthead ends up taking a third of the screen. Field mode gives the tracking
+ * back and spends the width on the words instead.
+ */
+[data-hthp-field="on"] [class*="tracking-[0.1"],
+[data-hthp-field="on"] [class*="tracking-[0.2"],
+[data-hthp-field="on"] [class*="tracking-[0.3"],
+[data-hthp-field="on"] .tracking-widest,
+[data-hthp-field="on"] .tracking-wider {
+  letter-spacing: 0.06em;
+}
+
+/* --------------------------------------------------------------------
+ * Wet hands miss anything under about 48px, repeatedly.
+ *
+ * The floor is applied to the things a thumb actually goes for. Inline links
+ * inside a paragraph are excluded: turning every one of those into a 48px
+ * block would destroy the prose they sit in, and they are not what somebody
+ * is jabbing at on a bank.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] button,
+[data-hthp-field="on"] select,
+[data-hthp-field="on"] summary,
+[data-hthp-field="on"] input:not([type="checkbox"]):not([type="radio"]),
+[data-hthp-field="on"] [role="button"],
+[data-hthp-field="on"] [role="tab"],
+[data-hthp-field="on"] a.tap,
+[data-hthp-field="on"] .tap {
+  min-height: 48px;
+}
+
+[data-hthp-field="on"] input[type="checkbox"],
+[data-hthp-field="on"] input[type="radio"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/*
+ * Space between targets matters as much as their size. Two 48px buttons
+ * touching each other are one 96px button as far as a cold thumb is
+ * concerned.
+ */
+[data-hthp-field="on"] .grid.gap-px > * + *,
+[data-hthp-field="on"] .flex.gap-1 > * + *,
+[data-hthp-field="on"] .flex.gap-1\.5 > * + * {
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------
+ * Nobody reads sixteen paragraphs standing on rocks.
+ *
+ * Long prose blocks fold to their first two lines with the rest one tap
+ * away. Collapsed, not deleted: a beginner in the field needs the reasoning
+ * more than a beginner at a desk, not less. Anything marked
+ * data-field-keep is exempt — safety, refusals and unknowns never fold.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] [data-field-fold]:not([open]) > *:not(summary) {
+  display: none;
+}
+
+[data-hthp-field="on"] .hthp-plate__notes:not([open]) .hthp-plate__notesbody {
+  display: none;
+}
+
+[data-hthp-field="on"] [data-field-keep] {
+  display: revert !important;
+}
+
+/* --------------------------------------------------------------------
+ * Decoration costs battery, bandwidth and attention.
+ *
+ * Parallax, film grain, reveal animations and hero imagery are for the
+ * kitchen table. On the water they are between the reader and the answer.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] .desk-parallax,
+[data-hthp-field="on"] .desk-film,
+[data-hthp-field="on"] .hm-parallax {
+  animation: none !important;
+  transform: none !important;
+}
+
+[data-hthp-field="on"] .desk-reveal,
+[data-hthp-field="on"] .stagger-in,
+[data-hthp-field="on"] .reveal {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+[data-hthp-field="on"] * {
+  scroll-behavior: auto !important;
+}
+
+/* --------------------------------------------------------------------
+ * Scrolling is the most expensive gesture on a bank.
+ *
+ * A hero that reserves most of the screen before the first fact, and a
+ * section rhythm tuned for a monitor, together push the answer two or three
+ * thumb-drags down. Neither is wrong at a desk. Both are wrong standing up
+ * with one hand on a rod, so field mode stops the reservation and tightens
+ * the rhythm. Nothing is removed — the same blocks in the same order, closer
+ * together.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] [class*="min-h-["][class*="vh]"],
+[data-hthp-field="on"] .min-h-screen {
+  min-height: 0 !important;
+}
+
+[data-hthp-field="on"] .py-14,
+[data-hthp-field="on"] .py-16,
+[data-hthp-field="on"] .py-20,
+[data-hthp-field="on"] .py-24 {
+  padding-block: 1.75rem;
+}
+
+[data-hthp-field="on"] .pt-16,
+[data-hthp-field="on"] .pt-20,
+[data-hthp-field="on"] .pt-24 {
+  padding-top: 1.75rem;
+}
+
+[data-hthp-field="on"] .pb-16,
+[data-hthp-field="on"] .pb-20,
+[data-hthp-field="on"] .pb-24 {
+  padding-bottom: 1.75rem;
+}
+
+/* --------------------------------------------------------------------
+ * Borders carry structure when colour cannot.
+ *
+ * A hairline that reads as a division indoors reads as nothing in sun, and
+ * these layouts lean on hairlines to separate one reading from the next.
+ * -------------------------------------------------------------------- */
+[data-hthp-field="on"] {
+  --hthp-line: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+[data-hthp-field="on"] .hthp-plate {
+  border-width: 2px;
+}
+
+/* --------------------------------------------------------------------
+ * The control that turns this on has to be reachable with one thumb.
+ * -------------------------------------------------------------------- */
+.hth-field-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.4)));
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, monospace));
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hth-field-toggle[data-active="true"] {
+  border-color: var(--hthp-accent, var(--brass, #b08428));
+  color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+.hth-field-toggle__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.hth-field-toggle[data-active="true"] .hth-field-toggle__dot {
+  opacity: 1;
+}
+
+[data-hthp-field="on"] .hth-field-toggle {
+  min-height: 48px;
+  font-size: 0.75rem;
+}
+
+@media print {
+  .hth-field-toggle {
+    display: none;
+  }
+}

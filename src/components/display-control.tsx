@@ -2,6 +2,7 @@ import { Check, Contrast, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { useTheme, THEMES, type Theme } from "@/lib/theme";
+import { FIELD_MODE_LABEL, FIELD_MODE_NOTE, useFieldMode } from "@/lib/field-mode";
 
 /**
  * The instrument's ONE appearance and accessibility control.
@@ -28,6 +29,7 @@ const ACCESS = THEMES.filter((t) => t.group === "access");
 
 export function DisplayControl() {
   const { theme, setTheme, motion, setMotion } = useTheme();
+  const { setting: fieldSetting, set: setFieldMode } = useFieldMode();
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -102,7 +104,37 @@ export function DisplayControl() {
             </button>
           </div>
 
-          <ul className="mt-2 space-y-1">{GROUND.map(row)}</ul>
+          {/* Reading mode belongs in this panel and nowhere else: it changes
+              how the page looks, and this instrument keeps every such control
+              behind one affordance. */}
+          <div className="mt-3">
+            <p className="tick text-[0.55rem]">Reading</p>
+            <div className="mt-2 grid grid-cols-3 gap-1">
+              {(["off", "auto", "on"] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setFieldMode(m)}
+                  aria-pressed={fieldSetting === m}
+                  className={`tap min-h-11 border text-xs uppercase tracking-[0.12em] ${
+                    fieldSetting === m
+                      ? "border-brass/60 bg-brass/10 text-brass"
+                      : "border-hairline text-muted-foreground hover:border-brass/40"
+                  }`}
+                >
+                  {FIELD_MODE_LABEL[m]}
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-[0.66rem] leading-relaxed text-muted-foreground">
+              {FIELD_MODE_NOTE[fieldSetting]}
+            </p>
+          </div>
+
+          <div className="rule-top mt-4 pt-3">
+            <p className="tick text-[0.55rem]">Ground</p>
+            <ul className="mt-2 space-y-1">{GROUND.map(row)}</ul>
+          </div>
 
           <div className="rule-top mt-4 pt-3">
             <p className="tick text-[0.55rem]">Accessibility modes</p>

@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { FIELD_MODE_BOOT_SCRIPT, FieldModeProvider } from "../lib/field-mode";
 import {
   Outlet,
   Link,
@@ -52,9 +53,8 @@ function NotFoundComponent() {
           That water is not on the catalog.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          Either the address is wrong, or the record was never here. Nothing is
-          invented to fill the page — start again from a search or from a
-          declared job.
+          Either the address is wrong, or the record was never here. Nothing is invented to fill the
+          page — start again from a search or from a declared job.
         </p>
         <WaysBack />
       </div>
@@ -77,8 +77,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           Something broke on our side.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          Nothing on this screen should be treated as a reading. Try again, and
-          if it keeps failing, go to the official source for the water directly.
+          Nothing on this screen should be treated as a reading. Try again, and if it keeps failing,
+          go to the official source for the water directly.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-2">
           <button
@@ -115,7 +115,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Field Sense Navigator" },
       {
         property: "og:description",
-        content: "Layered intelligence for named public waters. No private spots, no invented conditions.",
+        content:
+          "Layered intelligence for named public waters. No private spots, no invented conditions.",
       },
       { property: "og:type", content: "website" },
       {
@@ -161,6 +162,8 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Field mode before first paint, so a phone never flashes the desk layout. */}
+        <script dangerouslySetInnerHTML={{ __html: FIELD_MODE_BOOT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <HeadContent />
         <noscript>
@@ -182,10 +185,14 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        {/* The instrument's ONE appearance and accessibility control. */}
-        <DisplayControl />
+        {/* Reading mode wraps the control as well as the pages: DisplayControl
+            is where a reader changes it, so it has to be inside. */}
+        <FieldModeProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          {/* The instrument's ONE appearance and accessibility control. */}
+          <DisplayControl />
+        </FieldModeProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

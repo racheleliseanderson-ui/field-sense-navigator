@@ -4,6 +4,7 @@ import type { Destination } from "@/lib/catalog";
 import { useReadLevel } from "@/lib/read-level";
 import { FAMILY_LABEL, READ_LEVELS, cuesFor, readWater, type ReadLevel } from "@/lib/water-reading";
 import { WaterSectionReading } from "@/components/water-section-plate";
+import { ConditionResponsePanel } from "@/components/condition-response";
 
 /** Beginner → competent → advanced, as one setting the reader controls. */
 export function ReadLevelControl({
@@ -86,6 +87,10 @@ export function WaterReadingPanel({ destination }: { destination: Destination })
 
       <div className="mt-6">
         <WaterSectionReading destination={destination} level={level} />
+      </div>
+
+      <div className="mt-12">
+        <ConditionResponsePanel destination={destination} level={level} />
       </div>
 
       <ReadLevelControl level={level} setLevel={setLevel} className="mt-7 max-w-2xl" />
