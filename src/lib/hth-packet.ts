@@ -643,8 +643,15 @@ export function sanitizePacket(packet: HthPacket): HthPacket {
 function canonical<T extends string>(value: unknown, aliases: Record<string, T>): T | null {
   const key = str(value);
   if (!key) return null;
+  // Own properties only. A bare `aliases[key]` lookup resolves inherited
+  // Object.prototype members, so a packet carrying `tempSource: "constructor"`
+  // or `evidenceClass: "valueOf"` came back as a Function, was written into the
+  // packet as if it were a vocabulary value, survived readPacket() as state
+  // "ok", and was interpolated into a note shown to the reader. Nothing in the
+  // fleet sends those strings; a malformed or hostile packet does.
+  if (!Object.prototype.hasOwnProperty.call(aliases, key)) return null;
   const hit = aliases[key];
-  return hit === undefined || hit === key ? null : hit;
+  return typeof hit !== "string" || hit === key ? null : hit;
 }
 
 /**

@@ -705,3 +705,50 @@ describe("the fleet registry", () => {
     expect(url.startsWith("https://ops.hookthehorizon.blog/debrief#packet=")).toBe(true);
   });
 });
+
+describe("vocabulary aliases resolve own properties only", () => {
+  test("a packet naming an Object.prototype member never writes a Function into the packet", () => {
+    const hostile = {
+      ...FIELD_SENSE_PACKET,
+      conditions: {
+        tempSource: "constructor",
+        airTempSource: "toString",
+        weather: "valueOf",
+      },
+      provenance: [{ source: "x", evidenceClass: "hasOwnProperty" }],
+    } as unknown as HthPacket;
+
+    const read = readPacket(`#packet=${encodeURIComponent(JSON.stringify(hostile))}`);
+    expect(read.state).toBe("ok");
+    if (read.state !== "ok") return;
+
+    const conditions = read.packet.conditions as Record<string, unknown>;
+    const provenance = (read.packet.provenance ?? [])[0] as Record<string, unknown>;
+
+    // A bare `aliases[key]` lookup returned the inherited member, which is a
+    // Function. It survived as state "ok" and was interpolated into a note
+    // shown to the reader.
+    expect(typeof conditions["tempSource"]).not.toBe("function");
+    expect(typeof conditions["airTempSource"]).not.toBe("function");
+    expect(typeof conditions["weather"]).not.toBe("function");
+    expect(typeof provenance["evidenceClass"]).not.toBe("function");
+
+    // An unrecognised string is not an alias, so nothing is "repaired".
+    expect(read.normalizations ?? []).toEqual([]);
+  });
+
+  test("a real alias still normalises, so the guard did not disable the feature", () => {
+    const legacy = {
+      ...FIELD_SENSE_PACKET,
+      conditions: { tempSource: "official_station" },
+    } as unknown as HthPacket;
+
+    const read = readPacket(`#packet=${encodeURIComponent(JSON.stringify(legacy))}`);
+    expect(read.state).toBe("ok");
+    if (read.state !== "ok") return;
+    expect((read.packet.conditions as Record<string, unknown>)["tempSource"]).toBe(
+      "official-station",
+    );
+    expect((read.normalizations ?? []).length).toBeGreaterThan(0);
+  });
+});
