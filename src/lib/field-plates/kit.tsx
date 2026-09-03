@@ -233,14 +233,23 @@ export function LegendRow({
   children?: ReactNode | undefined;
   tone?: Tone | undefined;
 }) {
+  /*
+   * A swatch is a promise that the colour means something in the drawing. On
+   * an unnumbered row whose tone is only ink or muted it means nothing, and a
+   * column of identical cream squares down the side of a legend reads as a key
+   * to something the reader then goes looking for and cannot find.
+   */
+  const swatch = typeof n === "number" || (tone !== "ink" && tone !== "muted");
   return (
     <div className="hthp-legend__row">
       {typeof n === "number" ? (
         <span className="hthp-legend__badge" style={{ background: toneColor(tone) }}>
           {n}
         </span>
-      ) : (
+      ) : swatch ? (
         <span className="hthp-legend__swatch" style={{ background: toneColor(tone) }} />
+      ) : (
+        <span className="hthp-legend__swatch hthp-legend__swatch--none" />
       )}
       <span>
         <b className="hthp-legend__label">{label}</b>

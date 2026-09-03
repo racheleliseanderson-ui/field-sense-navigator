@@ -348,18 +348,12 @@ export function PresentationPathPlate({
         ) : null}
 
         {/* Where a fish can actually decide. Shaded, then measured. */}
-        <rect
-          x={windowX}
-          y={AIR + 4}
-          width={windowW}
-          height={COL - 8}
-          fill={BRASS}
-          opacity={0.09}
-        />
+        <rect x={windowX} y={AIR} width={windowW} height={COL} fill={BRASS} opacity={0.09} />
+        {/* The bracket sits above the surface line rather than on it. */}
         <Span
           from={windowX}
           to={windowX + windowW}
-          y={AIR + 14}
+          y={AIR - 12}
           label={`${job.strikeWindow} strike window`}
           tone="watch"
         />

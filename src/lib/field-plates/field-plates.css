@@ -15,6 +15,17 @@
 
 .hthp-plate {
   --hthp-gap: 0.75rem;
+  /*
+   * A plate never widens its container. The drawing inside may be wider than
+   * the phone — that is what the scrolling frame is for — but a grid or flex
+   * item defaults to min-width:auto, which lets the SVG's min-width push the
+   * whole page sideways. Two hundred and eighty-eight pixels of horizontal
+   * page scroll, in an app whose entire promise is that it works on a phone
+   * with one hand occupied.
+   */
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
   margin: 0;
   padding: 1rem;
   border: 1px solid var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
@@ -70,6 +81,7 @@
  * moment the reader is standing in wind with wet hands.
  */
 .hthp-plate__frame {
+  max-width: 100%;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
@@ -111,6 +123,11 @@
   height: 0.75rem;
   margin-top: 0.3rem;
   border-radius: 2px;
+}
+
+.hthp-legend__swatch--none {
+  background: none;
+  width: 0.25rem;
 }
 
 .hthp-legend__label {

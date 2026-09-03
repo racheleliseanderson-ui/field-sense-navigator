@@ -58,17 +58,23 @@ export type LoadPathSpec = {
 };
 
 const W = 640;
-const H = 250;
-const MID = 118;
+const H = 206;
+const MID = 96;
 
+/**
+ * What the material does to a connection. Deliberately does not restate the
+ * material's name — the legend row is already headed with it, and "Braid —
+ * braid: no stretch" is the kind of doubling that makes a reader stop reading
+ * legends.
+ */
 const MATERIAL_WORD: Record<LineMaterial, string> = {
-  mono: "Mono — stretches, grips a knot, forgives a little slack",
-  fluoro: "Fluorocarbon — stiffer, slicker, less forgiving of a hurried cinch",
-  braid: "Braid — no stretch and slippery; most connection failures here are slips",
-  wire: "Wire — will not knot like line; needs a connection built for it",
-  backing: "Backing — rarely the weak link, occasionally the forgotten one",
-  "fly-line": "Fly line — a coated core; the connection is to the core, not the coating",
-  unknown: "Material not stated, which changes what can be said about it",
+  mono: "Stretches, grips a knot, forgives a little slack.",
+  fluoro: "Stiffer and slicker than mono, and less forgiving of a hurried cinch.",
+  braid: "No stretch and slippery. Most connection failures in it are slips rather than breaks.",
+  wire: "Will not knot like line. It needs a connection built for it.",
+  backing: "Rarely the weak link. Occasionally the forgotten one.",
+  "fly-line": "A coated core — the connection is to the core, not to the coating.",
+  unknown: "Material not stated, which changes what can be said about it.",
 };
 
 const MODE_WORD: Record<FailureMode, string> = {

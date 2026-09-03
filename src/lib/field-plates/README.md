@@ -24,7 +24,6 @@ app and breaks it in the next.
 | `system-chain` | `SystemChainPlate` | Where does this whole setup give out first? |
 | `rig-schematic` | `RigSchematicPlate` | How are the components arranged, and at what spacing? |
 | `load-path` | `LoadPathPlate` | Where does load travel through a connection — and does it slip or break? |
-| `forage-silhouette` | `ForageSilhouettePlate` | What am I looking at, at what size, and how sure is that? |
 | `season-band` | `SeasonBandPlate` | What is this fish doing through the year, and what temperature drives it? |
 | `kit` | primitives | Everything the plates are drawn from. |
 
@@ -67,3 +66,21 @@ every plate follows:
 
 Set `data-hthp-field="on"` above the plates for field mode: larger type,
 higher contrast, muted text promoted to full ink.
+
+### One layout rule
+
+A plate carries `min-width: 0` and `max-width: 100%`, so it never widens its
+own container. It cannot fix a container that widens itself: a grid or flex
+item defaults to `min-width: auto`, which lets a wide drawing push the whole
+page sideways. If a plate's parent is a grid or flex item, give it
+`min-width: 0`. Two hundred and eighty-eight pixels of horizontal page scroll
+on a 390px screen is how this was found.
+
+### What is deliberately not here
+
+There is no forage silhouette plate. One was written and removed: the outlines
+were not recognisable, and a drawing that misidentifies an insect on an
+identification page is worse than no drawing at all. Hatch Match already ships
+authored specimen plates and cue diagrams that are correct, and the right move
+was to leave that work alone rather than compete with it from a shared module
+that knows less about the subject.

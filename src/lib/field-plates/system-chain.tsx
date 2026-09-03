@@ -76,7 +76,7 @@ const VERDICT_WORD: Record<LinkVerdict, string> = {
   unknown: "Not known",
 };
 
-const H = 236;
+const H = 196;
 const BOX_W = 118;
 const BOX_H = 74;
 const GAP = 26;
