@@ -59,7 +59,7 @@ export type SystemChainSpec = {
   /** Which link gives out first. Null when nothing does. */
   weakest?: string | null | undefined;
   /** The cheapest sensible correction, when one exists. */
-  fix?: { linkId?: string; what: string } | null | undefined;
+  fix?: { linkId?: string | undefined; what: string } | null | undefined;
 };
 
 const VERDICT_TONE: Record<LinkVerdict, Tone> = {
