@@ -1,5 +1,4 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -42,22 +41,40 @@ import { Art } from "@/components/art";
 import { PLATES } from "@/lib/imagery";
 import { withIdentity } from "@/lib/seo";
 
+/*
+ * Search params, validated without @tanstack/zod-adapter.
+ *
+ * The adapter peers on zod 3 and this app is on zod 4, which is why a clean
+ * `npm install` here could not resolve a tree at all — the only reason the
+ * repo appeared to work was a partial install nobody could reproduce.
+ *
+ * The adapter was doing two things: `fallback()` and wiring the schema into
+ * the router. zod 4 does the first natively with `.catch()`, and the router
+ * takes a plain function for the second, so neither needs a package.
+ *
+ * `.catch()` matters more than it looks: a hand-edited or stale URL should
+ * land the reader on the explore page with that one filter ignored, never on
+ * an error boundary. A shared link that half-works beats one that throws.
+ *
+ * `.default()` is what keeps each field optional on the way *in*, so
+ * `<Link to="/explore" search={{ state: "MT" }}>` still compiles. Without it
+ * every one of the thirteen becomes required at every call site in the app.
+ */
 const searchSchema = z.object({
-  q: fallback(z.string(), "").default(""),
-  juris: fallback(z.string(), "").default(""),
-  state: fallback(z.string(), "").default(""),
-  type: fallback(z.string(), "").default(""),
-  band: fallback(z.string(), "").default(""),
-  species: fallback(z.string(), "").default(""),
-  access: fallback(z.string(), "").default(""),
-  tag: fallback(z.string(), "").default(""),
-  logistics: fallback(z.string(), "").default(""),
-  fresh: fallback(z.number(), 0).default(0),
-  min: fallback(z.number(), 0).default(0),
-  watch: fallback(z.boolean(), false).default(false),
-  sort: fallback(z.string(), "readiness").default("readiness"),
+  q: z.string().catch("").default(""),
+  juris: z.string().catch("").default(""),
+  state: z.string().catch("").default(""),
+  type: z.string().catch("").default(""),
+  band: z.string().catch("").default(""),
+  species: z.string().catch("").default(""),
+  access: z.string().catch("").default(""),
+  tag: z.string().catch("").default(""),
+  logistics: z.string().catch("").default(""),
+  fresh: z.coerce.number().catch(0).default(0),
+  min: z.coerce.number().catch(0).default(0),
+  watch: z.coerce.boolean().catch(false).default(false),
+  sort: z.string().catch("readiness").default("readiness"),
 });
-
 interface CatalogSearch {
   q: string;
   juris: string;
@@ -75,7 +92,7 @@ interface CatalogSearch {
 }
 
 export const Route = createFileRoute("/explore")({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: searchSchema,
   head: () =>
     withIdentity({ path: "/explore" }, {
       meta: [
