@@ -50,3 +50,9 @@
 {"at":"2026-09-03T05:34:06.703Z","run":"health","records":926,"overdue":94,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
 {"at":"2026-09-03T05:42:30.600Z","run":"health","records":926,"overdue":94,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
 {"at":"2026-09-03T05:45:07.332Z","run":"refresh","attempted":926,"refreshed":578,"changed":38,"issues":{"robots_disallow":17,"page_no_longer_names_water":197,"page_unreadable":124,"untrusted_source_host":5,"redirects_off_agency":5},"prune":false,"dry":false}
+{"at":"2026-09-03T09:53:49.077Z","run":"discover","hosts":56,"found":200,"dry":false}
+{"at":"2026-09-03T09:54:27.466Z","run":"resolve-targets","attempted":200,"proved":98,"dropped":102,"reasons":{"no_published_name_that_names_a_water":48,"http_404":47,"page_does_not_name_the_water":1,"already_in_catalog":6},"dry":false}
+{"at":"2026-09-03T09:54:27.590Z","run":"seed","before":926,"added":98,"refused":0,"dry":false}
+{"at":"2026-09-03T10:10:09.476Z","run":"health","records":1024,"overdue":88,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
+{"at":"2026-09-03T10:11:10.209Z","run":"health","records":1024,"overdue":88,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
+{"at":"2026-09-03T10:13:23.637Z","run":"refresh","attempted":1024,"refreshed":670,"changed":12,"issues":{"page_no_longer_names_water":200,"robots_disallow":17,"page_unreadable":127,"untrusted_source_host":5,"redirects_off_agency":5},"prune":false,"dry":false}
