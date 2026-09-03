@@ -234,12 +234,6 @@ export function readAccess(d: Destination): AccessRead {
   };
 }
 
-/** Compact one-line logistics summary for cards and the printed brief. */
-export function logisticsLine(read: AccessRead): string {
-  if (read.logistics.length === 0) return "No amenity wording published on the record.";
-  return read.logistics.map((l) => l.label).join(" · ");
-}
-
 /* ---------------- logistics as a catalog facet ---------------- */
 
 /** The logistics worth filtering a catalog on. Order is the order shown. */

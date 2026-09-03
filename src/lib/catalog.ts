@@ -328,13 +328,3 @@ export function reviewOverdue(d: Destination, now = new Date()): boolean {
   if (Number.isNaN(due)) return false;
   return utcToday(now) > due;
 }
-
-export function reviewDue(d: Destination, now = new Date()): boolean {
-  const maxAge = 90 * 86_400_000;
-  const check = (iso: string | null | undefined) => {
-    if (!iso) return false;
-    const t = new Date(iso).getTime();
-    return !Number.isNaN(t) && now.getTime() - t > maxAge;
-  };
-  return check(d.regsReviewedDate) || check(d.accessReviewedDate);
-}

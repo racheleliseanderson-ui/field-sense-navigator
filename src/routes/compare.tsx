@@ -248,7 +248,7 @@ function Compare() {
         {cols.length === 0 ? (
           <EmptyState
             title="Nothing held for comparison yet"
-            body="Add waters from the catalog, the watchlist or the search box above. Two is enough to be useful; four is the readable limit."
+            body="Waters are held here from the picker above, or from the column icon on any water card — in the catalog, on the watchlist, or in a ranked plan. Two is enough to be useful; four is the readable limit."
             action={
               <Link to="/explore" className="tick text-primary hover:text-brass">
                 Open the catalog →

@@ -230,17 +230,6 @@ export function LayerPanel({
   );
 }
 
-export function CardSkeleton() {
-  return (
-    <div className="panel relative overflow-hidden p-6">
-      <div className="shimmer h-3 w-24" />
-      <div className="shimmer mt-4 h-6 w-3/4" />
-      <div className="shimmer mt-3 h-3 w-1/2" />
-      <div className="shimmer mt-6 h-12 w-full" />
-    </div>
-  );
-}
-
 export function EmptyState({
   title,
   body,

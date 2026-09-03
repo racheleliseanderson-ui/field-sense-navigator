@@ -556,10 +556,3 @@ export function readWater(d: Destination): WaterRead {
 export function cuesFor(read: WaterRead, level: ReadLevel): ReadCue[] {
   return read.cues.filter((c) => RANK[c.level] <= RANK[level]);
 }
-
-/** Short structure list for handoffs and the printed brief. */
-export function readSummaryLine(read: WaterRead, level: ReadLevel = "working"): string {
-  return cuesFor(read, level)
-    .map((c) => c.title)
-    .join(" · ");
-}
