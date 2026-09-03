@@ -5,6 +5,7 @@ import { Plus, X } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { EmptyState, GradeChip } from "@/components/instrument";
 import {
+  placeDotted,
   daysSince,
   destinations,
   displayName,
@@ -107,7 +108,7 @@ function Picker({
                 <span className="min-w-0">
                   <span className="block truncate text-sm text-foreground">{displayName(d)}</span>
                   <span className="block truncate text-[0.68rem] text-muted-foreground">
-                    {d.region} · {d.state}
+                    {placeDotted(d)}
                   </span>
                 </span>
               </button>
@@ -268,7 +269,7 @@ function Compare() {
                     {displayName(c.d)}
                   </Link>
                   <p className="mt-1 truncate text-xs text-muted-foreground">
-                    {c.d.region} · {c.d.state}
+                    {placeDotted(c.d)}
                   </p>
                 </div>
               ))}

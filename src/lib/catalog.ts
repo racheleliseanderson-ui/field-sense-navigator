@@ -36,7 +36,16 @@ export interface RelatedWater {
 export interface Destination {
   id: string;
   state: string;
-  region: string;
+  /**
+   * The sub-state place name, where the source gives one.
+   *
+   * Null on roughly half the catalogue, and it was typed as a plain string
+   * for all of them. `norm(d.region)` then threw on the first record without
+   * one, which took out the search index — and with it /explore and every
+   * other page that builds it. Typed honestly, the compiler finds all
+   * seventeen places that assumed it was there.
+   */
+  region: string | null;
   county?: string;
   waterbody: string;
   accessSite?: string;
@@ -341,6 +350,22 @@ export function daysSince(iso: string, now = new Date()): number {
  */
 export function reviewScheduleNote(): string {
   return `A target, not an appointment: ${REVIEW_CADENCE_DAYS} days after this record's last source check, spread across ${REVIEW_SPREAD_DAYS} days so the whole catalog does not fall due on one morning.`;
+}
+
+/**
+ * "Region, State", with the region left out when the source never gave one.
+ *
+ * Half this catalogue has no sub-state place name. Printing "null · Montana"
+ * or a bare leading separator is worse than printing the state on its own,
+ * and worse still is a crash.
+ */
+export function placeOf(d: Destination): string {
+  return d.region ? `${d.region}, ${d.state}` : d.state;
+}
+
+/** The same, with the middot separator the cards use. */
+export function placeDotted(d: Destination): string {
+  return d.region ? `${d.region} · ${d.state}` : d.state;
 }
 
 export function reviewOverdue(d: Destination, now = new Date()): boolean {

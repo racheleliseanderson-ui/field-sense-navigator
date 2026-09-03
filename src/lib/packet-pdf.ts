@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 
-import { catalogTags, datedWindows, displayName, humanize, reviewOverdue, tagLabel, windowSpan, type Destination } from "@/lib/catalog";
+import { placeOf, catalogTags, datedWindows, displayName, humanize, reviewOverdue, tagLabel, windowSpan, type Destination } from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -166,7 +166,7 @@ function record(
   }
   paragraph(
     ctx,
-    `${d.region}, ${d.state}${d.county ? ` · ${d.county} County` : ""} · ${d.waterType}`,
+    `${placeOf(d)}${d.county ? ` · ${d.county} County` : ""} · ${d.waterType}`,
     { size: 9, color: MUTED },
   );
 

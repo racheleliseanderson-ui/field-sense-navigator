@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, Printer } from "lucide-react";
-import { destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
+import { placeOf, destinationById, displayName, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, windowSpan } from "@/lib/catalog";
 import { FleetFooter } from "@/components/chrome";
 import { readAccess } from "@/lib/access";
 import { useReadLevel } from "@/lib/read-level";
@@ -160,7 +160,7 @@ function Packet() {
             </p>
           )}
           <p className="mt-2 text-sm text-packet-muted">
-            {d.region}, {d.state}
+            {placeOf(d)}
             {d.county ? ` · ${d.county} County` : ""} · {d.waterType}
           </p>
 

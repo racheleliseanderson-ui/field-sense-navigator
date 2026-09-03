@@ -24,7 +24,15 @@ export function nearbyWaters(d: Destination, limit = 6): NearbyGroup[] {
   const excluded = new Set<string>([d.id, ...(d.related ?? []).map((r) => r.id)]);
   const inState = destinations.filter((x) => x.state === d.state && !excluded.has(x.id));
 
-  const region = inState.filter((x) => x.region === d.region).sort(byReadiness);
+  /*
+   * Only group by region when there is one. Half the catalogue has no
+   * sub-state place name, and matching null against null quietly collected
+   * every unplaced water in the state into a group labelled "More water in
+   * null".
+   */
+  const region = d.region
+    ? inState.filter((x) => x.region === d.region).sort(byReadiness)
+    : [];
   const regionIds = new Set(region.map((x) => x.id));
 
   const sameType = inState
@@ -39,7 +47,7 @@ export function nearbyWaters(d: Destination, limit = 6): NearbyGroup[] {
   if (region.length) {
     groups.push({
       key: "region",
-      label: `More water in ${d.region}`,
+      label: `More water in ${d.region ?? d.state}`,
       note: "Same region as named by the agency — the shortest move if this record does not work out.",
       waters: region.slice(0, limit),
     });

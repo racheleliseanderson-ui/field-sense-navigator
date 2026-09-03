@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Columns3 } from "lucide-react";
-import { displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, type Destination } from "@/lib/catalog";
+import { placeDotted, displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, type Destination } from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
@@ -124,7 +124,7 @@ export function WaterCard({
         {displayName(destination)}
       </Heading>
       <p className="mt-1.5 text-sm text-muted-foreground">
-        {destination.region} · {destination.state}
+        {placeDotted(destination)}
       </p>
 
       <div className="mt-5 flex items-center gap-3">

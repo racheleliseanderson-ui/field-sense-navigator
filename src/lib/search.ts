@@ -2,6 +2,7 @@ import {
   destinations,
   displayName,
   isProvince,
+  placeDotted,
   REGION_ABBR,
   type Destination,
 } from "@/lib/catalog";
@@ -19,8 +20,13 @@ export interface Hit {
   matched: string[];
 }
 
-const norm = (s: string) =>
-  s
+/*
+ * Nullable on purpose. Half the catalogue has no region, and a normaliser that
+ * throws on a missing field takes the whole search index with it — which is
+ * exactly what was happening.
+ */
+const norm = (s: string | null | undefined) =>
+  (s ?? "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -285,7 +291,7 @@ export function suggest(query: string, limit = 8): Suggestion[] {
       out.push({
         kind: "water",
         label: displayName(row.d),
-        sub: `${row.d.region} · ${row.d.state}`,
+        sub: placeDotted(row.d),
         id: row.d.id,
       });
     }

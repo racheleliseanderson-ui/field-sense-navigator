@@ -11,6 +11,8 @@ import { AccessPanel } from "@/components/access-panel";
 import { WaterReadingPanel } from "@/components/water-reading";
 import { HookHandoff } from "@/components/hook-handoff";
 import {
+  placeOf,
+  placeDotted,
   reviewScheduleNote,
   destinationById,
   displayName,
@@ -47,7 +49,7 @@ export const Route = createFileRoute("/water/$id")({
   },
   head: ({ loaderData, params }) => {
     const name = loaderData ? displayName(loaderData) : "Water record";
-    const place = loaderData ? `${loaderData.region}, ${loaderData.state}` : "";
+    const place = loaderData ? placeOf(loaderData) : "";
     return withIdentity({ path: `/water/${params.id}` }, {
       meta: [
         { title: `${name} · Field Sense Navigator` },
@@ -163,7 +165,7 @@ function WaterRecord() {
             </p>
           )}
           <p className="mt-3 text-sm text-muted-foreground sm:mt-4 sm:text-base">
-            {d.region} · {d.state}
+            {placeDotted(d)}
             {d.county ? ` · ${d.county} County` : ""}
           </p>
 
@@ -456,7 +458,7 @@ function WaterRecord() {
                             {displayName(w)}
                           </span>
                           <span className="tick mt-1 block text-[0.55rem] text-muted-foreground">
-                            {w.waterType} · {w.region}
+                            {w.region ? `${w.waterType} · ${w.region}` : w.waterType}
                           </span>
                         </span>
                         <span className="data shrink-0 text-[0.62rem] text-muted-foreground">

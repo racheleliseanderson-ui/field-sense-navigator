@@ -1,4 +1,5 @@
 import {
+  placeOf,
   datedWindows,
   daysSince,
   humanize,
@@ -558,7 +559,7 @@ export function fitFor(
   let blocked: string | null = null;
   let score = r.score * 0.55;
 
-  const bigWater = BIG_WATER.test(`${d.waterbody} ${d.region}`) || d.waterType === "marine";
+  const bigWater = BIG_WATER.test(`${d.waterbody} ${d.region ?? ""}`) || d.waterType === "marine";
 
   /* ---- fail-closed gear gates ---- */
   if (c.gear === "trailer") {
@@ -893,7 +894,7 @@ export function buildHandoff(
     "FIELD SENSE NAVIGATOR — CARRY FORWARD",
     `Record: ${d.id}`,
     `Water: ${d.waterbody}${d.accessSite ? ` — ${d.accessSite}` : ""}`,
-    `Place: ${d.region}, ${d.state}${d.county ? ` (${d.county} County)` : ""}`,
+    `Place: ${placeOf(d)}${d.county ? ` (${d.county} County)` : ""}`,
     `Type: ${d.waterType} · Boundary: public waters only`,
     `Job: ${jobLabel}${c ? ` · Gear: ${humanize(c.gear)} · Window: ${c.timeWindow} · Wind tolerance: ${c.wind}` : ""}`,
     `Field Readiness: ${r.score}/100 — ${r.band}`,
