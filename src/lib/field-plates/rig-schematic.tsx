@@ -196,9 +196,38 @@ export function RigSchematicPlate({
           );
         })}
 
-        {parts.map((p, i) => (
-          <RigGlyph key={p.id} part={p} n={i + 1} x={AXIS} y={yOf(p.at)} unit={spec.unit} scale={(BOTTOM - TOP) / total} />
-        ))}
+        {/*
+          Labels are laid out separately from the glyphs.
+
+          A three-way swivel and its weight dropper start at the same
+          measurement, and two rigs in the catalogue put a hook and a weight an
+          inch apart. Drawn at their true positions the labels printed straight
+          through each other and the plate became unreadable at exactly the
+          point it was carrying the most information. The glyph stays where the
+          measurement puts it; the label slides down until it has room and a
+          leader line says which glyph it belongs to.
+        */}
+        {(() => {
+          const MIN_GAP = 30;
+          let lastLabelY = -Infinity;
+          return parts.map((p, i) => {
+            const y = yOf(p.at);
+            const labelY = Math.max(y, lastLabelY + MIN_GAP);
+            lastLabelY = labelY;
+            return (
+              <RigGlyph
+                key={p.id}
+                part={p}
+                n={i + 1}
+                x={AXIS}
+                y={y}
+                labelY={labelY}
+                unit={spec.unit}
+                scale={(BOTTOM - TOP) / total}
+              />
+            );
+          });
+        })()}
       </Canvas>
     </Plate>
   );
@@ -209,30 +238,59 @@ function RigGlyph({
   n,
   x,
   y,
+  labelY,
   unit,
   scale,
 }: {
   part: RigPart;
   n: number;
   x: number;
+  /** Where the component actually sits, to scale. */
   y: number;
+  /** Where its label sits, after collision avoidance. */
+  labelY: number;
   unit: string;
   scale: number;
 }) {
   const tone: Tone = part.risk ? "watch" : "accent";
   const c = toneColor(tone);
+  const moved = Math.abs(labelY - y) > 2;
   return (
     <g>
       <Shape kind={part.kind} x={x} y={y} c={c} tagLength={part.tagLength} scale={scale} />
-      {part.risk ? <FailureMark x={x + 26} y={y} scale={0.62} tone="watch" /> : null}
-      <circle cx={x + 54} cy={y} r={10} fill={c} stroke={PAPER} strokeWidth={1.3} />
-      <text x={x + 54} y={y + 4} textAnchor="middle" fontSize={10} fontWeight={700} fill={PAPER} fontFamily={MONO}>
+      {part.risk ? <FailureMark x={x + 24} y={y} scale={0.62} tone="watch" /> : null}
+      {moved ? (
+        <path
+          d={`M${x + 14},${y} L${x + 38},${labelY}`}
+          fill="none"
+          stroke={c}
+          strokeWidth={1}
+          opacity={0.6}
+        />
+      ) : null}
+      <circle cx={x + 54} cy={labelY} r={10} fill={c} stroke={PAPER} strokeWidth={1.3} />
+      <text
+        x={x + 54}
+        y={labelY + 4}
+        textAnchor="middle"
+        fontSize={10}
+        fontWeight={700}
+        fill={PAPER}
+        fontFamily={MONO}
+      >
         {n}
       </text>
-      <text x={x + 72} y={y + 4} fontSize={11} fill={INK} fontFamily={MONO}>
+      <text x={x + 72} y={labelY + 4} fontSize={11} fill={INK} fontFamily={MONO}>
         {part.label}
       </text>
-      <text x={x + 72} y={y + 17} fontSize={9} fill={MUTED} fontFamily={MONO} letterSpacing="0.1em">
+      <text
+        x={x + 72}
+        y={labelY + 17}
+        fontSize={9}
+        fill={MUTED}
+        fontFamily={MONO}
+        letterSpacing="0.1em"
+      >
         {`${part.at}${unit}`.toUpperCase()}
       </text>
     </g>
@@ -304,8 +362,8 @@ function Shape({
       const len = Math.max(18, (tagLength ?? 6) * scale);
       return (
         <g>
-          <path d={`M${x},${y} q-22,${len * 0.5} -34,${len}`} fill="none" stroke={c} strokeWidth={1.8} />
-          <circle cx={x - 34} cy={y + len} r={4} fill={c} />
+          <path d={`M${x},${y} q-16,${len * 0.55} -26,${len}`} fill="none" stroke={c} strokeWidth={1.8} strokeLinecap="round" />
+          <circle cx={x - 26} cy={y + len} r={4} fill={c} />
         </g>
       );
     }
