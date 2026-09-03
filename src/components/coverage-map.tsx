@@ -7,9 +7,12 @@ import { abbrFor, countByState, isProvince, states } from "@/lib/catalog";
  *
  * A schematic tile grid of North America — one square per state, province
  * and territory, sized by nothing and shaded by how many named public waters
- * the catalog holds there. It is deliberately NOT a pin map: this instrument
- * publishes no coordinates, so geography is given as jurisdiction and
- * neighbourhood, which is the resolution a decision is actually made at.
+ * the catalog holds there. It is deliberately NOT a pin map: geography is
+ * given as jurisdiction and neighbourhood, which is the resolution a decision
+ * is actually made at. A named public water does carry a coarse location —
+ * three decimal places, about 100 m, enough for a gridpoint lookup and to say
+ * which basin it is. Fishing spots, access detail and private water never
+ * enter the catalog at all, which is the line that actually matters.
  * ------------------------------------------------------------------ */
 
 /** [column, row] on a 12-wide grid. Canada occupies the first two rows. */
@@ -164,9 +167,10 @@ export function CoverageMap({
 
       <p className="mt-4 max-w-2xl text-[0.68rem] leading-relaxed text-muted-foreground">
         A schematic of jurisdictions, not a chart of positions — one square per state, province and
-        territory, carrying the number of named public waters held there. This instrument publishes
-        no coordinates, so geography is given at the resolution a decision is made at: which
-        jurisdiction governs, and what else is nearby.
+        territory, carrying the number of named public waters held there. Geography is given at the
+        resolution a decision is made at: which jurisdiction governs, and what else is nearby. A named
+        public water is located to about a hundred metres, which tells you the basin and nothing about
+        where the fish are. Fishing spots, access detail and private water are not in the catalog.
       </p>
     </div>
   );

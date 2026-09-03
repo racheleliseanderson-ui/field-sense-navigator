@@ -18,7 +18,7 @@ export const Route = createFileRoute("/boundary")({
         {
           property: "og:description",
           content:
-            "Public waters only. No private spots, no coordinates, no live-condition claims. The scope rules behind every record.",
+            "Public waters only. No private spots, no access detail, no live-condition claims. The scope rules behind every record.",
         },
       ],
     }),
