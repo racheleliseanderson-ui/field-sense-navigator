@@ -1,6 +1,19 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+/*
+ * Shared field plates.
+ *
+ * Imported here rather than relying on the `import "./field-plates.css"` inside
+ * the kit's barrel. That JS-side import is real and works in a plain Vite app,
+ * and in these builds Rollup treats the barrel as side-effect-free and drops
+ * it — so every plate in every app in this fleet shipped to production with no
+ * stylesheet at all and nobody could tell from a typecheck, a test or a build
+ * log. Found by rendering the built output in a browser.
+ *
+ * A CSS entry point importing CSS is not clever, and that is the point.
+ */
+@import "lib/field-plates/field-plates.css";
 
 @custom-variant dark (&:is(.dark *));
 
