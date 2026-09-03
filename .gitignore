@@ -46,3 +46,10 @@ public/sitemap.xml
 # main. A committed copy can never satisfy the 45-minute freshness gate, so it
 # would be dead weight that reads like a fallback.
 public/live/
+
+# Scratch output from the catalog launchers (RUN-SEEDING / RUN-REFRESH). The
+# durable version of each run is the timestamped file in reports/.
+BEFORE-report.txt
+AFTER-report.txt
+test-results.txt
+pipeline-tests.txt

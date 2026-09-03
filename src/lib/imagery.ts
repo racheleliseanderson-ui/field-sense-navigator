@@ -75,8 +75,6 @@ export const PLATES = {
   ),
 } as const;
 
-export type PlateKey = keyof typeof PLATES;
-
 /** Hero sizes hint: full-bleed on every viewport. */
 export const FULL_BLEED = "100vw";
 /** Half-width split panels on desktop, full-bleed on phones. */

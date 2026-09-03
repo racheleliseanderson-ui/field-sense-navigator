@@ -166,7 +166,7 @@ const LAKE: ReadCue[] = [
     title: "Points, bars and humps",
     level: "learning",
     what: "Land that runs out under the surface: a shoreline point, a submerged bar, an offshore hump rising off the basin.",
-    why: "Structure that reaches from shallow to deep lets fish change depth without crossing open water. It is the single most reliable feature on a still water.",
+    why: "Structure that reaches from shallow to deep lets fish change depth without crossing open water. On a lake with no current, that vertical move is most of what a fish has to work with.",
     look: "Extend every visible point out into the lake with your eye and fish that line, not the tip of the land.",
   },
   {
@@ -313,10 +313,10 @@ const MARINE: ReadCue[] = [
   {
     id: "tide",
     family: "current",
-    title: "Tide stage governs everything",
+    title: "Tide stage sets the terms",
     level: "learning",
     what: "Coastal water is a current system on a clock. The stage of the tide decides depth, direction of flow, and whether a spot is fishable or strands you.",
-    why: "Most coastal marks fish for a window of an hour or two on a particular stage, and are dead outside it.",
+    why: "A lot of coastal marks give you an hour or two on one stage and go quiet either side of it. Which stage is the mark's own business — you learn it by turning up on the wrong one first.",
     look: "Plan the session around the stage, not the clock. Note the stage that cuts off your exit before you walk out on anything.",
   },
   {
@@ -401,12 +401,12 @@ const HEADLINE: Record<WaterType, string> = {
 
 const SUMMARY: Record<WaterType, string> = {
   river:
-    "A river hands you the fish's problem for free: it has to hold somewhere it can eat without swimming hard all day. Find the places where fast water and slow water meet, and you have found the answer to almost every river you will ever stand in.",
+    "A river hands you the fish's problem for free: it has to hold somewhere it can eat without swimming hard all day. Find the places where fast water and slow water meet, and you have found where to start on most rivers, including ones you have never seen before.",
   lake: "On a still water nothing brings food to the fish, so the fish has to go to the food. That makes structure and edges everything: points, drop-offs, weed lines and anything that lets a fish move between shallow and deep without crossing open water.",
   reservoir:
     "A reservoir is a flooded valley with the old ground still underneath it. Read the land above the waterline and continue it downward, then let the current water level tell you which of that structure is actually in play today.",
   marine:
-    "Coastal water is a clock as much as a place. The same mark is three different marks across a tide, so the first question is never where — it is when, and what the water will be doing when you get there.",
+    "Coastal water is a clock as much as a place. The same mark is three different marks across a tide, so before you pick the mark, work out the window: which stage you want, and what the water will be doing then.",
 };
 
 const FIRST_MOVES: Record<WaterType, string[]> = {
@@ -555,11 +555,4 @@ export function readWater(d: Destination): WaterRead {
 /** Cues at or below the reader's declared level. */
 export function cuesFor(read: WaterRead, level: ReadLevel): ReadCue[] {
   return read.cues.filter((c) => RANK[c.level] <= RANK[level]);
-}
-
-/** Short structure list for handoffs and the printed brief. */
-export function readSummaryLine(read: WaterRead, level: ReadLevel = "working"): string {
-  return cuesFor(read, level)
-    .map((c) => c.title)
-    .join(" · ");
 }

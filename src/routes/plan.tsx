@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
 import { WaterCard, BlockedCard } from "@/components/water-card";
@@ -24,9 +24,25 @@ import { withIdentity } from "@/lib/seo";
 
 const JOB_IDS: JobId[] = JOBS.map((j) => j.id);
 
+type PlanStep = 1 | 2 | 3;
+
+/**
+ * The URL is the state.
+ *
+ * `job` and `step` used to be `useState`, seeded once from the search params
+ * and never resynced. Same-route navigation — the "Start with a bank job" link
+ * in the step-3 empty state, the browser's back button, a pasted address —
+ * changed the URL and nothing else, because the component was already mounted
+ * and the seed had long since been read. The link did nothing at all.
+ *
+ * Driving both off `Route.useSearch()` and writing changes back with
+ * `navigate` fixes that in both directions: the CTA works, back and forward
+ * work, and a ranked plan becomes an address somebody can send to a friend.
+ */
 type PlanSearch = {
   job?: JobId;
   guided?: boolean;
+  step?: PlanStep;
 };
 
 function parsePlanSearch(s: Record<string, unknown>): PlanSearch {
@@ -36,9 +52,13 @@ function parsePlanSearch(s: Record<string, unknown>): PlanSearch {
     s['guided'] === true || s['guided'] === "1" || s['guided'] === "true"
       ? true
       : undefined;
+  const rawStep = Number(s['step']);
+  const step: PlanStep | undefined =
+    rawStep === 1 || rawStep === 2 || rawStep === 3 ? (rawStep as PlanStep) : undefined;
   const out: PlanSearch = {};
   if (job) out.job = job;
   if (guided) out.guided = guided;
+  if (step) out.step = step;
   return out;
 }
 
@@ -135,15 +155,43 @@ function Selector<T extends string>({
 
 function Plan() {
   const search = Route.useSearch();
-  const [job, setJob] = useState<JobId | null>(search.job ?? null);
+  const navigate = Route.useNavigate();
+  const job = search.job ?? null;
+  /* No step in the address means: as far as the declared job gets you. A
+   * guided link lands on the ranking; a bare job lands on the constraints. */
+  const step: PlanStep = search.step ?? (search.job ? (search.guided ? 3 : 2) : 1);
   const [c, setC] = useState<Constraints>(() => ({
     ...DEFAULT_CONSTRAINTS,
     gear: gearForJob(search.job),
   }));
   const [shown, setShown] = useState(9);
-  const [step, setStep] = useState<1 | 2 | 3>(search.job ? (search.guided ? 3 : 2) : 1);
   const { set: setCompare } = useCompareTray();
   const { level } = useReadLevel();
+
+  /* Write the two URL-held values back. Everything else on this page is a
+   * constraint the reader can move freely, and putting all of it in the address
+   * would make the back button undo a checkbox. */
+  const go = (next: { job?: JobId; step?: PlanStep }) => {
+    void navigate({
+      search: (prev: PlanSearch): PlanSearch => {
+        const out: PlanSearch = { ...prev };
+        if (next.job !== undefined) out.job = next.job;
+        if (next.step !== undefined) out.step = next.step;
+        return out;
+      },
+    });
+  };
+
+  /*
+   * Gear follows the job unless the reader has since said otherwise, and a job
+   * change is a job change however it arrived — a button here, a link from
+   * somewhere else, or the back button. This is the sync the old seeded state
+   * could not do.
+   */
+  useEffect(() => {
+    setC((prev) => ({ ...prev, gear: gearForJob(search.job) }));
+    setShown(9);
+  }, [search.job]);
 
   const result = useMemo(
     () => (job ? rank(destinations, job, c) : null),
@@ -198,7 +246,7 @@ function Plan() {
                 <button
                   type="button"
                   disabled={!reachable}
-                  onClick={() => setStep(s.n)}
+                  onClick={() => go({ step: s.n })}
                   aria-current={active ? "step" : undefined}
                   className={`tap flex min-h-12 w-full items-center gap-2 border-b-2 px-3 text-left text-xs uppercase tracking-[0.12em] transition-colors disabled:opacity-40 ${
                     active
@@ -243,10 +291,7 @@ function Plan() {
                   key={j.id}
                   type="button"
                   onClick={() => {
-                    setJob(j.id);
-                    setC((prev) => ({ ...prev, gear: gearForJob(j.id) }));
-                    setShown(9);
-                    setStep(2);
+                    go({ job: j.id, step: 2 });
                   }}
                   aria-pressed={active}
                   className={`group relative px-6 py-7 text-left transition-colors ${
@@ -270,7 +315,7 @@ function Plan() {
           {job && (
             <button
               type="button"
-              onClick={() => setStep(2)}
+              onClick={() => go({ step: 2 })}
               className="tap mt-8 inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass"
             >
               Continue to constraints
@@ -345,7 +390,7 @@ function Plan() {
           <div className="mt-10 flex flex-wrap gap-3">
             <button
               type="button"
-              onClick={() => setStep(1)}
+              onClick={() => go({ step: 1 })}
               className="tap inline-flex min-h-12 items-center gap-2 border border-hairline px-5 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -353,7 +398,7 @@ function Plan() {
             </button>
             <button
               type="button"
-              onClick={() => setStep(3)}
+              onClick={() => go({ step: 3 })}
               disabled={!job}
               className="tap inline-flex min-h-12 items-center gap-2 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass disabled:opacity-50"
             >
@@ -379,7 +424,13 @@ function Plan() {
               body="Nothing has been ranked yet. Tell us what kind of day you are planning — we will not invent one to fill the page. Next: pick bank, kayak, or small boat — or browse the catalog."
               action={
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Link to="/plan" search={{ job: "bank" }} className="tick text-brass">
+                  {/* Same-route navigation, which only works now that job and
+                      step are read from the address rather than seeded once. */}
+                  <Link
+                    to="/plan"
+                    search={{ job: "bank", step: 3 }}
+                    className="tick text-brass"
+                  >
                     Start with a bank job →
                   </Link>
                   <Link to="/explore" className="tick text-primary hover:text-brass">
@@ -398,7 +449,7 @@ function Plan() {
               action={
                 <button
                   type="button"
-                  onClick={() => setStep(2)}
+                  onClick={() => go({ step: 2 })}
                   className="tick text-brass"
                 >
                   Change a constraint →

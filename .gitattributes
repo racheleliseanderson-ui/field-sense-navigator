@@ -3,6 +3,12 @@
 # and would have turned any commit into a whole-repo rewrite.
 * text=auto eol=lf
 
+# Windows batch files must keep CRLF. cmd.exe mishandles labels and GOTO in
+# a file checked out with LF endings, which is how a working launcher turns
+# into "the system cannot find the batch label" on someone else's machine.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
 # Never touch binaries.
 *.png binary
 *.jpg binary

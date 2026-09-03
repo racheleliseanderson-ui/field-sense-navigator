@@ -48,6 +48,24 @@ scope. Read it before changing the data layer, the build or the ingest.
 - **Craft is labelled as craft.** Anything not read from an official source —
   the water-reading layer in particular — says so where it is shown.
 
+## Growing and maintaining the catalog
+
+Two double-click launchers in the repository root, and one read-only check:
+
+- `RUN-SEEDING.bat` — find named waters the agencies publish that the catalog
+  does not hold, prove each one against that agency's own page, add what it can
+  prove and drop what it cannot, with the reason.
+- `RUN-REFRESH.bat` — re-read every record's agency page, add what it now says,
+  and refresh the review dates. Additive by default; a page that will not load
+  never retires a water.
+- `HEALTH-CHECK.bat` — how old the information is, duplicates, what the
+  catalogue can answer, and any source that is neither an agency nor a named
+  public authority. Changes nothing.
+
+The scripts behind them are in `scripts/pipeline/`. `docs/waterways-pipeline.md`
+explains the six gates a candidate has to clear and what a seeded record may
+claim.
+
 ## Live data
 
 Scheduled ingest lives in GitHub Actions (`.github/workflows/ingest-live.yml`

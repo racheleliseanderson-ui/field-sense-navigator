@@ -896,7 +896,7 @@ function Explore() {
 
       {/* mobile filter sheet */}
       {sheet && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Catalog filters">
           <button
             type="button"
             aria-label="Close filters"

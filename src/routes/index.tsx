@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/chrome";
+import { CarriedContext } from "@/components/carried-context";
 import { WaterCard } from "@/components/water-card";
 import { Art, Plate } from "@/components/art";
 import { CoverageMap } from "@/components/coverage-map";
@@ -90,6 +91,9 @@ function Home() {
     <div ref={reveal as React.Ref<HTMLDivElement>} className="page-in min-h-dvh bg-background">
       <SiteHeader />
       <main id="content">
+      {/* Anything a reader carried back into the catalog, before the page's own
+          opening claim. A failed carry says so here rather than staying silent. */}
+      <CarriedContext />
 
       {/* ---------- HERO: the instrument face ---------- */}
       <section className="relative isolate overflow-hidden">
@@ -312,7 +316,7 @@ function Home() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/80" data-reveal style={{ "--reveal-delay": "140ms" } as React.CSSProperties}>
             {NAMED_WATER_COUNT} records across {states.length} states,
             provinces and territories, filtered by jurisdiction, water type and
-            readiness band. Exploration without the spreadsheet.
+            readiness band. Filter it down, or just read through it.
           </p>
           <span className="tick mt-6 inline-flex min-h-11 items-center text-primary group-hover:text-brass">Open the catalog →</span>
         </Link>

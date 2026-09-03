@@ -22,7 +22,14 @@
     "scan:closures": "node scripts/scan-closures.mjs",
     "assert:catalog": "node scripts/assert-catalog.mjs",
     "build:sitemap": "node scripts/build-sitemap.mjs",
-    "prebuild": "node scripts/apply-plan-carefully-overlay.mjs && node scripts/assert-catalog.mjs && node scripts/build-sitemap.mjs"
+    "prebuild": "node scripts/apply-plan-carefully-overlay.mjs && node scripts/assert-catalog.mjs && node scripts/build-sitemap.mjs",
+    "waters:discover": "node scripts/pipeline/discover.mjs",
+    "waters:resolve": "node scripts/pipeline/resolve-targets.mjs",
+    "waters:seed": "node scripts/pipeline/seed-destinations.mjs",
+    "waters:refresh": "node scripts/pipeline/refresh.mjs",
+    "waters:health": "node scripts/pipeline/health.mjs",
+    "waters:count": "node scripts/pipeline/catalog-count.mjs",
+    "test:pipeline": "node --test scripts/pipeline/*.test.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

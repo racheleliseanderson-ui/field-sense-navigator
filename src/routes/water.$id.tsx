@@ -478,36 +478,10 @@ function WaterRecord() {
         {/* rail */}
         <aside className="min-w-0 space-y-6 lg:sticky lg:top-28 lg:self-start">
           <LiveConditions destination={d} />
-          <div className="panel p-6 lg:p-6">
-            <ReadinessMeter readiness={r} compact />
-            <dl className="mt-6 space-y-4">
-              {r.parts.map((p) => (
-                <div
-                  key={p.label}
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-4"
-                >
-                  {/* A description list may only hold dt/dd pairs, so the bar and
-                      the note live inside a second dd rather than as loose siblings. */}
-                  <dt className="text-sm text-foreground">{p.label}</dt>
-                  <dd className="data text-right text-sm text-muted-foreground">
-                    {p.value}
-                    <span className="text-dim-foreground">/{p.max}</span>
-                  </dd>
-                  <dd className="col-span-2">
-                    <div className="mt-1.5 h-[2px] w-full bg-border/50">
-                      <div
-                        className="h-full bg-brass"
-                        style={{ width: `${(p.value / p.max) * 100}%` }}
-                      />
-                    </div>
-                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                      {p.note}
-                    </p>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          {/* The full meter: panel, dashes and the score breakdown. This block
+              used to re-type the breakdown list byte for byte, comment
+              included, around a `compact` meter that exists to suppress it. */}
+          <ReadinessMeter readiness={r} />
 
           <div className="panel p-6">
             <p className="tick text-alert">What this score cannot know</p>

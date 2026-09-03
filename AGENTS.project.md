@@ -138,6 +138,29 @@ packet; do not repurpose existing ones — other instruments read them.
   survive, for the jump palette. Build new UI from the instrument utilities in
   `styles.css`, not from scaffold components.
 
+## Catalog growth and refresh pipeline
+
+`scripts/pipeline/` writes the Catalog plane only, by hand-triggered run, from
+an official page actually read. Launchers: `RUN-SEEDING.bat`, `RUN-REFRESH.bat`,
+`HEALTH-CHECK.bat`. Full description in `docs/waterways-pipeline.md`.
+
+- Discovery reads agency **sitemaps** and derives both the path families to look
+  in and the jurisdiction from the catalog itself. A family spanning states
+  yields nothing rather than a guessed jurisdiction.
+- Six gates decide whether a candidate becomes a record: robots, page loads,
+  trusted host (government or named public authority), page names the water,
+  page reads as fishing this water, water class declared by its own published
+  name. A failure is a drop with a reason in `reports/`, never a weaker record.
+- Extraction reads the page's `<main>` region, not site navigation, and strips
+  banners that appear across a run.
+- Seeded records carry `lastHumanReviewedAt: null` and a 30-day `nextReviewAt`.
+  Do not backfill those to look reviewed.
+- Refresh is additive; it never deletes human wording it failed to find, never
+  retires a water over a dead link, and moves dates only for pages it read.
+  Shard records are written back to their shard.
+- `agencies.mjs` learns host → agency from the catalog. Do not duplicate the map
+  in `scripts/enrich-catalog.mjs`; a second implementation drifts.
+
 ## Enrichment
 
 Follow `docs/enrichment-2026-08-19.md`. Apply source-backed field updates only. Leave REVIEW OVERDUE banners in place until `nextReviewAt` is in the future. One jurisdiction (or one official-source family) per PR. Do not mix overlay/build fixes with lake seeds.

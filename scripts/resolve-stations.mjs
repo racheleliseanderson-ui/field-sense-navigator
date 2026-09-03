@@ -19,6 +19,36 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { bestMatches, pickUnique, searchQueries } from "./match.mjs";
 
+/**
+ * Published location precision.
+ *
+ * A waterbody location is published at three decimal places — roughly 100 m.
+ * That is the resolution a reach, basin or reservoir arm is identified at, and
+ * it is all any consumer here needs: the only runtime use is an NWS gridpoint
+ * lookup, which resolves to a ~2.5 km cell.
+ *
+ * The raw geocoder returns up to fifteen decimals. Publishing that is false
+ * precision — it states a confidence about a lake's position that nothing
+ * behind it supports, and it reads like a targeting coordinate rather than a
+ * jurisdiction. Coarsen once, here, so nothing downstream has to decide.
+ *
+ * This is a precision rule, not a privacy rule. The privacy rule is upstream:
+ * only named public water enters the catalog at all.
+ */
+const LOCATION_DECIMALS = 3;
+const coarsen = (v) =>
+  typeof v === "number" && Number.isFinite(v)
+    ? Number(v.toFixed(LOCATION_DECIMALS))
+    : null;
+const coarsenLocations = (rows) => {
+  for (const row of rows) {
+    row.lat = coarsen(row.lat);
+    row.lon = coarsen(row.lon);
+  }
+  return rows;
+};
+
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const DEST_PATH = resolve(ROOT, "src/data/destinations.json");
@@ -611,6 +641,8 @@ async function main() {
     records,
     errors,
   };
+
+  coarsenLocations(records);
 
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`);
