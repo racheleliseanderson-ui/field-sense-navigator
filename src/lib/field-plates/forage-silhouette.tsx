@@ -59,13 +59,13 @@ export type ForageSpecimen = {
   form: ForageForm;
   label: string;
   /** Body length excluding tails, in millimetres. Null when it was not measured. */
-  lengthMm?: number | null;
-  cues?: ForageCue[];
-  confidence?: ForageConfidence;
+  lengthMm?: number | null | undefined;
+  cues?: ForageCue[] | undefined;
+  confidence?: ForageConfidence | undefined;
   /** Why the app landed here, and what would change its mind. */
-  because?: string;
+  because?: string | undefined;
   /** What observation would settle it. */
-  wouldSettleIt?: string;
+  wouldSettleIt?: string | undefined;
 };
 
 const W = 640;
@@ -162,11 +162,11 @@ export function ForageSilhouettePlate({
   testid = "forage-silhouette-plate",
 }: {
   specimen: ForageSpecimen;
-  eyebrow?: string;
-  title?: string;
-  caption?: string;
-  aside?: ReactNode;
-  testid?: string;
+  eyebrow?: string | undefined;
+  title?: string | undefined;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const conf = specimen.confidence ?? "possible";
   const tone = CONF_TONE[conf];

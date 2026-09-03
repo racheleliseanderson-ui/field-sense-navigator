@@ -715,3 +715,25 @@ html[data-motion="off"] [data-reveal] {
     break-inside: avoid;
   }
 }
+/*
+ * Shared field plates, mapped onto this instrument's tokens.
+ *
+ * The kit ships legible fallbacks, so this block is not what makes the plates
+ * work — it is what makes them look like they belong here. Because every value
+ * resolves through a token that already flips, the light, dark and
+ * high-contrast themes are all covered by this one mapping.
+ */
+:root {
+  --hthp-ink: var(--foreground);
+  --hthp-muted: var(--muted-foreground);
+  --hthp-accent: var(--brass);
+  --hthp-line: var(--hairline);
+  --hthp-surface: var(--card);
+  --hthp-paper: var(--background);
+  --hthp-deep: color-mix(in oklab, var(--foreground) 8%, transparent);
+  --hthp-land: var(--panel);
+  --hthp-foam: color-mix(in oklab, var(--foreground) 55%, transparent);
+  --hthp-alarm: var(--alert);
+  --hthp-steady: oklch(0.6 0.11 158);
+  --hthp-watch: var(--brass);
+}

@@ -169,14 +169,14 @@ export function Plate({
 }: {
   eyebrow: string;
   title: string;
-  caption?: string;
+  caption?: string | undefined;
   children: ReactNode;
-  legend?: ReactNode;
-  aside?: ReactNode;
+  legend?: ReactNode | undefined;
+  aside?: ReactNode | undefined;
   /** What the drawing could not show, and why it matters. Never hidden. */
-  unknown?: ReactNode;
-  testid?: string;
-  notesLabel?: string;
+  unknown?: ReactNode | undefined;
+  testid?: string | undefined;
+  notesLabel?: string | undefined;
 }) {
   const wide = useWidePlate();
   return (
@@ -228,10 +228,10 @@ export function LegendRow({
   children,
   tone = "accent",
 }: {
-  n?: number;
+  n?: number | undefined;
   label: string;
-  children?: ReactNode;
-  tone?: Tone;
+  children?: ReactNode | undefined;
+  tone?: Tone | undefined;
 }) {
   return (
     <div className="hthp-legend__row">
@@ -267,7 +267,7 @@ export function Canvas({
 }: {
   w: number;
   h: number;
-  min?: number;
+  min?: number | undefined;
   /** Read to a screen reader in place of the drawing. Always write one. */
   label: string;
   children: ReactNode;
@@ -301,7 +301,7 @@ export function WaterField({
   y: number;
   w: number;
   h: number;
-  opacity?: number;
+  opacity?: number | undefined;
 }) {
   return (
     <g opacity={opacity}>
@@ -344,7 +344,7 @@ export function Bank({
   w: number;
   h: number;
   side: "top" | "bottom";
-  label?: string;
+  label?: string | undefined;
   hatchId: string;
 }) {
   const lineY = side === "top" ? y + h : y;
@@ -386,8 +386,8 @@ export function Flow({
   w: number;
   rows: number;
   gap: number;
-  speed?: 1 | 2 | 3;
-  opacity?: number;
+  speed?: 1 | 2 | 3 | undefined;
+  opacity?: number | undefined;
 }) {
   const dash = speed === 1 ? "6 12" : speed === 2 ? "16 10" : "34 8";
   return (
@@ -422,8 +422,8 @@ export function Riffle({
   y: number;
   w: number;
   h: number;
-  density?: number;
-  seedFrom?: number;
+  density?: number | undefined;
+  seedFrom?: number | undefined;
 }) {
   const ticks: ReactNode[] = [];
   let seed = seedFrom;
@@ -465,7 +465,7 @@ export function HoldingZone({
   n: number;
   /** Where the numbered badge sits, in viewBox units. */
   at: [number, number];
-  tone?: Tone;
+  tone?: Tone | undefined;
 }) {
   const [cx, cy] = at;
   const c = toneColor(tone);
@@ -520,7 +520,7 @@ export function Structure({
   kind: "wood" | "rock" | "weed";
   x: number;
   y: number;
-  scale?: number;
+  scale?: number | undefined;
 }) {
   if (kind === "rock") {
     return (
@@ -587,9 +587,9 @@ export function Note({
   x: number;
   y: number;
   children: string;
-  anchor?: "start" | "middle" | "end";
-  tone?: Tone;
-  size?: number;
+  anchor?: "start" | "middle" | "end" | undefined;
+  tone?: Tone | undefined;
+  size?: number | undefined;
 }) {
   return (
     <text x={x} y={y} textAnchor={anchor} fontSize={size} fill={toneColor(tone)} fontFamily={SANS}>
@@ -610,9 +610,9 @@ export function Tag({
   x: number;
   y: number;
   children: string;
-  anchor?: "start" | "middle" | "end";
-  tone?: Tone;
-  size?: number;
+  anchor?: "start" | "middle" | "end" | undefined;
+  tone?: Tone | undefined;
+  size?: number | undefined;
 }) {
   return (
     <text
@@ -646,11 +646,11 @@ export function Arrow({
 }: {
   from: [number, number];
   to: [number, number];
-  bow?: number;
-  tone?: Tone;
-  dashed?: boolean;
-  width?: number;
-  label?: string;
+  bow?: number | undefined;
+  tone?: Tone | undefined;
+  dashed?: boolean | undefined;
+  width?: number | undefined;
+  label?: string | undefined;
 }) {
   const id = usePlateId("arrow");
   const [x1, y1] = from;
@@ -708,8 +708,8 @@ export function Cast({
 }: {
   from: [number, number];
   to: [number, number];
-  bow?: number;
-  label?: string;
+  bow?: number | undefined;
+  label?: string | undefined;
 }) {
   return <Arrow from={from} to={to} bow={bow} dashed tone="ink" label={label} />;
 }
@@ -729,7 +729,7 @@ export function Callout({
   at: [number, number];
   to: [number, number];
   n: number;
-  tone?: Tone;
+  tone?: Tone | undefined;
 }) {
   const c = toneColor(tone);
   return (
@@ -763,8 +763,8 @@ export function FailureMark({
 }: {
   x: number;
   y: number;
-  scale?: number;
-  tone?: Tone;
+  scale?: number | undefined;
+  tone?: Tone | undefined;
 }) {
   const c = toneColor(tone);
   return (
@@ -799,7 +799,7 @@ export function Span({
   to: number;
   y: number;
   label: string;
-  tone?: Tone;
+  tone?: Tone | undefined;
 }) {
   const c = toneColor(tone);
   return (
@@ -857,7 +857,7 @@ export function DepthColumn({
   w: number;
   h: number;
   active: DepthRowId | "varies" | readonly DepthRowId[];
-  labels?: boolean;
+  labels?: boolean | undefined;
 }) {
   const set = new Set<string>(
     typeof active === "string" ? (active === "varies" ? [] : [active]) : active,

@@ -44,7 +44,8 @@ export type PathShape =
   | "drop"
   | "troll"
   | "surface"
-  | "crawl";
+  | "crawl"
+  | "hold";
 
 export type PathSpeed = "dead" | "slow" | "moderate" | "brisk";
 export type PathPause = "none" | "brief" | "long";
@@ -62,9 +63,9 @@ export type PresentationJob = {
   /** How long the thing stays where a fish can decide about it. */
   strikeWindow: StrikeWindow;
   /** Only meaningful where there is current. */
-  current?: "across" | "with" | "against" | "none";
+  current?: "across" | "with" | "against" | "none" | undefined;
   /** Free text: silhouette and size, in the reader's units. */
-  profile?: string;
+  profile?: string | undefined;
 };
 
 const W = 720;
@@ -172,6 +173,15 @@ function pathFor(shape: PathShape, y: number): string {
       }
       return seg.join(" ");
     }
+    case "hold": {
+      /*
+       * A bait that sits still is still doing a job, and it is the one job
+       * anglers describe as "doing nothing". The line drops to the band and
+       * stays there; what moves is the water past it.
+       */
+      const hx = x0 + 250;
+      return `M${hx},${AIR + 4} C${hx + 8},${AIR + 40} ${hx - 6},${y - 40} ${hx + 2},${y} m-16,0 q16,-7 32,0 m-32,10 q16,-7 32,0`;
+    }
     case "crawl":
     default:
       return `M${x0},${BED - 46} C${x0 + 140},${BED - 20} ${x0 + 300},${BED - 10} ${x0 + 420},${BED - 16} C${x1 - 120},${BED - 22} ${x1 - 40},${BED - 12} ${x1},${BED - 14}`;
@@ -187,6 +197,7 @@ const SHAPE_LABEL: Record<PathShape, string> = {
   troll: "Troll",
   surface: "Surface",
   crawl: "Bottom crawl",
+  hold: "Held in place",
 };
 
 export function PresentationPathPlate({
@@ -199,12 +210,12 @@ export function PresentationPathPlate({
   testid = "presentation-path-plate",
 }: {
   job: PresentationJob;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactNode;
-  unknown?: ReactNode;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  unknown?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const glow = usePlateId("zonewash");
   const centre = bandCenter(job.depth);
@@ -212,8 +223,15 @@ export function PresentationPathPlate({
   const bandIds: DepthRowId[] =
     job.depth === "varies" ? [] : typeof job.depth === "string" ? [job.depth] : [...job.depth];
 
-  const windowW = job.strikeWindow === "short" ? 90 : job.strikeWindow === "medium" ? 200 : 330;
-  const windowX = job.shape === "drop" ? 200 : 250;
+  const windowW =
+    job.shape === "hold"
+      ? W - 120
+      : job.strikeWindow === "short"
+        ? 90
+        : job.strikeWindow === "medium"
+          ? 200
+          : 330;
+  const windowX = job.shape === "drop" || job.shape === "hold" ? 200 : 250;
 
   return (
     <Plate

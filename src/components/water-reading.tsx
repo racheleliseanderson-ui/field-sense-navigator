@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import type { Destination } from "@/lib/catalog";
 import { useReadLevel } from "@/lib/read-level";
 import { FAMILY_LABEL, READ_LEVELS, cuesFor, readWater, type ReadLevel } from "@/lib/water-reading";
+import { WaterSectionReading } from "@/components/water-section-plate";
 
 /** Beginner → competent → advanced, as one setting the reader controls. */
 export function ReadLevelControl({
@@ -81,6 +82,10 @@ export function WaterReadingPanel({ destination }: { destination: Destination })
           read for a {read.waterClass}. It holds no clarity, temperature, level, flow, tide or hatch
           for this water today, and it does not name a spot.
         </p>
+      </div>
+
+      <div className="mt-6">
+        <WaterSectionReading destination={destination} level={level} />
       </div>
 
       <ReadLevelControl level={level} setLevel={setLevel} className="mt-7 max-w-2xl" />

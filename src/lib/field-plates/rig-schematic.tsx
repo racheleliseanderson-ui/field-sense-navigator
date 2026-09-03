@@ -55,22 +55,22 @@ export type RigPart = {
   /** Distance from the top of the rig, in the same unit as `totalLength`. */
   at: number;
   /** Only for droppers: how far the tag hangs off the main path. */
-  tagLength?: number;
-  note?: string;
-  risk?: RigRisk | null;
+  tagLength?: number | undefined;
+  note?: string | undefined;
+  risk?: RigRisk | null | undefined;
 };
 
 export type RigSchematicSpec = {
   /** What this arrangement is supposed to make the bait or lure do. */
-  job?: string;
+  job?: string | undefined;
   /** Total drawn length, top of rig to terminal end. */
   totalLength: number;
   unit: string;
   parts: RigPart[];
   /** Where the surface sits along the rig, if the rig hangs through it. */
-  surfaceAt?: number | null;
+  surfaceAt?: number | null | undefined;
   /** Where the bottom sits, if the rig is meant to reach it. */
-  bottomAt?: number | null;
+  bottomAt?: number | null | undefined;
 };
 
 const W = 560;
@@ -96,12 +96,12 @@ export function RigSchematicPlate({
   testid = "rig-schematic-plate",
 }: {
   spec: RigSchematicSpec;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactNode;
-  unknown?: ReactNode;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  unknown?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const clipId = usePlateId("rigwater");
   const total = Math.max(spec.totalLength, 1);
@@ -182,7 +182,7 @@ export function RigSchematicPlate({
 
         {/* Measured spacing down the left, so a change to one gap moves the rest. */}
         {parts.map((p, i) => {
-          const prev = i === 0 ? 0 : parts[i - 1].at;
+          const prev = i === 0 ? 0 : (parts[i - 1]?.at ?? 0);
           if (p.at - prev < total * 0.06) return null;
           return (
             <g key={`span-${p.id}`} transform={`rotate(-90 ${58} ${(yOf(prev) + yOf(p.at)) / 2})`}>
@@ -251,7 +251,7 @@ function Shape({
   x: number;
   y: number;
   c: string;
-  tagLength?: number;
+  tagLength?: number | undefined;
   scale: number;
 }) {
   switch (kind) {

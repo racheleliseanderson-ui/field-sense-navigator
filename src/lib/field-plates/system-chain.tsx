@@ -41,7 +41,7 @@ export type ChainLink = {
   /** What the component does in the chain: "Main line", "Leader knot", "Hook". */
   role: string;
   /** What it actually is, in the reader's own words. */
-  spec?: string;
+  spec?: string | undefined;
   /**
    * How much margin this link has for the declared job, 0 to 1.
    * `null` means the app does not know, which is drawn as not known.
@@ -49,7 +49,7 @@ export type ChainLink = {
   headroom: number | null;
   verdict: LinkVerdict;
   /** One sentence. What gives, and under what. */
-  note?: string;
+  note?: string | undefined;
 };
 
 export type SystemChainSpec = {
@@ -57,9 +57,9 @@ export type SystemChainSpec = {
   job: string;
   links: ChainLink[];
   /** Which link gives out first. Null when nothing does. */
-  weakest?: string | null;
+  weakest?: string | null | undefined;
   /** The cheapest sensible correction, when one exists. */
-  fix?: { linkId?: string; what: string } | null;
+  fix?: { linkId?: string; what: string } | null | undefined;
 };
 
 const VERDICT_TONE: Record<LinkVerdict, Tone> = {
@@ -92,12 +92,12 @@ export function SystemChainPlate({
   testid = "system-chain-plate",
 }: {
   spec: SystemChainSpec;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactNode;
-  unknown?: ReactNode;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  unknown?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const links = spec.links;
   const W = Math.max(560, links.length * (BOX_W + GAP) + GAP + 24);

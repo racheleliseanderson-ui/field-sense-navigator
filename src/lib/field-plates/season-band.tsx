@@ -49,21 +49,21 @@ export type SeasonPhase = {
   /** Month index 0-11. A phase may wrap the year end. */
   from: number;
   to: number;
-  tone?: Tone;
+  tone?: Tone | undefined;
   /** What the fish is doing, and where that puts it. */
-  note?: string;
+  note?: string | undefined;
   /** The water temperature band this phase actually tracks, in Fahrenheit. */
-  tempF?: [number, number] | null;
+  tempF?: [number, number] | null | undefined;
 };
 
 export type SeasonBandSpec = {
   phases: SeasonPhase[];
   /** 0-11. Marked, not emphasised — today is a fact, not an argument. */
-  currentMonth?: number | null;
+  currentMonth?: number | null | undefined;
   /** Observed or typical water temperature by month, if the app has it. */
-  tempTrack?: { month: number; f: number }[] | null;
+  tempTrack?: { month: number; f: number }[] | null | undefined;
   /** Why the months are approximate here. Always worth saying. */
-  caveat?: string;
+  caveat?: string | undefined;
 };
 
 const W = 720;
@@ -86,11 +86,11 @@ export function SeasonBandPlate({
   testid = "season-band-plate",
 }: {
   spec: SeasonBandSpec;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactNode;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const track = spec.tempTrack ?? [];
   const temps = track.map((t) => t.f);

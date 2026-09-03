@@ -54,29 +54,29 @@ export type SectionZone = {
   why: string;
   /** Position as fractions of the water body: 0 = near bank / surface. */
   at: { x: number; y: number; w: number; h: number };
-  confidence?: ZoneConfidence;
+  confidence?: ZoneConfidence | undefined;
 };
 
 export type SectionStructure = {
   kind: "wood" | "rock" | "weed";
   /** Fractions of the water body. */
   at: { x: number; y: number };
-  scale?: number;
+  scale?: number | undefined;
 };
 
 export type WaterSectionSpec = {
   kind: WaterSectionKind;
   /** Names the two ends of the cut, e.g. ["Near bank", "Far bank"]. */
-  edges?: [string, string];
+  edges?: [string, string] | undefined;
   /** 1 slow, 2 moderate, 3 pushy. Ignored on stillwater. */
-  current?: 1 | 2 | 3;
+  current?: 1 | 2 | 3 | undefined;
   /** Depth of a thermal break as a fraction of the column, or null if unknown. */
-  thermocline?: number | null;
-  clarity?: "clear" | "stained" | "murky" | "unknown";
-  structures?: SectionStructure[];
-  zones?: SectionZone[];
+  thermocline?: number | null | undefined;
+  clarity?: "clear" | "stained" | "murky" | "unknown" | undefined;
+  structures?: SectionStructure[] | undefined;
+  zones?: SectionZone[] | undefined;
   /** Where the reader would put their feet, as a fraction across. */
-  stand?: number | null;
+  stand?: number | null | undefined;
 };
 
 const W = 720;
@@ -149,12 +149,12 @@ export function WaterSectionPlate({
   testid = "water-section-plate",
 }: {
   spec: WaterSectionSpec;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactChild;
-  unknown?: ReactChild;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactChild | undefined;
+  unknown?: ReactChild | undefined;
+  testid?: string | undefined;
 }) {
   const hatch = usePlateId("bank");
   const zones = spec.zones ?? [];

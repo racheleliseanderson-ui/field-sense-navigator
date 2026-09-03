@@ -18,3 +18,4 @@ export * from "./rig-schematic";
 export * from "./load-path";
 export * from "./forage-silhouette";
 export * from "./season-band";
+export * from "./thermal-band";

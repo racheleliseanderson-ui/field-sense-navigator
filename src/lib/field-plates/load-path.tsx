@@ -38,23 +38,23 @@ export type ConnectionSide = {
   label: string;
   material: LineMaterial;
   /** As the reader states it: "20 lb", "0.011 in", "3X". */
-  gauge?: string;
+  gauge?: string | undefined;
   /** Relative thickness for drawing, 1 to 6. */
-  weight?: number;
+  weight?: number | undefined;
 };
 
 export type LoadPathSpec = {
   a: ConnectionSide;
   b: ConnectionSide;
   /** Where load concentrates along the connection, 0 to 1. */
-  stressAt?: number[];
+  stressAt?: number[] | undefined;
   mode: FailureMode;
   /** Turns, wraps or passes — whatever the connection counts. */
-  turns?: number | null;
+  turns?: number | null | undefined;
   /** How far apart the two materials are. Null when it has not been worked out. */
-  mismatch?: "matched" | "workable" | "far apart" | null;
+  mismatch?: "matched" | "workable" | "far apart" | null | undefined;
   /** One sentence naming what actually gives. */
-  verdict?: string;
+  verdict?: string | undefined;
 };
 
 const W = 640;
@@ -110,15 +110,20 @@ export function LoadPathPlate({
   testid = "load-path-plate",
 }: {
   spec: LoadPathSpec;
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  caption?: string;
-  aside?: ReactNode;
-  unknown?: ReactNode;
-  testid?: string;
+  caption?: string | undefined;
+  aside?: ReactNode | undefined;
+  unknown?: ReactNode | undefined;
+  testid?: string | undefined;
 }) {
   const heat = usePlateId("loadheat");
-  const stress = spec.stressAt?.length ? spec.stressAt : [0.5];
+  /*
+   * At least one stress point, always. A connection drawn with no load
+   * concentration anywhere is a picture of a knot rather than a diagnosis.
+   */
+  const stress: number[] = spec.stressAt?.length ? spec.stressAt : [0.5];
+  const firstStress = stress[0] ?? 0.5;
   const knotX = W / 2;
   const turnCount = Math.max(2, Math.min(9, spec.turns ?? 5));
 
@@ -255,9 +260,9 @@ export function LoadPathPlate({
         ) : null}
         {spec.mode === "break" ? (
           <g>
-            <FailureMark x={stress[0] * (W - 60) + 30} y={MID} scale={1.15} />
+            <FailureMark x={firstStress * (W - 60) + 30} y={MID} scale={1.15} />
             <text
-              x={stress[0] * (W - 60) + 30}
+              x={firstStress * (W - 60) + 30}
               y={MID + 44}
               textAnchor="middle"
               fontSize={10.5}
