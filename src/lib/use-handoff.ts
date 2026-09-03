@@ -4,9 +4,9 @@ import { useServerFn } from "@tanstack/react-start";
 
 import type { Destination } from "@/lib/catalog";
 import { getLiveConditions } from "@/lib/live.functions";
+import { FLEET_TARGETS } from "@/lib/hth-packet";
 import {
   NO_TEMPERATURE,
-  TARGET_URL,
   buildHandoffSteps,
   handoffUrl,
   temperatureFrom,
@@ -75,7 +75,7 @@ export function useHandoffUrl(
             ...(level ? { level } : {}),
             ...(temperature ? { temperature } : {}),
           })
-        : TARGET_URL[target],
+        : FLEET_TARGETS[target].url,
     [mounted, d, target, job, species, level, temperature],
   );
 }
@@ -91,6 +91,6 @@ export function useHandoffSteps(d: Destination, ctx: HandoffContext = {}): Hando
       ...(temperature ? { temperature } : {}),
     });
     if (mounted) return steps;
-    return steps.map((s) => ({ ...s, url: TARGET_URL[s.id] }));
+    return steps.map((s) => ({ ...s, url: FLEET_TARGETS[s.id].url }));
   }, [mounted, d, job, species, level, temperature]);
 }

@@ -1,5 +1,14 @@
 import { daysSince, displayName, type Destination, type WaterType } from "@/lib/catalog";
-import { HORIZON } from "@/lib/fleet";
+import {
+  FLEET_CONTRACT as SHARED_FLEET_CONTRACT,
+  FLEET_TARGETS,
+  PACKET_VERSION as SHARED_PACKET_VERSION,
+  buildPacket as buildFleetPacket,
+  packetUrl,
+  type FleetTargetKey,
+  type HthPacket,
+  type PacketRead,
+} from "@/lib/hth-packet";
 import { JOBS, readTags, readiness, type JobId } from "@/lib/intelligence";
 import { readAccess } from "@/lib/access";
 import { readWater, cuesFor, type ReadLevel } from "@/lib/water-reading";
@@ -17,31 +26,22 @@ import { readWater, cuesFor, type ReadLevel } from "@/lib/water-reading";
  * The packet travels in the URL fragment, which is never sent to a server.
  * Nothing is posted automatically — a handoff is a link the reader presses.
  * It carries no coordinates and no private water, by contract.
+ *
+ * The envelope, the coordinate strip, the fragment encoding and the fleet
+ * addresses all live in `@/lib/hth-packet`, the file the whole fleet copies.
+ * What stays here is the part that is ours: how a Field Sense catalog record
+ * maps onto the packet's vocabulary, and the water/air temperature separation
+ * this instrument's own tests enforce.
  * ------------------------------------------------------------------ */
 
-export const FLEET_CONTRACT = "HTH-FLEET-1.0" as const;
-export const PACKET_VERSION = "HTH-1.0" as const;
+/** Re-exported from the shared module so this app has one spelling of each. */
+export const FLEET_CONTRACT = SHARED_FLEET_CONTRACT;
+export const PACKET_VERSION = SHARED_PACKET_VERSION;
 export const INSTRUMENT_ID = "HTH-HH-001" as const;
+export const ORIGIN = "field-sense" as const;
 
-export type HandoffTarget = "species" | "hatch" | "rig" | "tackle" | "knot" | "ops";
-
-const appUrl = (name: string, fallback: string): string => {
-  const hit = HORIZON.apps.find((a) => a.name === name);
-  return `${hit?.url ?? fallback}/`.replace(/\/+$/, "/");
-};
-
-/** Resolved from the fleet registry so a moved instrument is fixed in one place. */
-export const TARGET_URL: Record<HandoffTarget, string> = {
-  species: appUrl("Species & Presentation", "https://species.hookthehorizon.blog"),
-  hatch: appUrl("Hatch Match", "https://hatch.hookthehorizon.blog"),
-  rig: appUrl("Rig Signal", "https://rig-signal.hookthehorizon.blog"),
-  tackle: appUrl("Tackle Link Analyst", "https://tackle.hookthehorizon.blog"),
-  knot: appUrl("Knot Analyst", "https://knot.hookthehorizon.blog"),
-  ops: appUrl("Field Ops Desk", "https://ops.hookthehorizon.blog"),
-};
-
-/** Kept for the existing Species integration. */
-export const SPECIES_URL = TARGET_URL.species;
+/** Every fleet address except our own step. Field Sense is where you already are. */
+export type HandoffTarget = Exclude<FleetTargetKey, "water">;
 
 export interface HandoffStep {
   id: HandoffTarget;
@@ -143,6 +143,20 @@ export interface HandoffContext {
    * difference is recorded in `tempSource`, not invented.
    */
   temperature?: PacketTemperature | null;
+  /**
+   * A packet that arrived on this page, if one did.
+   *
+   * Field Sense is the chain's entry point, so most of the time nothing
+   * arrives. But the Field Ops Desk emits a packet now, and a reader following
+   * a "re-check this water" link back here is not starting cold — they are part
+   * way round a loop. Handing the read straight in extends that chain instead
+   * of restarting it, which is the difference between a trail that records the
+   * route and one that resets the clock.
+   *
+   * Accepts a `readPacket()` result directly; an `absent` or `invalid` read
+   * contributes nothing.
+   */
+  incoming?: PacketRead | HthPacket | null;
 }
 
 /* ------------------------------------------------------------------ *
@@ -253,8 +267,18 @@ export function toF(value: number, unit: string): number | null {
   return Math.round(f * 10) / 10;
 }
 
-/** Public-safe Field Sense → fleet packet. Named water only; no coordinates. */
-export function buildPacket(d: Destination, target: HandoffTarget, ctx: HandoffContext = {}) {
+/**
+ * Public-safe Field Sense → fleet packet. Named water only; no coordinates.
+ *
+ * Every field below is one this instrument already wrote. The envelope, the
+ * trail, the coordinate strip and the privacy claim are the shared module's;
+ * the mapping from a catalog record onto them is ours.
+ */
+export function buildPacket(
+  d: Destination,
+  target: HandoffTarget,
+  ctx: HandoffContext = {},
+): HthPacket {
   const waterType = mapWaterType(d.waterType);
   const createdAt = new Date().toISOString();
   const read = readWater(d);
@@ -263,17 +287,16 @@ export function buildPacket(d: Destination, target: HandoffTarget, ctx: HandoffC
   const job = ctx.job ? JOBS.find((j) => j.id === ctx.job) : undefined;
   const temp = ctx.temperature ?? NO_TEMPERATURE;
 
-  return {
-    packetVersion: PACKET_VERSION,
-    origin: "field-sense",
-    intent: target,
-    createdAt,
+  return buildFleetPacket({
+    origin: ORIGIN,
     instrumentId: INSTRUMENT_ID,
-    fleet: {
-      contract: FLEET_CONTRACT,
-      trail: [{ origin: "field-sense", at: createdAt }],
-      lastUpdatedBy: "field-sense",
-    },
+    intent: target,
+    /* The trail appends. A reader who came back here from Field Ops keeps the
+     * route they actually travelled. */
+    ...(ctx.incoming ? { incoming: ctx.incoming } : {}),
+    /* One clock for the whole packet, so `builtAt` in provenance is the same
+     * stamp as the trail hop rather than a millisecond later. */
+    now: createdAt,
     water: {
       waterId: d.id,
       waterName: displayName(d),
@@ -373,11 +396,14 @@ export function buildPacket(d: Destination, target: HandoffTarget, ctx: HandoffC
           ]
         : []),
     ],
+    /* No coordinate travels and no private water is in the catalog, so this
+     * instrument states both. The shared module carries a `true` forward from
+     * anything upstream; it cannot be lowered from here. */
     privacy: {
       containsCoordinates: false,
       containsPrivateWater: false,
     },
-  };
+  });
 }
 
 /** A pressable link into another Hook instrument, context attached. */
@@ -386,8 +412,7 @@ export function handoffUrl(
   target: HandoffTarget,
   ctx: HandoffContext = {},
 ): string {
-  const packet = buildPacket(d, target, ctx);
-  return `${TARGET_URL[target]}#packet=${encodeURIComponent(JSON.stringify(packet))}`;
+  return packetUrl(target, buildPacket(d, target, ctx));
 }
 
 /** Why this instrument is the next honest step for this particular water. */
@@ -453,9 +478,7 @@ export const WORKFLOW: WorkflowStop[] = [
     app: "Field Sense Navigator",
     step: "Water",
     question: "Which water, what kind of water is it, and what still has to be checked today?",
-    url:
-      HORIZON.apps.find((a) => a.name === "Field Sense Navigator")?.url ??
-      "https://waterways.hookthehorizon.blog",
+    url: FLEET_TARGETS.water.url,
     here: true,
   },
   ...HANDOFF_ORDER.map((id) => ({
@@ -463,7 +486,7 @@ export const WORKFLOW: WorkflowStop[] = [
     app: STEP_META[id].app,
     step: STEP_META[id].step,
     question: STEP_META[id].question,
-    url: TARGET_URL[id],
+    url: FLEET_TARGETS[id].url,
     here: false,
   })),
 ];
