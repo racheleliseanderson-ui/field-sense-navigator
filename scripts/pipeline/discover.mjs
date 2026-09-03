@@ -37,16 +37,18 @@ import {
   PATHS, readCatalog, readJson, writeJson, hostOf, trustTier, isTrusted,
   waterKey, plain, pooled, argv, ok, drop, note, writeReport, appendRun, today,
   declaredSitemaps, sitemapLocs, isSitemapIndex, fetchXml, robotsAllows,
+  isMultiStateHost, fetchPage, links,
 } from "./lib.mjs";
 
 const args = argv();
 const DRY = Boolean(args.dry);
 const ONLY_STATE = args.state ? plain(args.state) : null;
 const ONLY_HOST = args.host ? String(args.host).replace(/^www\./, "").toLowerCase() : null;
-const LIMIT = Number(args.limit) || 400;
-const PER_HOST = Number(args["per-host"]) || 60;
+const LIMIT = Number(args.limit) || 600;
+const PER_HOST = Number(args["per-host"]) || 40;
 const CONCURRENCY = Math.max(1, Math.min(4, Number(args.concurrency ?? 3)));
 const MIN_FAMILY = Number(args["min-family"]) || 2;
+const NO_WIDE = Boolean(args["no-wide"]);
 const MAX_HOSTS = Number(args["max-hosts"] ?? args["max-sources"]) || 120;
 const MAX_CHILD_SITEMAPS = 30;
 const MAX_URLS_PER_HOST = 80_000;
@@ -144,7 +146,22 @@ function pathParts(url) {
  * MIN_FAMILY supporting records, which is what keeps a one-off URL from
  * turning the whole site into a search space.
  */
-function familiesFor(records) {
+function familiesFor(records, host) {
+  // A federal host publishes in every state, so no family on it can say which
+  // state a new page belongs to. Skip the host rather than guess.
+  if (isMultiStateHost(host)) return [];
+
+  // How many records does a folder need before it counts as a place this
+  // agency keeps waters? Normally two. But on a host whose every record is one
+  // state -- georgiawildlife.com, adfg.alaska.gov -- a folder holding a single
+  // water is still that agency's folder for waters, and requiring two there
+  // shuts out most of the small state agencies entirely. The jurisdiction is
+  // not being guessed more loosely: resolve-targets still makes the PAGE name
+  // the state before anything is written, because a host this small never
+  // clears the single-state-host bar.
+  const hostStates = new Set(records.map((r) => r.state));
+  const minSupport = hostStates.size === 1 ? 1 : MIN_FAMILY;
+
   const tally = new Map();
   for (const r of records) {
     const parts = pathParts(r.officialSourceUrl);
@@ -159,16 +176,117 @@ function familiesFor(records) {
     }
   }
   return [...tally.values()]
-    .filter((f) => f.n >= MIN_FAMILY && f.prefix !== "/")
+    .filter((f) => f.n >= minSupport && f.prefix !== "/")
     .map((f) => {
       const [state, n] = [...f.states.entries()].sort((a, b) => b[1] - a[1])[0];
       return { prefix: f.prefix, support: f.n, state, stateShare: n / f.n };
     })
-    // A family spanning jurisdictions (nps.gov, fs.usda.gov) cannot tell us
-    // which state a new record belongs to, and a guessed jurisdiction is a
-    // wrong record. Those families are skipped, not guessed at.
+    // A family spanning jurisdictions cannot tell us which state a new record
+    // belongs to, and a guessed jurisdiction is a wrong record.
     .filter((f) => f.stateShare >= 0.8)
     .sort((a, b) => b.support - a.support);
+}
+
+/**
+ * Every URL this host publishes, from its sitemap.
+ *
+ * Returns an empty set when the host publishes none -- roughly a third of the
+ * state agencies here do not, which is what the index fallback below is for.
+ */
+async function sitemapUrls(host) {
+  const urls = new Set();
+  const seen = new Set();
+  const queue = [...(await declaredSitemaps(`https://${host}`))];
+  let read = 0;
+
+  while (queue.length && urls.size < MAX_URLS_PER_HOST && read <= MAX_CHILD_SITEMAPS) {
+    const sm = queue.shift();
+    if (!sm || seen.has(sm)) continue;
+    seen.add(sm);
+    if (hostOf(sm) !== host) continue;
+    const res = await fetchXml(sm);
+    read += 1;
+    if (!res.ok) continue;
+    const locs = sitemapLocs(res.xml);
+    if (isSitemapIndex(res.xml)) {
+      for (const child of locs.slice(0, MAX_CHILD_SITEMAPS)) queue.push(child);
+    } else {
+      for (const u of locs) urls.add(u);
+    }
+  }
+  return urls;
+}
+
+/**
+ * Fallback for the agencies that publish no sitemap -- Montana, Idaho,
+ * Michigan, Maine, Louisiana, Maryland, Kentucky and a dozen more.
+ *
+ * Their family folder is usually a real index page, so it is fetched directly
+ * and its same-host links one level down are taken as candidates. This finds
+ * less than a sitemap and misses anything drawn by JavaScript, which is why it
+ * is the fallback and not the method. Everything it finds still faces all six
+ * gates.
+ */
+async function indexUrls(host, families) {
+  const urls = new Set();
+  for (const family of families.slice(0, 6)) {
+    const indexUrl = `https://${host}${family.prefix}`;
+    if (!(await robotsAllows(indexUrl))) continue;
+    const page = await fetchPage(indexUrl, { timeoutMs: 15_000, retries: 0 });
+    if (!page.ok) continue;
+    for (const link of links(page.html, page.url)) {
+      if (hostOf(link.href) !== host) continue;
+      urls.add(link.href);
+      if (urls.size >= 4000) return urls;
+    }
+  }
+  return urls;
+}
+
+/**
+ * Sections of an agency site that are never a water, whatever the slug says.
+ *
+ * The wide scan below needs this. A state environmental department publishes
+ * thousands of notices with names like "hudson-river-estuary-grants", and
+ * without a path exclusion the widest net catches mostly paperwork.
+ */
+const NOT_A_WATER_PATH_RE =
+  /\/(news|press|media|bulletin|notices?|announcements?|blog|events?|calendar|grants?|permits?|regulations?|rulemaking|laws?|forms?|reports?|publications?|documents?|library|about|contact|careers|jobs|search|sitemap|privacy|espanol|es)\//i;
+
+/**
+ * The wide scan, used only when a host's own folders taught us nothing.
+ *
+ * Several agencies here -- New York, Wisconsin, Connecticut, Oregon -- are
+ * cited in this catalog only by a section index like /things-to-do/freshwater-
+ * fishing, never by a page about one water. So the catalog cannot say where
+ * that agency keeps its waters, and family matching finds nothing however
+ * large the sitemap is.
+ *
+ * For a host serving exactly one state, the fallback is to judge each URL on
+ * its own slug rather than on the folder above it: the slug must itself name a
+ * water, and the path must not sit in a section that never holds one. That is
+ * a looser net, deliberately, and it is safe because it changes only what gets
+ * ASKED. resolve-targets still has to load the page, find the water named on
+ * it, and find the state named on it, before a single record is written.
+ */
+function wideCandidates(urls, host, state) {
+  const out = [];
+  for (const url of urls) {
+    let path;
+    try {
+      path = new URL(url).pathname;
+    } catch {
+      continue;
+    }
+    if (NOT_A_WATER_PATH_RE.test(path)) continue;
+    const parts = path.split("/").filter(Boolean);
+    if (parts.length < 2 || parts.length > 5) continue;
+    const slug = parts[parts.length - 1];
+    // No folder to lean on here, so the slug alone has to name the water.
+    if (!looksLikeNamedWater(slug, "")) continue;
+    out.push({ url, slug, state, prefix: `/${parts.slice(0, -1).join("/")}/` });
+  }
+  return out;
 }
 
 /* ── main ───────────────────────────────────────────────────────────────── */
@@ -193,7 +311,7 @@ for (const r of records) {
 }
 
 let hosts = [...byHost.entries()]
-  .map(([host, rs]) => ({ host, records: rs, families: familiesFor(rs) }))
+  .map(([host, rs]) => ({ host, records: rs, families: familiesFor(rs, host) }))
   .filter((h) => h.families.length)
   .sort((a, b) => b.records.length - a.records.length);
 
@@ -222,97 +340,109 @@ if (!hosts.length) {
   process.exit(0);
 }
 
-const found = [];
+const perHost = new Map();
 const hostNotes = [];
 
 await pooled(hosts, CONCURRENCY, async (entry) => {
-  if (found.length >= LIMIT) return;
-  const origin = `https://${entry.host}`;
-  const roots = await declaredSitemaps(origin);
-
-  /* expand sitemap indexes one level */
-  const urls = new Set();
-  let sitemapsRead = 0;
-  const queue = [...roots];
-  const seenSitemaps = new Set();
-
-  while (queue.length && urls.size < MAX_URLS_PER_HOST && sitemapsRead <= MAX_CHILD_SITEMAPS) {
-    const sm = queue.shift();
-    if (!sm || seenSitemaps.has(sm)) continue;
-    seenSitemaps.add(sm);
-    if (hostOf(sm) !== entry.host) continue;
-    const res = await fetchXml(sm);
-    sitemapsRead += 1;
-    if (!res.ok) continue;
-    const locs = sitemapLocs(res.xml);
-    if (isSitemapIndex(res.xml)) {
-      for (const child of locs.slice(0, MAX_CHILD_SITEMAPS)) queue.push(child);
-    } else {
-      for (const u of locs) urls.add(u);
-    }
-  }
+  let urls = await sitemapUrls(entry.host);
+  let via = "sitemap";
 
   if (!urls.size) {
-    hostNotes.push({ host: entry.host, note: "no readable sitemap" });
-    drop(`${entry.host} — no readable sitemap`);
+    urls = await indexUrls(entry.host, entry.families);
+    via = "index page";
+  }
+  if (!urls.size) {
+    hostNotes.push({ host: entry.host, note: "no sitemap and no readable index page" });
     return;
   }
 
-  /* candidates: one segment below a known family */
-  let addedHere = 0;
+  const mine = [];
   const seenHere = new Set();
 
+  const consider = [];
   for (const url of urls) {
-    if (found.length >= LIMIT || addedHere >= PER_HOST) break;
     let path;
     try {
       path = new URL(url).pathname;
     } catch {
       continue;
     }
-
     const family = entry.families.find((f) => {
       if (!path.toLowerCase().startsWith(f.prefix.toLowerCase())) return false;
       const rest = path.slice(f.prefix.length).split("/").filter(Boolean);
       return rest.length === 1;
     });
     if (!family) continue;
-
     const slug = path.slice(family.prefix.length).replace(/\/$/, "");
     if (!slug || !looksLikeNamedWater(slug, family.prefix)) continue;
+    consider.push({ url, slug, state: family.state, prefix: family.prefix });
+  }
+
+  let mode = via;
+  if (!consider.length && !NO_WIDE) {
+    // The host's folders taught us nothing. Judge each URL on its own slug.
+    const hostStates = new Set(entry.records.map((r) => r.state));
+    if (hostStates.size === 1) {
+      consider.push(...wideCandidates(urls, entry.host, [...hostStates][0]));
+      mode = `${via}, wide scan`;
+    }
+  }
+
+  for (const candidate of consider) {
+    if (mine.length >= PER_HOST) break;
+    const { url, slug, state, prefix } = candidate;
 
     const waterbody = nameFromSlug(slug);
     if (waterbody.length < 4 || waterbody.length > 60) continue;
 
     const canonical = url.replace(/\/$/, "").toLowerCase();
     if (knownUrls.has(canonical) || queuedUrls.has(canonical) || seenHere.has(canonical)) continue;
-    const key = waterKey(waterbody, family.state);
+    const key = waterKey(waterbody, state);
     if (known.has(key) || queued.has(key)) continue;
     if (!(await robotsAllows(url))) continue;
 
     seenHere.add(canonical);
     queued.add(key);
     queuedUrls.add(canonical);
-    found.push({
+    mine.push({
       waterbody,
-      state: family.state,
+      state,
       url,
       waterType: null,
       nameIsProvisional: true,
-      discoveredFrom: `sitemap:${entry.host}${family.prefix}`,
+      discoveredFrom: `${mode}:${entry.host}${prefix}`,
       discoveredAt: today(),
       trust: trustTier(url),
       status: "queued",
     });
-    addedHere += 1;
   }
 
-  if (addedHere) ok(`${addedHere} candidate${addedHere === 1 ? "" : "s"} from ${entry.host} (${urls.size} sitemap URLs)`);
-  else hostNotes.push({ host: entry.host, note: `nothing new in ${urls.size} sitemap URLs` });
+  if (mine.length) {
+    perHost.set(entry.host, mine);
+    ok(`${mine.length} from ${entry.host} (${urls.size} urls via ${mode})`);
+  } else {
+    hostNotes.push({ host: entry.host, note: `nothing new in ${urls.size} urls via ${mode}` });
+  }
 });
 
+/**
+ * Take from every host in turn rather than filling the budget from the largest.
+ * Texas and Washington have thousands of pages between them and would otherwise
+ * consume the whole run, leaving twenty states that have never been asked.
+ */
+const found = [];
+const lanes = [...perHost.values()];
+for (let i = 0; found.length < LIMIT; i += 1) {
+  const round = lanes.map((lane) => lane[i]).filter(Boolean);
+  if (!round.length) break;
+  for (const item of round) {
+    if (found.length >= LIMIT) break;
+    found.push(item);
+  }
+}
+
 console.log("");
-console.log(`discover: ${found.length} new candidate waters across ${hosts.length} hosts`);
+console.log(`discover: ${found.length} new candidate waters across ${perHost.size} of ${hosts.length} hosts`);
 
 const byState = found.reduce((acc, f) => ({ ...acc, [f.state]: (acc[f.state] ?? 0) + 1 }), {});
 const reportPath = writeReport("discovery", [

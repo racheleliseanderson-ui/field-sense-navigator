@@ -33,6 +33,7 @@ import {
   PATHS, readCatalog, readJson, writeJson, hostOf, trustTier, waterKey, plain,
   fetchPage, robotsAllows, pooled, argv, ok, drop, note, writeReport, appendRun,
   today, addDays, pageNamesWater, pageCarriesPhrase, pageReadsAsWater, sleep, mainText,
+  isMultiStateHost,
 } from "./lib.mjs";
 import { agencyIndex } from "./agencies.mjs";
 import {
@@ -125,9 +126,12 @@ const hostStates = (() => {
   }
   const out = new Map();
   for (const [host, bucket] of map) {
+    // A federal host is never single-state, however its records happen to fall.
+    if (isMultiStateHost(host)) continue;
     const total = [...bucket.values()].reduce((a, b) => a + b, 0);
     const [state, n] = [...bucket.entries()].sort((a, b) => b[1] - a[1])[0];
-    if (total >= 3 && n / total >= 0.9) out.set(host, state);
+    // Eight records at 95% -- three at 100% is a coincidence, not a pattern.
+    if (total >= 8 && n / total >= 0.95) out.set(host, state);
   }
   return out;
 })();
@@ -287,6 +291,11 @@ async function resolveOne(target) {
         // otherwise would put a false provenance in the catalog.
         lastHumanReviewedAt: null,
         lastHumanReviewedBy: null,
+        // Optional provenance (schema 0.6.0). This is how a later run, or a
+        // repair, can tell machine-seeded records from human-written ones
+        // without guessing from id ranges.
+        seededBy: "field-sense-pipeline",
+        seededAt: today(),
       },
       evidence: {
         trust: finalTier,

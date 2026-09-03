@@ -10,13 +10,13 @@ echo  ================================================================
 echo    HEALTH CHECK
 echo  ================================================================
 echo.
-echo   Answers four questions in about a minute:
+echo   Answers four questions in about a second:
 echo     - How old is the information?
 echo     - Are there any duplicates?
 echo     - How much can the catalogue actually answer?
 echo     - Is anything being read from a source it should not be?
 echo.
-echo   It only reads. It changes nothing.
+echo   It only reads. It changes nothing. It installs nothing.
 echo.
 echo  ----------------------------------------------------------------
 echo.
@@ -31,11 +31,6 @@ if errorlevel 1 (
   exit /b 1
 )
 if exist ".git\index.lock" del /f /q ".git\index.lock" >nul 2>&1
-if not exist "node_modules\" (
-  echo   Installing the tools the project needs, first time only...
-  call npm install --no-audit --no-fund
-  echo.
-)
 
 call node scripts\pipeline\health.mjs
 

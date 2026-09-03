@@ -97,6 +97,7 @@ export const GOV_HOSTS = new Set([
   "dnr.state.mn.us", "wildlife.state.nm.us", "ifishillinois.org",
   // Canadian federal / provincial portals
   "ontario.ca", "quebec.ca", "saskatchewan.ca", "novascotia.ca", "yukon.ca",
+  "bcparks.ca", "albertaparks.ca", "ontarioparks.ca", "parkscanadahistory.com",
   "princeedwardisland.ca", "albertaregulations.ca",
   "envrbrportal.crm.saskatchewan.ca",
   // City and county governments that publish their own water access, on .org
@@ -123,6 +124,29 @@ const DENY_HOSTS = new Set([
   "portaransas.org", "portisabelsouthpadre.com", "visitcorpuschristi.com",
   "destinfwb.com", "navarrebeachpier.com",
 ]);
+
+/**
+ * Hosts that publish in every state and can therefore never vouch for one.
+ *
+ * This is the hole that put thirty-five BLM records -- rivers in California,
+ * Oregon and Arizona -- into the catalog as Idaho. A federal agency's site is
+ * a perfectly good SOURCE; it is simply not evidence of jurisdiction, and a
+ * small sample of records that happen to share a state must not be mistaken
+ * for evidence that the host serves only that state.
+ */
+export const MULTI_STATE_HOSTS = new Set([
+  "blm.gov", "nps.gov", "fs.usda.gov", "fws.gov", "usbr.gov", "usace.army.mil",
+  "noaa.gov", "epa.gov", "usgs.gov", "recreation.gov", "corpslakes.erdc.dren.mil",
+  "canada.ca", "dfo-mpo.gc.ca", "pac.dfo-mpo.gc.ca",
+]);
+
+/** True when a host serves many jurisdictions and cannot imply one. */
+export function isMultiStateHost(host) {
+  const bare = String(host ?? "").replace(/^www\d*\./, "").toLowerCase();
+  if (MULTI_STATE_HOSTS.has(bare)) return true;
+  for (const listed of MULTI_STATE_HOSTS) if (bare.endsWith(`.${listed}`)) return true;
+  return false;
+}
 
 export function hostOf(url) {
   try {

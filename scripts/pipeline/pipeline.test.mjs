@@ -12,10 +12,12 @@ import assert from "node:assert/strict";
 import {
   trustTier, isTrusted, waterTokens, waterKey, pageNamesWater, pageCarriesPhrase,
   pageReadsAsWater, stripHtml, sentences, sitemapLocs, isSitemapIndex, mainText,
+  isMultiStateHost,
 } from "./lib.mjs";
 import {
   publishedName, stripDesignation, chooseWaterbodyName, waterTypeFrom,
   accessFrom, noticesFrom, speciesFrom, tagsFrom, boilerplateFilter,
+  namesADocumentOrPlace, refuseAsWaterbodyName,
 } from "./extract.mjs";
 
 test("trust: agencies are believed, tourism boards are not", () => {
@@ -206,4 +208,44 @@ test("navigation is not read as this page's content", () => {
   assert.equal(body.includes("Public fishing piers"), false);
   assert.ok(body.includes("Abernathy Creek"));
   assert.equal(accessFrom(body, "Abernathy Creek")[0].type, "shore_access");
+});
+
+test("a federal host can never vouch for a jurisdiction", () => {
+  assert.equal(isMultiStateHost("blm.gov"), true);
+  assert.equal(isMultiStateHost("www.nps.gov"), true);
+  assert.equal(isMultiStateHost("fs.usda.gov"), true);
+  assert.equal(isMultiStateHost("or.blm.gov"), true, "a regional subdomain is still federal");
+  assert.equal(isMultiStateHost("wdfw.wa.gov"), false);
+  assert.equal(isMultiStateHost("cpw.state.co.us"), false);
+});
+
+test("a management unit is filed under the water it sits on", () => {
+  const page = "Dowdy Lake SWA offers bank fishing on Dowdy Lake.";
+  assert.equal(chooseWaterbodyName("Dowdy Lake Swa", "Dowdy Lake SWA", page), "Dowdy Lake");
+  assert.equal(stripDesignation("Prewitt Reservoir SWA"), "Prewitt Reservoir");
+  assert.equal(stripDesignation("Elk River Wildlife Management Area"), "Elk River");
+});
+
+test("a plan, a road and a mountain range are not waters", () => {
+  for (const name of [
+    "Lake Simcoe Protection Plan",
+    "Colorado River Headwaters Byway",
+    "Fish Creek Mountains Wilderness",
+    "Croy Creek Trailhead",
+    "PNERP Implementing Plan for Chalk River Laboratories",
+  ]) {
+    assert.equal(namesADocumentOrPlace(name), true, `${name} should be refused`);
+    assert.equal(chooseWaterbodyName(name, name, `${name} has fishing access.`), null);
+  }
+  assert.equal(namesADocumentOrPlace("Sam Rayburn Reservoir"), false);
+  assert.equal(namesADocumentOrPlace("Devils River"), false);
+});
+
+test("a headline is not a waterbody, however many water words it contains", () => {
+  assert.equal(refuseAsWaterbodyName("Convention Center Expansion Ruled Legally Sound"), "reads_as_a_sentence");
+  assert.equal(refuseAsWaterbodyName("Save the Bay Center"), "document_road_or_building");
+  assert.equal(refuseAsWaterbodyName("Fish Hatchery Creek Facility"), "document_road_or_building");
+  for (const good of ["Grant Lake", "North Fork American River", "Lake Casa Blanca", "Sam Rayburn Reservoir", "Devils River"]) {
+    assert.equal(refuseAsWaterbodyName(good), null, `${good} should be allowed`);
+  }
 });

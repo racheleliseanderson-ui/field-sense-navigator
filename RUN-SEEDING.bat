@@ -28,7 +28,10 @@ pause
 echo.
 
 REM ---------------------------------------------------------------- step 1
-echo  [1/7] Checking your computer has what it needs...
+REM Nothing here installs anything. Every script this file runs uses only
+REM what Node itself provides, so the website's packages are not needed and
+REM a failed package install cannot stop the catalogue from growing.
+echo  [1/6] Checking your computer has what it needs...
 where node >nul 2>&1
 if errorlevel 1 (
   echo.
@@ -42,7 +45,7 @@ if errorlevel 1 (
   exit /b 1
 )
 for /f "tokens=*" %%v in ('node -v') do set NODEV=%%v
-echo        Node.js !NODEV! - good.
+echo        Node.js !NODEV! - good. Nothing to install.
 if exist ".git\index.lock" (
   del /f /q ".git\index.lock" >nul 2>&1
   echo        Cleared a leftover Git lock file.
@@ -58,30 +61,13 @@ if not exist "src\data\destinations.json" (
 echo.
 
 REM ---------------------------------------------------------------- step 2
-echo  [2/7] Installing the tools the project needs...
-echo        (first time only - this can take a few minutes)
-if not exist "node_modules\" (
-  call npm install --no-audit --no-fund
-  if errorlevel 1 (
-    echo.
-    echo   ^>^> STOPPED. The install failed - usually no internet.
-    echo.
-    pause
-    exit /b 1
-  )
-) else (
-  echo        Already installed - skipping.
-)
-echo.
-
-REM ---------------------------------------------------------------- step 3
-echo  [3/7] Counting what you have now...
+echo  [2/6] Counting what you have now...
 for /f "tokens=*" %%c in ('node scripts\pipeline\catalog-count.mjs') do set BEFORE=%%c
 echo        !BEFORE! waters in the catalogue before this run.
 echo.
 
-REM ---------------------------------------------------------------- step 4
-echo  [4/7] Asking each agency what waters it publishes...
+REM ---------------------------------------------------------------- step 3
+echo  [3/6] Asking each agency what waters it publishes...
 echo.
 echo        This reads the agencies' own site maps. It is quick.
 echo.
@@ -90,8 +76,8 @@ call node scripts\pipeline\discover.mjs --limit=200
 echo  ----------------------------------------------------------------
 echo.
 
-REM ---------------------------------------------------------------- step 5
-echo  [5/7] Opening each new water's official page. THIS IS THE LONG PART.
+REM ---------------------------------------------------------------- step 4
+echo  [4/6] Opening each new water's official page. THIS IS THE LONG PART.
 echo.
 echo        Every water it proves prints a + line.
 echo        Every water it drops prints a - line and the reason.
@@ -110,8 +96,8 @@ if errorlevel 1 (
 echo  ----------------------------------------------------------------
 echo.
 
-REM ---------------------------------------------------------------- step 6
-echo  [6/7] Adding what it proved, then checking nothing broke...
+REM ---------------------------------------------------------------- step 5
+echo  [5/6] Adding what it proved, then checking nothing broke...
 call node scripts\pipeline\seed-destinations.mjs
 echo.
 call node scripts\assert-catalog.mjs
@@ -136,8 +122,8 @@ if errorlevel 1 (
 echo        Checks passed.
 echo.
 
-REM ---------------------------------------------------------------- step 7
-echo  [7/7] Counting what you have now...
+REM ---------------------------------------------------------------- step 6
+echo  [6/6] Counting what you have now...
 for /f "tokens=*" %%c in ('node scripts\pipeline\catalog-count.mjs') do set AFTER=%%c
 echo.
 echo  ================================================================

@@ -25,6 +25,7 @@ scripts/pipeline/
   seed-destinations.mjs  assign ids and append. The only writer of new records
   refresh.mjs            re-read what we already hold
   health.mjs             read-only report
+  repair-seeded.mjs      fix or remove machine-seeded records after a gate change
   catalog-count.mjs      one number, for the launchers
   pipeline.test.mjs      the gates, under test
 ```
@@ -52,6 +53,22 @@ The search is shaped by the catalog rather than by a list of URLs in this repo:
 So when an agency publishes a new lake page in a folder the catalog already
 knows, discovery finds it, and nobody maintains a URL list. Hand-added starting
 points go in `scripts/data/discovery-sources.json`.
+
+Three ways of enumerating a host, in order:
+
+1. **Sitemap** — the method. Complete, declared in `robots.txt`, no JavaScript.
+2. **Index page** — for the roughly one host in three that publishes no
+   sitemap (Montana, Idaho, Michigan, Maine, Kentucky, Maryland). The family
+   folder is fetched and its links one level down are taken. Finds less, misses
+   anything drawn by JavaScript.
+3. **Wide scan** — when a host's own folders taught us nothing. Several
+   agencies are cited in this catalog only by a section index
+   (`/things-to-do/freshwater-fishing`), never by a page about one water, so
+   there is no folder to learn from however large the sitemap is. For a host
+   serving exactly one state, each URL is then judged on its own slug instead
+   of the folder above it, with news, permit, grant and regulation sections
+   excluded. Looser on purpose, and safe because it changes only what gets
+   *asked* — the six gates still decide what gets written. `--no-wide` disables it.
 
 A discovered name is a **question**, written to `scripts/data/seed-targets.json`.
 Nothing in discovery writes `src/data`.
@@ -128,3 +145,15 @@ node scripts/pipeline/health.mjs --links --batch=120
 Every run writes `reports/<name>-<timestamp>.md` and appends a line to
 `reports/pipeline-runs.jsonl`. The reports are the record of what was refused
 and why, which is the part of a fail-closed pipeline worth keeping.
+
+## Repairing a bad run
+
+`repair-seeded.mjs --from-id=<n>` re-checks machine-seeded records against the
+current gates: it strips management designations from names ("Dowdy Lake SWA"
+-> "Dowdy Lake"), removes records whose jurisdiction was never evidenced, and
+removes names that turned out to be a document, a road, a building or a
+headline. Scope is limited to ids at or above `--from-id`, so human-written
+records can never be touched. Run it with `--dry` first.
+
+Seeded records carry `seededBy: "field-sense-pipeline"` and `seededAt`, which
+is how you find them all without id arithmetic.

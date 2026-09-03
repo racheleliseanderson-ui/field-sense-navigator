@@ -226,7 +226,39 @@ export function tagsFrom(waterType, access, pageText) {
  * copy, and the peeled name still has to survive the same checks.
  */
 const DESIGNATION_RE =
-  /\s+(?:State\s+(?:Park|Natural\s+Area|Recreation\s+Area|Fishing\s+Lake|Wildlife\s+Area|Historic\s+Site)|National\s+(?:Park|Forest|Wildlife\s+Refuge|Recreation\s+Area|Seashore|Monument)|Wildlife\s+(?:Management\s+)?Area|Fishing\s+Access\s+Site|Recreation\s+Area|Conservation\s+Area|Campground|Marina|Boat\s+Ramp|Access(?:\s+Area|\s+Site)?|Unit|Park)\s*$/i;
+  /\s+(?:State\s+(?:Park|Natural\s+Area|Recreation\s+Area|Fishing\s+Lake|Wildlife\s+Area|Historic\s+Site)|National\s+(?:Park|Forest|Wildlife\s+Refuge|Recreation\s+Area|Seashore|Monument)|Wildlife\s+(?:Management\s+)?Area|State\s+Wildlife\s+Area|SWA|WMA|Fishing\s+Access\s+Site|Recreation\s+(?:Area|Site)|Conservation\s+Area|Natural\s+Area|Public\s+Fishing\s+Area|Campground|Marina|Boat\s+Ramp|Launch\s+Site|Access(?:\s+Area|\s+Site)?|Corridor|Unit|Park)\s*$/i;
+
+/**
+ * Names that are a document, a road or a landform rather than a body of water.
+ *
+ * These reach the pipeline because an agency's sitemap does not distinguish a
+ * lake page from a management plan about a lake. "Lake Simcoe Protection Plan"
+ * is a policy document; "Colorado River Headwaters Byway" is a road; "Fish
+ * Creek Mountains Wilderness" is a mountain range. Each names a water and each
+ * would pass every other gate, so they are refused by name.
+ */
+const NOT_A_WATERBODY_RE =
+  /\b(Plan|Planning|Strategy|Policy|Report|Assessment|Laboratories|Laboratory|Byway|Highway|Trailhead|Trail|Wilderness|Mountains?|Lighthouse|Museum|Aquarium|Centre|Center|Headquarters|Building|Facility|Hatchery|Field\s+Office|District\s+Office|Program|Project|Act|Rule|Amendment|Expansion|Announced|Approved|Ruled|Proposed|Awarded)\b/i;
+
+export const namesADocumentOrPlace = (name) => NOT_A_WATERBODY_RE.test(String(name ?? ""));
+
+/**
+ * Waterbody names are short. "Lake Casa Blanca" is three words, "North Fork
+ * American River" is four; six words is a headline, not a name. The wide scan
+ * in discover.mjs judges a URL on its slug alone, so without a length ceiling a
+ * press item slugged "convention-center-expansion-ruled-legally-sound" arrives
+ * looking like a body of water called Sound.
+ */
+const MAX_NAME_WORDS = 5;
+
+/** Every reason a string must not become a record's waterbody. */
+export function refuseAsWaterbodyName(name) {
+  const text = String(name ?? "").trim();
+  if (text.length < 4 || text.length > 70) return "length";
+  if (text.split(/\s+/).length > MAX_NAME_WORDS) return "reads_as_a_sentence";
+  if (namesADocumentOrPlace(text)) return "document_road_or_building";
+  return null;
+}
 
 export function stripDesignation(name) {
   let out = String(name ?? "").trim();
@@ -270,7 +302,7 @@ export function chooseWaterbodyName(targetName, published, pageText) {
     const key = plain(name);
     if (!key || seen.has(key)) continue;
     seen.add(key);
-    if (name.length < 4 || name.length > 70) continue;
+    if (refuseAsWaterbodyName(name)) continue;
     if (!hasWaterClassWord(name)) continue;
     if (!usedOnPage(name)) continue;
     return name;

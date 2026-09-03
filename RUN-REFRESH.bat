@@ -34,7 +34,10 @@ pause
 echo.
 
 REM ---------------------------------------------------------------- step 1
-echo  [1/7] Checking your computer has what it needs...
+REM Nothing here installs anything. Every script this file runs uses only
+REM what Node itself provides, so the website's packages are not needed and
+REM a failed package install cannot stop a refresh.
+echo  [1/6] Checking your computer has what it needs...
 where node >nul 2>&1
 if errorlevel 1 (
   echo.
@@ -48,7 +51,7 @@ if errorlevel 1 (
   exit /b 1
 )
 for /f "tokens=*" %%v in ('node -v') do set NODEV=%%v
-echo        Node.js !NODEV! - good.
+echo        Node.js !NODEV! - good. Nothing to install.
 if exist ".git\index.lock" (
   del /f /q ".git\index.lock" >nul 2>&1
   echo        Cleared a leftover Git lock file.
@@ -56,32 +59,13 @@ if exist ".git\index.lock" (
 echo.
 
 REM ---------------------------------------------------------------- step 2
-echo  [2/7] Installing the tools the project needs...
-echo        (first time only - this can take a few minutes)
-if not exist "node_modules\" (
-  call npm install --no-audit --no-fund
-  if errorlevel 1 (
-    echo.
-    echo   ^>^> STOPPED. The install failed.
-    echo      Usually this means no internet connection.
-    echo      Check your connection and run this file again.
-    echo.
-    pause
-    exit /b 1
-  )
-) else (
-  echo        Already installed - skipping.
-)
-echo.
-
-REM ---------------------------------------------------------------- step 3
-echo  [3/7] Taking a "before" reading, so we can measure the gain...
+echo  [2/6] Taking a "before" reading, so we can measure the gain...
 call node scripts\pipeline\health.mjs > "BEFORE-report.txt" 2>&1
 echo        Saved to BEFORE-report.txt
 echo.
 
-REM ---------------------------------------------------------------- step 4
-echo  [4/7] Re-reading the agency pages. THIS IS THE LONG PART.
+REM ---------------------------------------------------------------- step 3
+echo  [3/6] Re-reading the agency pages. THIS IS THE LONG PART.
 echo.
 echo        Oldest information first, so a short run still buys the most.
 echo        Every water it re-verifies prints a + line.
@@ -94,17 +78,17 @@ echo.
 echo        Page reading finished.
 echo.
 
-REM ---------------------------------------------------------------- step 5
-echo  [5/7] Re-checking which gauge or tide station belongs to each water...
-call npm run resolve:stations
+REM ---------------------------------------------------------------- step 4
+echo  [4/6] Re-checking which gauge or tide station belongs to each water...
+call node scripts\resolve-stations.mjs
 if errorlevel 1 (
   echo        The station resolver did not finish. That is not fatal -
   echo        the bindings you already had are untouched.
 )
 echo.
 
-REM ---------------------------------------------------------------- step 6
-echo  [6/7] Making sure nothing broke...
+REM ---------------------------------------------------------------- step 5
+echo  [5/6] Making sure nothing broke...
 call node scripts\assert-catalog.mjs
 if errorlevel 1 (
   echo.
@@ -127,8 +111,8 @@ if errorlevel 1 (
 echo        All checks passed.
 echo.
 
-REM ---------------------------------------------------------------- step 7
-echo  [7/7] Taking an "after" reading...
+REM ---------------------------------------------------------------- step 6
+echo  [6/6] Taking an "after" reading...
 call node scripts\pipeline\health.mjs > "AFTER-report.txt" 2>&1
 echo        Saved to AFTER-report.txt
 echo.
