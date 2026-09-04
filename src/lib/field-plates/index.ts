@@ -12,6 +12,7 @@ import "./field-plates.css";
 
 export * from "./kit";
 export * from "./save-plate";
+export * from "./own-record-panel";
 export * from "./water-section";
 export * from "./presentation-path";
 export * from "./system-chain";

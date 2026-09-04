@@ -463,3 +463,98 @@
 .hthp-stack > .hthp-plate {
   align-self: stretch;
 }
+
+/* ------------------------------------------------------------------ *
+ * The angler's own record
+ *
+ * Deliberately not a plate. A plate is the instrument's argument; this is
+ * somebody else's, and it should not be able to pass for one. Hence the flat
+ * ground, the quoted text, and the rule down the left that says "quotation"
+ * in every document anybody has ever read.
+ * ------------------------------------------------------------------ */
+
+.hthp-own {
+  margin: 1.25rem 0 0;
+  padding: 0.875rem 1rem 1rem;
+  border: 1px solid var(--hthp-line, var(--border, #d8d2c4));
+  border-left: 3px solid var(--hthp-accent, var(--brass, #b08428));
+  background: var(--hthp-well, transparent);
+}
+
+.hthp-own__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.hthp-own__from {
+  margin: 0;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, monospace));
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-own__headline {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+.hthp-own__list {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.hthp-own__meta {
+  margin: 0;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, monospace));
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+/* A whole sentence, so not in the uppercase mono the datelines use. */
+.hthp-own__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+/* Their words, in a voice the app does not otherwise use. */
+.hthp-own__said {
+  margin: 0.3rem 0 0;
+  padding: 0;
+  font-size: 0.875rem;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+.hthp-own__said::before {
+  content: "\201C";
+}
+
+.hthp-own__said::after {
+  content: "\201D";
+}
+
+.hthp-own__note--tight {
+  margin-top: 0.3rem;
+}
+
+.hthp-own__disclaimer {
+  margin: 0.875rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}

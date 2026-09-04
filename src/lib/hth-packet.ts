@@ -562,6 +562,111 @@ export type PrivacyBlock = {
   [key: string]: unknown;
 };
 
+/* ========================================================================== *
+ * The angler's own record
+ *
+ * Every instrument in this fleet reasons from the water in front of it. Not one
+ * of them has ever known that the person holding the phone has stood on this
+ * bank four times before and written down what happened. That record exists —
+ * it is the Field Debrief, and it is the last link in the chain — but it was a
+ * sink. Nothing came back out of it.
+ *
+ * This block is what comes back out. It carries a COUNT and, at most, three
+ * things the angler wrote in their own words, so that a receiving instrument
+ * can put them beside its own reasoning and say plainly: this is your record,
+ * and I did not use it.
+ *
+ * That last part is the whole design. The temptation here is to feed history
+ * into the recommendation and produce something that looks like it learned. It
+ * did not learn; four trips is four trips, and an instrument that quietly
+ * weights its answer by them is a bite predictor wearing a diary. So the block
+ * is carried SEPARATELY from every reasoning input, it is never merged into
+ * conditions, and the receivers render it as its own thing.
+ *
+ * What it must never carry:
+ *   - a coordinate (the strip walk removes keyed ones; a sender must not put a
+ *     coordinate in free text, and the one sender that exists refuses to carry
+ *     notes from any record flagged as containing them);
+ *   - a summary. `said` is verbatim or it is absent. An instrument summarising
+ *     the angler back to themselves is the one thing worse than saying nothing.
+ * ========================================================================== */
+
+/** At most this many notes travel. Three is a pattern; ten is a logbook, and a
+ *  logbook belongs in the instrument that owns it, not in a URL. */
+export const HISTORY_NOTE_LIMIT = 3;
+
+/** A note is quoted, not summarised, so it is cut rather than condensed. */
+export const HISTORY_SAID_MAX = 200;
+
+export type HistoryNote = {
+  /** Day precision. An hour would make this a movement log. */
+  on?: Opt<string>;
+  /** The water as the angler named it. Never an id, never a coordinate. */
+  water?: Opt<string>;
+  species?: Opt<string>;
+  /** The presentation family actually fished, in the angler's vocabulary. */
+  presentation?: Opt<string>;
+  clarity?: Opt<string>;
+  season?: Opt<string>;
+  /** Their own words. Verbatim or absent — never a paraphrase. */
+  said?: Opt<string>;
+  [key: string]: unknown;
+};
+
+export type HistoryBlock = {
+  /** How many entries the record holds for this scope. May exceed `notes`. */
+  entries: number;
+  /** What the count was narrowed by, in words a receiver can show as-is. */
+  scope?: Opt<string>;
+  /** Newest first, at most `HISTORY_NOTE_LIMIT`. */
+  notes: HistoryNote[];
+  [key: string]: unknown;
+};
+
+/**
+ * Clamp a history block to what the protocol allows.
+ *
+ * Run on read as well as on write, for the same reason coordinates are: a
+ * receiver that trusts the sender's restraint is one careless emitter away
+ * from rendering a hundred notes and a four-thousand-character quotation.
+ * Returns null when there is nothing usable, so an empty block never travels.
+ */
+export function normalizeHistory(value: unknown): HistoryBlock | null {
+  if (!isPlainObject(value)) return null;
+
+  const rawNotes = Array.isArray(value["notes"]) ? value["notes"] : [];
+  const notes: HistoryNote[] = [];
+  for (const raw of rawNotes) {
+    if (notes.length >= HISTORY_NOTE_LIMIT) break;
+    if (!isPlainObject(raw)) continue;
+    const note: HistoryNote = { ...(raw as HistoryNote) };
+    const said = str(raw["said"]);
+    if (said) {
+      note.said =
+        said.length > HISTORY_SAID_MAX ? `${said.slice(0, HISTORY_SAID_MAX - 1)}\u2026` : said;
+    } else {
+      delete note.said;
+    }
+    notes.push(note);
+  }
+
+  const rawEntries = value["entries"];
+  const counted =
+    typeof rawEntries === "number" && Number.isFinite(rawEntries) && rawEntries > 0
+      ? Math.floor(rawEntries)
+      : 0;
+  /* A count below what actually travelled would be a sender contradicting
+     itself; the notes are the evidence, so they win. */
+  const entries = Math.max(counted, notes.length);
+  if (entries === 0) return null;
+
+  const block: HistoryBlock = { ...(value as HistoryBlock), entries, notes };
+  const scope = str(value["scope"]);
+  if (scope) block.scope = scope;
+  else delete block.scope;
+  return block;
+}
+
 /**
  * The HTH-1.0 packet.
  *
@@ -591,6 +696,8 @@ export type HthPacket = {
   conditions?: Opt<ConditionsBlock>;
   provenance?: Opt<ProvenanceEntry[]>;
   privacy?: Opt<PrivacyBlock>;
+  /** The angler's own record, carried beside the reasoning and never into it. */
+  history?: Opt<HistoryBlock>;
   [key: string]: unknown;
 };
 
@@ -690,6 +797,14 @@ export function sanitizePacket(packet: HthPacket): HthPacket {
     containsCoordinates: false,
     containsPrivateWater: prior?.containsPrivateWater === true,
   };
+  /* The angler's record is clamped in the same walk, inbound and outbound. A
+     receiver that trusted the sender's restraint here would be one careless
+     emitter away from rendering a hundred notes. */
+  if (clean.history !== undefined) {
+    const history = normalizeHistory(clean.history);
+    if (history) clean.history = history;
+    else delete clean.history;
+  }
   return clean;
 }
 
@@ -1503,6 +1618,16 @@ export type BuildPacketInput = {
   openChecks?: Opt<string[]>;
   /** Appended to whatever arrived. Provenance accumulates; it never resets. */
   provenance?: Opt<ProvenanceEntry[]>;
+  /**
+   * The angler's own record for what this packet is about.
+   *
+   * REPLACES rather than merges, and an explicit `null` removes it, because a
+   * record belongs to the instrument holding it and a stale one is worse than
+   * none. Omit the field to carry forward whatever arrived — which is what an
+   * instrument in the middle of a chain should do, since it has no record of
+   * its own to state.
+   */
+  history?: Opt<HistoryBlock>;
   /** Instrument-specific blocks — `claimEvaluation`, `tackleEvaluation`,
    *  `knotDecision`, `hypotheses`, and anything a future instrument adds. */
   blocks?: Opt<Record<string, unknown>>;
@@ -1645,6 +1770,12 @@ export function buildPacket(input: BuildPacketInput): HthPacket {
   if (input.readiness !== undefined) out["readiness"] = input.readiness;
   if (input.openChecks !== undefined && input.openChecks !== null) {
     out["openChecks"] = [...input.openChecks];
+  }
+  /* Stated or removed, never merged: half of one trip's record joined to half
+     of another's would be a sentence nobody wrote. */
+  if (input.history !== undefined) {
+    if (input.history) out["history"] = input.history;
+    else delete out["history"];
   }
 
   /* Instrument-specific blocks last, so an instrument can always state its own

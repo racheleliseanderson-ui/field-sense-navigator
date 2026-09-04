@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 import { readPacket, type PacketRead } from "@/lib/hth-packet";
 import { readCarriedContext } from "@/lib/fleet-inbound";
+import { OwnRecordPanel } from "@/lib/field-plates";
 
 /**
  * What a reader brought back with them.
@@ -99,7 +100,9 @@ export function CarriedContext() {
         {record ? (
           <>
             The record is already on this catalog, so nothing needs retyping.
-            {job?.state === "ranked" ? ` A ${job.label.toLowerCase()} day came across with it.` : ""}{" "}
+            {job?.state === "ranked"
+              ? ` A ${job.label.toLowerCase()} day came across with it.`
+              : ""}{" "}
             Nothing has been applied to this page on its own — open the record and it picks up where
             you left it.
           </>
@@ -130,10 +133,9 @@ export function CarriedContext() {
       */}
       {job?.state === "other-kind" && (
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          That link also carried{" "}
-          <span className="text-foreground">{job.label.toLowerCase()}</span> — a{" "}
-          {job.kind === "stage" ? "point in the fishing day" : "fishing job"} rather than a way of
-          getting on the water. This catalog ranks by access, so it is carried through untouched
+          That link also carried <span className="text-foreground">{job.label.toLowerCase()}</span>{" "}
+          — a {job.kind === "stage" ? "point in the fishing day" : "fishing job"} rather than a way
+          of getting on the water. This catalog ranks by access, so it is carried through untouched
           rather than used here.
         </p>
       )}
@@ -160,6 +162,16 @@ export function CarriedContext() {
           ))}
         </ul>
       )}
+
+      {/*
+       * Whatever the reader has written down about this water themselves.
+       *
+       * The catalog does not read it and does not rank by it. It is here
+       * because Field Ops is the end of a chain that used to stop there, and
+       * because somebody standing in front of a water they have fished four
+       * times should not have to remember the fourth time unaided.
+       */}
+      <OwnRecordPanel record={carried.packet.history} from={from} instrument="The catalog" />
 
       <div className="mt-5 flex flex-wrap gap-2">
         {record && (
