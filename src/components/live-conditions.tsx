@@ -65,16 +65,16 @@ function ReadingRows({
           key={`${r.label}-${r.observedAt}`}
           className={retained ? "border-l border-hairline pl-3" : "border-l border-brass/50 pl-3"}
         >
-          <dt className={`tick text-[0.55rem] ${retained ? "text-muted-foreground" : "text-brass"}`}>
+          <dt
+            className={`tick text-[0.55rem] ${retained ? "text-muted-foreground" : "text-brass"}`}
+          >
             {r.label}
           </dt>
           <dd
             className={`data mt-1 ${retained ? "text-sm text-muted-foreground" : "text-lg text-foreground"}`}
           >
             {r.value}
-            {r.unit ? (
-              <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span>
-            ) : null}
+            {r.unit ? <span className="ml-1 text-xs text-muted-foreground">{r.unit}</span> : null}
           </dd>
           <p className="mt-0.5 text-[0.68rem] text-muted-foreground">
             {retained
@@ -166,10 +166,9 @@ export function LiveConditions({ destination }: { destination: Destination }) {
       {!open && (
         <div className="mt-4">
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Every record carries the same four layers — gauge, weather
-            observation, forecast, and agency-page language. They load only when
-            you request them. Raw station observations, never a bite or
-            behaviour forecast.
+            Every record carries the same four layers — gauge, weather observation, forecast, and
+            agency-page language. They load only when you request them. Raw station observations,
+            never a bite or behaviour forecast.
           </p>
           <button
             type="button"
@@ -207,8 +206,8 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
       {open && isError && (
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          The official feeds could not be reached. Treat this water as unmonitored
-          and verify conditions directly.
+          The official feeds could not be reached. Treat this water as unmonitored and verify
+          conditions directly.
         </p>
       )}
 
@@ -217,8 +216,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
           {data.station ? (
             <p className="mt-4 text-sm leading-relaxed text-foreground">
               {data.station.agency} station{" "}
-              <span className="data text-brass">{data.station.id}</span> —{" "}
-              {data.station.name}
+              <span className="data text-brass">{data.station.id}</span> — {data.station.name}
               {data.binding.source === "override" ? " · pinned" : ""}
             </p>
           ) : (
@@ -270,8 +268,8 @@ export function LiveConditions({ destination }: { destination: Destination }) {
                   />
                 ) : (
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                    No current official observation. The last agency observation
-                    is printed below with its original time.
+                    No current official observation. The last agency observation is printed below
+                    with its original time.
                   </p>
                 )}
                 {obsRetained.length > 0 && (
@@ -332,10 +330,7 @@ export function LiveConditions({ destination }: { destination: Destination }) {
 
           <ul className="mt-5 space-y-2">
             {data.unknowns.map((u) => (
-              <li
-                key={u}
-                className="flex gap-3 text-xs leading-relaxed text-muted-foreground"
-              >
+              <li key={u} className="flex gap-3 text-xs leading-relaxed text-muted-foreground">
                 <span className="mt-1.5 h-px w-4 shrink-0 bg-alert" />
                 {u}
               </li>

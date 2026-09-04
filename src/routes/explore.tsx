@@ -94,22 +94,24 @@ interface CatalogSearch {
 export const Route = createFileRoute("/explore")({
   validateSearch: searchSchema,
   head: () =>
-    withIdentity({ path: "/explore" }, {
-      meta: [
-        { title: "Catalog · Field Sense Navigator" },
-        {
-          name: "description",
-          content:
-            `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with five reads on each: access, hazards, crowding, rules and the same-day checks.`,
-        },
-        { property: "og:title", content: "Catalog · Field Sense Navigator" },
-        {
-          property: "og:description",
-          content:
-            "Search named public waters by name, county, species or access, then sort by field readiness.",
-        },
-      ],
-    }),
+    withIdentity(
+      { path: "/explore" },
+      {
+        meta: [
+          { title: "Catalog · Field Sense Navigator" },
+          {
+            name: "description",
+            content: `Search ${NAMED_WATER_COUNT} named public waters by water, county, state, species or access type, with five reads on each: access, hazards, crowding, rules and the same-day checks.`,
+          },
+          { property: "og:title", content: "Catalog · Field Sense Navigator" },
+          {
+            property: "og:description",
+            content:
+              "Search named public waters by name, county, species or access, then sort by field readiness.",
+          },
+        ],
+      },
+    ),
   component: Explore,
 });
 
@@ -217,10 +219,7 @@ function Explore() {
     return m;
   }, []);
 
-  const byId = useMemo(
-    () => new Map(destinations.map((d) => [d.id, d])),
-    [],
-  );
+  const byId = useMemo(() => new Map(destinations.map((d) => [d.id, d])), []);
 
   /* This device always searches. It is the answer until something better
      arrives, and it is the answer again the moment that stops arriving. */
@@ -245,9 +244,7 @@ function Explore() {
   const results = useMemo(() => {
     // Why a record matched is the reader's own words, so it comes from the
     // local tokeniser either way — the replica returns ids, not explanations.
-    const matchedById = new Map(
-      found.hits.map((h) => [h.destination.id, [...new Set(h.matched)]]),
-    );
+    const matchedById = new Map(found.hits.map((h) => [h.destination.id, [...new Set(h.matched)]]));
 
     const ranked =
       replica?.ids && replica.ids.length > 0
@@ -273,21 +270,20 @@ function Explore() {
             r: scores.get(h.destination.id)!,
           }));
 
-    const rows = ranked
-      .filter(({ d, r }) => {
-        if (params.juris && jurisdictionOf(d) !== params.juris) return false;
-        if (params.state && d.state !== params.state) return false;
-        if (params.type && d.waterType !== params.type) return false;
-        if (params.band && r.band !== params.band) return false;
-        if (params.species && !matchesSpecies(d, params.species)) return false;
-        if (params.access && !matchesAccess(d, params.access)) return false;
-        if (params.tag && !matchesTag(d, params.tag)) return false;
-        if (params.logistics && !matchesLogistics(d, params.logistics)) return false;
-        if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
-        if (params.min > 0 && r.score < params.min) return false;
-        if (params.watch && !watched.includes(d.id)) return false;
-        return true;
-      });
+    const rows = ranked.filter(({ d, r }) => {
+      if (params.juris && jurisdictionOf(d) !== params.juris) return false;
+      if (params.state && d.state !== params.state) return false;
+      if (params.type && d.waterType !== params.type) return false;
+      if (params.band && r.band !== params.band) return false;
+      if (params.species && !matchesSpecies(d, params.species)) return false;
+      if (params.access && !matchesAccess(d, params.access)) return false;
+      if (params.tag && !matchesTag(d, params.tag)) return false;
+      if (params.logistics && !matchesLogistics(d, params.logistics)) return false;
+      if (params.fresh > 0 && daysSince(d.checkedAt) > params.fresh) return false;
+      if (params.min > 0 && r.score < params.min) return false;
+      if (params.watch && !watched.includes(d.id)) return false;
+      return true;
+    });
 
     const bySort: Record<string, (a: (typeof rows)[number], b: (typeof rows)[number]) => number> = {
       readiness: (a, b) => b.score - a.score || b.r.score - a.r.score,
@@ -296,7 +292,7 @@ function Explore() {
       state: (a, b) =>
         a.d.state.localeCompare(b.d.state) || displayName(a.d).localeCompare(displayName(b.d)),
     };
-    return rows.sort(bySort[params.sort] ?? bySort['readiness']!);
+    return rows.sort(bySort[params.sort] ?? bySort["readiness"]!);
   }, [
     found,
     replica,
@@ -362,8 +358,19 @@ function Explore() {
   const clearAll = () =>
     navigate({
       search: {
-        q: "", juris: "", state: "", type: "", band: "", species: "", access: "", tag: "",
-        logistics: "", fresh: 0, min: 0, watch: false, sort: "readiness",
+        q: "",
+        juris: "",
+        state: "",
+        type: "",
+        band: "",
+        species: "",
+        access: "",
+        tag: "",
+        logistics: "",
+        fresh: 0,
+        min: 0,
+        watch: false,
+        sort: "readiness",
       },
     });
 
@@ -394,9 +401,7 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">
-          Jurisdiction
-        </span>
+        <span className="tick mr-1 text-[0.55rem]">Jurisdiction</span>
         {(
           [
             { id: "us", label: "United States" },
@@ -425,9 +430,7 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]">
-          State, province or territory
-        </span>
+        <span className="tick mr-1 text-[0.55rem]">State, province or territory</span>
         <select
           value={params.state}
           onChange={(e) => {
@@ -496,7 +499,10 @@ function Explore() {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tick mr-1 text-[0.55rem]" title="Read from the amenity wording the agency published">
+        <span
+          className="tick mr-1 text-[0.55rem]"
+          title="Read from the amenity wording the agency published"
+        >
           Logistics
         </span>
         {LOGISTICS_FACETS.map((l) => (
@@ -565,390 +571,392 @@ function Explore() {
     <div ref={reveal as React.Ref<HTMLDivElement>} className="page-in min-h-dvh bg-background">
       <SiteHeader />
       <main id="content">
-
-      <section className="relative isolate overflow-hidden border-b border-hairline">
-        <Art
-          plate={PLATES.flats}
-          scrim="side"
-          priority
-          parallax
-          imgRef={heroImg as React.Ref<HTMLImageElement>}
-        />
-        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-24">
-          <div className="flex items-center gap-4" data-reveal>
-            <span className="h-px w-10 bg-brass" data-reveal-rule />
-            <p className="tick text-brass">Catalog</p>
+        <section className="relative isolate overflow-hidden border-b border-hairline">
+          <Art
+            plate={PLATES.flats}
+            scrim="side"
+            priority
+            parallax
+            imgRef={heroImg as React.Ref<HTMLImageElement>}
+          />
+          <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-24">
+            <div className="flex items-center gap-4" data-reveal>
+              <span className="h-px w-10 bg-brass" data-reveal-rule />
+              <p className="tick text-brass">Catalog</p>
+            </div>
+            <h1
+              className="mt-6 max-w-3xl font-display text-[clamp(2rem,5.4vw,4.2rem)] font-bold leading-[0.92] tracking-[-0.04em] text-foreground"
+              data-reveal
+              style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
+            >
+              {NAMED_WATER_COUNT} named public waters,
+              <br />
+              read one at a time.
+            </h1>
+            <p
+              className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
+              data-reveal
+              style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
+            >
+              Search by water, county, state, species or access type — "kayak Texas" and "trout
+              river" resolve themselves. Looking for a specific job?{" "}
+              <Link to="/plan" className="text-primary hover:text-brass">
+                Plan a day
+              </Link>
+              .
+            </p>
           </div>
-          <h1
-            className="mt-6 max-w-3xl font-display text-[clamp(2rem,5.4vw,4.2rem)] font-bold leading-[0.92] tracking-[-0.04em] text-foreground"
-            data-reveal
-            style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
-          >
-            {NAMED_WATER_COUNT} named public waters,
-            <br />
-            read one at a time.
-          </h1>
-          <p
-            className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
-            data-reveal
-            style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
-          >
-            Search by water, county, state, species or access type — "kayak Texas"
-            and "trout river" resolve themselves. Looking for a specific job?{" "}
-            <Link to="/plan" className="text-primary hover:text-brass">
-              Plan a day
-            </Link>
-            .
-          </p>
-        </div>
-      </section>
+        </section>
 
-      {/* search + filters */}
-      <div
-        data-print="hide"
-        className="sticky top-16 z-30 border-b border-hairline bg-background/95 backdrop-blur-xl"
-      >
-        <div className="mx-auto max-w-7xl space-y-4 px-5 py-4 sm:px-8 sm:py-5">
-          <div className="relative">
-            <div className="flex items-center gap-3 border border-hairline bg-card px-4">
-              <Search className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-              <input
-                ref={inputRef}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setTimeout(() => setFocused(false), 140)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") commit(draft);
-                  if (e.key === "Escape") setFocused(false);
-                }}
-                enterKeyHint="search"
-                placeholder="Search waters, counties, states, species, access"
-                aria-label="Search the catalog"
-                className="min-h-12 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
-              />
-              {draft && (
+        {/* search + filters */}
+        <div
+          data-print="hide"
+          className="sticky top-16 z-30 border-b border-hairline bg-background/95 backdrop-blur-xl"
+        >
+          <div className="mx-auto max-w-7xl space-y-4 px-5 py-4 sm:px-8 sm:py-5">
+            <div className="relative">
+              <div className="flex items-center gap-3 border border-hairline bg-card px-4">
+                <Search className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                <input
+                  ref={inputRef}
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setTimeout(() => setFocused(false), 140)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") commit(draft);
+                    if (e.key === "Escape") setFocused(false);
+                  }}
+                  enterKeyHint="search"
+                  placeholder="Search waters, counties, states, species, access"
+                  aria-label="Search the catalog"
+                  className="min-h-12 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
+                />
+                {draft && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDraft("");
+                      set({ q: "" });
+                      inputRef.current?.focus();
+                    }}
+                    aria-label="Clear search"
+                    className="tap grid grid-cols-1 h-11 w-11 shrink-0 place-items-center text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
                 <button
                   type="button"
-                  onClick={() => {
-                    setDraft("");
-                    set({ q: "" });
-                    inputRef.current?.focus();
-                  }}
-                  aria-label="Clear search"
-                  className="tap grid grid-cols-1 h-11 w-11 shrink-0 place-items-center text-muted-foreground hover:text-foreground"
+                  onClick={() => setSheet(true)}
+                  aria-haspopup="dialog"
+                  className="tap -mr-2 flex min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-1 text-xs uppercase tracking-[0.12em] text-muted-foreground lg:hidden"
                 >
-                  <X className="h-4 w-4" />
+                  <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                  Filters
+                  {activeFilters > 0 && (
+                    <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
+                  )}
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setPanel((v) => !v)}
+                  aria-expanded={panel}
+                  aria-controls="catalog-filters"
+                  className="tap -mr-2 hidden min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-3 text-xs uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground lg:flex"
+                >
+                  <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                  {panel ? "Hide filters" : "Filters"}
+                  {activeFilters > 0 && (
+                    <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
+                  )}
+                </button>
+              </div>
+
+              {focused && (suggestions.length > 0 || (draft.length < 2 && recent.length > 0)) && (
+                <div className="panel absolute inset-x-0 top-full z-40 mt-1 max-h-[60vh] overflow-y-auto p-2">
+                  {draft.length < 2 && recent.length > 0 && (
+                    <>
+                      <p className="tick px-3 py-2 text-[0.55rem]">Recent searches</p>
+                      {recent.map((r) => (
+                        <button
+                          key={r}
+                          type="button"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            setDraft(r);
+                            commit(r);
+                          }}
+                          className="tap flex min-h-11 w-full items-center px-3 text-left text-sm text-foreground hover:bg-panel"
+                        >
+                          {r}
+                        </button>
+                      ))}
+                    </>
+                  )}
+                  {suggestions.map((s) => (
+                    <button
+                      key={`${s.kind}-${s.label}`}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => {
+                        if (s.kind === "state") {
+                          setDraft("");
+                          set({ q: "", state: s.label });
+                        } else {
+                          setDraft(s.label);
+                          commit(s.label);
+                        }
+                      }}
+                      className="tap flex min-h-12 w-full items-center gap-3 px-3 text-left hover:bg-panel"
+                    >
+                      <span className="tick w-16 shrink-0 text-[0.5rem]">{s.kind}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm text-foreground">{s.label}</span>
+                        {s.sub && (
+                          <span className="block truncate text-[0.68rem] text-muted-foreground">
+                            {s.sub}
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               )}
-              <button
-                type="button"
-                onClick={() => setSheet(true)}
-                aria-haspopup="dialog"
-                className="tap -mr-2 flex min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-1 text-xs uppercase tracking-[0.12em] text-muted-foreground lg:hidden"
-              >
-                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-                Filters
-                {activeFilters > 0 && (
-                  <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={() => setPanel((v) => !v)}
-                aria-expanded={panel}
-                aria-controls="catalog-filters"
-                className="tap -mr-2 hidden min-h-12 shrink-0 items-center gap-2 border-l border-hairline pl-3 pr-3 text-xs uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground lg:flex"
-              >
-                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-                {panel ? "Hide filters" : "Filters"}
-                {activeFilters > 0 && (
-                  <span className="data bg-brass/20 px-1.5 text-brass">{activeFilters}</span>
-                )}
-              </button>
             </div>
 
-            {focused && (suggestions.length > 0 || (draft.length < 2 && recent.length > 0)) && (
-              <div className="panel absolute inset-x-0 top-full z-40 mt-1 max-h-[60vh] overflow-y-auto p-2">
-                {draft.length < 2 && recent.length > 0 && (
-                  <>
-                    <p className="tick px-3 py-2 text-[0.55rem]">
-                      Recent searches
-                    </p>
-                    {recent.map((r) => (
-                      <button
-                        key={r}
-                        type="button"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setDraft(r);
-                          commit(r);
-                        }}
-                        className="tap flex min-h-11 w-full items-center px-3 text-left text-sm text-foreground hover:bg-panel"
-                      >
-                        {r}
-                      </button>
-                    ))}
-                  </>
-                )}
-                {suggestions.map((s) => (
-                  <button
-                    key={`${s.kind}-${s.label}`}
-                    type="button"
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => {
-                      if (s.kind === "state") {
-                        setDraft("");
-                        set({ q: "", state: s.label });
-                      } else {
-                        setDraft(s.label);
-                        commit(s.label);
-                      }
-                    }}
-                    className="tap flex min-h-12 w-full items-center gap-3 px-3 text-left hover:bg-panel"
+            {/* resolved facets from plain text */}
+            {(found.tokens.length > 0 || activeFilters > 0) && (
+              <div className="flex flex-wrap items-center gap-2">
+                {found.tokens.map((tok) => (
+                  <span
+                    key={`${tok.kind}-${tok.value}`}
+                    className="inline-flex items-center gap-2 border border-brass/40 bg-brass/10 px-2.5 py-1 text-[0.68rem] text-brass"
                   >
-                    <span className="tick w-16 shrink-0 text-[0.5rem]">{s.kind}</span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm text-foreground">{s.label}</span>
-                      {s.sub && (
-                        <span className="block truncate text-[0.68rem] text-muted-foreground">
-                          {s.sub}
-                        </span>
-                      )}
-                    </span>
-                  </button>
+                    <span className="tick text-[0.5rem] text-brass/70">{tok.kind}</span>
+                    {tok.value}
+                  </span>
                 ))}
+                {(
+                  [
+                    [
+                      "juris",
+                      params.juris,
+                      params.juris === "ca"
+                        ? "Canada"
+                        : params.juris === "us"
+                          ? "United States"
+                          : "",
+                    ],
+                    ["state", params.state, params.state],
+                    ["type", params.type, params.type],
+                    ["band", params.band, params.band],
+                    ["species", params.species, params.species],
+                    ["access", params.access, params.access],
+                    ["tag", params.tag, params.tag ? tagLabel(params.tag) : ""],
+                    [
+                      "logistics",
+                      params.logistics,
+                      LOGISTICS_FACETS.find((l) => l.id === params.logistics)?.label ?? "",
+                    ],
+                    ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
+                    ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
+                    ["watch", params.watch, params.watch ? "watchlist only" : ""],
+                  ] as Array<[keyof CatalogSearch, string | number | boolean, string]>
+                )
+                  .filter(([, v]) => Boolean(v))
+                  .map(([k, , label]) => (
+                    <button
+                      key={k}
+                      type="button"
+                      onClick={() =>
+                        set({
+                          [k]: k === "fresh" || k === "min" ? 0 : k === "watch" ? false : "",
+                        } as Partial<CatalogSearch>)
+                      }
+                      className="tap inline-flex min-h-9 items-center gap-2 border border-hairline px-2.5 text-[0.68rem] text-foreground"
+                    >
+                      {label}
+                      <X className="h-3 w-3" aria-hidden="true" />
+                    </button>
+                  ))}
+                {anything && (
+                  <button
+                    type="button"
+                    onClick={clearAll}
+                    className="tick tap inline-flex min-h-9 items-center text-[0.55rem] text-primary hover:text-brass"
+                  >
+                    Clear all
+                  </button>
+                )}
               </div>
             )}
-          </div>
 
-          {/* resolved facets from plain text */}
-          {(found.tokens.length > 0 || activeFilters > 0) && (
-            <div className="flex flex-wrap items-center gap-2">
-              {found.tokens.map((tok) => (
+            <p className="data text-xs text-muted-foreground" aria-live="polite">
+              {results.length} {results.length === 1 ? "result" : "results"}
+              {rankedByReplica && (
                 <span
-                  key={`${tok.kind}-${tok.value}`}
-                  className="inline-flex items-center gap-2 border border-brass/40 bg-brass/10 px-2.5 py-1 text-[0.68rem] text-brass"
+                  className="ml-2 text-muted-foreground/70"
+                  title="Ranked by the catalog index, which searches the whole corpus and tolerates typos. When it cannot be reached this device ranks instead, using the same records."
                 >
-                  <span className="tick text-[0.5rem] text-brass/70">{tok.kind}</span>
-                  {tok.value}
+                  · ranked by the catalog index
                 </span>
-              ))}
-              {(
-                [
-                  ["juris", params.juris, params.juris === "ca" ? "Canada" : params.juris === "us" ? "United States" : ""],
-                  ["state", params.state, params.state],
-                  ["type", params.type, params.type],
-                  ["band", params.band, params.band],
-                  ["species", params.species, params.species],
-                  ["access", params.access, params.access],
-                  ["tag", params.tag, params.tag ? tagLabel(params.tag) : ""],
-                  [
-                    "logistics",
-                    params.logistics,
-                    LOGISTICS_FACETS.find((l) => l.id === params.logistics)?.label ?? "",
-                  ],
-                  ["fresh", params.fresh, params.fresh ? `verified ≤ ${params.fresh}d` : ""],
-                  ["min", params.min, params.min ? `readiness ${params.min}+` : ""],
-                  ["watch", params.watch, params.watch ? "watchlist only" : ""],
-                ] as Array<[keyof CatalogSearch, string | number | boolean, string]>
-              )
-                .filter(([, v]) => Boolean(v))
-                .map(([k, , label]) => (
+              )}
+            </p>
+          </div>
+        </div>
+
+        {/* Desktop facets live below the sticky bar so they scroll out of the
+          way — seven rows of pinned chrome leaves no room for the results. */}
+        <div
+          id="catalog-filters"
+          data-print="hide"
+          hidden={!panel}
+          className="border-b border-hairline bg-abyss/40 max-lg:hidden"
+        >
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-3 px-5 py-5 sm:px-8">
+            {filterControls}
+          </div>
+        </div>
+
+        <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12">
+          {results.length === 0 ? (
+            <EmptyState
+              title="No record matches that read"
+              body={
+                found.suggestion
+                  ? `Nothing matched. The closest water name on record is "${found.suggestion}".`
+                  : "The catalog holds only named public waters with published access. Widen the search, or clear it and let readiness sort the field for you."
+              }
+              action={
+                <div className="flex flex-wrap justify-center gap-2">
+                  {found.suggestion && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDraft(found.suggestion!);
+                        commit(found.suggestion!);
+                      }}
+                      className="tap min-h-12 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/20"
+                    >
+                      Search "{found.suggestion}"
+                    </button>
+                  )}
                   <button
-                    key={k}
                     type="button"
-                    onClick={() =>
-                      set({
-                        [k]:
-                          k === "fresh" || k === "min" ? 0 : k === "watch" ? false : "",
-                      } as Partial<CatalogSearch>)
-                    }
-                    className="tap inline-flex min-h-9 items-center gap-2 border border-hairline px-2.5 text-[0.68rem] text-foreground"
+                    onClick={clearAll}
+                    className="tap min-h-12 border border-hairline px-6 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
                   >
-                    {label}
-                    <X className="h-3 w-3" aria-hidden="true" />
+                    Clear all filters
                   </button>
+                </div>
+              }
+            />
+          ) : (
+            <>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {visible.map((row) => (
+                  <WaterCard
+                    key={row.d.id}
+                    destination={row.d}
+                    {...(params.q && row.matched.length > 0
+                      ? { matched: row.matched.slice(0, 4) }
+                      : {})}
+                  />
                 ))}
-              {anything && (
+              </div>
+              {count < results.length && (
+                <div className="mt-12 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setCount((c) => c + PAGE)}
+                    className="tap min-h-14 border border-hairline px-8 text-xs uppercase tracking-[0.16em] text-foreground transition-colors hover:border-brass/50 hover:text-brass"
+                  >
+                    Show {Math.min(PAGE, results.length - count)} more
+                  </button>
+                </div>
+              )}
+              <nav aria-label="Catalog index" className="mt-16 border-t border-hairline pt-10">
+                <p className="tick text-brass">Catalog index</p>
+                <p className="mt-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
+                  {results.length > INDEX_CAP
+                    ? `The first ${INDEX_CAP} of ${results.length} waters on this read, as links. Narrow the search or pick a jurisdiction below to see the rest.`
+                    : "Every named water on this read, as a link. The cards above are a page of the same list."}
+                </p>
+                <ul className="mt-6 columns-1 gap-x-10 sm:columns-2 lg:columns-3">
+                  {indexRows.map((d) => (
+                    <li key={`idx-${d.id}`} className="break-inside-avoid py-1">
+                      <Link
+                        to="/water/$id"
+                        params={{ id: d.id }}
+                        className="tap inline-block min-h-9 text-sm leading-9 text-foreground hover:text-brass"
+                      >
+                        {displayName(d)}
+                        <span className="text-muted-foreground"> · {d.state}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </>
+          )}
+        </section>
+
+        {/* browse by jurisdiction */}
+        <section className="border-t border-hairline bg-abyss/40">
+          <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-10 bg-brass" />
+              <p className="tick text-brass">Browse by jurisdiction</p>
+            </div>
+            <h2 className="mt-4 font-display text-[clamp(1.5rem,3vw,2.2rem)] font-bold tracking-[-0.035em] text-foreground">
+              Start from where you are
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+              Jurisdiction decides the licence, the regulation booklet and who you call when a check
+              cannot be cleared. It is the first geographic question worth asking.
+            </p>
+            <CoverageMap className="mt-8" activeState={params.state} />
+          </div>
+        </section>
+
+        {/* mobile filter sheet */}
+        {sheet && (
+          <div
+            className="fixed inset-0 z-50 lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Catalog filters"
+          >
+            <button
+              type="button"
+              aria-label="Close filters"
+              onClick={() => setSheet(false)}
+              className="absolute inset-0 bg-abyss/70 backdrop-blur-sm"
+            />
+            <div className="absolute inset-x-0 bottom-0 max-h-[82vh] overflow-y-auto border-t border-hairline bg-background p-5 pb-8">
+              <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-border" aria-hidden="true" />
+              <div className="flex items-center justify-between gap-4">
+                <p className="font-display text-lg font-bold text-foreground">Filters</p>
                 <button
                   type="button"
                   onClick={clearAll}
-                  className="tick tap inline-flex min-h-9 items-center text-[0.55rem] text-primary hover:text-brass"
+                  className="tick tap inline-flex min-h-11 items-center text-[0.55rem] text-primary"
                 >
                   Clear all
                 </button>
-              )}
-            </div>
-          )}
-
-          <p className="data text-xs text-muted-foreground" aria-live="polite">
-            {results.length} {results.length === 1 ? "result" : "results"}
-            {rankedByReplica && (
-              <span
-                className="ml-2 text-muted-foreground/70"
-                title="Ranked by the catalog index, which searches the whole corpus and tolerates typos. When it cannot be reached this device ranks instead, using the same records."
-              >
-                · ranked by the catalog index
-              </span>
-            )}
-          </p>
-        </div>
-      </div>
-
-      {/* Desktop facets live below the sticky bar so they scroll out of the
-          way — seven rows of pinned chrome leaves no room for the results. */}
-      <div
-        id="catalog-filters"
-        data-print="hide"
-        hidden={!panel}
-        className="border-b border-hairline bg-abyss/40 max-lg:hidden"
-      >
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-3 px-5 py-5 sm:px-8">
-          {filterControls}
-        </div>
-      </div>
-
-      <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12">
-        {results.length === 0 ? (
-          <EmptyState
-            title="No record matches that read"
-            body={
-              found.suggestion
-                ? `Nothing matched. The closest water name on record is "${found.suggestion}".`
-                : "The catalog holds only named public waters with published access. Widen the search, or clear it and let readiness sort the field for you."
-            }
-            action={
-              <div className="flex flex-wrap justify-center gap-2">
-                {found.suggestion && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setDraft(found.suggestion!);
-                      commit(found.suggestion!);
-                    }}
-                    className="tap min-h-12 border border-brass/50 bg-brass/10 px-6 text-xs uppercase tracking-[0.14em] text-brass hover:bg-brass/20"
-                  >
-                    Search "{found.suggestion}"
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={clearAll}
-                  className="tap min-h-12 border border-hairline px-6 text-xs uppercase tracking-[0.14em] text-foreground hover:border-brass/50"
-                >
-                  Clear all filters
-                </button>
               </div>
-            }
-          />
-        ) : (
-          <>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {visible.map((row) => (
-                <WaterCard
-                  key={row.d.id}
-                  destination={row.d}
-                  {...(params.q && row.matched.length > 0
-                    ? { matched: row.matched.slice(0, 4) }
-                    : {})}
-                />
-              ))}
-            </div>
-            {count < results.length && (
-              <div className="mt-12 flex justify-center">
-                <button
-                  type="button"
-                  onClick={() => setCount((c) => c + PAGE)}
-                  className="tap min-h-14 border border-hairline px-8 text-xs uppercase tracking-[0.16em] text-foreground transition-colors hover:border-brass/50 hover:text-brass"
-                >
-                  Show {Math.min(PAGE, results.length - count)} more
-                </button>
-              </div>
-            )}
-            <nav aria-label="Catalog index" className="mt-16 border-t border-hairline pt-10">
-              <p className="tick text-brass">Catalog index</p>
-              <p className="mt-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
-                {results.length > INDEX_CAP
-                  ? `The first ${INDEX_CAP} of ${results.length} waters on this read, as links. Narrow the search or pick a jurisdiction below to see the rest.`
-                  : "Every named water on this read, as a link. The cards above are a page of the same list."}
-              </p>
-              <ul className="mt-6 columns-1 gap-x-10 sm:columns-2 lg:columns-3">
-                {indexRows.map((d) => (
-                  <li key={`idx-${d.id}`} className="break-inside-avoid py-1">
-                    <Link
-                      to="/water/$id"
-                      params={{ id: d.id }}
-                      className="tap inline-block min-h-9 text-sm leading-9 text-foreground hover:text-brass"
-                    >
-                      {displayName(d)}
-                      <span className="text-muted-foreground"> · {d.state}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </>
-        )}
-      </section>
-
-      {/* browse by jurisdiction */}
-      <section className="border-t border-hairline bg-abyss/40">
-        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
-          <div className="flex items-center gap-4">
-            <span className="h-px w-10 bg-brass" />
-            <p className="tick text-brass">Browse by jurisdiction</p>
-          </div>
-          <h2 className="mt-4 font-display text-[clamp(1.5rem,3vw,2.2rem)] font-bold tracking-[-0.035em] text-foreground">
-            Start from where you are
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Jurisdiction decides the licence, the regulation booklet and who you
-            call when a check cannot be cleared. It is the first geographic
-            question worth asking.
-          </p>
-          <CoverageMap className="mt-8" activeState={params.state} />
-        </div>
-      </section>
-
-      {/* mobile filter sheet */}
-      {sheet && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Catalog filters">
-          <button
-            type="button"
-            aria-label="Close filters"
-            onClick={() => setSheet(false)}
-            className="absolute inset-0 bg-abyss/70 backdrop-blur-sm"
-          />
-          <div className="absolute inset-x-0 bottom-0 max-h-[82vh] overflow-y-auto border-t border-hairline bg-background p-5 pb-8">
-            <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-border" aria-hidden="true" />
-            <div className="flex items-center justify-between gap-4">
-              <p className="font-display text-lg font-bold text-foreground">
-                Filters
-              </p>
+              <div className="mt-5 space-y-5">{filterControls}</div>
               <button
                 type="button"
-                onClick={clearAll}
-                className="tick tap inline-flex min-h-11 items-center text-[0.55rem] text-primary"
+                onClick={() => setSheet(false)}
+                className="tap mt-7 min-h-14 w-full bg-brass text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground"
               >
-                Clear all
+                Show {results.length} {results.length === 1 ? "result" : "results"}
               </button>
             </div>
-            <div className="mt-5 space-y-5">{filterControls}</div>
-            <button
-              type="button"
-              onClick={() => setSheet(false)}
-              className="tap mt-7 min-h-14 w-full bg-brass text-xs font-semibold uppercase tracking-[0.14em] text-accent-foreground"
-            >
-              Show {results.length}{" "}
-              {results.length === 1
-                ? "result"
-                : "results"}
-            </button>
           </div>
-        </div>
-      )}
-
+        )}
       </main>
       <SiteFooter />
     </div>

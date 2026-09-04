@@ -133,8 +133,7 @@ const RIVER_EVENTS: EventRead[] = [
         what: "Small tributaries clear before the main river does, and they run colder.",
         where:
           "The mouth, and the strip of clearer water below it. It is the most reliable feature on a dirty river and the first place worth walking to.",
-        confirm:
-          "Two different colours of water meeting, with a visible line between them.",
+        confirm: "Two different colours of water meeting, with a visible line between them.",
         level: "working",
       },
       {
@@ -174,14 +173,14 @@ const RIVER_EVENTS: EventRead[] = [
         what: "Colour clears from the top down and from the tributaries outward.",
         where:
           "The clearing edge. Two feet of visibility on a river that had two inches is the best it has been all week, and it will keep improving past the point where the fish stop being easy.",
-        confirm: "The rod-tip test again, twice, an hour apart. The direction matters more than the number.",
+        confirm:
+          "The rod-tip test again, twice, an hour apart. The direction matters more than the number.",
         level: "working",
       },
       {
         id: "stranded",
         what: "Food that came in on the rise is still in the system, now in clearing water.",
-        where:
-          "Everywhere the current sorts it — foam lines, eddies, the inside of every bend.",
+        where: "Everywhere the current sorts it — foam lines, eddies, the inside of every bend.",
         confirm: "Foam is not dirt. A foam line is the surface telling you where things collect.",
         level: "working",
       },
@@ -270,8 +269,7 @@ const RIVER_EVENTS: EventRead[] = [
         what: "Low and warm together is the real problem — warm water holds less oxygen and low water warms faster.",
         where:
           "Riffles, springs, shade and tributary mouths. Fish will crowd into moving water for oxygen alone, entirely apart from food.",
-        confirm:
-          "Fish stacked somewhere that has no food advantage is usually an oxygen answer.",
+        confirm: "Fish stacked somewhere that has no food advantage is usually an oxygen answer.",
         level: "working",
       },
       {
@@ -312,7 +310,8 @@ const RIVER_EVENTS: EventRead[] = [
         what: "Water in the thirties and low forties slows everything a cold-water fish does.",
         where:
           "Slow and deep, and close to the bottom. A presentation that works in June is simply moving too fast to be taken.",
-        confirm: "The thermometer, again. Melt is the one condition where the number is the whole answer.",
+        confirm:
+          "The thermometer, again. Melt is the one condition where the number is the whole answer.",
         level: "working",
       },
       {
@@ -320,7 +319,8 @@ const RIVER_EVENTS: EventRead[] = [
         what: "Not every tributary melts at once — aspect and elevation decide.",
         where:
           "A south-facing drainage melts out before a north-facing one at the same height. Two tributaries a mile apart can be in completely different conditions.",
-        confirm: "Look up at where the water is coming from. Snow on one side and bare rock on the other.",
+        confirm:
+          "Look up at where the water is coming from. Snow on one side and bare rock on the other.",
         level: "advanced",
       },
     ],
@@ -407,8 +407,7 @@ const LAKE_EVENTS: EventRead[] = [
         what: "Fish pull tight to cover and stop moving to eat.",
         where:
           "Inside the cover rather than beside it. The distance you have to put a presentation to a post-front fish is measured in inches rather than feet.",
-        confirm:
-          "Hard blue sky, flat water, and a noticeably cold morning after a warm one.",
+        confirm: "Hard blue sky, flat water, and a noticeably cold morning after a warm one.",
         level: "learning",
       },
       {
@@ -477,8 +476,7 @@ const LAKE_EVENTS: EventRead[] = [
     applies: ["lake", "reservoir"],
     headline:
       "Sustained heat and no wind builds layers: warm on top, cold below, and a band in the middle where the temperature falls away quickly.",
-    window:
-      "It builds over weeks and holds until the weather breaks it or autumn does.",
+    window: "It builds over weeks and holds until the weather breaks it or autumn does.",
     doesNotChange:
       "That fish still have to eat. A stratified lake is not an empty one, it is a smaller one — the usable part has a ceiling and a floor.",
     level: "working",
@@ -495,8 +493,7 @@ const LAKE_EVENTS: EventRead[] = [
       {
         id: "night",
         what: "Shallow water is usable at night and around first light, and not much use at noon.",
-        where:
-          "Early, late, and shaded. Timing does more here than location.",
+        where: "Early, late, and shaded. Timing does more here than location.",
         confirm: "Surface activity at dawn that has stopped by mid-morning.",
         level: "learning",
       },
@@ -573,7 +570,8 @@ const RESERVOIR_EVENTS: EventRead[] = [
         what: "Structure that has been underwater for years is briefly visible.",
         where:
           "Nowhere, right now — it is dry. But this is the single best opportunity a reservoir angler gets, and it lasts weeks. Walk it, photograph it, remember it.",
-        confirm: "Stumps, rock piles, old roadbeds, foundations, culverts. All of it is fishable water at full pool.",
+        confirm:
+          "Stumps, rock piles, old roadbeds, foundations, culverts. All of it is fishable water at full pool.",
         level: "learning",
       },
       {
@@ -619,8 +617,7 @@ const RESERVOIR_EVENTS: EventRead[] = [
       {
         id: "colour",
         what: "Rising water is usually stained where it is climbing the bank.",
-        where:
-          "Shallower than you would expect for the time of year, because the colour is cover.",
+        where: "Shallower than you would expect for the time of year, because the colour is cover.",
         confirm: "Colour that is worst at the margins and clears as you move out.",
         level: "working",
       },
@@ -697,8 +694,7 @@ const MARINE_EVENTS: EventRead[] = [
         what: "Current carries food past ambush points and puts fish on station.",
         where:
           "The down-current side of anything solid, and in the funnel where water has to squeeze. Slack water is when to move, eat lunch or rig up.",
-        confirm:
-          "Watch weed or foam against a piling. When it stops moving, you are in slack.",
+        confirm: "Watch weed or foam against a piling. When it stops moving, you are in slack.",
         level: "learning",
       },
       {
@@ -782,8 +778,7 @@ const MARINE_EVENTS: EventRead[] = [
         what: "The two layers do not mix quickly, and they can differ by several degrees and a lot of salinity.",
         where:
           "Below the boundary. Getting a presentation through the fresh layer and into the salt is often the whole adjustment.",
-        confirm:
-          "A visible colour line, or a thermometer that changes sharply a few feet down.",
+        confirm: "A visible colour line, or a thermometer that changes sharply a few feet down.",
         level: "working",
       },
       {
@@ -826,8 +821,7 @@ const MARINE_EVENTS: EventRead[] = [
       {
         id: "return",
         what: "They come back as the shallows warm, and the shallows warm from the sun.",
-        where:
-          "Dark bottom, out of the wind, in the afternoon. Timing rather than location again.",
+        where: "Dark bottom, out of the wind, in the afternoon. Timing rather than location again.",
         confirm: "Warmer water over dark mud than over light sand, in the same depth.",
         level: "working",
       },

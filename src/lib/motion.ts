@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const motionOff = () =>
-  typeof document !== "undefined" &&
-  document.documentElement.dataset['motion'] === "off";
+  typeof document !== "undefined" && document.documentElement.dataset["motion"] === "off";
 
 /**
  * Stages [data-reveal], [data-reveal-crop] and [data-reveal-rule] elements
@@ -15,9 +14,7 @@ export function useReveal() {
   useEffect(() => {
     const scope: ParentNode = root.current ?? document;
     const nodes = Array.from(
-      scope.querySelectorAll<HTMLElement>(
-        "[data-reveal],[data-reveal-crop],[data-reveal-rule]",
-      ),
+      scope.querySelectorAll<HTMLElement>("[data-reveal],[data-reveal-crop],[data-reveal-rule]"),
     );
     if (nodes.length === 0) return;
 

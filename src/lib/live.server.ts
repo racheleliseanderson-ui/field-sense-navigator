@@ -175,7 +175,10 @@ let snapshotCache: { at: number; data: LiveSnapshot | null } = { at: 0, data: nu
 let statusCache: { at: number; data: IngestStatus | null } = { at: 0, data: null };
 let closureCache: { at: number; data: ClosureFile | null } = { at: 0, data: null };
 
-async function fetchJson<T>(url: string, extraHeaders: Record<string, string> = {}): Promise<T | null> {
+async function fetchJson<T>(
+  url: string,
+  extraHeaders: Record<string, string> = {},
+): Promise<T | null> {
   const res = await fetch(url, {
     headers: { "User-Agent": UA, Accept: "application/json", ...extraHeaders },
   });
@@ -354,7 +357,13 @@ function cdecIso(t?: string) {
 }
 
 function cdecLatest(
-  rows: Array<{ value?: number | string; obsDate?: string; date?: string; sensorType?: string; units?: string }>,
+  rows: Array<{
+    value?: number | string;
+    obsDate?: string;
+    date?: string;
+    sensorType?: string;
+    units?: string;
+  }>,
 ) {
   for (let i = rows.length - 1; i >= 0; i -= 1) {
     const row = rows[i];
@@ -371,14 +380,32 @@ async function cdecReadings(siteId: string): Promise<Reading[]> {
     `https://cdec.water.ca.gov/dynamicapp/req/JSONDataServlet?Stations=${encodeURIComponent(siteId)}` +
     `&SensorNums=6,15&dur_code=D&count=5`;
   const json = await fetchJson<
-    Array<{ value?: number; obsDate?: string; date?: string; sensorType?: string; units?: string; SENSOR_NUM?: number }>
+    Array<{
+      value?: number;
+      obsDate?: string;
+      date?: string;
+      sensorType?: string;
+      units?: string;
+      SENSOR_NUM?: number;
+    }>
   >(url);
   if (!Array.isArray(json)) return [];
-  const elev = cdecLatest(json.filter((r) => r.SENSOR_NUM === 6 || /ELE/i.test(r.sensorType ?? "")));
-  const store = cdecLatest(json.filter((r) => r.SENSOR_NUM === 15 || /STOR/i.test(r.sensorType ?? "")));
+  const elev = cdecLatest(
+    json.filter((r) => r.SENSOR_NUM === 6 || /ELE/i.test(r.sensorType ?? "")),
+  );
+  const store = cdecLatest(
+    json.filter((r) => r.SENSOR_NUM === 15 || /STOR/i.test(r.sensorType ?? "")),
+  );
   const out: Reading[] = [];
-  if (elev) out.push({ label: "Reservoir elevation", value: elev.value, unit: "ft", observedAt: elev.at });
-  if (store) out.push({ label: "Reservoir storage", value: store.value, unit: "ac-ft", observedAt: store.at });
+  if (elev)
+    out.push({ label: "Reservoir elevation", value: elev.value, unit: "ft", observedAt: elev.at });
+  if (store)
+    out.push({
+      label: "Reservoir storage",
+      value: store.value,
+      unit: "ac-ft",
+      observedAt: store.at,
+    });
   return out;
 }
 
@@ -403,10 +430,15 @@ async function usbrHydrometFb(code: string): Promise<{ value: string; at: string
     `parameter=${encodeURIComponent(code.toUpperCase() + " FB")}` +
     `&syer=${start.getUTCFullYear()}&smnth=${start.getUTCMonth() + 1}&sdy=${start.getUTCDate()}` +
     `&eyer=${now.getUTCFullYear()}&emnth=${now.getUTCMonth() + 1}&edy=${now.getUTCDate()}&format=2`;
-  const res = await fetch(`https://www.usbr.gov/pn-bin/webarccsv.pl?${q}`, { headers: { "User-Agent": UA } });
+  const res = await fetch(`https://www.usbr.gov/pn-bin/webarccsv.pl?${q}`, {
+    headers: { "User-Agent": UA },
+  });
   if (!res.ok) return null;
   const text = await res.text();
-  const lines = text.split("\n").map((l) => l.trim()).filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
+  const lines = text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
   for (let i = lines.length - 1; i >= 0; i -= 1) {
     const [d, v] = (lines[i] ?? "").split(",");
     const n = Number(String(v).trim());
@@ -553,9 +585,7 @@ export async function readLive(input: {
   const fetchedAt = new Date().toISOString();
   const bind = input.id
     ? bindingFor(input.id)
-    : bindingsFile.records.find(
-        (r) => r.state === input.state && r.waterbody === input.waterbody,
-      );
+    : bindingsFile.records.find((r) => r.state === input.state && r.waterbody === input.waterbody);
 
   const closuresFile = await loadClosures();
   const closures = closureFor(input.id ?? bind?.destinationId, closuresFile);
@@ -583,10 +613,7 @@ export async function readLive(input: {
   };
 
   if (bind.status !== "matched" || !bind.siteId) {
-    const unknowns = [
-      bind.note,
-      "We will not invent a nearby gauge.",
-    ];
+    const unknowns = [bind.note, "We will not invent a nearby gauge."];
     const snapshot = await loadSnapshot();
     const snapAge = snapshot
       ? Math.max(0, Math.round((Date.now() - new Date(snapshot.ingestedAt).getTime()) / 60000))
@@ -657,7 +684,12 @@ export async function readLive(input: {
   let source: LiveConditions["source"] = "agency-live";
 
   const takeRow = (
-    row: { readings?: AgeReading[]; retainedReadings?: AgeReading[]; error?: string; carriedForward?: boolean },
+    row: {
+      readings?: AgeReading[];
+      retainedReadings?: AgeReading[];
+      error?: string;
+      carriedForward?: boolean;
+    },
     from: LiveConditions["source"],
   ) => {
     const presented = presentReadings(row);
@@ -666,7 +698,8 @@ export async function readLive(input: {
     source = from;
     if (row.carriedForward || /last agency observation retained/i.test(row.error ?? "")) {
       unknowns.push(
-        row.error ?? "The last official observation was retained after a silent feed. Age is printed.",
+        row.error ??
+          "The last official observation was retained after a silent feed. Age is printed.",
       );
     }
   };

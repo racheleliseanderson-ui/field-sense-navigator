@@ -35,16 +35,7 @@ import {
 } from "./kit";
 
 export type RigPartKind =
-  | "knot"
-  | "swivel"
-  | "weight"
-  | "float"
-  | "bead"
-  | "stop"
-  | "hook"
-  | "fly"
-  | "lure"
-  | "dropper";
+  "knot" | "swivel" | "weight" | "float" | "bead" | "stop" | "hook" | "fly" | "lure" | "dropper";
 
 export type RigRisk = "tangle" | "snag" | "abrasion" | "interference";
 
@@ -120,7 +111,12 @@ export function RigSchematicPlate({
       legend={
         <>
           {parts.map((p, i) => (
-            <LegendRow key={p.id} n={i + 1} label={`${p.label} — ${p.at}${spec.unit}`} tone={p.risk ? "watch" : "accent"}>
+            <LegendRow
+              key={p.id}
+              n={i + 1}
+              label={`${p.label} — ${p.at}${spec.unit}`}
+              tone={p.risk ? "watch" : "accent"}
+            >
               {p.note ?? ""}
               {p.risk ? ` ${RISK_WORD[p.risk]}.` : ""}
             </LegendRow>
@@ -133,10 +129,20 @@ export function RigSchematicPlate({
         </>
       }
     >
-      <Canvas w={W} h={H} min={420} label={`Rig schematic, ${total}${spec.unit} from top to terminal end`}>
+      <Canvas
+        w={W}
+        h={H}
+        min={420}
+        label={`Rig schematic, ${total}${spec.unit} from top to terminal end`}
+      >
         <defs>
           <clipPath id={clipId}>
-            <rect x={0} y={typeof spec.surfaceAt === "number" ? yOf(spec.surfaceAt) : TOP} width={W} height={H} />
+            <rect
+              x={0}
+              y={typeof spec.surfaceAt === "number" ? yOf(spec.surfaceAt) : TOP}
+              width={W}
+              height={H}
+            />
           </clipPath>
         </defs>
 
@@ -166,8 +172,21 @@ export function RigSchematicPlate({
 
         {typeof spec.bottomAt === "number" ? (
           <>
-            <rect x={0} y={yOf(spec.bottomAt)} width={W} height={H - yOf(spec.bottomAt)} fill={LAND} />
-            <line x1={0} y1={yOf(spec.bottomAt)} x2={W} y2={yOf(spec.bottomAt)} stroke={MUTED} strokeWidth={1.3} />
+            <rect
+              x={0}
+              y={yOf(spec.bottomAt)}
+              width={W}
+              height={H - yOf(spec.bottomAt)}
+              fill={LAND}
+            />
+            <line
+              x1={0}
+              y1={yOf(spec.bottomAt)}
+              x2={W}
+              y2={yOf(spec.bottomAt)}
+              stroke={MUTED}
+              strokeWidth={1.3}
+            />
             <Tag x={W - 10} y={yOf(spec.bottomAt) + 16} anchor="end" tone="muted">
               Bottom
             </Tag>
@@ -352,7 +371,12 @@ function Shape({
     case "fly":
       return (
         <g>
-          <path d={`M${x},${y - 10} L${x},${y + 2} q0,9 8,9 q8,0 8,-8`} fill="none" stroke={c} strokeWidth={2} />
+          <path
+            d={`M${x},${y - 10} L${x},${y + 2} q0,9 8,9 q8,0 8,-8`}
+            fill="none"
+            stroke={c}
+            strokeWidth={2}
+          />
           <path d={`M${x - 6},${y - 8} q10,-6 18,-1`} fill="none" stroke={c} strokeWidth={1.6} />
         </g>
       );
@@ -362,7 +386,13 @@ function Shape({
       const len = Math.max(18, (tagLength ?? 6) * scale);
       return (
         <g>
-          <path d={`M${x},${y} q-16,${len * 0.55} -26,${len}`} fill="none" stroke={c} strokeWidth={1.8} strokeLinecap="round" />
+          <path
+            d={`M${x},${y} q-16,${len * 0.55} -26,${len}`}
+            fill="none"
+            stroke={c}
+            strokeWidth={1.8}
+            strokeLinecap="round"
+          />
           <circle cx={x - 26} cy={y + len} r={4} fill={c} />
         </g>
       );

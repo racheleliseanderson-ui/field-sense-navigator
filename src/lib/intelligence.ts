@@ -21,7 +21,11 @@ import {
 export type Grade = "clear" | "watch" | "flagged" | "restricted";
 
 const HAZARD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
-  { tag: "wind", label: "Wind & fetch", rx: /wind|fetch|small.craft|gust|chop|squall|rough water/i },
+  {
+    tag: "wind",
+    label: "Wind & fetch",
+    rx: /wind|fetch|small.craft|gust|chop|squall|rough water/i,
+  },
   // "flats" matched place names ("Plese Flats put-in" on an inland river) and
   // bare "tidal" matched the provincial licensing boilerplate ("any tidal or
   // federal licence requirements are separate"), which put a tide hazard on
@@ -34,7 +38,11 @@ const HAZARD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
   { tag: "fog", label: "Visibility / fog", rx: /\bfog\b|visibility/i },
   { tag: "fire", label: "Wildfire & smoke", rx: /wildfire|smoke|fire restriction|fire danger/i },
   { tag: "algae", label: "Algal advisory", rx: /\bhab\b|algal|algae|blue-?green|toxin/i },
-  { tag: "level", label: "Water level & submerged hazards", rx: /low water|water level|drawdown|stump|unmarked hazard|shoal|shallow|sandbar/i },
+  {
+    tag: "level",
+    label: "Water level & submerged hazards",
+    rx: /low water|water level|drawdown|stump|unmarked hazard|shoal|shallow|sandbar/i,
+  },
   // "current" is almost always the adjective in agency prose ("current rules",
   // "current registration", "current_with_..." statuses), which flagged a
   // current-and-flow hazard on every record in the catalog and put "read the
@@ -44,28 +52,64 @@ const HAZARD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
     label: "Current & flow",
     rx: /\bcurrents\b|(?:swift|strong|heavy|fast|river|tidal|reversing|cross)[- ]current|current (?:break|seam|line|speed|velocit)|\bflows?\b|rapids|whitewater|dam release|discharge|\bswift\b/i,
   },
-  { tag: "traffic", label: "Commercial & vessel traffic", rx: /commercial shipping|shipping traffic|barge|freighter|navigation planning|boat traffic/i },
+  {
+    tag: "traffic",
+    label: "Commercial & vessel traffic",
+    rx: /commercial shipping|shipping traffic|barge|freighter|navigation planning|boat traffic/i,
+  },
   { tag: "ice", label: "Ice & cold exposure", rx: /\bice\b|frozen|cold water|hypotherm/i },
-  { tag: "remote", label: "Remoteness & comms", rx: /remote|no cell|backcountry|wilderness|long walk|primitive/i },
+  {
+    tag: "remote",
+    label: "Remoteness & comms",
+    rx: /remote|no cell|backcountry|wilderness|long walk|primitive/i,
+  },
 ];
 
 const CROWD_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
   { tag: "parking", label: "Parking capacity", rx: /parking/i },
-  { tag: "ramp", label: "Ramp queueing", rx: /ramp queue|queue|launch congestion|ramp congestion/i },
+  {
+    tag: "ramp",
+    label: "Ramp queueing",
+    rx: /ramp queue|queue|launch congestion|ramp congestion/i,
+  },
   { tag: "congestion", label: "General congestion", rx: /congest|crowd|busy|heavy use|peak/i },
   { tag: "weekend", label: "Weekend / holiday load", rx: /weekend|holiday/i },
   { tag: "tourism", label: "Seasonal tourism load", rx: /tourism|tourist|visitor season/i },
-  { tag: "permit", label: "Permit, fee or reservation", rx: /permit|reservation|fee|day.use pass|entry pass/i },
+  {
+    tag: "permit",
+    label: "Permit, fee or reservation",
+    rx: /permit|reservation|fee|day.use pass|entry pass/i,
+  },
   { tag: "hours", label: "Operating hours", rx: /hours|gate|open year-?round|day use/i },
 ];
 
 const SEASONAL_PATTERNS: Array<{ tag: string; label: string; rx: RegExp }> = [
   { tag: "season", label: "Season dates", rx: /season|spawn|run\b|migration|stocking/i },
-  { tag: "gear", label: "Gear & method restrictions", rx: /gear rule|selective gear|artificial|barbless|tackle restriction|method/i },
-  { tag: "closure", label: "Closure in effect or possible", rx: /closure|closed|suspended|prohibited/i },
-  { tag: "regs", label: "Regulation variance by section", rx: /regulation|slot|limit|size limit|rule change|special rule/i },
-  { tag: "ais", label: "AIS inspection / decontamination", rx: /\bais\b|invasive|clean-?drain-?dry|inspection|decontam/i },
-  { tag: "jurisdiction", label: "Multi-jurisdiction rules", rx: /jurisdiction|ontario|tribal|reciproc|boundary water|interstate|two states/i },
+  {
+    tag: "gear",
+    label: "Gear & method restrictions",
+    rx: /gear rule|selective gear|artificial|barbless|tackle restriction|method/i,
+  },
+  {
+    tag: "closure",
+    label: "Closure in effect or possible",
+    rx: /closure|closed|suspended|prohibited/i,
+  },
+  {
+    tag: "regs",
+    label: "Regulation variance by section",
+    rx: /regulation|slot|limit|size limit|rule change|special rule/i,
+  },
+  {
+    tag: "ais",
+    label: "AIS inspection / decontamination",
+    rx: /\bais\b|invasive|clean-?drain-?dry|inspection|decontam/i,
+  },
+  {
+    tag: "jurisdiction",
+    label: "Multi-jurisdiction rules",
+    rx: /jurisdiction|ontario|tribal|reciproc|boundary water|interstate|two states/i,
+  },
 ];
 
 const SHORE_ACCESS_RX = /shore|pier|bank|jetty|beach|dock|walk|trail|park_access|fishing_platform/i;
@@ -79,10 +123,7 @@ export interface Signal {
   detail: string;
 }
 
-function match(
-  lines: string[],
-  patterns: Array<{ tag: string; label: string; rx: RegExp }>,
-) {
+function match(lines: string[], patterns: Array<{ tag: string; label: string; rx: RegExp }>) {
   const tags = new Set<string>();
   const signals: Signal[] = [];
   for (const line of lines) {
@@ -112,17 +153,13 @@ export interface WaterTags {
 
 export function readTags(d: Destination): WaterTags {
   const lines = [...d.currentNotices, ...d.directVerification, humanize(d.status)];
-  const accessText = d.publicAccess
-    .map((a) => `${a.name} ${a.type} ${a.status ?? ""}`)
-    .join(" ");
+  const accessText = d.publicAccess.map((a) => `${a.name} ${a.type} ${a.status ?? ""}`).join(" ");
 
   const hazards = match([...lines, accessText], HAZARD_PATTERNS).tags;
   const crowd = match([...lines, accessText], CROWD_PATTERNS).tags;
   const seasonal = match([...lines, accessText], SEASONAL_PATTERNS).tags;
 
-  const launches = d.publicAccess.filter(
-    (a) => LAUNCH_RX.test(a.type) || LAUNCH_RX.test(a.name),
-  );
+  const launches = d.publicAccess.filter((a) => LAUNCH_RX.test(a.type) || LAUNCH_RX.test(a.name));
   const hasClosedLaunch = launches.some((a) => CLOSED_RX.test(a.status ?? ""));
   const hasOpenLaunch = launches.some((a) => !CLOSED_RX.test(a.status ?? ""));
   const directoryOnly =
@@ -139,9 +176,8 @@ export function readTags(d: Destination): WaterTags {
       (a) => SHORE_ACCESS_RX.test(a.type) || SHORE_ACCESS_RX.test(a.name),
     ),
     hasHandLaunch:
-      d.publicAccess.some(
-        (a) => HAND_LAUNCH_RX.test(a.type) || HAND_LAUNCH_RX.test(a.name),
-      ) || /hand-?launch|kayak|paddleboard|canoe|cartop/i.test(d.currentNotices.join(" ")),
+      d.publicAccess.some((a) => HAND_LAUNCH_RX.test(a.type) || HAND_LAUNCH_RX.test(a.name)) ||
+      /hand-?launch|kayak|paddleboard|canoe|cartop/i.test(d.currentNotices.join(" ")),
     directoryOnly,
     restricted: /restricted/i.test(d.status) || hasClosedLaunch,
     namedSites: d.publicAccess.filter(
@@ -155,12 +191,7 @@ export function readTags(d: Destination): WaterTags {
  * Intelligence layers
  * ------------------------------------------------------------------ */
 
-export type LayerKey =
-  | "access"
-  | "conditions"
-  | "capacity"
-  | "seasonal"
-  | "fieldcheck";
+export type LayerKey = "access" | "conditions" | "capacity" | "seasonal" | "fieldcheck";
 
 export interface IntelLayer {
   key: LayerKey;
@@ -210,20 +241,18 @@ export function buildLayers(d: Destination): IntelLayer[] {
     label: windowSpan(w) ?? w.label,
     detail: w.notes ? `${w.label}. ${w.notes}` : w.label,
   }));
-  const seasonalSignals = [
-    ...windowSignals,
-    ...match(lines, SEASONAL_PATTERNS).signals,
-  ];
+  const seasonalSignals = [...windowSignals, ...match(lines, SEASONAL_PATTERNS).signals];
 
   const accessSignals: Signal[] = d.publicAccess.map((a) => ({
     label: humanize(a.type),
     detail: a.status ? `${a.name} — ${humanize(a.status)}` : a.name,
   }));
-  const accessGrade: Grade = t.hasClosedLaunch || /restricted/i.test(d.status)
-    ? "restricted"
-    : t.directoryOnly
-      ? "watch"
-      : "clear";
+  const accessGrade: Grade =
+    t.hasClosedLaunch || /restricted/i.test(d.status)
+      ? "restricted"
+      : t.directoryOnly
+        ? "watch"
+        : "clear";
   const accessReadout = t.hasClosedLaunch
     ? "Published access exists, but at least one launch is documented closed. Treat the water as partially open."
     : t.directoryOnly
@@ -238,8 +267,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
     : "No standing hazard families recorded on the official notices. Weather still governs the day.";
 
   const crowdCount = t.crowd.size;
-  const capacityGrade: Grade =
-    crowdCount >= 4 ? "flagged" : crowdCount >= 2 ? "watch" : "clear";
+  const capacityGrade: Grade = crowdCount >= 4 ? "flagged" : crowdCount >= 2 ? "watch" : "clear";
   const capacityReadout = crowdCount
     ? `${crowdCount} capacity pressure signal${crowdCount === 1 ? "" : "s"} documented. Signals describe typical load, never live occupancy.`
     : "No documented capacity pressure. Expect ordinary parking and launch behaviour, unverified.";
@@ -260,8 +288,7 @@ export function buildLayers(d: Destination): IntelLayer[] {
   const checkCount = d.directVerification.length;
   const fieldGrade: Grade = checkCount >= 4 ? "flagged" : checkCount >= 2 ? "watch" : "clear";
 
-  const stale = (unknowns: string[]) =>
-    overdue ? [OVERDUE_UNKNOWN, ...unknowns] : unknowns;
+  const stale = (unknowns: string[]) => (overdue ? [OVERDUE_UNKNOWN, ...unknowns] : unknowns);
 
   return [
     {
@@ -387,11 +414,7 @@ export function readiness(d: Destination): Readiness {
     30,
   );
 
-  const freshValue = clamp(
-    25 - Math.floor(age / 7) * 3 - (overdue ? 14 : 0),
-    2,
-    25,
-  );
+  const freshValue = clamp(25 - Math.floor(age / 7) * 3 - (overdue ? 14 : 0), 2, 25);
 
   const hazardValue = clamp(20 - t.hazards.size * 3, 4, 20);
   const crowdValue = clamp(10 - t.crowd.size * 2, 2, 10);
@@ -461,18 +484,17 @@ export function readiness(d: Destination): Readiness {
     band = "Plan carefully";
   }
 
-  const grade: Grade =
-    overdue
-      ? score >= 48
-        ? "flagged"
-        : "restricted"
-      : score >= 82
-        ? "clear"
-        : score >= 66
-          ? "watch"
-          : score >= 48
-            ? "flagged"
-            : "restricted";
+  const grade: Grade = overdue
+    ? score >= 48
+      ? "flagged"
+      : "restricted"
+    : score >= 82
+      ? "clear"
+      : score >= 66
+        ? "watch"
+        : score >= 48
+          ? "flagged"
+          : "restricted";
 
   return {
     score,
@@ -493,13 +515,7 @@ export function readiness(d: Destination): Readiness {
  * Job-aware ranking
  * ------------------------------------------------------------------ */
 
-export type JobId =
-  | "bank"
-  | "kayak"
-  | "small_boat"
-  | "scouting"
-  | "tournament"
-  | "family";
+export type JobId = "bank" | "kayak" | "small_boat" | "scouting" | "tournament" | "family";
 
 export interface JobDef {
   id: JobId;
@@ -508,12 +524,36 @@ export interface JobDef {
 }
 
 export const JOBS: JobDef[] = [
-  { id: "bank", label: "Bank & shoreline", blurb: "On foot from public shore, pier or park frontage." },
-  { id: "kayak", label: "Kayak & paddle", blurb: "Hand-launched craft, wind-sensitive, short haul from the car." },
-  { id: "small_boat", label: "Small boat", blurb: "Trailered craft needing a usable hard-surface ramp." },
-  { id: "scouting", label: "Scouting", blurb: "Learning a new water. Depth of documentation matters most." },
-  { id: "tournament", label: "Tournament-adjacent", blurb: "Pre-fish days and rule checks around organized events." },
-  { id: "family", label: "Family day", blurb: "Low commitment, low hazard, facilities and short walks." },
+  {
+    id: "bank",
+    label: "Bank & shoreline",
+    blurb: "On foot from public shore, pier or park frontage.",
+  },
+  {
+    id: "kayak",
+    label: "Kayak & paddle",
+    blurb: "Hand-launched craft, wind-sensitive, short haul from the car.",
+  },
+  {
+    id: "small_boat",
+    label: "Small boat",
+    blurb: "Trailered craft needing a usable hard-surface ramp.",
+  },
+  {
+    id: "scouting",
+    label: "Scouting",
+    blurb: "Learning a new water. Depth of documentation matters most.",
+  },
+  {
+    id: "tournament",
+    label: "Tournament-adjacent",
+    blurb: "Pre-fish days and rule checks around organized events.",
+  },
+  {
+    id: "family",
+    label: "Family day",
+    blurb: "Low commitment, low hazard, facilities and short walks.",
+  },
 ];
 
 export type TimeWindow = "short" | "day" | "multi";
@@ -545,13 +585,10 @@ export interface Fit {
   blocked: string | null;
 }
 
-const BIG_WATER = /superior|michigan|huron|erie|ontario|flathead|puget|bay|gulf|coast|sound|harbor|ocean|atlantic|pacific/i;
+const BIG_WATER =
+  /superior|michigan|huron|erie|ontario|flathead|puget|bay|gulf|coast|sound|harbor|ocean|atlantic|pacific/i;
 
-export function fitFor(
-  d: Destination,
-  job: JobId,
-  c: Constraints,
-): Fit {
+export function fitFor(d: Destination, job: JobId, c: Constraints): Fit {
   const t = readTags(d);
   const r = readiness(d);
   const reasons: string[] = [];
@@ -564,10 +601,9 @@ export function fitFor(
   /* ---- fail-closed gear gates ---- */
   if (c.gear === "trailer") {
     if (!t.hasOpenLaunch) {
-      blocked =
-        t.hasClosedLaunch
-          ? "Documented launch closure — no open trailer ramp on record."
-          : "No trailer-capable ramp documented on this record.";
+      blocked = t.hasClosedLaunch
+        ? "Documented launch closure — no open trailer ramp on record."
+        : "No trailer-capable ramp documented on this record.";
     } else {
       reasons.push("Open trailer ramp documented on the official source.");
       score += 12;
@@ -778,25 +814,53 @@ export function buildChecklist(
     );
   }
   if (t.hazards.has("wind")) {
-    add("Before you leave", "Pull the wind forecast and set a turn-back speed before you commit.", "Conditions: wind & fetch");
+    add(
+      "Before you leave",
+      "Pull the wind forecast and set a turn-back speed before you commit.",
+      "Conditions: wind & fetch",
+    );
   }
   if (t.hazards.has("tide")) {
-    add("Before you leave", "Read the tide table for your window; note the stage that strands you.", "Conditions: tide stage");
+    add(
+      "Before you leave",
+      "Read the tide table for your window; note the stage that strands you.",
+      "Conditions: tide stage",
+    );
   }
   if (t.hazards.has("level")) {
-    add("Before you leave", "Check current water level and ramp usability; assume unmarked hazards where levels are low.", "Conditions: water level");
+    add(
+      "Before you leave",
+      "Check current water level and ramp usability; assume unmarked hazards where levels are low.",
+      "Conditions: water level",
+    );
   }
   if (t.hazards.has("fire")) {
-    add("Before you leave", "Check wildfire closures, smoke and fire restrictions for the corridor.", "Conditions: wildfire & smoke");
+    add(
+      "Before you leave",
+      "Check wildfire closures, smoke and fire restrictions for the corridor.",
+      "Conditions: wildfire & smoke",
+    );
   }
   if (t.hazards.has("algae")) {
-    add("Before you leave", "Check current algal-bloom advisories before contact recreation.", "Conditions: algal advisory");
+    add(
+      "Before you leave",
+      "Check current algal-bloom advisories before contact recreation.",
+      "Conditions: algal advisory",
+    );
   }
   if (t.seasonal.has("ais")) {
-    add("Before you leave", "Clean, drain, dry. Confirm inspection or decontamination requirements for this water.", "Rules: AIS obligation");
+    add(
+      "Before you leave",
+      "Clean, drain, dry. Confirm inspection or decontamination requirements for this water.",
+      "Rules: AIS obligation",
+    );
   }
   if (t.seasonal.has("jurisdiction")) {
-    add("Before you leave", "Confirm which jurisdiction governs the exact section you intend to fish.", "Rules: multi-jurisdiction");
+    add(
+      "Before you leave",
+      "Confirm which jurisdiction governs the exact section you intend to fish.",
+      "Rules: multi-jurisdiction",
+    );
   }
   const dated = datedWindows(d);
   if (dated.length) {
@@ -818,47 +882,107 @@ export function buildChecklist(
     );
   }
   if (t.seasonal.size) {
-    add("Standing rules", "Read the current regulation entry for this water — season dates, gear and limits vary by section.", "Rules: regulatory pressure");
+    add(
+      "Standing rules",
+      "Read the current regulation entry for this water — season dates, gear and limits vary by section.",
+      "Rules: regulatory pressure",
+    );
   }
 
   if (t.crowd.size) {
-    add("At the access", "Have a named fallback access in case parking or the ramp is full on arrival.", "Capacity: pressure");
+    add(
+      "At the access",
+      "Have a named fallback access in case parking or the ramp is full on arrival.",
+      "Capacity: pressure",
+    );
   }
   if (t.crowd.has("permit")) {
-    add("At the access", "Carry the required permit, pass or fee payment method.", "Capacity: permit or fee");
+    add(
+      "At the access",
+      "Carry the required permit, pass or fee payment method.",
+      "Capacity: permit or fee",
+    );
   }
   if (t.crowd.has("hours")) {
-    add("At the access", "Confirm gate and day-use hours, including the closing time.", "Capacity: operating hours");
+    add(
+      "At the access",
+      "Confirm gate and day-use hours, including the closing time.",
+      "Capacity: operating hours",
+    );
   }
-  add("At the access", "Confirm posted signage matches what this brief says. Posted signage wins.", "Standing policy");
-  add("At the access", "Note the exact access name and managing authority in your log.", "Standing policy");
+  add(
+    "At the access",
+    "Confirm posted signage matches what this brief says. Posted signage wins.",
+    "Standing policy",
+  );
+  add(
+    "At the access",
+    "Note the exact access name and managing authority in your log.",
+    "Standing policy",
+  );
 
   if (job === "kayak" || c?.gear === "hand_launch") {
-    add("On the water", "PFD worn, not stowed. Confirm your re-entry plan and shoreline bail-out points.", "Job: paddle craft");
+    add(
+      "On the water",
+      "PFD worn, not stowed. Confirm your re-entry plan and shoreline bail-out points.",
+      "Job: paddle craft",
+    );
   }
   if (job === "small_boat" || c?.gear === "trailer") {
-    add("On the water", "Check ramp surface and depth before backing in; confirm safety gear and kill-switch.", "Job: trailered craft");
+    add(
+      "On the water",
+      "Check ramp surface and depth before backing in; confirm safety gear and kill-switch.",
+      "Job: trailered craft",
+    );
   }
   if (job === "bank" || c?.gear === "shore_only") {
-    add("On the water", "Stay on the public corridor. Where public and private land interleave, assume private and step back.", "Job: shoreline");
+    add(
+      "On the water",
+      "Stay on the public corridor. Where public and private land interleave, assume private and step back.",
+      "Job: shoreline",
+    );
   }
   if (job === "family") {
-    add("On the water", "Set a hard turn-around time and a fixed regroup point at the access.", "Job: family day");
+    add(
+      "On the water",
+      "Set a hard turn-around time and a fixed regroup point at the access.",
+      "Job: family day",
+    );
   }
   if (job === "tournament") {
-    add("Standing rules", "Confirm event boundary, off-limits periods and permitted launches in writing.", "Job: tournament-adjacent");
+    add(
+      "Standing rules",
+      "Confirm event boundary, off-limits periods and permitted launches in writing.",
+      "Job: tournament-adjacent",
+    );
   }
   if (job === "scouting") {
-    add("On the water", "Log access condition, parking count and hazards observed for the next visit.", "Job: scouting");
+    add(
+      "On the water",
+      "Log access condition, parking count and hazards observed for the next visit.",
+      "Job: scouting",
+    );
   }
   if (t.hazards.has("traffic")) {
-    add("On the water", "Stay clear of the navigation channel; commercial traffic has right of way and long stopping distance.", "Conditions: vessel traffic");
+    add(
+      "On the water",
+      "Stay clear of the navigation channel; commercial traffic has right of way and long stopping distance.",
+      "Conditions: vessel traffic",
+    );
   }
   if (t.hazards.has("current")) {
-    add("On the water", "Read current before wading or anchoring; flows can change with releases.", "Conditions: current & flow");
+    add(
+      "On the water",
+      "Read current before wading or anchoring; flows can change with releases.",
+      "Conditions: current & flow",
+    );
   }
-  if (t.hazards.has("ice") ) {
-    add("On the water", "Cold-water exposure planning: layers, change of clothes, immersion plan.", "Conditions: cold exposure");
+  if (t.hazards.has("ice")) {
+    add(
+      "On the water",
+      "Cold-water exposure planning: layers, change of clothes, immersion plan.",
+      "Conditions: cold exposure",
+    );
   }
 
   add(
@@ -881,11 +1005,7 @@ export const CHECK_GROUPS: CheckItem["group"][] = [
  * Handoff to Horizon Desk / Trip Prep
  * ------------------------------------------------------------------ */
 
-export function buildHandoff(
-  d: Destination,
-  job: JobId | null,
-  c: Constraints | null,
-): string {
+export function buildHandoff(d: Destination, job: JobId | null, c: Constraints | null): string {
   const r = readiness(d);
   const t = readTags(d);
   const jobLabel = JOBS.find((j) => j.id === job)?.label ?? "Not declared";
@@ -923,4 +1043,3 @@ export function buildHandoff(
     "NOT INCLUDED: live gauge, flow, tide, weather, bite or catch data. No private spots, no coordinates.",
   ].join("\n");
 }
-

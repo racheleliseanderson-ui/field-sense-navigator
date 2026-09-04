@@ -114,7 +114,12 @@ export function SystemChainPlate({
       legend={
         <>
           {links.map((l, i) => (
-            <LegendRow key={l.id} n={i + 1} label={`${l.role}${l.spec ? ` — ${l.spec}` : ""}`} tone={VERDICT_TONE[l.verdict]}>
+            <LegendRow
+              key={l.id}
+              n={i + 1}
+              label={`${l.role}${l.spec ? ` — ${l.spec}` : ""}`}
+              tone={VERDICT_TONE[l.verdict]}
+            >
               {VERDICT_WORD[l.verdict]}
               {l.note ? `. ${l.note}` : "."}
             </LegendRow>
@@ -127,7 +132,12 @@ export function SystemChainPlate({
         </>
       }
     >
-      <Canvas w={W} h={H} min={Math.min(W, 620)} label={`Component chain for ${spec.job}, load running left to right`}>
+      <Canvas
+        w={W}
+        h={H}
+        min={Math.min(W, 620)}
+        label={`Component chain for ${spec.job}, load running left to right`}
+      >
         <Tag x={14} y={22} tone="accent">
           Load runs this way
         </Tag>
@@ -236,7 +246,14 @@ export function SystemChainPlate({
         ) : null}
 
         {spec.fix ? (
-          <text x={14} y={H - 14} fontSize={10.5} fill={BRASS} fontFamily={MONO} letterSpacing="0.12em">
+          <text
+            x={14}
+            y={H - 14}
+            fontSize={10.5}
+            fill={BRASS}
+            fontFamily={MONO}
+            letterSpacing="0.12em"
+          >
             {`FIX: ${spec.fix.what}`.slice(0, 82).toUpperCase()}
           </text>
         ) : null}
@@ -257,7 +274,5 @@ export function weakestLink(links: readonly ChainLink[]): ChainLink | null {
   const mismatched = links.filter((l) => l.verdict === "mismatch");
   const pool = mismatched.length ? mismatched : links.filter((l) => l.headroom !== null);
   if (!pool.length) return null;
-  return pool.reduce((worst, l) =>
-    (l.headroom ?? 1) < (worst.headroom ?? 1) ? l : worst,
-  );
+  return pool.reduce((worst, l) => ((l.headroom ?? 1) < (worst.headroom ?? 1) ? l : worst));
 }

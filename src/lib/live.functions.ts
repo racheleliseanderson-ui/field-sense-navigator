@@ -28,8 +28,8 @@ export const getPipelinePulse = createServerFn({ method: "GET" }).handler(async 
       ? Math.max(0, Math.round((Date.now() - new Date(scannedAt).getTime()) / 60000))
       : null;
   const usbr = status?.usbr ?? {
-    bound: snapshot?.stats.byAgency?.['USBR']?.bound ?? 0,
-    withReadings: snapshot?.stats.byAgency?.['USBR']?.withReadings ?? 0,
+    bound: snapshot?.stats.byAgency?.["USBR"]?.bound ?? 0,
+    withReadings: snapshot?.stats.byAgency?.["USBR"]?.withReadings ?? 0,
     timeouts: 0,
   };
   return {

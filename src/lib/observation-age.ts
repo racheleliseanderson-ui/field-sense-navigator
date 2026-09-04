@@ -83,8 +83,5 @@ export function presentReadings(
     | undefined,
   now = Date.now(),
 ): { readings: AgeReading[]; retainedReadings: AgeReading[] } {
-  return partitionReadings(
-    [...(row?.readings ?? []), ...(row?.retainedReadings ?? [])],
-    now,
-  );
+  return partitionReadings([...(row?.readings ?? []), ...(row?.retainedReadings ?? [])], now);
 }

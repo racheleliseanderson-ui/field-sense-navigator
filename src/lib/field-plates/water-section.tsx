@@ -36,12 +36,7 @@ import {
 } from "./kit";
 
 export type WaterSectionKind =
-  | "flowing"
-  | "stillwater"
-  | "surf"
-  | "inshore"
-  | "nearshore"
-  | "offshore";
+  "flowing" | "stillwater" | "surf" | "inshore" | "nearshore" | "offshore";
 
 /** How sure the app is that a zone is really there. Drawn, not just claimed. */
 export type ZoneConfidence = "observed" | "likely" | "check";
@@ -218,12 +213,26 @@ export function WaterSectionPlate({
         {/* Water column. */}
         <WaterField x={WATER_X0} y={AIR} w={WATER_W} h={BED - AIR} />
         {wash > 0 ? (
-          <rect x={WATER_X0} y={AIR} width={WATER_W} height={BED - AIR} fill={LAND} opacity={wash} />
+          <rect
+            x={WATER_X0}
+            y={AIR}
+            width={WATER_W}
+            height={BED - AIR}
+            fill={LAND}
+            opacity={wash}
+          />
         ) : null}
 
         {/* Surface line. */}
-        <line x1={WATER_X0} y1={AIR} x2={WATER_X1} y2={AIR} stroke={INK} strokeWidth={2} opacity={0.55} />
-
+        <line
+          x1={WATER_X0}
+          y1={AIR}
+          x2={WATER_X1}
+          y2={AIR}
+          stroke={INK}
+          strokeWidth={2}
+          opacity={0.55}
+        />
 
         {/* Thermal break, when one is known. A line the fish can feel. */}
         {typeof spec.thermocline === "number" ? (
@@ -246,11 +255,29 @@ export function WaterSectionPlate({
 
         {/* Current, or the absence of it. */}
         {!still && spec.current ? (
-          <Flow x={WATER_X0 + 8} y={AIR + 22} w={WATER_W - 16} rows={4} gap={30} speed={spec.current} opacity={0.42} />
+          <Flow
+            x={WATER_X0 + 8}
+            y={AIR + 22}
+            w={WATER_W - 16}
+            rows={4}
+            gap={30}
+            speed={spec.current}
+            opacity={0.42}
+          />
         ) : null}
-        {!still && spec.current === 3 ? <Riffle x={WATER_X0} y={AIR - 6} w={WATER_W} h={12} density={40} /> : null}
+        {!still && spec.current === 3 ? (
+          <Riffle x={WATER_X0} y={AIR - 6} w={WATER_W} h={12} density={40} />
+        ) : null}
         {still ? (
-          <Flow x={WATER_X0 + 8} y={AIR + 14} w={WATER_W - 16} rows={1} gap={0} speed={1} opacity={0.28} />
+          <Flow
+            x={WATER_X0 + 8}
+            y={AIR + 14}
+            w={WATER_W - 16}
+            rows={1}
+            gap={0}
+            speed={1}
+            opacity={0.28}
+          />
         ) : null}
 
         {/* Structure sits behind the zones: it is why the zone is there. */}

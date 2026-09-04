@@ -100,7 +100,12 @@ describe("temperatureFrom", () => {
       station: { id: "9414290", name: "SF Bay", agency: "NOAA-COOPS" },
       readings: [],
       retainedReadings: [
-        { label: "Water temperature", value: "58.6", unit: "°F", observedAt: "2026-08-30T12:00:00Z" },
+        {
+          label: "Water temperature",
+          value: "58.6",
+          unit: "°F",
+          observedAt: "2026-08-30T12:00:00Z",
+        },
       ],
       observation: null,
     });
@@ -142,7 +147,12 @@ describe("conditions on the packet", () => {
       station: { id: "9414290", name: "SF Bay", agency: "NOAA-COOPS" },
       readings: [],
       retainedReadings: [
-        { label: "Water temperature", value: "58.6", unit: "°F", observedAt: "2026-08-30T12:00:00Z" },
+        {
+          label: "Water temperature",
+          value: "58.6",
+          unit: "°F",
+          observedAt: "2026-08-30T12:00:00Z",
+        },
       ],
       observation: null,
     });

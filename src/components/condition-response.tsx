@@ -26,14 +26,19 @@ export function ConditionResponsePanel({
   destination: Destination;
   level: ReadLevel;
 }) {
-  const events = useMemo(() => eventsFor(destination.waterType, level), [destination.waterType, level]);
+  const events = useMemo(
+    () => eventsFor(destination.waterType, level),
+    [destination.waterType, level],
+  );
   const sharp = useMemo(() => new Set(sharpenedFor(destination)), [destination]);
   const [open, setOpen] = useState<ConditionEvent | null>(null);
 
   if (!events.length) return null;
 
   /* Events this record has a specific reason to care about come first. */
-  const ordered = [...events].sort((a, b) => Number(sharp.has(b.event)) - Number(sharp.has(a.event)));
+  const ordered = [...events].sort(
+    (a, b) => Number(sharp.has(b.event)) - Number(sharp.has(a.event)),
+  );
 
   return (
     <section aria-labelledby="change-heading" className="min-w-0">
@@ -48,8 +53,8 @@ export function ConditionResponsePanel({
         It rained. They ran the dam. The wind swung.
       </h2>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        Pick what actually happened. Nothing here reads a gauge — you supply the event, from your own
-        eyes or the agency's page, and this says what it does to water of this class.
+        Pick what actually happened. Nothing here reads a gauge — you supply the event, from your
+        own eyes or the agency's page, and this says what it does to water of this class.
       </p>
 
       <ul className="mt-6 grid gap-px bg-hairline sm:grid-cols-2">
@@ -86,7 +91,8 @@ export function ConditionResponsePanel({
                           <span className="tick text-[0.5rem] text-brass">Where</span> {n.where}
                         </p>
                         <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                          <span className="tick text-[0.5rem] text-brass">Confirm it</span> {n.confirm}
+                          <span className="tick text-[0.5rem] text-brass">Confirm it</span>{" "}
+                          {n.confirm}
                         </p>
                       </li>
                     ))}
@@ -111,8 +117,8 @@ export function ConditionResponsePanel({
       <div className="mt-6 border border-alert/30 bg-alert/[0.06] px-4 py-3">
         <p className="text-xs leading-relaxed text-foreground/90">
           <span className="tick text-alert">Still craft, not observation</span> — this is what these
-          changes do to a {destination.waterType}. It does not know whether any of them happened here,
-          and it never will. The agency's page and your own eyes are the only things that do.
+          changes do to a {destination.waterType}. It does not know whether any of them happened
+          here, and it never will. The agency's page and your own eyes are the only things that do.
         </p>
       </div>
     </section>

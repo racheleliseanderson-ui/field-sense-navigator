@@ -38,19 +38,42 @@ const norm = (s: string | null | undefined) =>
  * the coverage map and anything else that needs to name a jurisdiction. */
 
 const TYPE_WORDS: Record<string, string> = {
-  lake: "lake", lakes: "lake", lago: "lake",
-  reservoir: "reservoir", reservoirs: "reservoir", embalse: "reservoir",
-  river: "river", rivers: "river", creek: "river", rio: "river",
-  marine: "marine", saltwater: "marine", coast: "marine", coastal: "marine",
-  bay: "marine", surf: "marine", ocean: "marine",
+  lake: "lake",
+  lakes: "lake",
+  lago: "lake",
+  reservoir: "reservoir",
+  reservoirs: "reservoir",
+  embalse: "reservoir",
+  river: "river",
+  rivers: "river",
+  creek: "river",
+  rio: "river",
+  marine: "marine",
+  saltwater: "marine",
+  coast: "marine",
+  coastal: "marine",
+  bay: "marine",
+  surf: "marine",
+  ocean: "marine",
 };
 
 const ACCESS_WORDS: Record<string, string> = {
-  kayak: "hand launch", canoe: "hand launch", paddle: "hand launch",
-  "hand launch": "hand launch", carry: "hand launch",
-  ramp: "boat launch", launch: "boat launch", trailer: "boat launch",
-  boat: "boat launch", pier: "pier", dock: "pier", jetty: "pier",
-  bank: "shore", shore: "shore", wade: "shore", wading: "shore",
+  kayak: "hand launch",
+  canoe: "hand launch",
+  paddle: "hand launch",
+  "hand launch": "hand launch",
+  carry: "hand launch",
+  ramp: "boat launch",
+  launch: "boat launch",
+  trailer: "boat launch",
+  boat: "boat launch",
+  pier: "pier",
+  dock: "pier",
+  jetty: "pier",
+  bank: "shore",
+  shore: "shore",
+  wade: "shore",
+  wading: "shore",
 };
 
 /**
@@ -70,13 +93,7 @@ const ACCESS_MATCH: Record<string, string[]> = {
   ],
   "boat launch": ["boat launch", "boating", "multiple official access", "float access"],
   pier: ["pier", "dock", "park access", "multiple official access"],
-  shore: [
-    "shore",
-    "walk in",
-    "trail access",
-    "park access",
-    "multiple official access",
-  ],
+  shore: ["shore", "walk in", "trail access", "park access", "multiple official access"],
 };
 
 /**
@@ -123,8 +140,26 @@ const index: Row[] = destinations.map((d) => {
   const access = norm(d.publicAccess.map((a) => `${a.name} ${a.type}`).join(" "));
   const tags = norm((d.tags ?? []).join(" ").replace(/_/g, " "));
   return {
-    d, name, state, region, county, type, species, access, tags,
-    blob: [name, state, region, county, type, species, access, tags, norm(d.managingAgency ?? "")].join(" "),
+    d,
+    name,
+    state,
+    region,
+    county,
+    type,
+    species,
+    access,
+    tags,
+    blob: [
+      name,
+      state,
+      region,
+      county,
+      type,
+      species,
+      access,
+      tags,
+      norm(d.managingAgency ?? ""),
+    ].join(" "),
   };
 });
 
@@ -133,13 +168,22 @@ function close(a: string, b: string): boolean {
   if (a === b) return true;
   if (Math.abs(a.length - b.length) > 1) return false;
   if (a.length < 4) return false;
-  let i = 0, j = 0, edits = 0;
+  let i = 0,
+    j = 0,
+    edits = 0;
   while (i < a.length && j < b.length) {
-    if (a[i] === b[j]) { i++; j++; continue; }
+    if (a[i] === b[j]) {
+      i++;
+      j++;
+      continue;
+    }
     if (++edits > 1) return false;
     if (a.length > b.length) i++;
     else if (a.length < b.length) j++;
-    else { i++; j++; }
+    else {
+      i++;
+      j++;
+    }
   }
   return edits + (a.length - i) + (b.length - j) <= 1;
 }
@@ -154,8 +198,7 @@ export function tokenize(query: string): { tokens: Token[]; rest: string } {
     const w = words[i]!;
     const two = i + 1 < words.length ? `${w} ${words[i + 1]}` : "";
 
-    const three =
-      i + 2 < words.length ? `${w} ${words[i + 1]} ${words[i + 2]}` : "";
+    const three = i + 2 < words.length ? `${w} ${words[i + 1]} ${words[i + 2]}` : "";
     const stateThree = three && Object.values(REGION_ABBR).find((s) => norm(s) === three);
     if (stateThree) {
       tokens.push({ kind: "state", value: stateThree, label: stateThree });
@@ -163,9 +206,16 @@ export function tokenize(query: string): { tokens: Token[]; rest: string } {
       continue;
     }
     const stateTwo = two && Object.values(REGION_ABBR).find((s) => norm(s) === two);
-    if (stateTwo) { tokens.push({ kind: "state", value: stateTwo, label: stateTwo }); i++; continue; }
+    if (stateTwo) {
+      tokens.push({ kind: "state", value: stateTwo, label: stateTwo });
+      i++;
+      continue;
+    }
     const stateOne = Object.values(REGION_ABBR).find((s) => norm(s) === w);
-    if (stateOne) { tokens.push({ kind: "state", value: stateOne, label: stateOne }); continue; }
+    if (stateOne) {
+      tokens.push({ kind: "state", value: stateOne, label: stateOne });
+      continue;
+    }
     if (REGION_ABBR[w] && w.length === 2) {
       const full = REGION_ABBR[w]!;
       tokens.push({ kind: "state", value: full, label: full });
@@ -173,15 +223,26 @@ export function tokenize(query: string): { tokens: Token[]; rest: string } {
     }
     if (two && ACCESS_WORDS[two]) {
       tokens.push({ kind: "access", value: ACCESS_WORDS[two]!, label: two });
-      i++; continue;
+      i++;
+      continue;
     }
     if (two && TAG_WORDS[two]) {
       tokens.push({ kind: "tag", value: TAG_WORDS[two]!, label: two });
-      i++; continue;
+      i++;
+      continue;
     }
-    if (TYPE_WORDS[w]) { tokens.push({ kind: "type", value: TYPE_WORDS[w]!, label: w }); continue; }
-    if (ACCESS_WORDS[w]) { tokens.push({ kind: "access", value: ACCESS_WORDS[w]!, label: w }); continue; }
-    if (TAG_WORDS[w]) { tokens.push({ kind: "tag", value: TAG_WORDS[w]!, label: w }); continue; }
+    if (TYPE_WORDS[w]) {
+      tokens.push({ kind: "type", value: TYPE_WORDS[w]!, label: w });
+      continue;
+    }
+    if (ACCESS_WORDS[w]) {
+      tokens.push({ kind: "access", value: ACCESS_WORDS[w]!, label: w });
+      continue;
+    }
+    if (TAG_WORDS[w]) {
+      tokens.push({ kind: "tag", value: TAG_WORDS[w]!, label: w });
+      continue;
+    }
     if (speciesTerms.has(w) || [...speciesTerms].some((s) => s.includes(w) && w.length > 3)) {
       tokens.push({ kind: "species", value: w, label: w });
       continue;
@@ -199,33 +260,74 @@ function scoreRow(row: Row, terms: string[], tokens: Token[]): Hit | null {
   for (const t of tokens) {
     if (t.kind === "state") {
       if (norm(t.value) !== row.state) return null;
-      score += 30; matched.push(t.value);
+      score += 30;
+      matched.push(t.value);
     } else if (t.kind === "type") {
       if (t.value !== row.type) return null;
-      score += 24; matched.push(t.value);
+      score += 24;
+      matched.push(t.value);
     } else if (t.kind === "species") {
       if (!row.species.includes(t.value)) return null;
-      score += 26; matched.push(t.value);
+      score += 26;
+      matched.push(t.value);
     } else if (t.kind === "access") {
       const needles = ACCESS_MATCH[t.value] ?? [t.value];
       if (!needles.some((n) => row.access.includes(n))) return null;
-      score += 22; matched.push(t.value);
+      score += 22;
+      matched.push(t.value);
     } else if (t.kind === "tag") {
       if (!row.d.tags?.includes(t.value)) return null;
-      score += 22; matched.push(t.label);
+      score += 22;
+      matched.push(t.label);
     }
   }
 
   for (const term of terms) {
-    if (row.name.startsWith(term)) { score += 60; matched.push(term); continue; }
-    if (row.name.includes(term)) { score += 44; matched.push(term); continue; }
-    if (row.county.includes(term)) { score += 24; matched.push(term); continue; }
-    if (row.region.includes(term)) { score += 22; matched.push(term); continue; }
-    if (row.state.includes(term)) { score += 20; matched.push(term); continue; }
-    if (row.species.includes(term)) { score += 18; matched.push(term); continue; }
-    if (row.access.includes(term)) { score += 14; matched.push(term); continue; }
-    if (row.tags.includes(term)) { score += 16; matched.push(term); continue; }
-    if (row.blob.split(" ").some((w) => close(w, term))) { score += 8; matched.push(term); continue; }
+    if (row.name.startsWith(term)) {
+      score += 60;
+      matched.push(term);
+      continue;
+    }
+    if (row.name.includes(term)) {
+      score += 44;
+      matched.push(term);
+      continue;
+    }
+    if (row.county.includes(term)) {
+      score += 24;
+      matched.push(term);
+      continue;
+    }
+    if (row.region.includes(term)) {
+      score += 22;
+      matched.push(term);
+      continue;
+    }
+    if (row.state.includes(term)) {
+      score += 20;
+      matched.push(term);
+      continue;
+    }
+    if (row.species.includes(term)) {
+      score += 18;
+      matched.push(term);
+      continue;
+    }
+    if (row.access.includes(term)) {
+      score += 14;
+      matched.push(term);
+      continue;
+    }
+    if (row.tags.includes(term)) {
+      score += 16;
+      matched.push(term);
+      continue;
+    }
+    if (row.blob.split(" ").some((w) => close(w, term))) {
+      score += 8;
+      matched.push(term);
+      continue;
+    }
     return null;
   }
 
@@ -245,7 +347,11 @@ export function search(query: string): SearchResult {
   const terms = rest.split(" ").filter(Boolean);
 
   if (tokens.length === 0 && terms.length === 0) {
-    return { hits: index.map((r) => ({ destination: r.d, score: 0, matched: [] })), tokens, suggestion: null };
+    return {
+      hits: index.map((r) => ({ destination: r.d, score: 0, matched: [] })),
+      tokens,
+      suggestion: null,
+    };
   }
 
   const hits: Hit[] = [];

@@ -101,10 +101,7 @@ function applyEnrichments(
   });
 }
 
-const assembled: Destination[] = [
-  ...(base as Destination[]),
-  ...(bcInterior as Destination[]),
-];
+const assembled: Destination[] = [...(base as Destination[]), ...(bcInterior as Destination[])];
 
 type SeasonRule = Omit<DestinationEnrichment, "id">;
 type RuleIndexRow = { id: string; rule: string };
@@ -169,21 +166,18 @@ function reviewOffset(id: string): number {
 export function scheduleReview(d: Destination): string {
   const checked = printedDay(d.checkedAt);
   if (Number.isNaN(checked)) return d.nextReviewAt;
-  const due =
-    checked +
-    (REVIEW_CADENCE_DAYS + reviewOffset(d.id)) * 86_400_000;
+  const due = checked + (REVIEW_CADENCE_DAYS + reviewOffset(d.id)) * 86_400_000;
   return new Date(due).toISOString().slice(0, 10);
 }
 
-export const destinations = applyEnrichments(
-  assembled,
-  allSeasonWindowEnrichments,
-).map((d) => ({ ...d, nextReviewAt: scheduleReview(d) }));
+export const destinations = applyEnrichments(assembled, allSeasonWindowEnrichments).map((d) => ({
+  ...d,
+  nextReviewAt: scheduleReview(d),
+}));
 
 export const NAMED_WATER_COUNT = destinations.length;
 
-export const destinationById = (id: string) =>
-  destinations.find((d) => d.id === id);
+export const destinationById = (id: string) => destinations.find((d) => d.id === id);
 
 export const RELATION_LABEL: Record<RelatedWater["relation"], string> = {
   same_waterbody_segment: "Same waterbody",
@@ -199,9 +193,7 @@ export function relatedRecords(d: Destination) {
       const destination = destinationById(rel.id);
       return destination ? { ...rel, destination } : null;
     })
-    .filter(
-      (row): row is RelatedWater & { destination: Destination } => row !== null,
-    );
+    .filter((row): row is RelatedWater & { destination: Destination } => row !== null);
 }
 
 export const states = [...new Set(destinations.map((d) => d.state))].sort();
@@ -228,8 +220,7 @@ export type Jurisdiction = "us" | "ca";
 
 export const isProvince = (state: string) => PROVINCE_SET.has(state);
 
-export const jurisdictionOf = (d: Destination): Jurisdiction =>
-  isProvince(d.state) ? "ca" : "us";
+export const jurisdictionOf = (d: Destination): Jurisdiction => (isProvince(d.state) ? "ca" : "us");
 
 export const provinces = states.filter(isProvince);
 
@@ -241,24 +232,72 @@ export const usStates = states.filter((s) => !isProvince(s));
  * code, so one lookup covers North America.
  */
 export const STATE_ABBR: Readonly<Record<string, string>> = {
-  al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
-  co: "Colorado", ct: "Connecticut", de: "Delaware", fl: "Florida", ga: "Georgia",
-  hi: "Hawaii", id: "Idaho", il: "Illinois", in: "Indiana", ia: "Iowa",
-  ks: "Kansas", ky: "Kentucky", la: "Louisiana", me: "Maine", md: "Maryland",
-  ma: "Massachusetts", mi: "Michigan", mn: "Minnesota", ms: "Mississippi",
-  mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada", nh: "New Hampshire",
-  nj: "New Jersey", nm: "New Mexico", ny: "New York", nc: "North Carolina",
-  nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon", pa: "Pennsylvania",
-  ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota", tn: "Tennessee",
-  tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia", wa: "Washington",
-  wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
+  al: "Alabama",
+  ak: "Alaska",
+  az: "Arizona",
+  ar: "Arkansas",
+  ca: "California",
+  co: "Colorado",
+  ct: "Connecticut",
+  de: "Delaware",
+  fl: "Florida",
+  ga: "Georgia",
+  hi: "Hawaii",
+  id: "Idaho",
+  il: "Illinois",
+  in: "Indiana",
+  ia: "Iowa",
+  ks: "Kansas",
+  ky: "Kentucky",
+  la: "Louisiana",
+  me: "Maine",
+  md: "Maryland",
+  ma: "Massachusetts",
+  mi: "Michigan",
+  mn: "Minnesota",
+  ms: "Mississippi",
+  mo: "Missouri",
+  mt: "Montana",
+  ne: "Nebraska",
+  nv: "Nevada",
+  nh: "New Hampshire",
+  nj: "New Jersey",
+  nm: "New Mexico",
+  ny: "New York",
+  nc: "North Carolina",
+  nd: "North Dakota",
+  oh: "Ohio",
+  ok: "Oklahoma",
+  or: "Oregon",
+  pa: "Pennsylvania",
+  ri: "Rhode Island",
+  sc: "South Carolina",
+  sd: "South Dakota",
+  tn: "Tennessee",
+  tx: "Texas",
+  ut: "Utah",
+  vt: "Vermont",
+  va: "Virginia",
+  wa: "Washington",
+  wv: "West Virginia",
+  wi: "Wisconsin",
+  wy: "Wyoming",
 };
 
 export const PROVINCE_ABBR: Readonly<Record<string, string>> = {
-  ab: "Alberta", bc: "British Columbia", mb: "Manitoba", nb: "New Brunswick",
-  nl: "Newfoundland and Labrador", nt: "Northwest Territories", ns: "Nova Scotia",
-  nu: "Nunavut", on: "Ontario", pe: "Prince Edward Island", qc: "Quebec",
-  sk: "Saskatchewan", yt: "Yukon",
+  ab: "Alberta",
+  bc: "British Columbia",
+  mb: "Manitoba",
+  nb: "New Brunswick",
+  nl: "Newfoundland and Labrador",
+  nt: "Northwest Territories",
+  ns: "Nova Scotia",
+  nu: "Nunavut",
+  on: "Ontario",
+  pe: "Prince Edward Island",
+  qc: "Quebec",
+  sk: "Saskatchewan",
+  yt: "Yukon",
 };
 
 export const REGION_ABBR: Readonly<Record<string, string>> = {
@@ -271,8 +310,7 @@ const ABBR_BY_NAME: ReadonlyMap<string, string> = new Map(
 );
 
 /** "Texas" -> "TX". Falls back to the first two letters for an unlisted name. */
-export const abbrFor = (name: string) =>
-  ABBR_BY_NAME.get(name) ?? name.slice(0, 2).toUpperCase();
+export const abbrFor = (name: string) => ABBR_BY_NAME.get(name) ?? name.slice(0, 2).toUpperCase();
 
 /** How many catalog records each jurisdiction holds. */
 export const countByState: ReadonlyMap<string, number> = (() => {
@@ -283,11 +321,9 @@ export const countByState: ReadonlyMap<string, number> = (() => {
 
 export const waterTypes: WaterType[] = ["lake", "reservoir", "river", "marine"];
 
-export const humanize = (value: string) =>
-  value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+export const humanize = (value: string) => value.replace(/_/g, " ").replace(/\s+/g, " ").trim();
 
-export const titleCase = (value: string) =>
-  value.charAt(0).toUpperCase() + value.slice(1);
+export const titleCase = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 export function catalogTags(d: Destination): string[] {
   return [...(d.tags ?? [])].sort();

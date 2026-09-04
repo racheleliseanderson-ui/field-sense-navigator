@@ -37,15 +37,7 @@ import {
 } from "./kit";
 
 export type PathShape =
-  | "drift"
-  | "swing"
-  | "retrieve"
-  | "jig"
-  | "drop"
-  | "troll"
-  | "surface"
-  | "crawl"
-  | "hold";
+  "drift" | "swing" | "retrieve" | "jig" | "drop" | "troll" | "surface" | "crawl" | "hold";
 
 export type PathSpeed = "dead" | "slow" | "moderate" | "brisk";
 export type PathPause = "none" | "brief" | "long";
@@ -246,9 +238,7 @@ export function PresentationPathPlate({
           <LegendRow label="Depth" tone="accent">
             {job.depth === "varies"
               ? "Not settled. Find the layer before you argue about anything else."
-              : bandIds
-                  .map((id) => DEPTH_ROWS.find((r) => r.id === id)?.label ?? id)
-                  .join(", ")}
+              : bandIds.map((id) => DEPTH_ROWS.find((r) => r.id === id)?.label ?? id).join(", ")}
           </LegendRow>
           <LegendRow label="Path" tone="ink">
             {SHAPE_LABEL[job.shape]}
@@ -376,8 +366,22 @@ export function PresentationPathPlate({
               const px = 46 + f * (W - 86);
               return (
                 <g key={f}>
-                  <circle cx={px} cy={y} r={job.pause === "long" ? 7 : 5} fill={ALARM} opacity={0.85} />
-                  <circle cx={px} cy={y} r={job.pause === "long" ? 12 : 9} fill="none" stroke={ALARM} strokeWidth={1.1} opacity={0.5} />
+                  <circle
+                    cx={px}
+                    cy={y}
+                    r={job.pause === "long" ? 7 : 5}
+                    fill={ALARM}
+                    opacity={0.85}
+                  />
+                  <circle
+                    cx={px}
+                    cy={y}
+                    r={job.pause === "long" ? 12 : 9}
+                    fill="none"
+                    stroke={ALARM}
+                    strokeWidth={1.1}
+                    opacity={0.5}
+                  />
                 </g>
               );
             })}
@@ -388,7 +392,15 @@ export function PresentationPathPlate({
         ) : null}
 
         {/* Rod tip, so the path has an origin the reader recognises. */}
-        <line x1={18} y1={AIR - 26} x2={46} y2={AIR - 2} stroke={INK} strokeWidth={2.6} strokeLinecap="round" />
+        <line
+          x1={18}
+          y1={AIR - 26}
+          x2={46}
+          y2={AIR - 2}
+          stroke={INK}
+          strokeWidth={2.6}
+          strokeLinecap="round"
+        />
         <Tag x={10} y={AIR - 32} tone="muted">
           Rod tip
         </Tag>

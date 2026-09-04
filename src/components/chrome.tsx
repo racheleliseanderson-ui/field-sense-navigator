@@ -256,8 +256,8 @@ export function FleetFooter({ children }: { children?: React.ReactNode }) {
         <nav aria-label="Across the fleet">
           <p className="tick">Across the fleet</p>
           <p className="mt-3 max-w-xs text-[0.72rem] leading-relaxed text-dim-foreground">
-            Other publications in the same house. Different subjects, same rule about
-            not inventing what the sources do not say.
+            Other publications in the same house. Different subjects, same rule about not inventing
+            what the sources do not say.
           </p>
           <ul className="mt-3 space-y-1 text-sm">
             {ACROSS_FLEET.map((group) => (
@@ -288,9 +288,9 @@ export function FleetFooter({ children }: { children?: React.ReactNode }) {
       <div className="relative border-t border-hairline">
         <div className="mx-auto max-w-7xl px-safe py-5 sm:px-8">
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Field Sense Navigator — built for Hook the Horizon. Official agency sources
-            are authoritative; posted signage on the day wins over anything printed here.
-            This is a planning guide, not a safety service:{" "}
+            Field Sense Navigator — built for Hook the Horizon. Official agency sources are
+            authoritative; posted signage on the day wins over anything printed here. This is a
+            planning guide, not a safety service:{" "}
             <Link
               to="/boundary"
               className="underline hover:text-brass focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
@@ -300,9 +300,9 @@ export function FleetFooter({ children }: { children?: React.ReactNode }) {
             .
           </p>
           <p className="mt-2 text-[0.7rem] leading-relaxed text-dim-foreground">
-            Observations are published by USGS, NOAA CO-OPS, the National Weather
-            Service, USBR, USACE, CDEC and the Water Survey of Canada. Contains
-            information licensed under the Open Government Licence – Canada.
+            Observations are published by USGS, NOAA CO-OPS, the National Weather Service, USBR,
+            USACE, CDEC and the Water Survey of Canada. Contains information licensed under the Open
+            Government Licence – Canada.
           </p>
         </div>
       </div>
@@ -329,9 +329,9 @@ export function SiteFooter() {
             Named public waters. Nothing else.
           </p>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-            No private spots, exact coordinates, catch guarantees, or invented live
-            conditions. If current access or safety information cannot be confirmed,
-            Field Sense tells you what still needs checking instead of guessing.
+            No private spots, exact coordinates, catch guarantees, or invented live conditions. If
+            current access or safety information cannot be confirmed, Field Sense tells you what
+            still needs checking instead of guessing.
           </p>
           <dl className="data mt-6 space-y-1 text-sm text-muted-foreground">
             <div className="flex gap-2">

@@ -113,9 +113,11 @@
     transparent 42%,
     color-mix(in oklab, var(--accent) 16%, transparent) 100%
   );
-  --shadow-panel: 0 1px 0 0 color-mix(in oklab, white 70%, transparent) inset,
+  --shadow-panel:
+    0 1px 0 0 color-mix(in oklab, white 70%, transparent) inset,
     0 18px 44px -34px oklch(0.35 0.03 262 / 60%);
-  --shadow-lift: 0 26px 56px -38px oklch(0.35 0.03 262 / 70%),
+  --shadow-lift:
+    0 26px 56px -38px oklch(0.35 0.03 262 / 70%),
     0 0 0 1px color-mix(in oklab, var(--primary) 22%, transparent);
   --hero-scrim: linear-gradient(
     180deg,
@@ -158,9 +160,11 @@
     oklch(0.178 0.014 262) 55%,
     oklch(0.2 0.016 260) 100%
   );
-  --shadow-panel: 0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset,
+  --shadow-panel:
+    0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset,
     0 22px 60px -32px oklch(0.05 0.02 262);
-  --shadow-lift: 0 30px 70px -40px oklch(0.05 0.02 262),
+  --shadow-lift:
+    0 30px 70px -40px oklch(0.05 0.02 262),
     0 0 0 1px color-mix(in oklab, var(--primary) 18%, transparent);
   --hero-scrim: linear-gradient(
     180deg,
@@ -364,7 +368,8 @@ html[data-motion="off"] [data-reveal] {
 }
 
 @utility hairline-grid {
-  background-image: linear-gradient(
+  background-image:
+    linear-gradient(
       to right,
       color-mix(in oklab, var(--border) 45%, transparent) 1px,
       transparent 1px
@@ -446,12 +451,11 @@ html[data-motion="off"] [data-reveal] {
 
 /* Soft brass halo behind a focal element. */
 @utility halo {
-  background:
-    radial-gradient(
-      60% 50% at 50% 60%,
-      color-mix(in oklab, var(--accent) 22%, transparent) 0%,
-      transparent 70%
-    );
+  background: radial-gradient(
+    60% 50% at 50% 60%,
+    color-mix(in oklab, var(--accent) 22%, transparent) 0%,
+    transparent 70%
+  );
 }
 
 /* Layered surface: card with a top highlight and deep drop. */

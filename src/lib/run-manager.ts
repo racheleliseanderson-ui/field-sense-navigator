@@ -58,7 +58,10 @@ export function useRunManager(probe: Probe) {
   }, []);
 
   const start = useCallback(
-    async (targets: RunTarget[], opts: { concurrency: number; scope: string; append?: boolean }) => {
+    async (
+      targets: RunTarget[],
+      opts: { concurrency: number; scope: string; append?: boolean },
+    ) => {
       if (targets.length === 0) return;
       stopped.current = false;
       paused.current = false;

@@ -145,7 +145,14 @@ export function SeasonBandPlate({
         {/* Month grid. */}
         {MONTH_SHORT.map((m, i) => (
           <g key={m}>
-            <line x1={colX(i)} y1={BAND_TOP - 12} x2={colX(i)} y2={trackBottom} stroke={PANEL} strokeWidth={0.7} />
+            <line
+              x1={colX(i)}
+              y1={BAND_TOP - 12}
+              x2={colX(i)}
+              y2={trackBottom}
+              stroke={PANEL}
+              strokeWidth={0.7}
+            />
             <text
               x={colX(i) + (RIGHT - LEFT) / 24}
               y={MONTHS_Y}
@@ -159,7 +166,14 @@ export function SeasonBandPlate({
             </text>
           </g>
         ))}
-        <line x1={colX(12)} y1={BAND_TOP - 12} x2={colX(12)} y2={trackBottom} stroke={PANEL} strokeWidth={0.7} />
+        <line
+          x1={colX(12)}
+          y1={BAND_TOP - 12}
+          x2={colX(12)}
+          y2={trackBottom}
+          stroke={PANEL}
+          strokeWidth={0.7}
+        />
 
         {/* Phase bars. */}
         {segments.map((s, i) => {
@@ -206,12 +220,23 @@ export function SeasonBandPlate({
         {/* Temperature track — the thing the phases are actually following. */}
         {track.length > 1 ? (
           <g>
-            <rect x={LEFT} y={trackTop} width={RIGHT - LEFT} height={TRACK_H} fill="none" stroke={PANEL} strokeWidth={1} />
+            <rect
+              x={LEFT}
+              y={trackTop}
+              width={RIGHT - LEFT}
+              height={TRACK_H}
+              fill="none"
+              stroke={PANEL}
+              strokeWidth={1}
+            />
             <path
               d={track
                 .slice()
                 .sort((a, b) => a.month - b.month)
-                .map((t, i) => `${i === 0 ? "M" : "L"}${colX(t.month) + (RIGHT - LEFT) / 24},${tempY(t.f)}`)
+                .map(
+                  (t, i) =>
+                    `${i === 0 ? "M" : "L"}${colX(t.month) + (RIGHT - LEFT) / 24},${tempY(t.f)}`,
+                )
                 .join(" ")}
               fill="none"
               stroke={BRASS}
@@ -222,15 +247,36 @@ export function SeasonBandPlate({
             <Tag x={LEFT} y={trackTop - 8} tone="accent">
               Water temp
             </Tag>
-            <text x={LEFT - 6} y={trackTop + 10} textAnchor="end" fontSize={9} fill={MUTED} fontFamily={MONO}>
+            <text
+              x={LEFT - 6}
+              y={trackTop + 10}
+              textAnchor="end"
+              fontSize={9}
+              fill={MUTED}
+              fontFamily={MONO}
+            >
               {Math.round(hi)}
             </text>
-            <text x={LEFT - 6} y={trackBottom} textAnchor="end" fontSize={9} fill={MUTED} fontFamily={MONO}>
+            <text
+              x={LEFT - 6}
+              y={trackBottom}
+              textAnchor="end"
+              fontSize={9}
+              fill={MUTED}
+              fontFamily={MONO}
+            >
               {Math.round(lo)}
             </text>
           </g>
         ) : (
-          <text x={LEFT} y={trackTop + 20} fontSize={10} fill={MUTED} fontFamily={MONO} letterSpacing="0.11em">
+          <text
+            x={LEFT}
+            y={trackTop + 20}
+            fontSize={10}
+            fill={MUTED}
+            fontFamily={MONO}
+            letterSpacing="0.11em"
+          >
             NO TEMPERATURE TRACK FOR THIS WATER — THE MONTHS ARE THE ROUGHER GUIDE
           </text>
         )}
@@ -247,7 +293,12 @@ export function SeasonBandPlate({
               strokeWidth={1.8}
               strokeDasharray="6 4"
             />
-            <Tag x={colX(spec.currentMonth) + (RIGHT - LEFT) / 24} y={MONTHS_Y - 16} anchor="middle" tone="accent">
+            <Tag
+              x={colX(spec.currentMonth) + (RIGHT - LEFT) / 24}
+              y={MONTHS_Y - 16}
+              anchor="middle"
+              tone="accent"
+            >
               Now
             </Tag>
           </g>

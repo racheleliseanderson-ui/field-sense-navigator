@@ -109,8 +109,7 @@ export function integrity(pool: Destination[] = destinations): IntegrityCheck[] 
       "Any record carrying a sensitive location is withheld.",
       pool.filter(
         (d) =>
-          d.privacy.sensitiveLocationIncluded ||
-          d.privacy.classification !== "public_destination",
+          d.privacy.sensitiveLocationIncluded || d.privacy.classification !== "public_destination",
       ),
       total,
       1,

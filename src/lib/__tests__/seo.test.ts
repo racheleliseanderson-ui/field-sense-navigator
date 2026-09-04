@@ -24,7 +24,9 @@ describe("withIdentity", () => {
   test("an indexable page canonicalises to itself", () => {
     const h = withIdentity({ path: "/water/X" }, { meta: [{ content: "t" }] });
     expect(h.links.at(-1)).toEqual({ rel: "canonical", href: `${SITE_URL}/water/X` });
-    expect(h.meta.some((m) => m["content"] === "index, follow, max-image-preview:large")).toBe(true);
+    expect(h.meta.some((m) => m["content"] === "index, follow, max-image-preview:large")).toBe(
+      true,
+    );
   });
 
   test("a derived view canonicalises to the page it was derived from", () => {

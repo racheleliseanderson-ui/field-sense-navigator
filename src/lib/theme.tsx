@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
 /** Five grounds. Deep water is the signature and the default. */
 export type Theme = "dark" | "light" | "black" | "white" | "cvd";
@@ -97,7 +90,7 @@ function applyTheme(theme: Theme) {
   el.classList.toggle("mode-black", c.black);
   el.classList.toggle("mode-white", c.white);
   el.classList.toggle("mode-cvd", c.cvd);
-  el.dataset['theme'] = theme;
+  el.dataset["theme"] = theme;
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -120,7 +113,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           ? "off"
           : "on";
     setMotionState(m);
-    document.documentElement.dataset['motion'] = m;
+    document.documentElement.dataset["motion"] = m;
   }, []);
 
   const setTheme = useCallback((t: Theme) => {
@@ -131,7 +124,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setMotion = useCallback((m: Motion) => {
     setMotionState(m);
-    document.documentElement.dataset['motion'] = m;
+    document.documentElement.dataset["motion"] = m;
     write(MOTION_STORAGE_KEY, m);
   }, []);
 
@@ -140,9 +133,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [setTheme]);
 
   return (
-    <Ctx.Provider value={{ theme, setTheme, toggle, motion, setMotion }}>
-      {children}
-    </Ctx.Provider>
+    <Ctx.Provider value={{ theme, setTheme, toggle, motion, setMotion }}>{children}</Ctx.Provider>
   );
 }
 

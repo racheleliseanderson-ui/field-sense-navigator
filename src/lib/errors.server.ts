@@ -29,11 +29,7 @@ export interface ErrorReport {
 
 function releaseId(): string {
   const env = process.env as Record<string, string | undefined>;
-  return (
-    env["VERCEL_GIT_COMMIT_SHA"]?.slice(0, 7) ??
-    env["VERCEL_DEPLOYMENT_ID"] ??
-    "local"
-  );
+  return env["VERCEL_GIT_COMMIT_SHA"]?.slice(0, 7) ?? env["VERCEL_DEPLOYMENT_ID"] ?? "local";
 }
 
 /** One line per report, prefixed so a log drain can filter for it. */

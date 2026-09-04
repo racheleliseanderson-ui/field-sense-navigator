@@ -30,9 +30,7 @@ export function nearbyWaters(d: Destination, limit = 6): NearbyGroup[] {
    * every unplaced water in the state into a group labelled "More water in
    * null".
    */
-  const region = d.region
-    ? inState.filter((x) => x.region === d.region).sort(byReadiness)
-    : [];
+  const region = d.region ? inState.filter((x) => x.region === d.region).sort(byReadiness) : [];
   const regionIds = new Set(region.map((x) => x.id));
 
   const sameType = inState

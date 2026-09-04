@@ -30,7 +30,8 @@ import {
   usePlateId,
 } from "./kit";
 
-export type LineMaterial = "mono" | "fluoro" | "braid" | "wire" | "backing" | "fly-line" | "unknown";
+export type LineMaterial =
+  "mono" | "fluoro" | "braid" | "wire" | "backing" | "fly-line" | "unknown";
 
 export type FailureMode = "slip" | "break" | "holds" | "unknown";
 
@@ -79,9 +80,11 @@ const MATERIAL_WORD: Record<LineMaterial, string> = {
 
 const MODE_WORD: Record<FailureMode, string> = {
   slip: "It slips. The connection pulls through rather than parting — more turns, a wetter cinch, or a different connection for this material.",
-  break: "It breaks. The line parts at the load point — the material is at its limit, or the cinch damaged it.",
+  break:
+    "It breaks. The line parts at the load point — the material is at its limit, or the cinch damaged it.",
   holds: "It holds under the load described here.",
-  unknown: "Not enough to say which. Slip and break need different fixes, so it is worth finding out which one you had.",
+  unknown:
+    "Not enough to say which. Slip and break need different fixes, so it is worth finding out which one you had.",
 };
 
 function strokeFor(side: ConnectionSide): number {
@@ -154,7 +157,13 @@ export function LoadPathPlate({
           {spec.mismatch ? (
             <LegendRow
               label="Diameter"
-              tone={spec.mismatch === "far apart" ? "alarm" : spec.mismatch === "workable" ? "watch" : "steady"}
+              tone={
+                spec.mismatch === "far apart"
+                  ? "alarm"
+                  : spec.mismatch === "workable"
+                    ? "watch"
+                    : "steady"
+              }
             >
               {spec.mismatch === "far apart"
                 ? "Far apart. A connection that works at matched diameters can bite through the thinner side here."
@@ -172,7 +181,12 @@ export function LoadPathPlate({
         </>
       }
     >
-      <Canvas w={W} h={H} min={480} label={`Load path through a ${spec.a.label} to ${spec.b.label} connection`}>
+      <Canvas
+        w={W}
+        h={H}
+        min={480}
+        label={`Load path through a ${spec.a.label} to ${spec.b.label} connection`}
+      >
         <defs>
           <radialGradient id={heat}>
             <stop offset="0%" stopColor={ALARM} stopOpacity="0.5" />
@@ -246,12 +260,23 @@ export function LoadPathPlate({
 
         {/* Load, pulling both ways. A connection is only interesting under tension. */}
         <Arrow from={[128, MID + 58]} to={[34, MID + 58]} tone="muted" width={1.4} label="Load" />
-        <Arrow from={[W - 128, MID + 58]} to={[W - 34, MID + 58]} tone="muted" width={1.4} label="Load" />
+        <Arrow
+          from={[W - 128, MID + 58]}
+          to={[W - 34, MID + 58]}
+          tone="muted"
+          width={1.4}
+          label="Load"
+        />
 
         {/* The failure, placed where it happens. */}
         {spec.mode === "slip" ? (
           <g>
-            <Arrow from={[knotX + 6, MID - 44]} to={[knotX + 52, MID - 44]} tone="alarm" width={2} />
+            <Arrow
+              from={[knotX + 6, MID - 44]}
+              to={[knotX + 52, MID - 44]}
+              tone="alarm"
+              width={2}
+            />
             <text
               x={knotX + 58}
               y={MID - 40}

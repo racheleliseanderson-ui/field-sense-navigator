@@ -38,7 +38,9 @@ export function WaterSectionReading({
         left.length
           ? `Not drawn: ${left
               .map((c) => c.title.toLowerCase())
-              .join(", ")}. Those describe the whole system rather than a place in it, and putting them somewhere on this picture would be inventing a location to make it look fuller.`
+              .join(
+                ", ",
+              )}. Those describe the whole system rather than a place in it, and putting them somewhere on this picture would be inventing a location to make it look fuller.`
           : undefined
       }
       aside={
@@ -48,9 +50,9 @@ export function WaterSectionReading({
             subtler reads — present often enough to look for, not often enough to assume.
           </p>
           <p>
-            Nothing here is an observation of today. No gauge reading, no clarity, no temperature and
-            no fish went into this drawing. It is the same standing craft an angler carries between
-            waters, and the water in front of you outranks all of it.
+            Nothing here is an observation of today. No gauge reading, no clarity, no temperature
+            and no fish went into this drawing. It is the same standing craft an angler carries
+            between waters, and the water in front of you outranks all of it.
           </p>
         </>
       }

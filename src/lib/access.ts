@@ -260,8 +260,9 @@ const FACET_LABELS: Record<string, string> = {
   day_use: "Day use",
 };
 
-export const LOGISTICS_FACETS: ReadonlyArray<{ id: string; label: string }> =
-  LOGISTICS.map((s) => ({ id: s.id, label: FACET_LABELS[s.id] ?? s.label }));
+export const LOGISTICS_FACETS: ReadonlyArray<{ id: string; label: string }> = LOGISTICS.map(
+  (s) => ({ id: s.id, label: FACET_LABELS[s.id] ?? s.label }),
+);
 
 /**
  * Amenity wording is agency free text, so this index is built once and reused.

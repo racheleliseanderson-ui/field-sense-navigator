@@ -66,8 +66,7 @@ const BASIS_WORD: Record<ThermalBasis, string> = {
     "A measured preference. The fish chooses this range when it can, which is the kind of number worth planning around.",
   distribution:
     "From where the species is found, not a measured preference. It tells you where the fish lives, not where it would rather be — a weaker claim than it looks.",
-  mixed:
-    "Preference and distribution data mixed. Treat the edges as softer than the core.",
+  mixed: "Preference and distribution data mixed. Treat the edges as softer than the core.",
 };
 
 export function ThermalBandPlate({
@@ -96,7 +95,9 @@ export function ThermalBandPlate({
   if (typeof spec.observedF === "number") marks.push(spec.observedF);
   else if (Array.isArray(spec.observedF)) marks.push(...spec.observedF);
 
-  const hasBand = Boolean(spec.activeF || spec.preferredF || spec.coldEdgeF != null || spec.warmEdgeF != null);
+  const hasBand = Boolean(
+    spec.activeF || spec.preferredF || spec.coldEdgeF != null || spec.warmEdgeF != null,
+  );
   const lo = marks.length ? Math.floor(Math.min(...marks) - 6) : 32;
   const hi = marks.length ? Math.ceil(Math.max(...marks) + 6) : 86;
   const x = (f: number) => LEFT + ((f - lo) / Math.max(1, hi - lo)) * (RIGHT - LEFT);
@@ -127,7 +128,10 @@ export function ThermalBandPlate({
       legend={
         <>
           {spec.preferredF ? (
-            <LegendRow label={`Preferred ${spec.preferredF[0]}–${spec.preferredF[1]}°F`} tone="steady">
+            <LegendRow
+              label={`Preferred ${spec.preferredF[0]}–${spec.preferredF[1]}°F`}
+              tone="steady"
+            >
               The core. Where the reviewed record says this fish would rather be.
             </LegendRow>
           ) : null}
@@ -173,10 +177,24 @@ export function ThermalBandPlate({
       <Canvas w={W} h={H} min={480} label={`Reviewed temperature bands for ${title}`}>
         {/* Cold and warm ends, drawn as the whole remaining axis rather than a stub. */}
         {spec.coldEdgeF != null ? (
-          <rect x={LEFT} y={AXIS_Y - BAR_H} width={Math.max(0, x(spec.coldEdgeF) - LEFT)} height={BAR_H} fill={ALARM} opacity={0.12} />
+          <rect
+            x={LEFT}
+            y={AXIS_Y - BAR_H}
+            width={Math.max(0, x(spec.coldEdgeF) - LEFT)}
+            height={BAR_H}
+            fill={ALARM}
+            opacity={0.12}
+          />
         ) : null}
         {spec.warmEdgeF != null ? (
-          <rect x={x(spec.warmEdgeF)} y={AXIS_Y - BAR_H} width={Math.max(0, RIGHT - x(spec.warmEdgeF))} height={BAR_H} fill={ALARM} opacity={0.12} />
+          <rect
+            x={x(spec.warmEdgeF)}
+            y={AXIS_Y - BAR_H}
+            width={Math.max(0, RIGHT - x(spec.warmEdgeF))}
+            height={BAR_H}
+            fill={ALARM}
+            opacity={0.12}
+          />
         ) : null}
 
         {spec.activeF ? (
@@ -236,7 +254,14 @@ export function ThermalBandPlate({
         {ticks.map((t) => (
           <g key={t}>
             <line x1={x(t)} y1={AXIS_Y} x2={x(t)} y2={AXIS_Y + 6} stroke={MUTED} strokeWidth={1} />
-            <text x={x(t)} y={AXIS_Y + 19} textAnchor="middle" fontSize={9.5} fill={MUTED} fontFamily={MONO}>
+            <text
+              x={x(t)}
+              y={AXIS_Y + 19}
+              textAnchor="middle"
+              fontSize={9.5}
+              fill={MUTED}
+              fontFamily={MONO}
+            >
               {t}
             </text>
           </g>
@@ -261,8 +286,22 @@ export function ThermalBandPlate({
             {observed.map((v, i) =>
               i === 1 && observed[0] === observed[1] ? null : (
                 <g key={i}>
-                  <line x1={x(v)} y1={AXIS_Y - BAR_H - 22} x2={x(v)} y2={AXIS_Y} stroke={BRASS} strokeWidth={2.2} />
-                  <circle cx={x(v)} cy={AXIS_Y - BAR_H - 22} r={5} fill={BRASS} stroke={PAPER} strokeWidth={1.3} />
+                  <line
+                    x1={x(v)}
+                    y1={AXIS_Y - BAR_H - 22}
+                    x2={x(v)}
+                    y2={AXIS_Y}
+                    stroke={BRASS}
+                    strokeWidth={2.2}
+                  />
+                  <circle
+                    cx={x(v)}
+                    cy={AXIS_Y - BAR_H - 22}
+                    r={5}
+                    fill={BRASS}
+                    stroke={PAPER}
+                    strokeWidth={1.3}
+                  />
                 </g>
               ),
             )}

@@ -22,9 +22,7 @@ if (typeof document !== "undefined") {
       if (queued.has(key)) return;
       queued.add(key);
       (trigger as HTMLElement).setAttribute("aria-busy", "true");
-      document
-        .querySelector(`[data-queue-notice="${CSS.escape(key)}"]`)
-        ?.removeAttribute("hidden");
+      document.querySelector(`[data-queue-notice="${CSS.escape(key)}"]`)?.removeAttribute("hidden");
     },
     { capture: true },
   );

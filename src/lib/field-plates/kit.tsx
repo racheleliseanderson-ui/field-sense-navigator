@@ -49,7 +49,8 @@ export const DEEP = "var(--hthp-deep, var(--abyss, rgba(128,150,170,0.14)))";
 export const LAND = "var(--hthp-land, var(--hull, rgba(128,128,128,0.16)))";
 export const FOAM = "var(--hthp-foam, var(--foam, rgba(255,255,255,0.72)))";
 export const PAPER = "var(--hthp-paper, var(--background, #ffffff))";
-export const MONO = "var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace))";
+export const MONO =
+  "var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace))";
 export const SANS = "var(--hthp-sans, var(--font-sans, ui-sans-serif, system-ui, sans-serif))";
 
 /** Warnings and confirmations, so a failed link reads the same in every app. */
@@ -133,13 +134,7 @@ export function usePlateDepth(): PlateDepth {
 const DEPTH_RANK: Record<PlateDepth, number> = { plain: 0, working: 1, inspect: 2 };
 
 /** Show `children` only once the reader has asked for at least `atLeast`. */
-export function AtDepth({
-  atLeast,
-  children,
-}: {
-  atLeast: PlateDepth;
-  children: ReactNode;
-}) {
+export function AtDepth({ atLeast, children }: { atLeast: PlateDepth; children: ReactNode }) {
   const depth = usePlateDepth();
   if (DEPTH_RANK[depth] < DEPTH_RANK[atLeast]) return null;
   return <>{children}</>;
@@ -287,7 +282,12 @@ export function Canvas({
       role="img"
       aria-label={label}
       preserveAspectRatio="xMidYMid meet"
-      style={{ width: "100%", minWidth: min ? `${min}px` : undefined, height: "auto", display: "block" }}
+      style={{
+        width: "100%",
+        minWidth: min ? `${min}px` : undefined,
+        height: "auto",
+        display: "block",
+      }}
     >
       {children}
     </svg>
@@ -330,7 +330,13 @@ export function WaterField({
 export function BankHatch({ id }: { id: string }) {
   return (
     <defs>
-      <pattern id={id} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <pattern
+        id={id}
+        width="8"
+        height="8"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(45)"
+      >
         <rect width="8" height="8" fill={LAND} />
         <line x1="0" y1="0" x2="0" y2="8" stroke={MUTED} strokeWidth="1.4" opacity="0.5" />
       </pattern>
@@ -534,7 +540,12 @@ export function Structure({
   if (kind === "rock") {
     return (
       <g transform={`translate(${x},${y}) scale(${scale})`}>
-        <path d="M0,0 L14,-8 L28,-3 L34,8 L20,15 L4,12 Z" fill={LAND} stroke={MUTED} strokeWidth={1.3} />
+        <path
+          d="M0,0 L14,-8 L28,-3 L34,8 L20,15 L4,12 Z"
+          fill={LAND}
+          stroke={MUTED}
+          strokeWidth={1.3}
+        />
       </g>
     );
   }
@@ -743,7 +754,15 @@ export function Callout({
   const c = toneColor(tone);
   return (
     <g>
-      <line x1={at[0]} y1={at[1]} x2={to[0]} y2={to[1]} stroke={c} strokeWidth={1.2} opacity={0.75} />
+      <line
+        x1={at[0]}
+        y1={at[1]}
+        x2={to[0]}
+        y2={to[1]}
+        stroke={c}
+        strokeWidth={1.2}
+        opacity={0.75}
+      />
       <circle cx={to[0]} cy={to[1]} r={10} fill={c} stroke={PAPER} strokeWidth={1.4} />
       <text
         x={to[0]}
@@ -880,7 +899,9 @@ export function DepthColumn({
         const ry = y + i * rowH;
         return (
           <g key={row.id}>
-            {on ? <rect x={x} y={ry} width={w} height={rowH} fill={BRASS} fillOpacity={0.22} /> : null}
+            {on ? (
+              <rect x={x} y={ry} width={w} height={rowH} fill={BRASS} fillOpacity={0.22} />
+            ) : null}
             <line x1={x} y1={ry} x2={x + w} y2={ry} stroke={PANEL} strokeWidth={0.75} />
             {labels ? (
               <text

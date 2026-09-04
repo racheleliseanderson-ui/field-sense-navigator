@@ -1,6 +1,16 @@
 import { jsPDF } from "jspdf";
 
-import { placeOf, catalogTags, datedWindows, displayName, humanize, reviewOverdue, tagLabel, windowSpan, type Destination } from "@/lib/catalog";
+import {
+  placeOf,
+  catalogTags,
+  datedWindows,
+  displayName,
+  humanize,
+  reviewOverdue,
+  tagLabel,
+  windowSpan,
+  type Destination,
+} from "@/lib/catalog";
 import {
   CHECK_GROUPS,
   DEFAULT_CONSTRAINTS,
@@ -84,7 +94,13 @@ function tick(ctx: Ctx, label: string) {
 function paragraph(
   ctx: Ctx,
   text: string,
-  opts: { size?: number; style?: "normal" | "bold"; color?: [number, number, number]; indent?: number; lead?: number } = {},
+  opts: {
+    size?: number;
+    style?: "normal" | "bold";
+    color?: [number, number, number];
+    indent?: number;
+    lead?: number;
+  } = {},
 ) {
   const size = opts.size ?? 9.5;
   const lead = opts.lead ?? size * 1.42;
@@ -125,12 +141,7 @@ function checkbox(ctx: Ctx, text: string, source: string) {
   ctx.y += 13;
 }
 
-function record(
-  ctx: Ctx,
-  d: Destination,
-  job: JobId | null,
-  level: ReadLevel = "working",
-) {
+function record(ctx: Ctx, d: Destination, job: JobId | null, level: ReadLevel = "working") {
   const r = readiness(d);
   const layers = buildLayers(d);
   const t = readTags(d);
@@ -164,11 +175,10 @@ function record(
     doc.text(line, M, ctx.y);
     ctx.y += 21;
   }
-  paragraph(
-    ctx,
-    `${placeOf(d)}${d.county ? ` · ${d.county} County` : ""} · ${d.waterType}`,
-    { size: 9, color: MUTED },
-  );
+  paragraph(ctx, `${placeOf(d)}${d.county ? ` · ${d.county} County` : ""} · ${d.waterType}`, {
+    size: 9,
+    color: MUTED,
+  });
 
   const overdue = reviewOverdue(d);
   if (overdue) {
@@ -252,11 +262,7 @@ function record(
     for (const s of access.sites) {
       need(ctx, 26);
       const status =
-        s.open === false
-          ? " — DOCUMENTED CLOSED"
-          : s.statusLabel
-            ? ` — ${s.statusLabel}`
-            : "";
+        s.open === false ? " — DOCUMENTED CLOSED" : s.statusLabel ? ` — ${s.statusLabel}` : "";
       paragraph(ctx, `${s.name} (${s.typeLabel})${status}`, { size: 9 });
       if (s.amenities.length) {
         paragraph(ctx, s.amenities.join(" · "), {
@@ -326,11 +332,9 @@ function record(
       );
     } else {
       for (const w of dated) {
-        paragraph(
-          ctx,
-          `${windowSpan(w) ?? ""}  ${w.label}${w.notes ? ` — ${w.notes}` : ""}`,
-          { size: 9 },
-        );
+        paragraph(ctx, `${windowSpan(w) ?? ""}  ${w.label}${w.notes ? ` — ${w.notes}` : ""}`, {
+          size: 9,
+        });
       }
     }
   }
@@ -368,7 +372,10 @@ function record(
 }
 
 function fileSafe(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export function downloadPacketPdf(

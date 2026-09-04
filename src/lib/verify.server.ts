@@ -40,8 +40,7 @@ export async function verifySource(url: string): Promise<SourceVerification> {
         headers: {
           // Several agency hosts reject unfamiliar agents outright; a browser
           // string only affects whether we get an answer, never what we report.
-          "user-agent":
-            "Mozilla/5.0 (compatible; HoneyHoleIntelligence/0.4; source verification)",
+          "user-agent": "Mozilla/5.0 (compatible; HoneyHoleIntelligence/0.4; source verification)",
           accept: "text/html,application/xhtml+xml",
         },
       });

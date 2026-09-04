@@ -57,14 +57,9 @@ export function ConfidenceBar({ value }: { value: number }) {
   return (
     <div className="flex items-center gap-3">
       <div className="relative h-[3px] w-full bg-border/60">
-        <div
-          className="absolute inset-y-0 left-0 bg-primary"
-          style={{ width: `${value}%` }}
-        />
+        <div className="absolute inset-y-0 left-0 bg-primary" style={{ width: `${value}%` }} />
       </div>
-      <span className="data shrink-0 text-[0.7rem] text-muted-foreground">
-        {value}%
-      </span>
+      <span className="data shrink-0 text-[0.7rem] text-muted-foreground">{value}%</span>
     </div>
   );
 }
@@ -109,10 +104,7 @@ export function ReadinessMeter({
       {!compact && (
         <dl className="mt-6 space-y-4">
           {parts.map((p) => (
-            <div
-              key={p.label}
-              className="grid grid-cols-[1fr_auto] items-baseline gap-x-4"
-            >
+            <div key={p.label} className="grid grid-cols-[1fr_auto] items-baseline gap-x-4">
               {/* A description list may only hold dt/dd pairs, so the bar and
                   the note live inside a second dd rather than as loose siblings. */}
               <dt className="text-sm text-foreground">{p.label}</dt>
@@ -127,9 +119,7 @@ export function ReadinessMeter({
                     style={{ width: `${(p.value / p.max) * 100}%` }}
                   />
                 </div>
-                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                  {p.note}
-                </p>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{p.note}</p>
               </dd>
             </div>
           ))}
@@ -203,9 +193,7 @@ export function LayerPanel({
               {layer.signals.map((s, i) => (
                 <li key={i} className="border-l border-brass/50 pl-3">
                   <p className="tick text-[0.55rem] text-brass">{s.label}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-foreground">
-                    {s.detail}
-                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-foreground">{s.detail}</p>
                 </li>
               ))}
             </ul>
@@ -214,10 +202,7 @@ export function LayerPanel({
             <p className="tick">What this read cannot tell you</p>
             <ul className="mt-3 space-y-2.5">
               {layer.unknowns.map((u, i) => (
-                <li
-                  key={i}
-                  className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
-                >
+                <li key={i} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
                   <span className="mt-2 h-px w-4 shrink-0 bg-border" />
                   {u}
                 </li>

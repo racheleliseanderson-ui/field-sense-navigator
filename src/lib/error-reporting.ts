@@ -57,8 +57,7 @@ export function reportClientError(error: unknown, context: ErrorContext = {}) {
   seen.add(key);
   sent += 1;
 
-  const boundary =
-    typeof context["boundary"] === "string" ? context["boundary"] : undefined;
+  const boundary = typeof context["boundary"] === "string" ? context["boundary"] : undefined;
   const vp = viewport();
 
   void reportError({

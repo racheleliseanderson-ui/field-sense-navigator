@@ -82,7 +82,9 @@ describe("crowd and seasonal tags", () => {
     }
   });
   test("ais fires on clean-drain-dry language", () => {
-    expect(readTags(withNotice("clean-drain-dry inspection at the ramp")).seasonal.has("ais")).toBe(true);
+    expect(readTags(withNotice("clean-drain-dry inspection at the ramp")).seasonal.has("ais")).toBe(
+      true,
+    );
   });
   test("a record with no prose carries no tags at all", () => {
     const t = readTags(water());

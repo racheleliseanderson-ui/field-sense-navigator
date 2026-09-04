@@ -48,4 +48,3 @@ export const bindingsFile = raw as BindingsFile;
 const byId = new Map(bindingsFile.records.map((r) => [r.destinationId, r]));
 
 export const bindingFor = (id: string) => byId.get(id);
-

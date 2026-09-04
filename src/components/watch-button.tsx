@@ -51,7 +51,9 @@ export function WatchButton({
       aria-pressed={on}
       aria-label={on ? `Remove ${name} from watchlist` : `Add ${name} to watchlist`}
       className={`tap grid h-11 w-11 shrink-0 place-items-center border border-hairline transition-colors ${
-        on ? "border-brass/60 bg-selected text-selected-foreground" : "text-muted-foreground hover:text-brass"
+        on
+          ? "border-brass/60 bg-selected text-selected-foreground"
+          : "text-muted-foreground hover:text-brass"
       } ${className}`}
     >
       {on ? (

@@ -128,23 +128,56 @@ function row(d: Destination) {
 type Row = ReturnType<typeof row>;
 
 const COLUMNS: Array<[keyof Row, string]> = [
-  ["id", "text"], ["waterbody", "text"], ["access_site", "text"], ["display_name", "text"],
-  ["state", "text"], ["region", "text"], ["county", "text"], ["jurisdiction", "text"],
-  ["water_type", "text"], ["status", "text"], ["official_source_url", "text"],
-  ["official_regs_url", "text"], ["managing_agency", "text"], ["checked_at", "date"],
-  ["next_review_at", "date"], ["regs_reviewed_date", "date"], ["access_reviewed_date", "date"],
-  ["last_verified", "date"], ["last_human_reviewed_at", "date"], ["last_human_reviewed_by", "text"],
-  ["review_overdue", "boolean"], ["species_context", "text[]"], ["tags", "text[]"],
-  ["current_notices", "text[]"], ["direct_verification", "text[]"],
-  ["unresolved_questions", "text[]"], ["season_windows", "jsonb"], ["public_access", "jsonb"],
-  ["related", "jsonb"], ["provenance_notes", "text"], ["confidence_notes", "text"],
-  ["usgs_site_id", "text"], ["noaa_coops_station_id", "text"], ["ndbc_buoy_id", "text"],
-  ["readiness_score", "smallint"], ["readiness_band", "text"], ["readiness_grade", "text"],
-  ["hazard_tags", "text[]"], ["crowd_tags", "text[]"], ["seasonal_tags", "text[]"],
-  ["access_kinds", "text[]"], ["logistics", "text[]"], ["named_sites", "integer"],
-  ["dated_closures", "integer"], ["has_open_launch", "boolean"], ["has_shore_access", "boolean"],
-  ["has_hand_launch", "boolean"], ["directory_only", "boolean"],
-  ["water_class_headline", "text"], ["published", "boolean"],
+  ["id", "text"],
+  ["waterbody", "text"],
+  ["access_site", "text"],
+  ["display_name", "text"],
+  ["state", "text"],
+  ["region", "text"],
+  ["county", "text"],
+  ["jurisdiction", "text"],
+  ["water_type", "text"],
+  ["status", "text"],
+  ["official_source_url", "text"],
+  ["official_regs_url", "text"],
+  ["managing_agency", "text"],
+  ["checked_at", "date"],
+  ["next_review_at", "date"],
+  ["regs_reviewed_date", "date"],
+  ["access_reviewed_date", "date"],
+  ["last_verified", "date"],
+  ["last_human_reviewed_at", "date"],
+  ["last_human_reviewed_by", "text"],
+  ["review_overdue", "boolean"],
+  ["species_context", "text[]"],
+  ["tags", "text[]"],
+  ["current_notices", "text[]"],
+  ["direct_verification", "text[]"],
+  ["unresolved_questions", "text[]"],
+  ["season_windows", "jsonb"],
+  ["public_access", "jsonb"],
+  ["related", "jsonb"],
+  ["provenance_notes", "text"],
+  ["confidence_notes", "text"],
+  ["usgs_site_id", "text"],
+  ["noaa_coops_station_id", "text"],
+  ["ndbc_buoy_id", "text"],
+  ["readiness_score", "smallint"],
+  ["readiness_band", "text"],
+  ["readiness_grade", "text"],
+  ["hazard_tags", "text[]"],
+  ["crowd_tags", "text[]"],
+  ["seasonal_tags", "text[]"],
+  ["access_kinds", "text[]"],
+  ["logistics", "text[]"],
+  ["named_sites", "integer"],
+  ["dated_closures", "integer"],
+  ["has_open_launch", "boolean"],
+  ["has_shore_access", "boolean"],
+  ["has_hand_launch", "boolean"],
+  ["directory_only", "boolean"],
+  ["water_class_headline", "text"],
+  ["published", "boolean"],
 ];
 
 const commit = (() => {
@@ -161,17 +194,22 @@ const rows = destinations.map(row);
 /* ---------------- offline path: emit SQL ---------------- */
 
 const LONG_FORM: Array<keyof Row> = [
-  "current_notices", "direct_verification", "public_access", "related",
-  "unresolved_questions", "season_windows", "provenance_notes", "confidence_notes",
+  "current_notices",
+  "direct_verification",
+  "public_access",
+  "related",
+  "unresolved_questions",
+  "season_windows",
+  "provenance_notes",
+  "confidence_notes",
 ];
 
 function emitSql(dir: string) {
-  const cols = seedOnly
-    ? COLUMNS.filter(([c]) => !LONG_FORM.includes(c))
-    : COLUMNS;
+  const cols = seedOnly ? COLUMNS.filter(([c]) => !LONG_FORM.includes(c)) : COLUMNS;
   const colList = cols.map(([c]) => c).join(", ");
   const recordDef = cols.map(([c, t]) => `${c} ${t}`).join(", ");
-  const updates = cols.filter(([c]) => c !== "id")
+  const updates = cols
+    .filter(([c]) => c !== "id")
     .map(([c]) => `${c} = excluded.${c}`)
     .join(", ");
   const pick = (r: Row) => {
@@ -233,7 +271,9 @@ function emitSql(dir: string) {
 
   mkdirSync(dir, { recursive: true });
   for (const [name, body] of files) writeFileSync(`${dir}/${name}`, body + "\n", "utf8");
-  console.log(`wrote ${files.length} files to ${dir} (${rows.length} records, commit ${commit.slice(0, 7)})`);
+  console.log(
+    `wrote ${files.length} files to ${dir} (${rows.length} records, commit ${commit.slice(0, 7)})`,
+  );
 }
 
 /* ---------------- online path: PostgREST ---------------- */
@@ -307,7 +347,9 @@ async function publish(url: string, key: string) {
     "mark current",
   );
 
-  console.log(`published ${rows.length} records · commit ${commit.slice(0, 7)} · version ${versionId}`);
+  console.log(
+    `published ${rows.length} records · commit ${commit.slice(0, 7)} · version ${versionId}`,
+  );
 }
 
 /* ---------------- run ---------------- */
@@ -317,7 +359,8 @@ const summary = {
   jurisdictions: new Set(rows.map((r) => r.state)).size,
   overdue: rows.filter((r) => r.review_overdue).length,
   withoutAgency: rows.filter((r) => !r.managing_agency).length,
-  unbound: rows.filter((r) => !r.usgs_site_id && !r.noaa_coops_station_id && !r.ndbc_buoy_id).length,
+  unbound: rows.filter((r) => !r.usgs_site_id && !r.noaa_coops_station_id && !r.ndbc_buoy_id)
+    .length,
   meanReadiness: Math.round(rows.reduce((n, r) => n + r.readiness_score, 0) / rows.length),
 };
 console.log(`catalog ${SCHEMA_VERSION} @ ${commit.slice(0, 7)}:`, JSON.stringify(summary));

@@ -41,7 +41,9 @@ describe("logistics facets", () => {
     const d = water({
       // logisticsIdsFor memoizes by record id, so each fixture needs its own.
       id: "HHI-DEST-TEST-AMENITIES",
-      publicAccess: [{ name: "North Ramp", type: "boat_launch", amenities: ["restroom", "parking"] }],
+      publicAccess: [
+        { name: "North Ramp", type: "boat_launch", amenities: ["restroom", "parking"] },
+      ],
     });
     const ids = logisticsIdsFor(d);
     expect(ids.size).toBeGreaterThan(0);

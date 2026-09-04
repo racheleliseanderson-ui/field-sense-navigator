@@ -1,6 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Columns3 } from "lucide-react";
-import { placeDotted, displayName, daysSince, humanize, reviewOverdue, catalogTags, tagLabel, datedWindows, type Destination } from "@/lib/catalog";
+import {
+  placeDotted,
+  displayName,
+  daysSince,
+  humanize,
+  reviewOverdue,
+  catalogTags,
+  tagLabel,
+  datedWindows,
+  type Destination,
+} from "@/lib/catalog";
 import { readTags, readiness, type Fit } from "@/lib/intelligence";
 import { GradeChip } from "@/components/instrument";
 import { WatchButton } from "@/components/watch-button";
@@ -22,7 +32,9 @@ function CompareButton({ id, name }: { id: string; name: string }) {
       disabled={!on && full}
       aria-label={on ? `Remove ${name} from the comparison` : `Add ${name} to the comparison`}
       className={`tap grid h-11 w-11 shrink-0 place-items-center border border-hairline bg-card/80 backdrop-blur transition-colors disabled:opacity-40 ${
-        on ? "border-brass/60 bg-selected text-selected-foreground" : "text-muted-foreground hover:text-brass"
+        on
+          ? "border-brass/60 bg-selected text-selected-foreground"
+          : "text-muted-foreground hover:text-brass"
       }`}
     >
       <Columns3 className="h-4 w-4" aria-hidden="true" />
@@ -31,9 +43,7 @@ function CompareButton({ id, name }: { id: string; name: string }) {
 }
 
 function TypeMark({ type }: { type: string }) {
-  return (
-    <span className="tick text-[0.55rem] text-brass">{type}</span>
-  );
+  return <span className="tick text-[0.55rem] text-brass">{type}</span>;
 }
 
 export function WaterCard({
@@ -84,144 +94,141 @@ export function WaterCard({
           className="bg-card/80 backdrop-blur"
         />
       </div>
-    <Link
-      to="/water/$id"
-      params={{ id: destination.id }}
-      className={`panel lift group relative block overflow-hidden ${art ? "pt-0" : ""} p-6`}
-    >
-      {art && (
-        <div aria-hidden="true" className="relative -mx-6 mb-5 h-36 overflow-hidden sm:h-40">
-          <img
-            src={plate.src}
-            srcSet={plate.srcSet}
-            sizes={CARD}
-            alt=""
-            width={2400}
-            height={1355}
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-            className="image-treated h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
-            style={{ objectPosition: plate.position }}
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-card via-card/35 to-transparent" />
-          <div className="grain absolute inset-0" />
-        </div>
-      )}
-      <div className="flex items-start justify-between gap-4 pr-[6.5rem]">
-        <div className="flex items-center gap-3">
-          {typeof rank === "number" && (
-            <span className="data text-xs text-brass">
-              {String(rank).padStart(2, "0")}
-            </span>
-          )}
-          <TypeMark type={destination.waterType} />
-        </div>
-        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brass" />
-      </div>
-
-      <Heading className="mt-4 font-display text-xl font-bold leading-tight tracking-tight text-foreground">
-        {displayName(destination)}
-      </Heading>
-      <p className="mt-1.5 text-sm text-muted-foreground">
-        {placeDotted(destination)}
-      </p>
-
-      <div className="mt-5 flex items-center gap-3">
-        <span className="data text-2xl font-semibold text-foreground">
-          {fit ? fit.score : r.score}
-        </span>
-        <div className="flex-1">
-          <p className="tick text-[0.55rem]">
-            {fit ? "Job fit" : "Field readiness"}
-          </p>
-          <div className="mt-1.5 h-[2px] w-full bg-border/60">
-            <div
-              className="h-full bg-primary"
-              style={{ width: `${fit ? fit.score : r.score}%` }}
+      <Link
+        to="/water/$id"
+        params={{ id: destination.id }}
+        className={`panel lift group relative block overflow-hidden ${art ? "pt-0" : ""} p-6`}
+      >
+        {art && (
+          <div aria-hidden="true" className="relative -mx-6 mb-5 h-36 overflow-hidden sm:h-40">
+            <img
+              src={plate.src}
+              srcSet={plate.srcSet}
+              sizes={CARD}
+              alt=""
+              width={2400}
+              height={1355}
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+              className="image-treated h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+              style={{ objectPosition: plate.position }}
             />
+            <div className="absolute inset-0 bg-linear-to-t from-card via-card/35 to-transparent" />
+            <div className="grain absolute inset-0" />
           </div>
+        )}
+        <div className="flex items-start justify-between gap-4 pr-[6.5rem]">
+          <div className="flex items-center gap-3">
+            {typeof rank === "number" && (
+              <span className="data text-xs text-brass">{String(rank).padStart(2, "0")}</span>
+            )}
+            <TypeMark type={destination.waterType} />
+          </div>
+          <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brass" />
         </div>
-        <GradeChip grade={r.grade} label={r.band} />
-      </div>
 
-      {overdue && (
-        <p className="mt-3 text-xs font-medium leading-relaxed text-alert">
-          Review overdue — this record is past {destination.nextReviewAt}. Treat it as don't-go until the official source has been read again.
-        </p>
-      )}
+        <Heading className="mt-4 font-display text-xl font-bold leading-tight tracking-tight text-foreground">
+          {displayName(destination)}
+        </Heading>
+        <p className="mt-1.5 text-sm text-muted-foreground">{placeDotted(destination)}</p>
 
-      {fit && (fit.reasons.length > 0 || fit.cautions.length > 0) && (
-        <ul className="mt-4 space-y-1.5">
-          {fit.reasons.slice(0, 2).map((x, i) => (
-            <li key={`r${i}`} className="flex gap-2 text-xs leading-relaxed text-foreground/85">
-              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-clear" />
-              {x}
-            </li>
-          ))}
-          {fit.cautions.slice(0, 2).map((x, i) => (
-            <li key={`c${i}`} className="flex gap-2 text-xs leading-relaxed text-muted-foreground">
-              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-watch" />
-              {x}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {!fit && matched && matched.length > 0 && (
-        <p className="mt-4 text-xs leading-relaxed text-brass">
-          <span className="tick text-[0.5rem] text-brass/80">Matched</span>{" "}
-          {matched.join(" · ")}
-        </p>
-      )}
-
-      {!fit && destination.currentNotices[0] && (
-        <p className="mt-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-          {destination.currentNotices[0]}
-        </p>
-      )}
-
-      {/* Five readouts at instrument width; three on a phone, where five
-          uppercase labels cannot fit without pushing the card off-screen. */}
-      <dl className="rule-top mt-5 grid grid-cols-3 gap-x-3 gap-y-3 pt-4 sm:grid-cols-5 sm:gap-1">
-        {readCounts.map((l) => (
-          <div key={l.k} className="min-w-0">
-            <dt className="tick truncate text-[0.5rem]">{l.k}</dt>
-            <dd className="data mt-1 text-sm text-foreground/90">{l.v}</dd>
+        <div className="mt-5 flex items-center gap-3">
+          <span className="data text-2xl font-semibold text-foreground">
+            {fit ? fit.score : r.score}
+          </span>
+          <div className="flex-1">
+            <p className="tick text-[0.55rem]">{fit ? "Job fit" : "Field readiness"}</p>
+            <div className="mt-1.5 h-[2px] w-full bg-border/60">
+              <div
+                className="h-full bg-primary"
+                style={{ width: `${fit ? fit.score : r.score}%` }}
+              />
+            </div>
           </div>
-        ))}
-      </dl>
+          <GradeChip grade={r.grade} label={r.band} />
+        </div>
 
-      <p className="mt-3 text-[0.65rem] text-muted-foreground">
-        {humanize(destination.status)}
-        {" · "}
-        Last source check: {age === 0 ? "today" : `${age}d ago`}
-        {" · "}
-        {dated.length
-          ? `${dated.length} dated closure${dated.length === 1 ? "" : "s"}`
-          : "no dated closure published"}
-      </p>
-      {destination.managingAgency && (
-        <p className="mt-1 truncate text-[0.65rem] text-muted-foreground/90">
-          {destination.managingAgency}
-        </p>
-      )}
-      {catalogTags(destination).length > 0 && (
-        <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Catalog tags">
-          {catalogTags(destination)
-            .filter((t) => t !== destination.waterType)
-            .slice(0, 4)
-            .map((t) => (
-              <li
-                key={t}
-                className="border border-hairline bg-background/60 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-[0.08em] text-muted-foreground"
-              >
-                {tagLabel(t)}
+        {overdue && (
+          <p className="mt-3 text-xs font-medium leading-relaxed text-alert">
+            Review overdue — this record is past {destination.nextReviewAt}. Treat it as don't-go
+            until the official source has been read again.
+          </p>
+        )}
+
+        {fit && (fit.reasons.length > 0 || fit.cautions.length > 0) && (
+          <ul className="mt-4 space-y-1.5">
+            {fit.reasons.slice(0, 2).map((x, i) => (
+              <li key={`r${i}`} className="flex gap-2 text-xs leading-relaxed text-foreground/85">
+                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-clear" />
+                {x}
               </li>
             ))}
-        </ul>
-      )}
-    </Link>
+            {fit.cautions.slice(0, 2).map((x, i) => (
+              <li
+                key={`c${i}`}
+                className="flex gap-2 text-xs leading-relaxed text-muted-foreground"
+              >
+                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-watch" />
+                {x}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {!fit && matched && matched.length > 0 && (
+          <p className="mt-4 text-xs leading-relaxed text-brass">
+            <span className="tick text-[0.5rem] text-brass/80">Matched</span> {matched.join(" · ")}
+          </p>
+        )}
+
+        {!fit && destination.currentNotices[0] && (
+          <p className="mt-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+            {destination.currentNotices[0]}
+          </p>
+        )}
+
+        {/* Five readouts at instrument width; three on a phone, where five
+          uppercase labels cannot fit without pushing the card off-screen. */}
+        <dl className="rule-top mt-5 grid grid-cols-3 gap-x-3 gap-y-3 pt-4 sm:grid-cols-5 sm:gap-1">
+          {readCounts.map((l) => (
+            <div key={l.k} className="min-w-0">
+              <dt className="tick truncate text-[0.5rem]">{l.k}</dt>
+              <dd className="data mt-1 text-sm text-foreground/90">{l.v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <p className="mt-3 text-[0.65rem] text-muted-foreground">
+          {humanize(destination.status)}
+          {" · "}
+          Last source check: {age === 0 ? "today" : `${age}d ago`}
+          {" · "}
+          {dated.length
+            ? `${dated.length} dated closure${dated.length === 1 ? "" : "s"}`
+            : "no dated closure published"}
+        </p>
+        {destination.managingAgency && (
+          <p className="mt-1 truncate text-[0.65rem] text-muted-foreground/90">
+            {destination.managingAgency}
+          </p>
+        )}
+        {catalogTags(destination).length > 0 && (
+          <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Catalog tags">
+            {catalogTags(destination)
+              .filter((t) => t !== destination.waterType)
+              .slice(0, 4)
+              .map((t) => (
+                <li
+                  key={t}
+                  className="border border-hairline bg-background/60 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-[0.08em] text-muted-foreground"
+                >
+                  {tagLabel(t)}
+                </li>
+              ))}
+          </ul>
+        )}
+      </Link>
     </div>
   );
 }
@@ -231,14 +238,10 @@ export function BlockedCard({ fit }: { fit: Fit }) {
   return (
     <div className="border border-alert/30 bg-card/50 p-5">
       <div className="flex items-center justify-between gap-3">
-        <p className="font-display text-base font-bold text-foreground">
-          {displayName(d)}
-        </p>
+        <p className="font-display text-base font-bold text-foreground">{displayName(d)}</p>
         <GradeChip grade="restricted" label="Set aside" />
       </div>
-      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-        {fit.blocked}
-      </p>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{fit.blocked}</p>
       <Link
         to="/water/$id"
         params={{ id: d.id }}

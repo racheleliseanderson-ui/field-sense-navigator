@@ -29,8 +29,7 @@ function warnOnce(message: string) {
 
 function config(): { url: string; key: string } | null {
   const url = process.env["SUPABASE_URL"];
-  const key =
-    process.env["SUPABASE_PUBLISHABLE_KEY"] ?? process.env["SUPABASE_ANON_KEY"];
+  const key = process.env["SUPABASE_PUBLISHABLE_KEY"] ?? process.env["SUPABASE_ANON_KEY"];
   if (!url || !key) {
     warnOnce("SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY are not set");
     return null;
