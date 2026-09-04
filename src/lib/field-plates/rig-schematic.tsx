@@ -108,6 +108,28 @@ export function RigSchematicPlate({
       testid={testid}
       aside={aside}
       unknown={unknown}
+      inputs={[
+        { label: "Drawn length", value: `${spec.totalLength}${spec.unit}`, source: "stated" },
+        { label: "Components placed", value: String(parts.length), source: "stated" },
+        {
+          label: "Surface at",
+          value: typeof spec.surfaceAt === "number" ? `${spec.surfaceAt}${spec.unit}` : "not drawn",
+          source: typeof spec.surfaceAt === "number" ? "stated" : "assumed",
+        },
+        {
+          label: "Bottom at",
+          value: typeof spec.bottomAt === "number" ? `${spec.bottomAt}${spec.unit}` : "not drawn",
+          source: typeof spec.bottomAt === "number" ? "stated" : "assumed",
+        },
+        {
+          label: "Spacing between components",
+          value: "drawn to scale from the stated positions",
+        },
+        {
+          label: "Flagged for failure",
+          value: risky.length ? risky.map((p) => p.label).join(", ") : "none flagged",
+        },
+      ]}
       legend={
         <>
           {parts.map((p, i) => (

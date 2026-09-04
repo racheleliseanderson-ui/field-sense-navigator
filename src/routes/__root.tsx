@@ -15,6 +15,7 @@ import { SupportLink } from "../components/support-link";
 import { DisplayControl } from "../components/display-control";
 import { reportClientError } from "../lib/error-reporting";
 import { ThemeProvider, themeBootstrapScript } from "../lib/theme";
+import { PlateDepthProvider } from "../lib/field-plates";
 import { OfflineBanner, ServiceWorkerRegistrar } from "@/components/offline";
 
 /** Every dead end offers the same three ways back into the instrument. */
@@ -201,8 +202,12 @@ function RootComponent() {
           {/* The craft survives a lost signal; the readings deliberately do not. */}
           <ServiceWorkerRegistrar />
           <OfflineBanner />
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
+          {/* How much every drawing explains about itself. Above the pages
+              so two plates on one screen can never disagree about it. */}
+          <PlateDepthProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </PlateDepthProvider>
           {/* The instrument's ONE appearance and accessibility control. */}
           <DisplayControl />
         </FieldModeProvider>

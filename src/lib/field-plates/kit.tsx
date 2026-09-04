@@ -118,28 +118,153 @@ export function useWidePlate(): boolean {
  */
 export type PlateDepth = "plain" | "working" | "inspect";
 
-const DepthContext = createContext<PlateDepth>("working");
+export const PLATE_DEPTHS: { id: PlateDepth; label: string; blurb: string }[] = [
+  {
+    id: "plain",
+    label: "Plain",
+    blurb: "The drawing and what it says. Nothing else on the screen.",
+  },
+  {
+    id: "working",
+    label: "Working",
+    blurb: "Adds what the drawing gave up to say it, and what it could not show.",
+  },
+  {
+    id: "inspect",
+    label: "Inspect",
+    blurb: "Adds the numbers it was drawn from, so you can disagree with them.",
+  },
+];
 
+/** Per device, per app. A reading habit, not an account setting. */
+export const DEPTH_KEY = "hth.plate-depth.v1";
+
+function readStoredDepth(): PlateDepth | null {
+  try {
+    const raw = window.localStorage.getItem(DEPTH_KEY);
+    return raw === "plain" || raw === "working" || raw === "inspect" ? raw : null;
+  } catch {
+    /* Private mode, or storage switched off. The default still works. */
+    return null;
+  }
+}
+
+type DepthState = { depth: PlateDepth; set: (next: PlateDepth) => void; managed: boolean };
+
+const DepthContext = createContext<DepthState>({
+  depth: "working",
+  set: () => {},
+  managed: false,
+});
+
+/**
+ * Holds the reading depth for everything under it, and remembers it.
+ *
+ * `depth` may be passed to pin it — a printed sheet or a fixture wants one
+ * fixed depth and no control. Left off, the provider owns the setting and
+ * persists it, which is the normal case.
+ *
+ * The stored value is read after mount rather than during render: this fleet
+ * server-renders, and reading storage during render is how a page ends up
+ * hydrating into different HTML than it shipped.
+ */
 export function PlateDepthProvider({
   depth,
   children,
 }: {
-  depth: PlateDepth;
+  depth?: PlateDepth | undefined;
   children: ReactNode;
 }) {
-  return <DepthContext.Provider value={depth}>{children}</DepthContext.Provider>;
+  const [own, setOwn] = useState<PlateDepth>("working");
+
+  useEffect(() => {
+    if (depth) return;
+    const stored = readStoredDepth();
+    if (stored) setOwn(stored);
+    /* Two tabs of the same instrument should not disagree about this. */
+    const sync = (e: StorageEvent) => {
+      if (e.key !== DEPTH_KEY) return;
+      const next = readStoredDepth();
+      if (next) setOwn(next);
+    };
+    window.addEventListener("storage", sync);
+    return () => window.removeEventListener("storage", sync);
+  }, [depth]);
+
+  const value = useMemo<DepthState>(
+    () => ({
+      depth: depth ?? own,
+      managed: !depth,
+      set: (next: PlateDepth) => {
+        setOwn(next);
+        try {
+          window.localStorage.setItem(DEPTH_KEY, next);
+        } catch {
+          /* It still applies for this visit. */
+        }
+      },
+    }),
+    [depth, own],
+  );
+
+  return <DepthContext.Provider value={value}>{children}</DepthContext.Provider>;
 }
 
 export function usePlateDepth(): PlateDepth {
-  return useContext(DepthContext);
+  return useContext(DepthContext).depth;
+}
+
+/**
+ * The control. Renders nothing at all when no provider owns the setting, so
+ * an app that pins a depth cannot show a switch that does not work.
+ *
+ * Named after what the plate does rather than after the reader: "Beginner"
+ * is a rank, and a rank sorts people. Somebody who has fished for thirty
+ * years still wants Plain when they are standing in the river.
+ */
+export function PlateDepthControl({ label = "Detail" }: { label?: string | undefined }) {
+  const state = useContext(DepthContext);
+  if (!state.managed) return null;
+  return (
+    <div className="hthp-depth no-print" data-testid="plate-depth">
+      <span className="hthp-depth__label">{label}</span>
+      <div className="hthp-depth__set" role="group" aria-label="How much each drawing explains">
+        {PLATE_DEPTHS.map((d) => (
+          <button
+            key={d.id}
+            type="button"
+            className="hthp-depth__btn"
+            aria-pressed={state.depth === d.id}
+            data-on={state.depth === d.id ? "yes" : undefined}
+            title={d.blurb}
+            onClick={() => state.set(d.id)}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 const DEPTH_RANK: Record<PlateDepth, number> = { plain: 0, working: 1, inspect: 2 };
 
+/**
+ * Whether a reader at `depth` has asked for something marked `atLeast`.
+ *
+ * The ordering is the whole contract: Plain never shows more than Working,
+ * Working never shows more than Inspect, and nothing is only visible in the
+ * middle. A plate that hid something at Inspect would be a plate that
+ * punishes curiosity.
+ */
+export function shownAtDepth(depth: PlateDepth, atLeast: PlateDepth): boolean {
+  return DEPTH_RANK[depth] >= DEPTH_RANK[atLeast];
+}
+
 /** Show `children` only once the reader has asked for at least `atLeast`. */
 export function AtDepth({ atLeast, children }: { atLeast: PlateDepth; children: ReactNode }) {
   const depth = usePlateDepth();
-  if (DEPTH_RANK[depth] < DEPTH_RANK[atLeast]) return null;
+  if (!shownAtDepth(depth, atLeast)) return null;
   return <>{children}</>;
 }
 
@@ -162,6 +287,7 @@ export function Plate({
   legend,
   aside,
   unknown,
+  inputs,
   testid,
   notesLabel = "What this plate is telling you",
   savable,
@@ -174,6 +300,11 @@ export function Plate({
   aside?: ReactNode | undefined;
   /** What the drawing could not show, and why it matters. Never hidden. */
   unknown?: ReactNode | undefined;
+  /**
+   * The numbers this drawing was built from, so a reader who doubts it can
+   * check the inputs rather than the conclusion. Shown at `inspect` only.
+   */
+  inputs?: PlateInput[] | undefined;
   testid?: string | undefined;
   notesLabel?: string | undefined;
   /** Set false on a plate that has no business being taken out of the app. */
@@ -197,21 +328,74 @@ export function Plate({
         {children}
       </div>
       {legend ? <div className="hthp-plate__legend">{legend}</div> : null}
+      {/*
+       * Never gated on depth. What a drawing could not show is the thing a
+       * reader is most likely to assume in its absence, and hiding it at
+       * `plain` would make the simplest reading the most confident one.
+       */}
       {unknown ? (
         <p className="hthp-plate__unknown" data-testid="plate-unknown">
           {unknown}
         </p>
       ) : null}
       {aside ? (
-        <details open={wide} className="hthp-plate__notes" data-testid="plate-notes">
-          <summary className="hthp-plate__summary">
-            {notesLabel}
-            <Chevron />
-          </summary>
-          <div className="hthp-plate__notesbody">{aside}</div>
-        </details>
+        <AtDepth atLeast="working">
+          <details open={wide} className="hthp-plate__notes" data-testid="plate-notes">
+            <summary className="hthp-plate__summary">
+              {notesLabel}
+              <Chevron />
+            </summary>
+            <div className="hthp-plate__notesbody">{aside}</div>
+          </details>
+        </AtDepth>
+      ) : null}
+      {inputs && inputs.length > 0 ? (
+        <AtDepth atLeast="inspect">
+          <PlateInputs rows={inputs} />
+        </AtDepth>
       ) : null}
     </figure>
+  );
+}
+
+/** One number the drawing was built from, and where it came from. */
+export type PlateInput = {
+  label: string;
+  value: string;
+  /**
+   * Where the value came from — `stated` is the reader's own, `assumed` is
+   * ours and is the line worth arguing with. Marked rather than hidden.
+   */
+  source?: "stated" | "assumed" | "measured" | undefined;
+};
+
+/**
+ * The inputs, at inspect depth.
+ *
+ * A drawing is an argument, and an argument you cannot inspect is a poster.
+ * Anything marked `assumed` is where this plate guessed on the reader's
+ * behalf, which is exactly the row somebody who disagrees needs to find.
+ */
+export function PlateInputs({ rows }: { rows: PlateInput[] }) {
+  return (
+    <div className="hthp-inputs" data-testid="plate-inputs">
+      <p className="hthp-eyebrow">What this was drawn from</p>
+      <dl className="hthp-inputs__list">
+        {rows.map((row) => (
+          <div key={row.label} className="hthp-inputs__row">
+            <dt className="hthp-inputs__key">{row.label}</dt>
+            <dd className="hthp-inputs__val">
+              {row.value}
+              {row.source === "assumed" ? (
+                <span className="hthp-inputs__flag" data-testid="plate-input-assumed">
+                  assumed
+                </span>
+              ) : null}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
 

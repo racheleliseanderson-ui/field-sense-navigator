@@ -233,6 +233,32 @@ export function PresentationPathPlate({
       testid={testid}
       aside={aside}
       unknown={unknown}
+      inputs={[
+        {
+          label: "Depth band",
+          value:
+            job.depth === "varies"
+              ? "varies — not fixed by this job"
+              : Array.isArray(job.depth)
+                ? job.depth.join(", ")
+                : String(job.depth),
+        },
+        { label: "Path", value: job.shape },
+        { label: "Speed", value: job.speed },
+        { label: "Pause", value: job.pause },
+        { label: "Contact", value: job.contact },
+        { label: "Strike window", value: job.strikeWindow },
+        {
+          label: "Current",
+          value: job.current ?? "none stated",
+          source: job.current ? "stated" : "assumed",
+        },
+        {
+          label: "Profile",
+          value: job.profile ?? "not declared",
+          source: job.profile ? "stated" : "assumed",
+        },
+      ]}
       legend={
         <>
           <LegendRow label="Depth" tone="accent">

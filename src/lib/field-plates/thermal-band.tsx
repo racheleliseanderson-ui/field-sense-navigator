@@ -120,6 +120,41 @@ export function ThermalBandPlate({
       caption={caption}
       testid={testid}
       aside={aside}
+      inputs={[
+        {
+          label: "Reading you have",
+          value:
+            spec.observedF == null
+              ? "none"
+              : Array.isArray(spec.observedF)
+                ? `${spec.observedF[0]}–${spec.observedF[1]}°F`
+                : `${spec.observedF}°F`,
+          source: spec.observedF == null ? "assumed" : "measured",
+        },
+        {
+          label: "Active range",
+          value: spec.activeF ? `${spec.activeF[0]}–${spec.activeF[1]}°F` : "none published",
+        },
+        {
+          label: "Preferred range",
+          value: spec.preferredF
+            ? `${spec.preferredF[0]}–${spec.preferredF[1]}°F`
+            : "none published",
+        },
+        {
+          label: "Cold edge",
+          value: typeof spec.coldEdgeF === "number" ? `${spec.coldEdgeF}°F` : "not published",
+        },
+        {
+          label: "Warm edge",
+          value: typeof spec.warmEdgeF === "number" ? `${spec.warmEdgeF}°F` : "not published",
+        },
+        {
+          label: "What the numbers describe",
+          value: spec.basis ?? "not stated by the source",
+          source: spec.basis ? "stated" : "assumed",
+        },
+      ]}
       unknown={
         hasBand
           ? undefined

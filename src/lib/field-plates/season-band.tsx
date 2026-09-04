@@ -130,6 +130,32 @@ export function SeasonBandPlate({
       testid={testid}
       aside={aside}
       unknown={spec.caveat ? <>{spec.caveat}</> : undefined}
+      inputs={[
+        { label: "Phases drawn", value: String(spec.phases.length), source: "stated" },
+        {
+          label: "Phases with a temperature band",
+          value: String(spec.phases.filter((p) => p.tempF).length),
+        },
+        {
+          label: "Temperature track",
+          value: spec.tempTrack?.length
+            ? `${spec.tempTrack.length} monthly readings`
+            : "none supplied",
+          source: spec.tempTrack?.length ? "measured" : "assumed",
+        },
+        {
+          label: "Month marked as now",
+          value:
+            typeof spec.currentMonth === "number"
+              ? (MONTH_SHORT[spec.currentMonth] ?? "—")
+              : "none",
+        },
+        {
+          label: "Month boundaries",
+          value: "approximate — the water temperature is what the phase actually tracks",
+          source: "assumed",
+        },
+      ]}
       legend={
         <>
           {spec.phases.map((p, i) => (

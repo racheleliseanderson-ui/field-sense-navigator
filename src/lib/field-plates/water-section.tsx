@@ -186,6 +186,35 @@ export function WaterSectionPlate({
       testid={testid}
       aside={aside}
       unknown={unknown}
+      inputs={[
+        { label: "Water", value: spec.kind, source: "stated" },
+        {
+          label: "Current",
+          value:
+            spec.current === undefined
+              ? "not stated"
+              : (["slow", "moderate", "pushy"][spec.current - 1] ?? String(spec.current)),
+          source: spec.current === undefined ? "assumed" : "stated",
+        },
+        {
+          label: "Clarity",
+          value: spec.clarity ?? "unknown",
+          source: spec.clarity && spec.clarity !== "unknown" ? "stated" : "assumed",
+        },
+        {
+          label: "Thermal break",
+          value:
+            typeof spec.thermocline === "number"
+              ? `${Math.round(spec.thermocline * 100)}% down the column`
+              : "none drawn",
+          source: typeof spec.thermocline === "number" ? "stated" : "assumed",
+        },
+        { label: "Zones drawn", value: String(zones.length) },
+        {
+          label: "Zones still to be checked",
+          value: String(zones.filter((z) => z.confidence === "check").length),
+        },
+      ]}
       legend={
         zones.length ? (
           <>

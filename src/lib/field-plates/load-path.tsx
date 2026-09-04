@@ -144,6 +144,35 @@ export function LoadPathPlate({
       testid={testid}
       aside={aside}
       unknown={unknown}
+      inputs={[
+        {
+          label: spec.a.label,
+          value: `${MATERIAL_WORD[spec.a.material]}${spec.a.gauge ? `, ${spec.a.gauge}` : ""}`,
+          source: "stated",
+        },
+        {
+          label: spec.b.label,
+          value: `${MATERIAL_WORD[spec.b.material]}${spec.b.gauge ? `, ${spec.b.gauge}` : ""}`,
+          source: "stated",
+        },
+        {
+          label: "Turns counted",
+          value: typeof spec.turns === "number" ? String(spec.turns) : "not counted",
+          source: typeof spec.turns === "number" ? "stated" : "assumed",
+        },
+        {
+          label: "How far apart the two materials are",
+          value: spec.mismatch ?? "not worked out",
+          source: spec.mismatch ? "stated" : "assumed",
+        },
+        {
+          label: "Stress drawn at",
+          value: (spec.stressAt ?? []).length
+            ? (spec.stressAt ?? []).map((v) => `${Math.round(v * 100)}%`).join(", ")
+            : "no concentration drawn",
+        },
+        { label: "What gives", value: spec.verdict ?? MODE_WORD[spec.mode] },
+      ]}
       legend={
         <>
           <LegendRow label={spec.a.label} tone="ink">

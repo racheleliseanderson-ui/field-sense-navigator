@@ -111,6 +111,28 @@ export function SystemChainPlate({
       testid={testid}
       aside={aside}
       unknown={unknown}
+      inputs={[
+        { label: "Job it is judged against", value: spec.job, source: "stated" },
+        { label: "Links assessed", value: String(links.length) },
+        {
+          label: "Links with no margin figure",
+          value: String(links.filter((l) => l.headroom === null).length),
+        },
+        {
+          label: "First to give",
+          value: spec.weakest
+            ? (links.find((l) => l.id === spec.weakest)?.role ?? spec.weakest)
+            : "nothing named",
+        },
+        {
+          label: "Cheapest correction",
+          value: spec.fix?.what ?? "none offered",
+        },
+        {
+          label: "Margin figures",
+          value: "0 to 1 against the stated job, not against the tackle's rating",
+        },
+      ]}
       legend={
         <>
           {links.map((l, i) => (

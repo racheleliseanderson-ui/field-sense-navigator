@@ -333,3 +333,133 @@
     display: none !important;
   }
 }
+
+/*
+ * How much a plate explains about itself.
+ *
+ * Named after what the drawing does, not after the reader. "Beginner" is a
+ * rank and a rank sorts people; somebody who has fished for thirty years
+ * still wants Plain when they are standing in the river with one hand free.
+ */
+.hthp-depth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hthp-depth__label {
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-depth__set {
+  display: flex;
+}
+
+.hthp-depth__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.7rem;
+  border: 1px solid var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
+  border-right-width: 0;
+  background: transparent;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hthp-depth__btn:last-child {
+  border-right-width: 1px;
+}
+
+.hthp-depth__btn[data-on="yes"] {
+  color: var(--hthp-paper, var(--background, #ffffff));
+  background: var(--hthp-accent, var(--brass, #b08428));
+  border-color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+.hthp-depth__btn:hover:not([data-on="yes"]) {
+  color: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+/*
+ * The inputs, at inspect depth. A drawing is an argument, and an argument you
+ * cannot inspect is a poster.
+ */
+.hthp-inputs {
+  margin-top: var(--hthp-gap);
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
+}
+
+.hthp-inputs__list {
+  margin: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .hthp-inputs__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.hthp-inputs__row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
+  padding-bottom: 0.25rem;
+}
+
+.hthp-inputs__key {
+  margin: 0;
+  font-size: 12px;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-inputs__val {
+  margin: 0;
+  text-align: right;
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 12px;
+  color: var(--hthp-ink, var(--foreground, #16191c));
+}
+
+.hthp-inputs__flag {
+  margin-left: 0.4rem;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hthp-watch, #a16207);
+}
+
+@media print {
+  .hthp-depth {
+    display: none !important;
+  }
+}
+
+/* A control and the plate it changes, stacked with the control on top. */
+.hthp-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.hthp-stack > .hthp-plate {
+  align-self: stretch;
+}
