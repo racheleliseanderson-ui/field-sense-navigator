@@ -2,139 +2,139 @@
   "schema": 1,
   "jurisdictions": {
     "Nunavut": {
-      "lastScannedAt": "2026-09-04T16:53:31.949Z",
+      "lastScannedAt": "2026-09-04T19:19:51.212Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Vermont": {
-      "lastScannedAt": "2026-09-04T16:53:32.046Z",
+      "lastScannedAt": "2026-09-04T19:19:51.296Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Arizona": {
-      "lastScannedAt": "2026-09-04T16:53:32.138Z",
+      "lastScannedAt": "2026-09-04T19:19:51.379Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Arkansas": {
-      "lastScannedAt": "2026-09-04T16:53:32.227Z",
+      "lastScannedAt": "2026-09-04T19:19:51.460Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Connecticut": {
-      "lastScannedAt": "2026-09-04T16:53:34.263Z",
+      "lastScannedAt": "2026-09-04T19:19:55.878Z",
       "lastYield": 8,
       "zeroYieldStreak": 0
     },
     "Hawaii": {
-      "lastScannedAt": "2026-09-04T16:53:37.713Z",
+      "lastScannedAt": "2026-09-04T19:20:14.727Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Illinois": {
-      "lastScannedAt": "2026-09-04T16:53:39.270Z",
+      "lastScannedAt": "2026-09-04T19:20:15.599Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Iowa": {
-      "lastScannedAt": "2026-09-04T16:53:39.459Z",
+      "lastScannedAt": "2026-09-04T19:20:15.684Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Kansas": {
-      "lastScannedAt": "2026-09-04T16:53:39.630Z",
+      "lastScannedAt": "2026-09-04T19:20:15.774Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Missouri": {
-      "lastScannedAt": "2026-09-04T16:53:39.803Z",
+      "lastScannedAt": "2026-09-04T19:20:15.868Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Nebraska": {
-      "lastScannedAt": "2026-09-04T16:53:39.968Z",
+      "lastScannedAt": "2026-09-04T19:20:15.955Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Nevada": {
-      "lastScannedAt": "2026-09-04T16:53:40.143Z",
+      "lastScannedAt": "2026-09-04T19:20:16.039Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "New Brunswick": {
-      "lastScannedAt": "2026-09-04T16:53:42.250Z",
+      "lastScannedAt": "2026-09-04T19:20:17.858Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "New Hampshire": {
-      "lastScannedAt": "2026-09-04T16:53:42.430Z",
+      "lastScannedAt": "2026-09-04T19:20:17.949Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "New Mexico": {
-      "lastScannedAt": "2026-09-04T16:53:42.604Z",
+      "lastScannedAt": "2026-09-04T19:20:18.036Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Newfoundland and Labrador": {
-      "lastScannedAt": "2026-09-04T16:53:47.036Z",
+      "lastScannedAt": "2026-09-04T19:20:21.994Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "North Dakota": {
-      "lastScannedAt": "2026-09-04T16:53:47.234Z",
+      "lastScannedAt": "2026-09-04T19:20:22.082Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Northwest Territories": {
-      "lastScannedAt": "2026-09-04T16:53:47.656Z",
+      "lastScannedAt": "2026-09-04T19:20:22.287Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Nova Scotia": {
-      "lastScannedAt": "2026-09-04T16:53:48.936Z",
+      "lastScannedAt": "2026-09-04T19:20:23.210Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Oklahoma": {
-      "lastScannedAt": "2026-09-04T16:53:49.141Z",
+      "lastScannedAt": "2026-09-04T19:20:23.297Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Pennsylvania": {
-      "lastScannedAt": "2026-09-04T16:53:51.147Z",
+      "lastScannedAt": "2026-09-04T19:20:25.570Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Prince Edward Island": {
-      "lastScannedAt": "2026-09-04T16:54:06.514Z",
+      "lastScannedAt": "2026-09-04T19:20:37.884Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "South Dakota": {
-      "lastScannedAt": "2026-09-04T16:54:06.715Z",
+      "lastScannedAt": "2026-09-04T19:20:37.973Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Tennessee": {
-      "lastScannedAt": "2026-09-04T16:54:08.375Z",
+      "lastScannedAt": "2026-09-04T19:20:39.051Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Utah": {
-      "lastScannedAt": "2026-09-04T16:54:08.541Z",
+      "lastScannedAt": "2026-09-04T19:20:39.142Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "West Virginia": {
-      "lastScannedAt": "2026-09-04T16:54:08.734Z",
+      "lastScannedAt": "2026-09-04T19:20:39.228Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Wyoming": {
-      "lastScannedAt": "2026-09-04T16:54:08.895Z",
+      "lastScannedAt": "2026-09-04T19:20:39.311Z",
       "lastYield": 0,
-      "zeroYieldStreak": 1
+      "zeroYieldStreak": 2
     },
     "Yukon": {
       "lastScannedAt": "2026-09-04T16:54:09.571Z",
@@ -225,7 +225,97 @@
       "lastScannedAt": "2026-09-04T16:55:10.138Z",
       "lastYield": 0,
       "zeroYieldStreak": 1
+    },
+    "Quebec": {
+      "lastScannedAt": "2026-09-04T19:18:28.548Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Wisconsin": {
+      "lastScannedAt": "2026-09-04T19:18:31.061Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Michigan": {
+      "lastScannedAt": "2026-09-04T19:18:31.887Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Ontario": {
+      "lastScannedAt": "2026-09-04T19:18:34.003Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Oregon": {
+      "lastScannedAt": "2026-09-04T19:18:34.451Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Indiana": {
+      "lastScannedAt": "2026-09-04T19:18:41.784Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Rhode Island": {
+      "lastScannedAt": "2026-09-04T19:18:42.355Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "British Columbia": {
+      "lastScannedAt": "2026-09-04T19:18:45.101Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Minnesota": {
+      "lastScannedAt": "2026-09-04T19:18:47.213Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Montana": {
+      "lastScannedAt": "2026-09-04T19:18:50.133Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "New York": {
+      "lastScannedAt": "2026-09-04T19:19:11.495Z",
+      "lastYield": 8,
+      "zeroYieldStreak": 0
+    },
+    "Alabama": {
+      "lastScannedAt": "2026-09-04T19:19:24.396Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Idaho": {
+      "lastScannedAt": "2026-09-04T19:19:36.647Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Florida": {
+      "lastScannedAt": "2026-09-04T19:19:41.982Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "California": {
+      "lastScannedAt": "2026-09-04T19:19:44.976Z",
+      "lastYield": 8,
+      "zeroYieldStreak": 0
+    },
+    "Texas": {
+      "lastScannedAt": "2026-09-04T19:19:45.933Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Colorado": {
+      "lastScannedAt": "2026-09-04T19:19:48.219Z",
+      "lastYield": 0,
+      "zeroYieldStreak": 1
+    },
+    "Washington": {
+      "lastScannedAt": "2026-09-04T19:19:50.018Z",
+      "lastYield": 8,
+      "zeroYieldStreak": 0
     }
   },
-  "updatedAt": "2026-09-04T16:55:10.138Z"
+  "updatedAt": "2026-09-04T19:20:39.311Z"
 }

@@ -1,0 +1,36 @@
+✔ trust: agencies are believed, tourism boards are not (1.5068ms)
+✔ names: the class word never carries the identity (0.6949ms)
+✔ naming: a page about another lake is not this lake (0.2709ms)
+✔ naming: apostrophes and accents do not break a match (0.1796ms)
+✔ subject: a page has to be about fishing this water (0.2831ms)
+✔ published name: site furniture is cut, the water is kept (0.8513ms)
+✔ the record names the water, not the park on it (0.6141ms)
+✔ a park with no water in its name is refused, not guessed at (0.2613ms)
+✔ a name the page never uses is refused (0.1824ms)
+✔ water class comes from the published name (0.231ms)
+✔ access: only what the page published, and named where it said a name (0.9037ms)
+✔ notices: the agency's wording, and never a denial of a closure (0.906ms)
+✔ species: only species the page names (0.3185ms)
+✔ tags follow the water class and the access that was published (0.2048ms)
+✔ html: scripts and styles never reach the text (0.3883ms)
+✔ sentences: fragments and boilerplate lengths are excluded (0.0693ms)
+✔ sitemaps: an index is told apart from a page list (0.2056ms)
+✔ a management unit is filed under the water, not the unit (0.1209ms)
+✔ a provisional slug name is corrected by the published one (0.1142ms)
+✔ a banner on every page of a site is furniture, not a notice (0.2284ms)
+✔ boilerplate is not guessed at from a handful of pages (0.0716ms)
+✔ a committee name is not a notice, however many times it says advisory (0.0803ms)
+✔ a species that is also an ordinary word is not read out of a permit notice (0.0879ms)
+✔ navigation is not read as this page's content (0.2396ms)
+✔ a federal host can never vouch for a jurisdiction (0.1046ms)
+✔ a management unit is filed under the water it sits on (0.1059ms)
+✔ a plan, a road and a mountain range are not waters (0.0937ms)
+✔ a headline is not a waterbody, however many water words it contains (0.0644ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 88.2862

@@ -26,10 +26,10 @@
 
   WHAT CAN THE CATALOGUE ANSWER?
   ------------------------------------------------------------------
-  managing agency named                        961 of 1024  (94%)
-  official regulations url                     962 of 1024  (94%)
+  managing agency named                        1014 of 1024  (99%)
+  official regulations url                     1024 of 1024  (100%)
   at least one published access                814 of 1024  (79%)
-  at least one current notice                  743 of 1024  (73%)
+  at least one current notice                  748 of 1024  (73%)
   species context                              778 of 1024  (76%)
   region named                                 523 of 1024  (51%)
   gauge or tide station bound                  734 of 1024  (72%)
@@ -56,5 +56,5 @@
   targets queued for seeding                   0
   records staged, not yet seeded               0
 
-  report: reports\health-2026-09-04T16-53-30.md
+  report: reports\health-2026-09-04T19-18-28.md
 

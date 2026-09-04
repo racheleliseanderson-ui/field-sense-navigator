@@ -41356,7 +41356,16 @@
     "checkedAt": "2026-09-03T10:12:03.118Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "Northern pike",
+      "Tiger muskie",
+      "Bluegill"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Effective until further notice: Building, maintaining, attending, or using an open fire, campfire, or open flame outdoors is PROHIBITED, including in developed campgrounds & picnic areas."
@@ -41442,8 +41451,16 @@
     "checkedAt": "2026-09-03T10:12:03.430Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Spot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Boat Ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -41483,7 +41500,16 @@
     "checkedAt": "2026-09-03T10:12:03.476Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Flathead catfish",
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Freshwater drum",
+      "Black crappie",
+      "Blue catfish",
+      "White bass"
+    ],
     "publicAccess": [
       {
         "name": "John Martin Reservoir — access published by the managing agency",
@@ -41531,7 +41557,16 @@
     "checkedAt": "2026-09-03T10:12:03.804Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Black crappie",
+      "Rainbow trout",
+      "Brown trout",
+      "Bluegill",
+      "Walleye",
+      "Crappie",
+      "Saugeye"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -41781,7 +41816,17 @@
     "checkedAt": "2026-09-03T10:12:04.532Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Mountain whitefish",
+      "Smallmouth bass",
+      "Rainbow trout",
+      "Northern pike",
+      "Brown trout",
+      "Whitefish",
+      "Trout",
+      "Bass",
+      "Pollock"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Effective until further notice: Building, maintaining, attending, or using an open fire, campfire, or open flame outdoors is PROHIBITED, including in developed campgrounds & picnic areas."
@@ -41824,8 +41869,24 @@
     "checkedAt": "2026-09-03T10:12:04.548Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Trout",
+      "Channel catfish",
+      "Black crappie",
+      "White crappie",
+      "Bluegill",
+      "Crappie",
+      "Catfish"
+    ],
+    "publicAccess": [
+      {
+        "name": "North Fork — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -42009,7 +42070,12 @@
     "checkedAt": "2026-09-03T10:12:04.904Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Splake",
+      "Trout"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Open for public access 1 hour before sunrise to 1 hour after sunset; no time restrictions for fishing.",
@@ -45733,7 +45799,16 @@
     "checkedAt": "2026-09-04T16:57:05.604Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Black crappie",
+      "Yellow perch",
+      "Bluegill",
+      "Walleye",
+      "Crappie"
+    ],
     "publicAccess": [
       {
         "name": "Mesa Lake — access published by the managing agency",
@@ -45831,8 +45906,19 @@
     "checkedAt": "2026-09-04T16:57:05.929Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Steelhead",
+      "Salmon"
+    ],
+    "publicAccess": [
+      {
+        "name": "Naselle River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Overnight parking and camping are prohibited."
     ],
@@ -46031,9 +46117,21 @@
       "Coastal cutthroat trout",
       "Cutthroat trout",
       "Rainbow trout",
-      "Trout"
+      "Trout",
+      "Largemouth bass",
+      "Brown bullhead",
+      "Yellow perch",
+      "Sunfish",
+      "Perch",
+      "Bass"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Pine Lake — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -46076,9 +46174,19 @@
       "Rainbow trout",
       "Bull trout",
       "Salmon",
-      "Trout"
+      "Trout",
+      "Brook trout",
+      "Cutthroat trout",
+      "Westslope cutthroat trout",
+      "Tiger trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Rock Creek — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -46124,7 +46232,13 @@
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Scatter Creek — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Overnight parking and camping are prohibited."
     ],
@@ -46213,7 +46327,10 @@
     "checkedAt": "2026-09-04T16:57:06.888Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Trout",
+      "Kokanee"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Several forest roads are closed annually to motor vehicle use from Dec.",
@@ -46316,7 +46433,8 @@
       "Chinook salmon",
       "Bull trout",
       "Salmon",
-      "Trout"
+      "Trout",
+      "Spot"
     ],
     "publicAccess": [],
     "currentNotices": [
@@ -46401,8 +46519,25 @@
     "checkedAt": "2026-09-04T16:57:07.332Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_tide_and_marine_checks",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Cutthroat trout",
+      "Chinook salmon",
+      "Coho salmon",
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Allyn Pier",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Fox Island Fishing Pier",
+        "type": "fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -46489,7 +46624,16 @@
     "checkedAt": "2026-09-04T16:57:07.509Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Lahontan cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Bluegill"
+    ],
     "publicAccess": [
       {
         "name": "Sprague Lake — access published by the managing agency",
@@ -46745,7 +46889,13 @@
     "speciesContext": [
       "Salmon"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Union River — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Motorized vehicles and bicycles are prohibited.",
       "Open fires and fireworks are prohibited.",
@@ -46790,7 +46940,16 @@
     "checkedAt": "2026-09-04T16:57:08.113Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "American shad"
+    ],
     "publicAccess": [
       {
         "name": "Vancouver Lake — access published by the managing agency",
@@ -46892,9 +47051,18 @@
     "speciesContext": [
       "Chinook salmon",
       "Steelhead",
-      "Salmon"
+      "Salmon",
+      "Cutthroat trout",
+      "Trout",
+      "Rainbow trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "White River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "The wildlife area's numerous dirt roads, which are closed to motorized vehicles, offer good hiking, mountain biking, cross country skiing and snowshoeing opportunities.",
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
@@ -46993,8 +47161,17 @@
     "checkedAt": "2026-09-04T16:57:08.433Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Yakima River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -47038,8 +47215,22 @@
     "checkedAt": "2026-09-04T16:57:08.728Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Eastern brook trout",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Brown trout",
+      "Brook trout",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Merrill Lake — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Off-road driving and ATV's are prohibited.",
       "The Kalama River is closed to fishing in the section below Kalama Falls"
@@ -47088,7 +47279,13 @@
       "Salmon",
       "Trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Asotin Creek — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -47132,8 +47329,20 @@
     "checkedAt": "2026-09-04T16:57:09.001Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Sea-run cutthroat",
+      "Cutthroat trout",
+      "Whitefish",
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Johns River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -47219,7 +47428,13 @@
     "speciesContext": [
       "Trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Drano Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -47258,7 +47473,16 @@
     "checkedAt": "2026-09-04T16:57:09.317Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Bullhead catfish",
+      "Largemouth bass",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Bluegill",
+      "Crappie",
+      "Catfish"
+    ],
     "publicAccess": [
       {
         "name": "Cow Lake — access published by the managing agency",
@@ -47362,7 +47586,16 @@
     "checkedAt": "2026-09-04T16:57:09.367Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Yellow perch",
+      "Brown trout",
+      "Tiger trout"
+    ],
     "publicAccess": [
       {
         "name": "Roses Lake — access published by the managing agency",
@@ -47466,7 +47699,15 @@
     "checkedAt": "2026-09-04T16:57:09.630Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Cutthroat trout",
+      "Sockeye salmon",
+      "Rainbow trout",
+      "Kokanee",
+      "Salmon",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Lake Sutherland — access published by the managing agency",
@@ -47513,7 +47754,11 @@
     "checkedAt": "2026-09-04T16:57:09.677Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coho salmon",
+      "Steelhead",
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "Cedar Creek — access published by the managing agency",
@@ -47560,7 +47805,16 @@
     "checkedAt": "2026-09-04T16:57:09.679Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "Yellow perch"
+    ],
     "publicAccess": [
       {
         "name": "Kress Lake — access published by the managing agency",
@@ -47607,7 +47861,10 @@
     "checkedAt": "2026-09-04T16:57:09.950Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Jameson Lake — access published by the managing agency",
@@ -47660,7 +47917,10 @@
     "checkedAt": "2026-09-04T16:57:09.980Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Blue Lake — access published by the managing agency",
@@ -47712,7 +47972,11 @@
     "checkedAt": "2026-09-04T16:57:09.985Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Yellow perch",
+      "Salmon",
+      "Perch"
+    ],
     "publicAccess": [
       {
         "name": "Black Creek — access published by the managing agency",
@@ -47848,7 +48112,12 @@
     "checkedAt": "2026-09-03T10:12:28.884Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Brook trout",
+      "Trout"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -49974,6 +50243,11 @@
         "name": "Eagle Lake — access published by the managing agency",
         "type": "boat_launch_and_shore_access",
         "officiallyPublished": true
+      },
+      {
+        "name": "Beaches and Beach Access",
+        "type": "shore_access",
+        "officiallyPublished": true
       }
     ],
     "currentNotices": [
@@ -50358,7 +50632,13 @@
     "nextReviewAt": "2026-11-03",
     "status": "current_with_tide_and_marine_checks",
     "speciesContext": [],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Weeks Bay Reserve — access published by the managing agency",
+        "type": "fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Alabama Department of Conservation and Natural Resources regulations for current rules on this water before fishing.",
@@ -50975,7 +51255,10 @@
     "checkedAt": "2026-09-04T16:57:18.812Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Steelhead",
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "Hunting and Fishing Access",
@@ -51262,6 +51545,11 @@
       {
         "name": "Sawgrass Lake — access published by the managing agency",
         "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Beaches and Beach Access",
+        "type": "shore_access",
         "officiallyPublished": true
       }
     ],
@@ -52012,7 +52300,9 @@
     "checkedAt": "2026-09-04T16:57:21.215Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Trout"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -52518,7 +52808,14 @@
     "checkedAt": "2026-09-04T16:57:22.578Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Trout",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Failor Lake — access published by the managing agency",
@@ -53021,11 +53318,18 @@
     "checkedAt": "2026-09-04T16:57:24.307Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "W Fork Satsop — access published by the managing agency",
         "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Double Bridges Access",
+        "type": "shore_access",
         "officiallyPublished": true
       }
     ],
@@ -53171,9 +53475,19 @@
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Catfish",
-      "Bass"
+      "Bass",
+      "Largemouth bass",
+      "Channel catfish",
+      "Northern pike",
+      "Bluegill"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Sugar Creek — access published by the managing agency",
+        "type": "boat_launch_and_shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "A fastener used in conjunction with a tree stand or pole climber that penetrates a tree more than 1/2 inch is prohibited (e.g., screw-in steps and screw-in bow and gun hangers).",
       "There are no mountain bike trails and off-road travel is prohibited",
@@ -53219,7 +53533,8 @@
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Brown trout",
-      "Trout"
+      "Trout",
+      "Spot"
     ],
     "publicAccess": [],
     "currentNotices": [],
@@ -53915,7 +54230,14 @@
     "checkedAt": "2026-09-04T16:57:26.673Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Trout",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Deer Lake — access published by the managing agency",
@@ -66016,5 +66338,724 @@
     "lastHumanReviewedBy": null,
     "seededBy": "field-sense-pipeline",
     "seededAt": "2026-09-03"
+  },
+  {
+    "id": "HHI-DEST-1089",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Swinging Bridge Reservoir",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://dec.ny.gov/places/swinging-bridge-reservoir",
+    "checkedAt": "2026-09-04T19:20:40.622Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Brown bullhead",
+      "Yellow perch",
+      "Brown trout",
+      "White perch",
+      "Rock bass",
+      "Walleye"
+    ],
+    "publicAccess": [
+      {
+        "name": "Swinging Bridge Reservoir — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "reservoir"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1090",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Canadice Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://dec.ny.gov/places/canadice-lake",
+    "checkedAt": "2026-09-04T19:20:40.133Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Landlocked salmon",
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Brown bullhead",
+      "Chain pickerel",
+      "Black crappie",
+      "Rainbow trout",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Canadice Lake — access published by the managing agency",
+        "type": "boat_launch_and_shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "shore_access"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1091",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Greenwood Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://dec.ny.gov/places/greenwood-lake-orange",
+    "checkedAt": "2026-09-04T19:20:40.722Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Chain pickerel",
+      "Rainbow trout",
+      "Tiger muskie",
+      "Brown trout",
+      "Muskellunge",
+      "Walleye"
+    ],
+    "publicAccess": [],
+    "currentNotices": [],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "lake"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1092",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Whitney Point Reservoir",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://dec.ny.gov/places/whitney-point-reservoir",
+    "checkedAt": "2026-09-04T19:20:40.531Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Chain pickerel",
+      "Black crappie",
+      "White crappie",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Whitney Point Reservoir — access published by the managing agency",
+        "type": "boat_launch_and_shore_access",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "A summer draw-down of up to 2 feet is expected to occur every other year; a draw-down of up to 4 feet is anticipated to occur once every 10 years; a drawdown of up to 6 feet in expected one out of 20 years; and the maximum allowable draw-down of 8 feet is expected to occur once every 50-100 years.",
+      "There is a 25 hp motor restriction and a 10 mph speed limit on all of Whitney Point Reservoir.",
+      "At the north end, a deep 2-acre pool was created within a shallow 14-acre embayment to limit the potential for stranding fish in low water levels during summer water releases."
+    ],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "reservoir",
+      "shore_access"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1093",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Thompsons Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://dec.ny.gov/places/thompsons-lake",
+    "checkedAt": "2026-09-04T19:20:41.457Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Brown bullhead",
+      "Chain pickerel",
+      "Black crappie",
+      "Rainbow trout",
+      "Yellow perch",
+      "Brown trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Thompsons Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "state_park"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1094",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Kensico Reservoir",
+    "waterType": "reservoir",
+    "officialSourceUrl": "https://dec.ny.gov/places/kensico-reservoir",
+    "checkedAt": "2026-09-04T19:20:41.556Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Brown trout",
+      "Lake trout",
+      "Panfish",
+      "Trout",
+      "Bass"
+    ],
+    "publicAccess": [],
+    "currentNotices": [],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "reservoir"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1095",
+    "state": "New York",
+    "region": null,
+    "waterbody": "Canandaigua Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://dec.ny.gov/places/canandaigua-lake",
+    "checkedAt": "2026-09-04T19:20:41.679Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Brown bullhead",
+      "Lake whitefish",
+      "Chain pickerel",
+      "Black crappie",
+      "Rainbow trout",
+      "Yellow perch"
+    ],
+    "publicAccess": [
+      {
+        "name": "Canandaigua Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Maintained year round and provides parking for ice fishing when ice conditions allow."
+    ],
+    "directVerification": [
+      "Check New York State Department of Environmental Conservation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "New York State Department of Environmental Conservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake",
+      "state_park"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1096",
+    "state": "California",
+    "region": null,
+    "waterbody": "Bay Summit Card 1",
+    "waterType": "marine",
+    "officialSourceUrl": "https://www.sandiego.gov/department-document/bay-summit-card-1",
+    "checkedAt": "2026-09-04T19:20:43.349Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_tide_and_marine_checks",
+    "speciesContext": [],
+    "publicAccess": [],
+    "currentNotices": [],
+    "directVerification": [
+      "Check City of San Diego Parks and Recreation regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "marine"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1097",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Sidley Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/sidley-lake-595",
+    "checkedAt": "2026-09-04T19:20:43.948Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [],
+    "publicAccess": [
+      {
+        "name": "Sidley Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1098",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Silver Nail Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/silver-nail-lake-598",
+    "checkedAt": "2026-09-04T19:20:43.972Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [],
+    "publicAccess": [
+      {
+        "name": "Silver Nail Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1099",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Wannacut Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/wannacut-lake-692",
+    "checkedAt": "2026-09-04T19:20:44.355Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [],
+    "publicAccess": [
+      {
+        "name": "Wannacut Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1100",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Whitestone Lake",
+    "waterType": "lake",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/whitestone-lake-235",
+    "checkedAt": "2026-09-04T19:20:44.830Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [],
+    "publicAccess": [
+      {
+        "name": "Whitestone Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "lake"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1101",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Palix River",
+    "waterType": "river",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/palix-river-522",
+    "checkedAt": "2026-09-04T19:20:45.205Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Salmon"
+    ],
+    "publicAccess": [
+      {
+        "name": "Palix River — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Check our wildfire information page for fire restrictions and wildfire-related closures before you visit WDFW-managed lands."
+    ],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "pier",
+      "river"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
+  },
+  {
+    "id": "HHI-DEST-1102",
+    "state": "Washington",
+    "region": null,
+    "waterbody": "Ward Creek",
+    "waterType": "river",
+    "officialSourceUrl": "https://wdfw.wa.gov/places-to-go/water-access-sites/ward-creek-724",
+    "checkedAt": "2026-09-04T19:20:45.471Z",
+    "nextReviewAt": "2026-10-04",
+    "status": "current_with_same_day_rule_check_required",
+    "speciesContext": [
+      "Salmon"
+    ],
+    "publicAccess": [
+      {
+        "name": "Ward Creek — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
+    "currentNotices": [
+      "Check our wildfire information page for fire restrictions and wildfire-related closures before you visit WDFW-managed lands."
+    ],
+    "directVerification": [
+      "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
+      "Confirm the access point is open on the intended date."
+    ],
+    "privacy": {
+      "classification": "public_destination",
+      "publicLocationIncluded": true,
+      "sensitiveLocationIncluded": false
+    },
+    "usgsSiteId": null,
+    "noaaCoopsStationId": null,
+    "ndbcBuoyId": null,
+    "managingAgency": "Washington Department of Fish and Wildlife",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
+    "regsReviewedDate": "2026-09-04",
+    "accessReviewedDate": "2026-09-04",
+    "lastVerified": "2026-09-04",
+    "speciesPresent": null,
+    "seasonWindows": null,
+    "tags": [
+      "boat_ramp",
+      "pier",
+      "river"
+    ],
+    "lastHumanReviewedAt": null,
+    "lastHumanReviewedBy": null,
+    "seededBy": "field-sense-pipeline",
+    "seededAt": "2026-09-04"
   }
 ]

@@ -1,0 +1,215 @@
+# Supplemental seed completion 2026-09-04T19:22:18.893Z
+
+Selected: 150
+Improved: 43
+Dry run: no
+
+Only additional pages on the same trusted agency host were accepted, and
+each accepted page had to name the exact water. Human-review provenance and
+primary-source review dates are deliberately unchanged.
+
+## Improved records
+
+- HHI-DEST-527 Jackson Lake (Colorado)
+  - +1 access, +0 species — https://cpw.state.co.us/state-parks/jackson-lake-state-park/jackson-lake-state-park-park-highlights
+  - +0 access, +1 species — https://cpw.state.co.us/state-parks/jackson-lake-state-park/jackson-lake-state-park-activities-trails
+- HHI-DEST-525 Elkhead Reservoir (Colorado)
+  - +0 access, +8 species — https://cpw.state.co.us/body-of-water/elkhead-reservoir
+- HHI-DEST-529 Lake Pueblo (Colorado)
+  - +0 access, +8 species — https://cpw.state.co.us/hatchery/pueblo
+- HHI-DEST-528 John Martin Reservoir (Colorado)
+  - +0 access, +8 species — https://cpw.state.co.us/body-of-water/john-martin-reservoir
+- HHI-DEST-541 Watson Lake (Colorado)
+  - +0 access, +4 species — https://cpw.state.co.us/hatchery/bellvue-watson
+- HHI-DEST-535 Yampa River (Colorado)
+  - +0 access, +8 species — https://cpw.state.co.us/body-of-water/yampa-river
+  - +0 access, +1 species — https://cpw.state.co.us/state-trust-lands/yampa-river
+- HHI-DEST-537 North Fork (Colorado)
+  - +0 access, +3 species — https://cpw.state.co.us/body-of-water/north-fork-cache-la-poudre-river-divide-creek-downstream-bull-creek
+  - +1 access, +6 species — https://cpw.state.co.us/body-of-water/north-fork-cache-la-poudre-river-seaman-reservoir-downstream-cache-la-poudre-river
+- HHI-DEST-627 Mesa Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/mesa-lake
+- HHI-DEST-629 Naselle River (Washington)
+  - +0 access, +4 species — https://wdfw.wa.gov/fishing/management/hatcheries/facilities/naselle
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/water-access-sites/old-naselle-bridge-503
+- HHI-DEST-633 Pine Lake (Washington)
+  - +1 access, +6 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/pine-lake
+- HHI-DEST-634 Rock Creek (Washington)
+  - +0 access, +1 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/rock-creek
+  - +0 access, +1 species — https://wdfw.wa.gov/fishing/locations/high-lakes/rock-little
+  - +1 access, +2 species — https://wdfw.wa.gov/fishing/locations/high-lakes/rock-lake-2
+- HHI-DEST-635 Scatter Creek (Washington)
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/wildlife-areas/scatter-creek-wildlife-area
+- HHI-DEST-641 South Puget Sound (Washington)
+  - +2 access, +5 species — https://wdfw.wa.gov/fishing/locations/marine-areas/south-puget-sound
+- HHI-DEST-637 Sherman Creek (Washington)
+  - +0 access, +1 species — https://wdfw.wa.gov/newsroom/news-release/most-sherman-creek-wildlife-area-closed-due-wildfire
+  - +0 access, +1 species — https://wdfw.wa.gov/newsroom/news-release/kokanee-released-early-flooded-sherman-creek-hatchery
+- HHI-DEST-639 Discovery Bay (Washington)
+  - +0 access, +1 species — https://wdfw.wa.gov/newsroom/news-release/discovery-bay-shrimp-season-reopen
+- HHI-DEST-643 Sprague Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/sprague-lake
+- HHI-DEST-648 Union River (Washington)
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/water-access-sites/union-river-1705
+- HHI-DEST-649 Vancouver Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/vancouver-lake
+- HHI-DEST-653 Yakima River (Washington)
+  - +1 access, +2 species — https://wdfw.wa.gov/newsroom/news-release/popular-boat-ramp-re-opens-yakima-river
+- HHI-DEST-654 Merrill Lake (Washington)
+  - +1 access, +7 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/merrill-lake
+- HHI-DEST-656 Johns River (Washington)
+  - +1 access, +5 species — https://wdfw.wa.gov/places-to-go/wildlife-areas/johns-river-wildlife-area-unit
+- HHI-DEST-651 White River (Washington)
+  - +0 access, +2 species — https://wdfw.wa.gov/fishing/locations/high-lakes/white-1
+  - +0 access, +1 species — https://wdfw.wa.gov/fishing/locations/high-lakes/white-chuck
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/water-access-sites/old-white-bridge-736
+- HHI-DEST-655 Asotin Creek (Washington)
+  - +1 access, +0 species — https://wdfw.wa.gov/newsroom/news-release/part-asotin-creek-wildlife-area-close-winter-protect-elk-and-agricultural-crops
+- HHI-DEST-658 Drano Lake (Washington)
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/water-access-sites/drano-lake-348
+- HHI-DEST-659 Cow Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/cow-lake
+- HHI-DEST-661 Roses Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/roses-lake
+- HHI-DEST-663 Lake Sutherland (Washington)
+  - +0 access, +7 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/lake-sutherland
+- HHI-DEST-664 Cedar Creek (Washington)
+  - +0 access, +3 species — https://wdfw.wa.gov/places-to-go/wildlife-areas/cedar-creek-wildlife-area-unit
+- HHI-DEST-665 Kress Lake (Washington)
+  - +0 access, +8 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/kress-lake
+- HHI-DEST-666 Jameson Lake (Washington)
+  - +0 access, +2 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/jameson-lake
+- HHI-DEST-667 Blue Lake (Washington)
+  - +0 access, +2 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/blue-lake-grant
+- HHI-DEST-668 Black Creek (Washington)
+  - +0 access, +3 species — https://wdfw.wa.gov/newsroom
+- HHI-DEST-671 Beaver Creek (Colorado)
+  - +0 access, +4 species — https://cpw.state.co.us/body-of-water/beaver-creek
+- HHI-DEST-729 Weeks Bay Reserve (Alabama)
+  - +1 access, +0 species — https://www.outdooralabama.com/weeks-bay-reserve/weeks-bay-resource-center
+- HHI-DEST-721 Eagle Lake (Florida)
+  - +1 access, +0 species — https://pinellas.gov/eagle-lake-park-map/
+- HHI-DEST-743 Boise River (Idaho)
+  - +0 access, +2 species — https://idfg.idaho.gov/visit/location-wildlife-management-areas/21791-wma-boise-river-wma
+- HHI-DEST-750 Sawgrass Lake (Florida)
+  - +1 access, +0 species — https://pinellas.gov/sawgrass-lake-park-map/
+- HHI-DEST-766 River Conditions (Minnesota)
+  - +0 access, +1 species — https://www.dnr.state.mn.us/areas/fisheries/lanesboro/stream_conditions.html
+- HHI-DEST-777 Failor Lake (Washington)
+  - +0 access, +6 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/failor-lake
+- HHI-DEST-792 Sugar Creek (Indiana)
+  - +1 access, +4 species — https://www.in.gov/dnr/fish-and-wildlife/properties/sugar-ridge-fwa
+- HHI-DEST-788 W Fork Satsop (Washington)
+  - +1 access, +0 species — https://wdfw.wa.gov/places-to-go/wildlife-areas/satsop-wildlife-area-unit
+  - +0 access, +1 species — https://wdfw.wa.gov/newsroom/news-release/chehalis-satsop-and-clearwater-open-fall-salmon-fishing
+- HHI-DEST-793 Hot Creek (California)
+  - +0 access, +1 species — https://www.monocounty.org/places-to-go/hot-springs/
+- HHI-DEST-808 Deer Lake (Washington)
+  - +0 access, +6 species — https://wdfw.wa.gov/fishing/locations/lowland-lakes/deer-lake-island
+
+## No additional evidence found
+
+- HHI-DEST-526 Highline Lake (Colorado)
+- HHI-DEST-524 Barr Lake (Colorado)
+- HHI-DEST-530 Pearl Lake (Colorado)
+- HHI-DEST-532 Sweitzer Lake (Colorado)
+- HHI-DEST-531 Steamboat Lake (Colorado)
+- HHI-DEST-534 Trinidad Lake (Colorado)
+- HHI-DEST-533 Sylvan Lake (Colorado)
+- HHI-DEST-538 Prewitt Reservoir (Colorado)
+- HHI-DEST-539 Road Canyon Reservoir (Colorado)
+- HHI-DEST-540 Turks Pond (Colorado)
+- HHI-DEST-542 Woods Lake (Colorado)
+- HHI-DEST-543 Alberta Park Reservoir (Colorado)
+- HHI-DEST-626 Lower Crab Creek (Washington)
+- HHI-DEST-628 Morse Creek (Washington)
+- HHI-DEST-630 Nemah River Estuary (Washington)
+- HHI-DEST-636 Scotch Creek (Washington)
+- HHI-DEST-640 South Grays Harbor (Washington)
+- HHI-DEST-642 South Sequim Bay (Washington)
+- HHI-DEST-644 Swale Creek (Washington)
+- HHI-DEST-645 Telegraph Slough (Washington)
+- HHI-DEST-646 Tennant Lake (Washington)
+- HHI-DEST-650 West Foster Creek (Washington)
+- HHI-DEST-657 Lake Koeneman (Washington)
+- HHI-DEST-660 Couse Creek (Washington)
+- HHI-DEST-669 Andrews Lake (Colorado)
+- HHI-DEST-670 Beaver Creek Reservoir (Colorado)
+- HHI-DEST-673 Bellaire Lake (Colorado)
+- HHI-DEST-674 Big Meadows Reservoir (Colorado)
+- HHI-DEST-675 Billy Creek (Colorado)
+- HHI-DEST-676 Blue River (Colorado)
+- HHI-DEST-672 Beaver Lake (Colorado)
+- HHI-DEST-677 Boedecker Reservoir (Colorado)
+- HHI-DEST-679 Clear Creek Reservoir (Colorado)
+- HHI-DEST-678 Cabin Creek (Colorado)
+- HHI-DEST-680 Colorado River Island (Colorado)
+- HHI-DEST-682 Cowdrey Lake (Colorado)
+- HHI-DEST-683 Dawn Pond (Colorado)
+- HHI-DEST-681 Cottonwood Creek (Colorado)
+- HHI-DEST-685 Deweese Reservoir (Colorado)
+- HHI-DEST-684 Devil Creek (Colorado)
+- HHI-DEST-688 Dowdy Lake (Colorado)
+- HHI-DEST-686 Dolores River (Colorado)
+- HHI-DEST-687 Douglas Reservoir (Colorado)
+- HHI-DEST-690 Duck Creek (Colorado)
+- HHI-DEST-689 Dry Creek Basin (Colorado)
+- HHI-DEST-691 Echo Canyon Reservoir (Colorado)
+- HHI-DEST-693 Flagler Reservoir (Colorado)
+- HHI-DEST-695 Frenchman Creek (Colorado)
+- HHI-DEST-694 Frantz Lake (Colorado)
+- HHI-DEST-696 Garfield Creek (Colorado)
+- HHI-DEST-697 Groundhog Reservoir (Colorado)
+- HHI-DEST-699 Holbrook Reservoir (Colorado)
+- HHI-DEST-702 Jerry Creek Reservoirs (Colorado)
+- HHI-DEST-703 Joe Moore Reservoir (Colorado)
+- HHI-DEST-692 Fish Creek (Colorado)
+- HHI-DEST-700 Hot Creek (Colorado)
+- HHI-DEST-704 Karval Reservoir (Colorado)
+- HHI-DEST-705 Kinney Lake (Colorado)
+- HHI-DEST-707 Lake Beckwith (Colorado)
+- HHI-DEST-706 La Jara Reservoir (Colorado)
+- HHI-DEST-708 Lake Dorothey (Colorado)
+- HHI-DEST-712 Middle Taylor Creek (Colorado)
+- HHI-DEST-709 Lake Fork of Gunnison River (Colorado)
+- HHI-DEST-710 Lake John (Colorado)
+- HHI-DEST-718 Managing Your Farm Pond (Kentucky)
+- HHI-DEST-724 River Basin Action Strategies (North Carolina)
+- HHI-DEST-725 Mallard Pond (Colorado)
+- HHI-DEST-722 Belmont Lake (New York)
+- HHI-DEST-728 Grand Lake Region (Maine)
+- HHI-DEST-726 Mississippi River Information (Minnesota)
+- HHI-DEST-731 Lake Information (Kentucky)
+- HHI-DEST-737 Bulls Bay Preserve (Florida)
+- HHI-DEST-740 Sandpiper Pond (Colorado)
+- HHI-DEST-741 Pelican Lake Information (Minnesota)
+- HHI-DEST-739 Sweetwater Reservoir Pumping Plant (California)
+- HHI-DEST-745 Fish River Lakes Region (Maine)
+- HHI-DEST-748 East Walker River (California)
+- HHI-DEST-744 Lake Levels (Wisconsin)
+- HHI-DEST-749 Evert Pierson Kids Fishing Pond (Colorado)
+- HHI-DEST-753 Bathtub Racing on the Bay (California)
+- HHI-DEST-751 Julington Durbin Creek Preserve (Florida)
+- HHI-DEST-755 Warm Water River Information (Minnesota)
+- HHI-DEST-747 Goose Pond Fwa (Indiana)
+- HHI-DEST-764 Pintail Pond (Colorado)
+- HHI-DEST-761 Pumpkin Hill Creek State Preserve (Florida)
+- HHI-DEST-763 Celebration of Mission Bay (California)
+- HHI-DEST-768 Deroche Creek (British Columbia)
+- HHI-DEST-776 Coot Pond (Colorado)
+- HHI-DEST-772 Green Creek (California)
+- HHI-DEST-774 Sal Taylor Creek Preserve (Florida)
+- HHI-DEST-781 Autauga Creek (Alabama)
+- HHI-DEST-780 Chemainus River (British Columbia)
+- HHI-DEST-785 Mobbly Bayou Preserve (Florida)
+- HHI-DEST-790 Cahaba River (Alabama)
+- HHI-DEST-786 Seaton Creek Preserve (Florida)
+- HHI-DEST-795 Big Creek Lake Lower (Colorado)
+- HHI-DEST-794 Thomas Creek Preserve (Florida)
+- HHI-DEST-800 Chattahoochee River (Alabama)
+- HHI-DEST-797 Lake Alice Construction (Minnesota)
+- HHI-DEST-805 Mystery Bay (Washington)
+- HHI-DEST-807 Kelly Lake (Colorado)
+- HHI-DEST-806 Reservoir Dams (California)
+- HHI-DEST-810 Choctawhatchee River (Alabama)
+- HHI-DEST-804 Reports from Prior Bay Incidents (Rhode Island)
