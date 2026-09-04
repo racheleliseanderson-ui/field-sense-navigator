@@ -264,6 +264,25 @@ export const FORAGE_CLASSES = [
   "eggs",
   "amphibians",
   "zooplankton",
+  /*
+   * `cephalopods` is the twelfth, and it was added because a real observation
+   * had nowhere to go.
+   *
+   * Hatch Match declared a cephalopod class in schema v8 and held no animal in
+   * it, so the gap cost nothing. Its salt wave put a squid in that class, and
+   * the moment it did, an observed squid arriving at Species & Presentation
+   * resolved to null: Hatch's own mapper refused to file it under `mollusks`,
+   * on the grounds that a squid is not a mollusc to anything downstream that is
+   * choosing a presentation, and that a wrong class travels further than a
+   * missing one. That was the right call and the wrong outcome.
+   *
+   * It is a class rather than a synonym because the mechanics genuinely differ.
+   * A mollusc is a bottom problem — slow drag, contact, stationary. A squid is
+   * a mid-column problem with a big soft profile, a jet-and-glide path and a
+   * strong night bias. Filing one as the other would have pointed the reader at
+   * the bottom for an animal that is nowhere near it.
+   */
+  "cephalopods",
 ] as const;
 export type ForageClass = Open<(typeof FORAGE_CLASSES)[number]>;
 
