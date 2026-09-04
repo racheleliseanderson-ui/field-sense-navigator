@@ -162,6 +162,19 @@
   transform: none !important;
 }
 
+/*
+ * A purely decorative band marked data-field-hero goes away entirely rather
+ * than merely stopping moving. Stilling a photograph that occupies the first
+ * screen does not give the reader that screen back, and on a phone held in
+ * one hand a hero band is a full swipe between arriving and doing the thing
+ * you opened the app to do.
+ *
+ * Only mark a band that carries no information. A drawing is not decoration.
+ */
+[data-hthp-field="on"] [data-field-hero] {
+  display: none !important;
+}
+
 [data-hthp-field="on"] .desk-reveal,
 [data-hthp-field="on"] .stagger-in,
 [data-hthp-field="on"] .reveal {
