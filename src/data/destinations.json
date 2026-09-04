@@ -2177,6 +2177,10 @@
       {
         "id": "HHI-DEST-290",
         "relation": "same_waterbody_segment"
+      },
+      {
+        "id": "HHI-DEST-294",
+        "relation": "shared_agency_page"
       }
     ],
     "tags": [
@@ -8421,6 +8425,12 @@
     "tags": [
       "boat_ramp",
       "reservoir"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-548",
+        "relation": "shared_agency_page"
+      }
     ]
   },
   {
@@ -24525,6 +24535,10 @@
     "seasonWindows": null,
     "related": [
       {
+        "id": "HHI-DEST-030",
+        "relation": "shared_agency_page"
+      },
+      {
         "id": "HHI-DEST-293",
         "relation": "shared_agency_page"
       },
@@ -33958,6 +33972,10 @@
       {
         "id": "HHI-DEST-417",
         "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-499",
+        "relation": "shared_agency_page"
       }
     ],
     "tags": [
@@ -34025,6 +34043,10 @@
       },
       {
         "id": "HHI-DEST-417",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-499",
         "relation": "shared_agency_page"
       }
     ],
@@ -34101,6 +34123,10 @@
       },
       {
         "id": "HHI-DEST-416",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-499",
         "relation": "shared_agency_page"
       }
     ],
@@ -40041,6 +40067,20 @@
       "boat_ramp",
       "marine",
       "shore_access"
+    ],
+    "related": [
+      {
+        "id": "HHI-DEST-415",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-416",
+        "relation": "shared_agency_page"
+      },
+      {
+        "id": "HHI-DEST-417",
+        "relation": "shared_agency_page"
+      }
     ]
   },
   {
@@ -41315,7 +41355,16 @@
     "checkedAt": "2026-09-03T10:12:03.118Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "Northern pike",
+      "Tiger muskie",
+      "Bluegill"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Effective until further notice: Building, maintaining, attending, or using an open fire, campfire, or open flame outdoors is PROHIBITED, including in developed campgrounds & picnic areas."
@@ -41401,8 +41450,16 @@
     "checkedAt": "2026-09-03T10:12:03.430Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Spot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Boat Ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -41442,7 +41499,16 @@
     "checkedAt": "2026-09-03T10:12:03.476Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Flathead catfish",
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Freshwater drum",
+      "Black crappie",
+      "Blue catfish",
+      "White bass"
+    ],
     "publicAccess": [
       {
         "name": "John Martin Reservoir — access published by the managing agency",
@@ -41490,7 +41556,16 @@
     "checkedAt": "2026-09-03T10:12:03.804Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Black crappie",
+      "Rainbow trout",
+      "Brown trout",
+      "Bluegill",
+      "Walleye",
+      "Crappie",
+      "Saugeye"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -41617,8 +41692,21 @@
     "checkedAt": "2026-09-03T10:12:04.175Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Bluegill",
+      "Catfish",
+      "Sunfish",
+      "Bass",
+      "Spot"
+    ],
+    "publicAccess": [
+      {
+        "name": "Boat Ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -41740,7 +41828,17 @@
     "checkedAt": "2026-09-03T10:12:04.532Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Mountain whitefish",
+      "Smallmouth bass",
+      "Rainbow trout",
+      "Northern pike",
+      "Brown trout",
+      "Whitefish",
+      "Trout",
+      "Bass",
+      "Pollock"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Effective until further notice: Building, maintaining, attending, or using an open fire, campfire, or open flame outdoors is PROHIBITED, including in developed campgrounds & picnic areas."
@@ -41783,8 +41881,24 @@
     "checkedAt": "2026-09-03T10:12:04.548Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Trout",
+      "Channel catfish",
+      "Black crappie",
+      "White crappie",
+      "Bluegill",
+      "Crappie",
+      "Catfish"
+    ],
+    "publicAccess": [
+      {
+        "name": "North Fork — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -41968,7 +42082,12 @@
     "checkedAt": "2026-09-03T10:12:04.904Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Splake",
+      "Trout"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Open for public access 1 hour before sunrise to 1 hour after sunset; no time restrictions for fishing.",
@@ -42259,7 +42378,13 @@
     "lastHumanReviewedAt": null,
     "lastHumanReviewedBy": null,
     "seededBy": "field-sense-pipeline",
-    "seededAt": "2026-09-03"
+    "seededAt": "2026-09-03",
+    "related": [
+      {
+        "id": "HHI-DEST-109",
+        "relation": "shared_agency_page"
+      }
+    ]
   },
   {
     "id": "HHI-DEST-549",
@@ -45685,7 +45810,16 @@
     "checkedAt": "2026-09-03T10:12:18.125Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Black crappie",
+      "Yellow perch",
+      "Bluegill",
+      "Walleye",
+      "Crappie"
+    ],
     "publicAccess": [
       {
         "name": "Mesa Lake — access published by the managing agency",
@@ -45783,8 +45917,19 @@
     "checkedAt": "2026-09-03T10:12:19.162Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Chinook salmon",
+      "Coho salmon",
+      "Steelhead",
+      "Salmon"
+    ],
+    "publicAccess": [
+      {
+        "name": "Naselle River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Overnight parking and camping are prohibited."
     ],
@@ -45983,9 +46128,21 @@
       "Coastal cutthroat trout",
       "Cutthroat trout",
       "Rainbow trout",
-      "Trout"
+      "Trout",
+      "Largemouth bass",
+      "Brown bullhead",
+      "Yellow perch",
+      "Sunfish",
+      "Perch",
+      "Bass"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Pine Lake — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -46028,9 +46185,19 @@
       "Rainbow trout",
       "Bull trout",
       "Salmon",
-      "Trout"
+      "Trout",
+      "Brook trout",
+      "Cutthroat trout",
+      "Westslope cutthroat trout",
+      "Tiger trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Rock Creek — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -46076,7 +46243,13 @@
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Scatter Creek — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Overnight parking and camping are prohibited."
     ],
@@ -46165,7 +46338,10 @@
     "checkedAt": "2026-09-03T10:12:21.571Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Trout",
+      "Kokanee"
+    ],
     "publicAccess": [],
     "currentNotices": [
       "Several forest roads are closed annually to motor vehicle use from Dec.",
@@ -46268,7 +46444,8 @@
       "Chinook salmon",
       "Bull trout",
       "Salmon",
-      "Trout"
+      "Trout",
+      "Spot"
     ],
     "publicAccess": [],
     "currentNotices": [
@@ -46353,8 +46530,25 @@
     "checkedAt": "2026-09-03T10:12:21.989Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_tide_and_marine_checks",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Cutthroat trout",
+      "Chinook salmon",
+      "Coho salmon",
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Allyn Pier",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Fox Island Fishing Pier",
+        "type": "fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -46441,7 +46635,16 @@
     "checkedAt": "2026-09-03T10:12:22.006Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Lahontan cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Bluegill"
+    ],
     "publicAccess": [
       {
         "name": "Sprague Lake — access published by the managing agency",
@@ -46697,7 +46900,13 @@
     "speciesContext": [
       "Salmon"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Union River — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Motorized vehicles and bicycles are prohibited.",
       "Open fires and fireworks are prohibited.",
@@ -46742,7 +46951,16 @@
     "checkedAt": "2026-09-03T10:12:24.358Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "American shad"
+    ],
     "publicAccess": [
       {
         "name": "Vancouver Lake — access published by the managing agency",
@@ -46844,9 +47062,18 @@
     "speciesContext": [
       "Chinook salmon",
       "Steelhead",
-      "Salmon"
+      "Salmon",
+      "Cutthroat trout",
+      "Trout",
+      "Rainbow trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "White River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "The wildlife area's numerous dirt roads, which are closed to motorized vehicles, offer good hiking, mountain biking, cross country skiing and snowshoeing opportunities.",
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
@@ -46945,8 +47172,17 @@
     "checkedAt": "2026-09-03T10:12:25.369Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Yakima River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -46990,8 +47226,22 @@
     "checkedAt": "2026-09-03T10:12:25.477Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Eastern brook trout",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Brown trout",
+      "Brook trout",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Merrill Lake — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Off-road driving and ATV's are prohibited.",
       "The Kalama River is closed to fishing in the section below Kalama Falls"
@@ -47040,7 +47290,13 @@
       "Salmon",
       "Trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Asotin Creek — access published by the managing agency",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "16 through Sept 15, restrictions prohibit discharging firearms for target shooting on all WDFW-managed lands (including the previously mentioned target-shooting ranges) in Eastern Washington, unless otherwise posted.",
       "All restrictions will remain in effect until further notice.",
@@ -47084,8 +47340,20 @@
     "checkedAt": "2026-09-03T10:12:26.228Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Sea-run cutthroat",
+      "Cutthroat trout",
+      "Whitefish",
+      "Salmon",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Johns River — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -47171,7 +47439,13 @@
     "speciesContext": [
       "Trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Drano Lake — access published by the managing agency",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Washington Department of Fish and Wildlife regulations for current rules on this water before fishing.",
@@ -47210,7 +47484,16 @@
     "checkedAt": "2026-09-03T10:12:26.386Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Bullhead catfish",
+      "Largemouth bass",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Bluegill",
+      "Crappie",
+      "Catfish"
+    ],
     "publicAccess": [
       {
         "name": "Cow Lake — access published by the managing agency",
@@ -47314,7 +47597,16 @@
     "checkedAt": "2026-09-03T10:12:27.203Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "Yellow perch",
+      "Brown trout",
+      "Tiger trout"
+    ],
     "publicAccess": [
       {
         "name": "Roses Lake — access published by the managing agency",
@@ -47418,7 +47710,15 @@
     "checkedAt": "2026-09-03T10:12:27.532Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Cutthroat trout",
+      "Sockeye salmon",
+      "Rainbow trout",
+      "Kokanee",
+      "Salmon",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Lake Sutherland — access published by the managing agency",
@@ -47465,7 +47765,11 @@
     "checkedAt": "2026-09-03T10:12:27.830Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coho salmon",
+      "Steelhead",
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "Cedar Creek — access published by the managing agency",
@@ -47512,7 +47816,16 @@
     "checkedAt": "2026-09-03T10:12:28.098Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout",
+      "White crappie",
+      "Yellow perch"
+    ],
     "publicAccess": [
       {
         "name": "Kress Lake — access published by the managing agency",
@@ -47559,7 +47872,10 @@
     "checkedAt": "2026-09-03T10:12:28.198Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Jameson Lake — access published by the managing agency",
@@ -47612,7 +47928,10 @@
     "checkedAt": "2026-09-03T10:12:28.460Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Blue Lake — access published by the managing agency",
@@ -47664,7 +47983,11 @@
     "checkedAt": "2026-09-03T10:12:28.694Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Yellow perch",
+      "Salmon",
+      "Perch"
+    ],
     "publicAccess": [
       {
         "name": "Black Creek — access published by the managing agency",
@@ -49926,6 +50249,11 @@
         "name": "Eagle Lake — access published by the managing agency",
         "type": "boat_launch_and_shore_access",
         "officiallyPublished": true
+      },
+      {
+        "name": "Beaches and Beach Access",
+        "type": "shore_access",
+        "officiallyPublished": true
       }
     ],
     "currentNotices": [
@@ -49946,7 +50274,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -49993,8 +50321,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "New York State Office of Parks, Recreation and Historic Preservation",
+    "officialRegsUrl": "https://www.dec.ny.gov/outdoor/fishing.html",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50047,8 +50375,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "California Department of Water Resources",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50089,7 +50417,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://www.ncwildlife.gov/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50310,7 +50638,13 @@
     "nextReviewAt": "2027-03-02",
     "status": "current_with_tide_and_marine_checks",
     "speciesContext": [],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Weeks Bay Reserve — access published by the managing agency",
+        "type": "fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Alabama Department of Conservation and Natural Resources regulations for current rules on this water before fishing.",
@@ -50522,8 +50856,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50577,7 +50911,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50619,8 +50953,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50705,8 +51039,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "California Department of Water Resources",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50746,8 +51080,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -50927,7 +51261,10 @@
     "checkedAt": "2026-09-03T10:12:37.848Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Steelhead",
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "Hunting and Fishing Access",
@@ -50994,7 +51331,7 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
+    "managingAgency": "Wisconsin Department of Natural Resources",
     "officialRegsUrl": "https://dnr.wisconsin.gov/topic/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
@@ -51183,8 +51520,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Boulder Parks and Recreation",
+    "officialRegsUrl": "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51215,6 +51552,11 @@
         "name": "Sawgrass Lake — access published by the managing agency",
         "type": "boat_launch",
         "officiallyPublished": true
+      },
+      {
+        "name": "Beaches and Beach Access",
+        "type": "shore_access",
+        "officiallyPublished": true
       }
     ],
     "currentNotices": [
@@ -51234,7 +51576,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51274,8 +51616,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51326,8 +51668,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "California Department of Water Resources",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51367,8 +51709,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51736,8 +52078,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51797,8 +52139,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "California Department of Water Resources",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51838,8 +52180,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -51963,7 +52305,9 @@
     "checkedAt": "2026-09-03T10:12:41.223Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Trout"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -52081,7 +52425,7 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "managingAgency": null,
     "officialRegsUrl": "https://www2.gov.bc.ca/FishingRegulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
@@ -52297,7 +52641,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -52337,8 +52681,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -52392,8 +52736,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "California Department of Water Resources",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -52469,7 +52813,14 @@
     "checkedAt": "2026-09-03T10:12:42.981Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Trout",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Failor Lake — access published by the managing agency",
@@ -52643,7 +52994,7 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "managingAgency": null,
     "officialRegsUrl": "https://www2.gov.bc.ca/FishingRegulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
@@ -52840,7 +53191,7 @@
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
     "managingAgency": null,
-    "officialRegsUrl": null,
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -52887,8 +53238,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -52972,11 +53323,18 @@
     "checkedAt": "2026-09-03T10:12:44.646Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Salmon"
+    ],
     "publicAccess": [
       {
         "name": "W Fork Satsop — access published by the managing agency",
         "type": "boat_launch",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Double Bridges Access",
+        "type": "shore_access",
         "officiallyPublished": true
       }
     ],
@@ -53122,9 +53480,19 @@
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Catfish",
-      "Bass"
+      "Bass",
+      "Largemouth bass",
+      "Channel catfish",
+      "Northern pike",
+      "Bluegill"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Sugar Creek — access published by the managing agency",
+        "type": "boat_launch_and_shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "A fastener used in conjunction with a tree stand or pole climber that penetrates a tree more than 1/2 inch is prohibited (e.g., screw-in steps and screw-in bow and gun hangers).",
       "There are no mountain bike trails and off-road travel is prohibited",
@@ -53170,7 +53538,8 @@
     "status": "current_with_same_day_rule_check_required",
     "speciesContext": [
       "Brown trout",
-      "Trout"
+      "Trout",
+      "Spot"
     ],
     "publicAccess": [],
     "currentNotices": [],
@@ -53233,8 +53602,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of Jacksonville Parks and Recreation",
+    "officialRegsUrl": "https://myfwc.com/fishing/",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -53753,8 +54122,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -53795,8 +54164,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -53866,7 +54235,14 @@
     "checkedAt": "2026-09-03T10:12:46.860Z",
     "nextReviewAt": "2027-03-02",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Largemouth bass",
+      "Cutthroat trout",
+      "Rainbow trout",
+      "Trout",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Deer Lake — access published by the managing agency",
@@ -54297,7 +54673,7 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "managingAgency": null,
     "officialRegsUrl": "https://www2.gov.bc.ca/FishingRegulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
@@ -54513,8 +54889,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -54554,8 +54930,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -54752,7 +55128,7 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": "British Columbia Ministry of Water, Land and Resource Stewardship",
+    "managingAgency": null,
     "officialRegsUrl": "https://www2.gov.bc.ca/FishingRegulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
@@ -54903,8 +55279,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -54945,8 +55321,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -55152,8 +55528,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -55566,8 +55942,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -55928,8 +56304,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -56275,8 +56651,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -56629,8 +57005,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -56874,8 +57250,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -57167,8 +57543,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -57451,8 +57827,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -57747,8 +58123,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -57960,8 +58336,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Washington State Parks",
+    "officialRegsUrl": "https://www.wdfw.wa.gov/fishing/regulations",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -58474,8 +58850,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -58748,8 +59124,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -58881,8 +59257,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -59160,8 +59536,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -59395,8 +59771,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -59743,8 +60119,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -59932,8 +60308,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -59972,8 +60348,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -60174,8 +60550,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -60315,8 +60691,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "Oregon Department of Fish and Wildlife",
+    "officialRegsUrl": "https://myodfw.com/fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -61041,8 +61417,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -61715,8 +62091,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -61851,8 +62227,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -61943,8 +62319,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62035,8 +62411,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62122,8 +62498,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62305,8 +62681,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62497,8 +62873,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62689,8 +63065,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62834,8 +63210,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -62992,8 +63368,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -63822,8 +64198,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",
@@ -64009,8 +64385,8 @@
     "usgsSiteId": null,
     "noaaCoopsStationId": null,
     "ndbcBuoyId": null,
-    "managingAgency": null,
-    "officialRegsUrl": null,
+    "managingAgency": "City of San Diego Parks and Recreation",
+    "officialRegsUrl": "https://wildlife.ca.gov/Fishing",
     "regsReviewedDate": "2026-09-03",
     "accessReviewedDate": "2026-09-03",
     "lastVerified": "2026-09-03",

@@ -1,0 +1,60 @@
+
+  HOW OLD IS THE INFORMATION?
+  ------------------------------------------------------------------
+  under 30 days                                1019 records
+  30 to 90 days                                5 records
+  90 to 180 days                               0 records
+  over 180 days                                0 records
+  never recorded                               0 records
+  past their own review date                   88 records
+  never read by a person                       997 records
+
+  ANY DUPLICATES?
+  ------------------------------------------------------------------
+  same water, same jurisdiction, twice         9
+  duplicate record ids                         0
+  official pages cited by 2+ records           91 (normal for directories)
+    HHI-DEST-006 / HHI-DEST-098  Flathead Lake (Montana)
+    HHI-DEST-016 / HHI-DEST-017  Lake Erie (Ohio)
+    HHI-DEST-019 / HHI-DEST-020  Lake Ontario (New York)
+    HHI-DEST-023 / HHI-DEST-095  Lake Minnetonka (Minnesota)
+    HHI-DEST-036 / HHI-DEST-083  Lake Chelan (Washington)
+    HHI-DEST-043 / HHI-DEST-081  Potholes Reservoir (Washington)
+    HHI-DEST-044 / HHI-DEST-082  Banks Lake (Washington)
+    HHI-DEST-309 / HHI-DEST-496  Cape Cod Bay (Massachusetts)
+    HHI-DEST-318 / HHI-DEST-495  Barnegat Bay (New Jersey)
+
+  WHAT CAN THE CATALOGUE ANSWER?
+  ------------------------------------------------------------------
+  managing agency named                        961 of 1024  (94%)
+  official regulations url                     962 of 1024  (94%)
+  at least one published access                814 of 1024  (79%)
+  at least one current notice                  743 of 1024  (73%)
+  species context                              778 of 1024  (76%)
+  region named                                 523 of 1024  (51%)
+  gauge or tide station bound                  734 of 1024  (72%)
+  weather station bound                        730 of 1024  (71%)
+  human reviewed at least once                 27 of 1024  (3%)
+
+  WHERE IS IT READING FROM?
+  ------------------------------------------------------------------
+  government                                   1014 records
+  untrusted                                    5 records
+  authority                                    5 records
+  sources that are neither an agency nor a named authority:
+    HHI-DEST-179  Port Aransas public pier corridor (Corpus Christi Bay / Aransas Pass approaches) (Texas) — portaransas.org
+    HHI-DEST-183  Lower Laguna Madre (South Padre Island — Marisol public boat ramp corridor) (Texas) — portisabelsouthpadre.com
+    HHI-DEST-192  Packery Channel public corridor (Corpus Christi Bay / Gulf pass approaches) (Texas) — visitcorpuschristi.com
+    HHI-DEST-227  Destin / Okaloosa Island public corridor (Choctawhatchee Bay, Santa Rosa Sound, Gulf) (Florida) — destinfwb.com
+    HHI-DEST-239  Navarre Beach Fishing Pier (Gulf of Mexico) (Florida) — navarrebeachpier.com
+
+  SHAPE
+  ------------------------------------------------------------------
+  records                                      1024
+  jurisdictions                                63
+  water classes                                lake 359, river 298, reservoir 228, marine 139
+  targets queued for seeding                   0
+  records staged, not yet seeded               0
+
+  report: reports\health-2026-09-04T16-53-30.md
+
