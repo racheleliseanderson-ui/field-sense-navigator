@@ -65,6 +65,10 @@ const newest =
 const entries = [
   { loc: `${SITE}/`, lastmod: newest, changefreq: "daily", priority: "1.0" },
   { loc: `${SITE}/explore`, lastmod: newest, changefreq: "daily", priority: "0.9" },
+  // The reading school is craft rather than catalogue: it does not change when
+  // a record is refreshed, and it is the page most likely to be useful to
+  // somebody who has never heard of any water we hold.
+  { loc: `${SITE}/reading`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE}/pipeline`, lastmod: newest, changefreq: "daily", priority: "0.5" },
   { loc: `${SITE}/boundary`, lastmod: newest, changefreq: "monthly", priority: "0.4" },
 ];

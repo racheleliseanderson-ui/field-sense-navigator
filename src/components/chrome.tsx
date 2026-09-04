@@ -22,9 +22,16 @@ import { CommandPalette } from "@/components/command-palette";
  * add a theme, contrast, motion or language switch here.
  */
 
-/** The five places a reader works. */
+/**
+ * The six places a reader works.
+ *
+ * "Read water" is not a sixth view of the catalogue — it is the only page here
+ * that works on water nobody has catalogued, which is most water. It sits
+ * second because it is what somebody needs before the records are any use.
+ */
 const PRIMARY_NAV = [
   { to: "/", label: "Check a water" },
+  { to: "/reading", label: "Read water" },
   { to: "/plan", label: "Plan a day" },
   { to: "/explore", label: "Explore waters" },
   { to: "/compare", label: "Compare" },

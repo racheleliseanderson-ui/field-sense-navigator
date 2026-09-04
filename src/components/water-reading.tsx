@@ -4,6 +4,7 @@ import type { Destination } from "@/lib/catalog";
 import { useReadLevel } from "@/lib/read-level";
 import { FAMILY_LABEL, READ_LEVELS, cuesFor, readWater, type ReadLevel } from "@/lib/water-reading";
 import { WaterSectionReading } from "@/components/water-section-plate";
+import { PlanViewBoard } from "@/components/plan-view";
 import { ConditionResponsePanel } from "@/components/condition-response";
 
 /** Beginner → competent → advanced, as one setting the reader controls. */
@@ -87,6 +88,18 @@ export function WaterReadingPanel({ destination }: { destination: Destination })
 
       <div className="mt-6">
         <WaterSectionReading destination={destination} level={level} />
+      </div>
+
+      {/* The section answers how far out and how deep. This answers where
+          along — the question anyone actually asks first, and the only one
+          where the wind, the level and the tide can be made to move the
+          picture in front of you. */}
+      <div className="mt-8">
+        <PlanViewBoard
+          waterType={read.waterClass}
+          level={level}
+          waterbody={destination.waterbody}
+        />
       </div>
 
       <div className="mt-12">
