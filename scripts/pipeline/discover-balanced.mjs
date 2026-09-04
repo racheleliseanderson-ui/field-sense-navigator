@@ -23,6 +23,7 @@ import {
   PATHS,
   readCatalog,
   readJson,
+  writeJson,
   argv,
   writeReport,
   appendRun,
@@ -38,8 +39,13 @@ const CONCURRENCY = Math.max(1, Math.min(4, Number(args.concurrency ?? 3)));
 const MAX_HOSTS = Math.max(1, Number(args["max-hosts"]) || 12);
 const ONLY_STATE = args.state ? String(args.state).trim() : null;
 const DRY = Boolean(args.dry);
+const COOLDOWN_HOURS = Math.max(0, Number(args["cooldown-hours"] ?? 18));
+const IGNORE_COOLDOWN = Boolean(args["ignore-cooldown"]);
 
 const discoverPath = fileURLToPath(new URL("./discover.mjs", import.meta.url));
+const progressPath = fileURLToPath(new URL("../data/discovery-progress.json", import.meta.url));
+const progress = readJson(progressPath, { schema: 1, jurisdictions: {} }) ?? { schema: 1, jurisdictions: {} };
+progress.jurisdictions ??= {};
 
 function queueStats() {
   const rows = readJson(PATHS.seedTargets, []) ?? [];
@@ -61,9 +67,29 @@ for (const record of catalog) {
   counts.set(record.state, (counts.get(record.state) ?? 0) + 1);
 }
 
+const cooldownCutoff = Date.now() - COOLDOWN_HOURS * 60 * 60 * 1000;
 let priorities = [...counts.entries()]
-  .map(([state, records]) => ({ state, records }))
-  .sort((a, b) => a.records - b.records || a.state.localeCompare(b.state));
+  .map(([state, records]) => {
+    const prior = progress.jurisdictions[state] ?? {};
+    const scannedAt = Date.parse(prior.lastScannedAt ?? "") || 0;
+    return {
+      state,
+      records,
+      lastScannedAt: prior.lastScannedAt ?? null,
+      lastYield: Number(prior.lastYield ?? 0),
+      zeroYieldStreak: Number(prior.zeroYieldStreak ?? 0),
+      cooling: !IGNORE_COOLDOWN && !ONLY_STATE && scannedAt >= cooldownCutoff,
+      scannedAt,
+    };
+  })
+  // First: jurisdictions not scanned recently. Within that pool, least-covered
+  // still wins. A recent zero-yield state therefore cannot monopolize every run.
+  .sort((a, b) =>
+    Number(a.cooling) - Number(b.cooling) ||
+    a.records - b.records ||
+    a.scannedAt - b.scannedAt ||
+    a.state.localeCompare(b.state),
+  );
 
 if (ONLY_STATE) priorities = priorities.filter((row) => row.state === ONLY_STATE);
 priorities = priorities.slice(0, MAX_JURISDICTIONS);
@@ -82,9 +108,9 @@ console.log(`balanced-discover: catalog ${catalog.length} waters across ${counts
 console.log(`balanced-discover: target ${TARGET} new questions, max ${PER_STATE} per jurisdiction`);
 console.log(`balanced-discover: ${beforeQueue.pending} unresolved question(s) already queued`);
 console.log("");
-console.log("Least-covered jurisdictions are asked first:");
+console.log("Least-covered jurisdictions not scanned recently are asked first:");
 for (const row of priorities.slice(0, 12)) {
-  console.log(`  ${String(row.records).padStart(4)}  ${row.state}`);
+  console.log(`  ${String(row.records).padStart(4)}  ${row.state}${row.cooling ? "  (cooldown fallback)" : ""}`);
 }
 console.log("");
 
@@ -124,6 +150,17 @@ for (const row of priorities) {
     exitCode: result.status ?? 1,
   });
 
+  if (!DRY) {
+    const prior = progress.jurisdictions[row.state] ?? {};
+    progress.jurisdictions[row.state] = {
+      lastScannedAt: new Date().toISOString(),
+      lastYield: delta,
+      zeroYieldStreak: delta > 0 ? 0 : Number(prior.zeroYieldStreak ?? 0) + 1,
+    };
+    progress.updatedAt = new Date().toISOString();
+    writeJson(progressPath, progress);
+  }
+
   if ((result.status ?? 1) !== 0) {
     console.error(`balanced-discover: ${row.state} discovery exited ${result.status}; continuing to the next jurisdiction`);
   } else if (!DRY) {
@@ -152,10 +189,12 @@ const reportPath = writeReport("balanced-discovery", [
   `Pending before:            ${beforeQueue.pending}`,
   `Pending after:             ${afterQueue.pending}`,
   `Dry run:                   ${DRY ? "yes" : "no"}`,
+  `Cooldown hours:             ${COOLDOWN_HOURS}`,
   "",
   "Jurisdictions are processed from the smallest catalog count upward. This is",
   "deliberate: discovery should broaden the map instead of reinforcing the",
-  "states that already have the most records.",
+  "states that already have the most records. Jurisdictions scanned within the",
+  `last ${COOLDOWN_HOURS} hours are deprioritized so repeated manual runs rotate outward.`,
   "",
   "## Jurisdictions",
   "",
@@ -181,6 +220,7 @@ appendRun("balanced-discovery", {
   pendingBefore: beforeQueue.pending,
   pendingAfter: afterQueue.pending,
   errors: failed.length,
+  cooldownHours: COOLDOWN_HOURS,
   dry: DRY,
 });
 
