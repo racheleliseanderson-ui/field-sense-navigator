@@ -320,7 +320,7 @@ export function Plate({
           <h4 className="hthp-plate__title">{title}</h4>
         </div>
         {savable === false ? null : (
-          <PlateSave frameRef={frameRef} eyebrow={eyebrow} title={title} />
+          <PlateSave frameRef={frameRef} eyebrow={eyebrow} title={title} caption={caption} />
         )}
         {caption ? <p className="hthp-plate__caption">{caption}</p> : null}
       </figcaption>

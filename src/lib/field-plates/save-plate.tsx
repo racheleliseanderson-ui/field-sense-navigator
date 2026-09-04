@@ -141,6 +141,16 @@ const FOOT = 38;
 export interface CardText {
   eyebrow: string;
   title: string;
+  /**
+   * The line under the title.
+   *
+   * On several plates this is where the card's identity lives — the species
+   * and the conditions a presentation brief was worked out for, the job a rig
+   * was drawn against. Dropping it produced the kind of note you find in a
+   * camera roll a month later and delete because you cannot tell what it was
+   * for.
+   */
+  caption?: string | undefined;
   /** Rendered under the drawing. The app, and the date it was saved. */
   credit: string;
 }
@@ -296,8 +306,16 @@ export function buildCard(
   /* The live plate sizes itself with inline width:100%; a card is a fixed
      drawing and that style would make it collapse. */
   clone.removeAttribute("style");
+  /*
+   * `currentColor` is the other way a drawing arrives in the page's colours,
+   * and it is the one a var() sweep cannot see. Inside a rasterized SVG it
+   * falls back to black, which on this fleet's dark grounds is a card with an
+   * invisible diagram on it. Pinning the colour the drawing actually inherits
+   * is the whole fix.
+   */
+  clone.setAttribute("style", `color:${getComputedStyle(svg).color}`);
   clone.setAttribute("x", String(PAD));
-  clone.setAttribute("y", String(HEAD));
+  /* y is set once the caption height is known, further down. */
   clone.setAttribute("width", String(vw));
   clone.setAttribute("height", String(vh));
 
@@ -324,8 +342,14 @@ export function buildCard(
     frame,
   );
 
-  const inner = resolveCssVars(new XMLSerializer().serializeToString(clone), frame);
   const titleSize = 20;
+
+  /* The caption, wrapped and capped: two lines of identity, not a paragraph. */
+  const captionLines = text.caption ? wrapText(text.caption, vw, `13px ${sans}`).slice(0, 2) : [];
+  const capHeight = captionLines.length * 18;
+  clone.setAttribute("y", String(HEAD + capHeight));
+
+  const inner = resolveCssVars(new XMLSerializer().serializeToString(clone), frame);
 
   /* The legend, wrapped to the card and laid out under the drawing. */
   const plate = frame.closest(".hthp-plate") ?? frame;
@@ -333,7 +357,7 @@ export function buildCard(
   const boldFont = `700 ${LEGEND_SIZE}px ${sans}`;
   const textWidth = vw - LEGEND_INDENT;
 
-  let cursor = HEAD + vh + 22;
+  let cursor = HEAD + capHeight + vh + 22;
   const legendMarkup: string[] = [];
 
   for (const row of cardLines(plate)) {
@@ -364,8 +388,8 @@ export function buildCard(
     cursor += lines.length * LEGEND_LEAD + 9;
   }
 
-  const legendHeight = legendMarkup.length ? cursor - (HEAD + vh) - 9 : 0;
-  const h = vh + HEAD + FOOT + legendHeight;
+  const legendHeight = legendMarkup.length ? cursor - (HEAD + capHeight + vh) - 9 : 0;
+  const h = vh + HEAD + capHeight + FOOT + legendHeight;
 
   const markup =
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ` +
@@ -376,6 +400,13 @@ export function buildCard(
     `fill="${accent}">${escapeText(fit(text.eyebrow.toUpperCase(), vw, 11))}</text>` +
     `<text x="${PAD}" y="56" font-family="${sans}" font-size="${titleSize}" font-weight="700" ` +
     `fill="${ink}">${escapeText(fit(text.title, vw, titleSize))}</text>` +
+    captionLines
+      .map(
+        (l, i) =>
+          `<text x="${PAD}" y="${78 + i * 18}" font-family="${sans}" font-size="13" ` +
+          `fill="${muted}">${escapeText(l)}</text>`,
+      )
+      .join("") +
     inner +
     legendMarkup.join("") +
     `<text x="${PAD}" y="${h - 14}" font-family="${mono}" font-size="10" letter-spacing="1.2" ` +
@@ -449,10 +480,12 @@ export function PlateSave({
   frameRef,
   eyebrow,
   title,
+  caption,
 }: {
   frameRef: RefObject<HTMLDivElement | null>;
   eyebrow: string;
   title: string;
+  caption?: string | undefined;
 }) {
   const [state, setState] = useState<SaveState>("idle");
   /* Some plates are legend and prose with no drawing in them at all, and
@@ -480,8 +513,13 @@ export function PlateSave({
       month: "short",
       day: "numeric",
     });
-    return buildCard(frame, { eyebrow, title, credit: `${siteName()} · saved ${when}` });
-  }, [frameRef, eyebrow, title]);
+    return buildCard(frame, {
+      eyebrow,
+      title,
+      ...(caption ? { caption } : {}),
+      credit: `${siteName()} · saved ${when}`,
+    });
+  }, [frameRef, eyebrow, title, caption]);
 
   const save = useCallback(
     async (kind: "png" | "svg") => {
