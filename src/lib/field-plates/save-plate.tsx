@@ -176,6 +176,105 @@ function escapeText(text: string): string {
  * Returns null when the plate holds no drawing — some plates are legend and
  * prose, and offering to save a picture of nothing is worse than not offering.
  */
+/* ------------------------------------------------------------------ */
+/* The words under the drawing                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A saved card used to be the drawing and nothing else, which is fine for a
+ * schematic whose labels are inside it and useless for every plate whose
+ * meaning lives in the legend — the numbered rows, and the line saying what
+ * the drawing could not show. Somebody saved a card, opened it on the water,
+ * and had a picture with the reasoning left behind in a browser tab.
+ *
+ * So the card carries them. Wrapped to the card's width with the browser's
+ * own text measurement rather than a guess at average character width, which
+ * is the difference between a tidy block and one that runs off the edge.
+ */
+export type CardLine = {
+  /** Numbered rows keep their number. */
+  badge?: string | undefined;
+  /** The swatch or badge colour, already resolved. */
+  tone?: string | undefined;
+  label?: string | undefined;
+  body?: string | undefined;
+};
+
+const LEGEND_SIZE = 12.5;
+const LEGEND_LEAD = 17;
+const LEGEND_INDENT = 24;
+/* A card is a card. Past this it is a document, and a document is what the
+   app already is. */
+const MAX_LEGEND_ROWS = 14;
+
+let ruler: CanvasRenderingContext2D | null = null;
+
+function measure(text: string, font: string): number {
+  if (!ruler) ruler = document.createElement("canvas").getContext("2d");
+  if (!ruler) return text.length * LEGEND_SIZE * 0.52;
+  ruler.font = font;
+  return ruler.measureText(text).width;
+}
+
+/**
+ * Greedy wrap against any measurer.
+ *
+ * Separated from the browser so it can be tested: a word wider than the line
+ * takes the line on its own rather than looping forever, which is the bug
+ * every hand-rolled wrapper has the first time.
+ */
+export function wrapWith(text: string, width: number, widthOf: (s: string) => number): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = "";
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && widthOf(next) > width) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+/** The same wrap, measured by the browser in the font the card will use. */
+export function wrapText(text: string, width: number, font: string): string[] {
+  return wrapWith(text, width, (t) => measure(t, font));
+}
+
+/** The legend rows and the unknown line, read off the live plate. */
+export function cardLines(plate: Element): CardLine[] {
+  const out: CardLine[] = [];
+
+  for (const row of plate.querySelectorAll(".hthp-legend__row")) {
+    const badgeEl = row.querySelector(".hthp-legend__badge");
+    const swatch = row.querySelector(".hthp-legend__swatch:not(.hthp-legend__swatch--none)");
+    const source = badgeEl ?? swatch;
+    out.push({
+      badge: badgeEl?.textContent?.trim() || undefined,
+      tone: source ? getComputedStyle(source).backgroundColor : undefined,
+      label: row.querySelector(".hthp-legend__label")?.textContent?.trim() || undefined,
+      body: row.querySelector(".hthp-legend__body")?.textContent?.trim() || undefined,
+    });
+  }
+
+  /* Never dropped, whatever else is trimmed: what a drawing could not show is
+     the thing a reader assumes in its absence. */
+  const unknown = plate.querySelector('[data-testid="plate-unknown"]')?.textContent?.trim();
+
+  const trimmed = out.slice(0, MAX_LEGEND_ROWS);
+  if (out.length > trimmed.length) {
+    trimmed.push({
+      body: `${out.length - trimmed.length} more rows are in the app. This card holds the first ${trimmed.length}.`,
+    });
+  }
+  if (unknown) trimmed.push({ label: "Not shown", body: unknown });
+  return trimmed;
+}
+
 export function buildCard(
   frame: Element,
   text: CardText,
@@ -203,7 +302,6 @@ export function buildCard(
   clone.setAttribute("height", String(vh));
 
   const w = vw + PAD * 2;
-  const h = vh + HEAD + FOOT;
 
   const style = getComputedStyle(frame);
   const paper =
@@ -229,6 +327,46 @@ export function buildCard(
   const inner = resolveCssVars(new XMLSerializer().serializeToString(clone), frame);
   const titleSize = 20;
 
+  /* The legend, wrapped to the card and laid out under the drawing. */
+  const plate = frame.closest(".hthp-plate") ?? frame;
+  const legendFont = `${LEGEND_SIZE}px ${sans}`;
+  const boldFont = `700 ${LEGEND_SIZE}px ${sans}`;
+  const textWidth = vw - LEGEND_INDENT;
+
+  let cursor = HEAD + vh + 22;
+  const legendMarkup: string[] = [];
+
+  for (const row of cardLines(plate)) {
+    const head = row.label ? `${row.label}${row.body ? " — " : ""}` : "";
+    /* The label is bold and the body follows it on the same line, so the two
+       are wrapped together against a font that is a compromise between them.
+       Getting this exactly right would need per-run measurement; being a few
+       characters conservative is invisible and never overflows. */
+    const lines = wrapText(`${head}${row.body ?? ""}`, textWidth, boldFont);
+    if (row.badge) {
+      legendMarkup.push(
+        `<circle cx="${PAD + 8}" cy="${cursor - 4}" r="8" fill="${row.tone ?? accent}"/>` +
+          `<text x="${PAD + 8}" y="${cursor - 0.5}" text-anchor="middle" font-family="${mono}" ` +
+          `font-size="9" font-weight="700" fill="${paper}">${escapeText(row.badge)}</text>`,
+      );
+    } else if (row.tone) {
+      legendMarkup.push(
+        `<rect x="${PAD + 2}" y="${cursor - 11}" width="11" height="11" fill="${row.tone}"/>`,
+      );
+    }
+    for (const [i, text] of lines.entries()) {
+      legendMarkup.push(
+        `<text x="${PAD + LEGEND_INDENT}" y="${cursor + i * LEGEND_LEAD}" ` +
+          `font-family="${sans}" font-size="${LEGEND_SIZE}" fill="${i === 0 ? ink : muted}">` +
+          `${escapeText(text)}</text>`,
+      );
+    }
+    cursor += lines.length * LEGEND_LEAD + 9;
+  }
+
+  const legendHeight = legendMarkup.length ? cursor - (HEAD + vh) - 9 : 0;
+  const h = vh + HEAD + FOOT + legendHeight;
+
   const markup =
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ` +
     `width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">` +
@@ -239,6 +377,7 @@ export function buildCard(
     `<text x="${PAD}" y="56" font-family="${sans}" font-size="${titleSize}" font-weight="700" ` +
     `fill="${ink}">${escapeText(fit(text.title, vw, titleSize))}</text>` +
     inner +
+    legendMarkup.join("") +
     `<text x="${PAD}" y="${h - 14}" font-family="${mono}" font-size="10" letter-spacing="1.2" ` +
     `fill="${muted}">${escapeText(fit(text.credit.toUpperCase(), vw, 10.5))}</text>` +
     `</svg>`;
