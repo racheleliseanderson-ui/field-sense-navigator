@@ -72,6 +72,26 @@ describe("the app can be installed", () => {
     }
   });
 
+  test("every shortcut is prefetched by the service worker", () => {
+    /*
+     * This is the whole point of a shortcut on a fishing app: it is pressed
+     * from a home screen, on a bank, with no bars. One that opens a page the
+     * worker never cached fails in exactly the situation it exists for.
+     *
+     * Compared on the pathname, because a shortcut may carry a query the
+     * client reads and the worker caches by path.
+     */
+    const sw = readFileSync(join(PUBLIC, "sw.js"), "utf8");
+    const block = sw.match(/const OFFLINE_ROUTES\s*=\s*\[([^\]]*)\]/);
+    expect(block).toBeTruthy();
+    const cached = [...block![1]!.matchAll(/"([^"]+)"/g)].map((m) => m[1]!);
+    expect(cached).toContain("/");
+    for (const shortcut of manifest.shortcuts ?? []) {
+      const path = shortcut.url.split("?")[0] || "/";
+      expect(cached).toContain(path);
+    }
+  });
+
   test("the head links the manifest, or none of the above happens", () => {
     const root = readFileSync(join(ROUTES, "__root.tsx"), "utf8");
     expect(root).toContain('rel: "manifest"');
