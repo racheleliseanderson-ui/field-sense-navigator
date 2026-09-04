@@ -1,0 +1,39 @@
+{
+  "name": "Waterways — read the water before you fish it",
+  "short_name": "Waterways",
+  "description": "What a reach does after rain, a release, a wind shift or a drawdown, and which bank that puts the fish on. Named public waters only. Works with no signal.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#10141b",
+  "theme_color": "#10141b",
+  "categories": ["sports", "utilities", "travel"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Read a reach",
+      "short_name": "Reading",
+      "description": "A schematic that changes as the conditions change",
+      "url": "/reading"
+    },
+    {
+      "name": "Plan a water",
+      "short_name": "Plan",
+      "description": "Work a named water against what it is doing today",
+      "url": "/plan"
+    },
+    {
+      "name": "The watchlist",
+      "short_name": "Watchlist",
+      "description": "The waters you keep an eye on",
+      "url": "/watchlist"
+    }
+  ]
+}

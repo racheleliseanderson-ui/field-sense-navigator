@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Waterways">
+  <defs>
+    <clipPath id="ww-edge"><rect width="512" height="512" rx="96"/></clipPath>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#10141b"/>
+  <g clip-path="url(#ww-edge)">
+    <!-- The reach, drawn as water rather than as two lines, and running off
+         both edges: a reach is a piece of something longer. -->
+    <path d="M244-24C288 104 312 216 280 328c-26 92-18 146 14 208"
+          fill="none" stroke="#81bbf9" stroke-opacity="0.16" stroke-width="172"/>
+    <g fill="none" stroke="#e4e6eb" stroke-width="15" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M158-24C202 104 226 216 194 328c-26 92-18 146 14 208"/>
+      <path d="M330-24C374 104 398 216 366 328c-26 92-18 146 14 208"/>
+    </g>
+    <g fill="none" stroke="#81bbf9" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+      <!-- The seam, where the fast water meets the slow. Nothing marks a spot. -->
+      <path d="M214-16C258 108 282 218 250 328c-26 92-18 144 14 204" stroke-dasharray="26 26"/>
+      <!-- Which way it is going. -->
+      <path d="M292 178l24 28 24-32" opacity="0.95"/>
+      <path d="M274 358l24 28 26-30" opacity="0.95"/>
+    </g>
+  </g>
+</svg>
