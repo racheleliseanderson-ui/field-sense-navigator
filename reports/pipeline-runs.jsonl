@@ -84,3 +84,4 @@
 {"at":"2026-09-04T16:55:10.153Z","run":"balanced-discovery","catalog":1024,"jurisdictions":45,"target":200,"queued":8,"pendingBefore":0,"pendingAfter":8,"errors":0,"cooldownHours":18,"dry":false}
 {"at":"2026-09-04T16:55:18.335Z","run":"resolve-targets","attempted":8,"proved":0,"dropped":8,"reasons":{"http_404":8},"dry":false}
 {"at":"2026-09-04T16:57:15.580Z","run":"complete-seeded","selected":150,"improved":43,"dry":false}
+{"at":"2026-09-04T16:58:18.089Z","run":"refresh","attempted":1024,"refreshed":585,"changed":9,"issues":{"robots_disallow":14,"page_no_longer_names_water":197,"page_unreadable":218,"untrusted_source_host":5,"redirects_off_agency":5},"prune":false,"dry":false}
