@@ -130,12 +130,18 @@ echo.
 REM ---------------------------------------------------------------- step 6
 echo  [6/8] Filling the machine-provable supporting criteria...
 echo.
+echo        - supplemental official pages for missing access/species evidence
 echo        - managing agency and regulations URL
 echo        - related-water links where the catalog can prove them
 echo        - public location lookup
 echo        - gauge / tide binding where a defensible match exists
 echo        - weather-station binding for located US waters
 echo.
+call node scripts\pipeline\complete-seeded.mjs --days=3 --limit=150 --concurrency=3
+if errorlevel 1 (
+  echo   ^>^> WARNING: supplemental official-source completion did not finish.
+  echo      The primary-source seed is still intact; unresolved fields stay empty.
+)
 call node scripts\enrich-catalog.mjs
 if errorlevel 1 (
   echo   ^>^> WARNING: catalog enrichment did not finish.
