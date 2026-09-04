@@ -118,3 +118,5 @@
 {"at":"2026-09-04T19:20:47.303Z","run":"resolve-targets","attempted":32,"proved":14,"dropped":18,"reasons":{"no_published_name_that_names_a_water":9,"already_in_catalog":1,"http_404":8},"dry":false}
 {"at":"2026-09-04T19:20:47.411Z","run":"seed","before":1024,"added":14,"refused":0,"dry":false}
 {"at":"2026-09-04T19:22:18.914Z","run":"complete-seeded","selected":150,"improved":43,"dry":false}
+{"at":"2026-09-04T19:36:07.169Z","run":"health","records":1038,"overdue":88,"duplicates":9,"untrusted":5,"deadLinks":0,"links":false}
+{"at":"2026-09-04T19:41:47.256Z","run":"refresh","attempted":1038,"refreshed":662,"changed":9,"issues":{"robots_disallow":14,"page_no_longer_names_water":203,"page_unreadable":149,"untrusted_source_host":5,"redirects_off_agency":5},"prune":false,"dry":false}
