@@ -248,3 +248,88 @@
     transition: none;
   }
 }
+
+/*
+ * Taking the drawing with you.
+ *
+ * Quiet on purpose. Somebody reading a plate is reading the plate; this is
+ * for the moment afterwards, when they want the answer somewhere that does
+ * not need the app open, a charged phone and a signal. It never prints —
+ * a printed page with two buttons drawn on it is a printed page with a bug.
+ */
+.hthp-plate__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.hthp-plate__headline {
+  min-width: 0;
+  flex: 1 1 14rem;
+}
+
+.hthp-plate__caption {
+  flex: 1 0 100%;
+}
+
+.hthp-save {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+}
+
+.hthp-save__label {
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+}
+
+.hthp-save__btn {
+  /* 44px of tappable height with only 22px of visible chrome: the target is
+     the part that matters on wet rock, the box is the part that would shout. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.55rem;
+  border: 1px solid var(--hthp-line, var(--panel-border, rgba(128, 128, 128, 0.32)));
+  background: transparent;
+  color: var(--hthp-muted, var(--muted-foreground, #6b7280));
+  font-family: var(--hthp-mono, var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hthp-save__btn:hover:not(:disabled) {
+  color: var(--hthp-ink, var(--foreground, #16191c));
+  border-color: var(--hthp-accent, var(--brass, #b08428));
+}
+
+.hthp-save__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hthp-save__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media print {
+  .hthp-save {
+    display: none !important;
+  }
+}

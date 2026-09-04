@@ -27,9 +27,12 @@ import {
   useEffect,
   useId,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
+
+import { PlateSave } from "./save-plate";
 
 /* ------------------------------------------------------------------ */
 /* Tokens                                                              */
@@ -161,6 +164,7 @@ export function Plate({
   unknown,
   testid,
   notesLabel = "What this plate is telling you",
+  savable,
 }: {
   eyebrow: string;
   title: string;
@@ -172,16 +176,26 @@ export function Plate({
   unknown?: ReactNode | undefined;
   testid?: string | undefined;
   notesLabel?: string | undefined;
+  /** Set false on a plate that has no business being taken out of the app. */
+  savable?: boolean | undefined;
 }) {
   const wide = useWidePlate();
+  const frameRef = useRef<HTMLDivElement | null>(null);
   return (
     <figure className="hthp-plate" data-testid={testid}>
       <figcaption className="hthp-plate__head">
-        <p className="hthp-eyebrow">{eyebrow}</p>
-        <h4 className="hthp-plate__title">{title}</h4>
+        <div className="hthp-plate__headline">
+          <p className="hthp-eyebrow">{eyebrow}</p>
+          <h4 className="hthp-plate__title">{title}</h4>
+        </div>
+        {savable === false ? null : (
+          <PlateSave frameRef={frameRef} eyebrow={eyebrow} title={title} />
+        )}
         {caption ? <p className="hthp-plate__caption">{caption}</p> : null}
       </figcaption>
-      <div className="hthp-plate__frame">{children}</div>
+      <div ref={frameRef} className="hthp-plate__frame">
+        {children}
+      </div>
       {legend ? <div className="hthp-plate__legend">{legend}</div> : null}
       {unknown ? (
         <p className="hthp-plate__unknown" data-testid="plate-unknown">
