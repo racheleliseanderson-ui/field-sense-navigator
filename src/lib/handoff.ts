@@ -328,7 +328,11 @@ export function buildPacket(
       shoreAccess: access.counts.shore > 0 || access.counts.pier > 0,
       amenitiesPublished: access.logistics.map((l) => l.id),
     },
-    job: job ? { id: job.id, label: job.label } : null,
+    /* `kind: "access"` states what this instrument has always meant by `job`
+       and never said in the packet. Tackle Link already reads it correctly on
+       a convention held in a comment in another repository; this makes the
+       convention a fact the receiver can check. */
+    job: job ? { id: job.id, label: job.label, kind: "access" as const } : null,
     readiness: { score: r.score, band: r.band },
     openChecks: d.directVerification,
     conditions: {

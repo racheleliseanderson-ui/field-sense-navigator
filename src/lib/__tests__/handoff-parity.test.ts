@@ -201,6 +201,48 @@ const live: LiveConditionsLike = {
 
 const TARGETS: HandoffTarget[] = ["species", "hatch", "rig", "tackle", "knot", "ops"];
 
+/**
+ * Deliberate protocol changes made since the copy above was frozen.
+ *
+ * The frozen emitter says not to edit it, and that is right: its whole value is
+ * that nobody has. But deleting the assertion outright — the other option it
+ * offers — throws away parity on every other field to record one addition. So
+ * the addition is named here instead, and everything not named still has to
+ * match exactly.
+ *
+ * Each entry needs a reason, and the list should stay short. A long list means
+ * this parity check has stopped saying anything.
+ *
+ *   · `job.kind` — the packet contract gained an optional `kind` on `JobRef`
+ *     so a receiver can tell an access mode from a workflow stage from a
+ *     fishing job. This instrument has always meant "access" by `job` and now
+ *     says so. Nothing is removed and nothing changes meaning; a reader that
+ *     ignores the field sees exactly what it saw before.
+ */
+const SINCE_FROZEN: { path: string; why: string }[] = [
+  {
+    path: "job.kind",
+    why: "JobRef gained an optional kind; Field Sense has always meant access and now declares it.",
+  },
+];
+
+/** Strip the deliberately-added fields so the rest can be compared as frozen. */
+function withoutDeliberateAdditions(value: unknown): unknown {
+  const clone = JSON.parse(JSON.stringify(value ?? null)) as Record<string, unknown> | null;
+  if (!clone) return clone;
+  for (const { path } of SINCE_FROZEN) {
+    const parts = path.split(".");
+    const leaf = parts.pop() as string;
+    let node: unknown = clone;
+    for (const part of parts) {
+      node =
+        node && typeof node === "object" ? (node as Record<string, unknown>)[part] : undefined;
+    }
+    if (node && typeof node === "object") delete (node as Record<string, unknown>)[leaf];
+  }
+  return clone;
+}
+
 describe("the shared module emits what the hand-rolled emitter emitted", () => {
   const cases: Array<[string, Destination, HandoffContext]> = [
     ["a bare record", water(), {}],
@@ -223,7 +265,7 @@ describe("the shared module emits what the hand-rolled emitter emitted", () => {
     for (const target of TARGETS) {
       test(`${name}, carried to ${target}`, () => {
         const before = withoutTheClock(legacyBuildPacket(record, target, ctx));
-        const after = withoutTheClock(buildPacket(record, target, ctx));
+        const after = withoutDeliberateAdditions(withoutTheClock(buildPacket(record, target, ctx)));
         expect(sorted(after)).toEqual(sorted(before));
         // Same fields, not merely the same values under different names.
         expect(Object.keys(after as object).sort()).toEqual(Object.keys(before as object).sort());
@@ -234,7 +276,7 @@ describe("the shared module emits what the hand-rolled emitter emitted", () => {
   test("fifty real catalog records, field for field", () => {
     for (const record of destinations.slice(0, 50)) {
       const before = withoutTheClock(legacyBuildPacket(record, "species"));
-      const after = withoutTheClock(buildPacket(record, "species"));
+      const after = withoutDeliberateAdditions(withoutTheClock(buildPacket(record, "species")));
       expect(sorted(after)).toEqual(sorted(before));
     }
   });

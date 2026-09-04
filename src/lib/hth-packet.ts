@@ -385,10 +385,58 @@ export type LogisticsBlock = {
   [key: string]: unknown;
 };
 
+/**
+ * What KIND of job a `JobRef` names.
+ *
+ * `job` entered the contract as one field with no statement of what the word
+ * meant, and today exactly one instrument originates it: Field Sense Navigator
+ * writes an ACCESS mode there — `bank`, `kayak`, `small_boat`, `scouting`. How
+ * you are getting to the water. Tackle Link reads it back as an access mode and
+ * says so in a comment; Field Ops relays it untouched. So the convention is
+ * real, correct, and written down in exactly one place, in one repository, as
+ * prose.
+ *
+ * That is fine right up until a second instrument wants the field. Field Ops is
+ * becoming the spine of the fishing day and has an obvious use for a workflow
+ * STAGE — trip prep, on the water, debrief. Tackle Link reasons about FISHING
+ * jobs — anchored bait in the surf, deep jigging. Either could reasonably land
+ * in `job`, and the instrument that reads it would look the id up in its own
+ * vocabulary, miss, and drop it in silence. A receiver would have no way to
+ * tell "a job I do not recognise" from "a job of a kind I do not model", and
+ * those deserve different answers.
+ *
+ * Naming the kind costs one optional field and buys the difference. It is
+ * added now, while there is one writer and the change is free, rather than
+ * after there are three and it is a migration.
+ *
+ * `kind` is optional because every packet built before it existed is still
+ * valid. A receiver seeing no `kind` should fall back to matching the id
+ * against its own vocabulary — the lenient behaviour that already exists — and
+ * must not assume the job is of the kind it happens to model.
+ */
+export type JobKind = "access" | "stage" | "fishing";
+
+export const JOB_KINDS: readonly JobKind[] = ["access", "stage", "fishing"];
+
 export type JobRef = {
   id: string;
   label: string;
+  kind?: Opt<JobKind>;
 };
+
+/**
+ * The kind a `JobRef` declares, or null when it declares none.
+ *
+ * Deliberately does NOT guess from the id. Two instruments could reasonably
+ * both call something `scouting`, and a guess here would be a guess wearing a
+ * function's authority.
+ */
+export function jobKindOf(job: { kind?: unknown } | null | undefined): JobKind | null {
+  const kind = job?.kind;
+  return typeof kind === "string" && (JOB_KINDS as readonly string[]).includes(kind)
+    ? (kind as JobKind)
+    : null;
+}
 
 export type ReadinessBlock = {
   score: number;
