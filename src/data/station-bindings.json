@@ -1,6 +1,6 @@
 {
   "schema": "0.6.0",
-  "generatedAt": "2026-09-04T19:49:50.083Z",
+  "generatedAt": "2026-09-05T01:20:43.431Z",
   "matchFloor": 0.75,
   "doctrine": "Override file wins. Otherwise name + water-type must align. Ambiguous multi-matches stay unmatched. No nearby-station substitution. Gaps stay gaps.",
   "stats": {

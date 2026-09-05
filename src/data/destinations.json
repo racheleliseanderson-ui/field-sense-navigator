@@ -48065,7 +48065,12 @@
     "checkedAt": "2026-09-04T19:37:19.565Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Brook trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Boat Ramp",
@@ -48118,7 +48123,13 @@
       "Brook trout",
       "Trout"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Boat Ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [],
     "directVerification": [
       "Check Colorado Parks and Wildlife regulations for current rules on this water before fishing.",
@@ -48157,8 +48168,19 @@
     "checkedAt": "2026-09-04T19:37:19.773Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Brook trout",
+      "Trout"
+    ],
+    "publicAccess": [
+      {
+        "name": "Boat Ramp",
+        "type": "boat_launch",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Vessel use prohibited except for handlaunched, hand-propelled vessels used as an aid for fishing."
     ],
@@ -48328,8 +48350,29 @@
     "checkedAt": "2026-09-04T19:37:20.201Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
-    "publicAccess": [],
+    "speciesContext": [
+      "Kokanee salmon",
+      "Rainbow trout",
+      "Brown trout",
+      "Kokanee",
+      "Salmon",
+      "Trout",
+      "Channel catfish",
+      "Blue catfish",
+      "Catfish"
+    ],
+    "publicAccess": [
+      {
+        "name": "Maps and Access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      },
+      {
+        "name": "Walk-In Access",
+        "type": "shore_access",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Discharging firearms or bows and overnight vehicle parking prohibited."
     ],
@@ -48553,7 +48596,12 @@
     "checkedAt": "2026-09-04T19:37:22.310Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Brown trout",
+      "Trout",
+      "Pollock"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -54653,7 +54701,9 @@
     "checkedAt": "2026-09-04T19:41:04.930Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Spot"
+    ],
     "publicAccess": [],
     "currentNotices": [],
     "directVerification": [
@@ -55002,7 +55052,16 @@
     "checkedAt": "2026-09-04T19:41:05.841Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Coastal cutthroat trout",
+      "Largemouth bass",
+      "Smallmouth bass",
+      "Cutthroat trout",
+      "Channel catfish",
+      "Brown bullhead",
+      "Black crappie",
+      "Rainbow trout"
+    ],
     "publicAccess": [
       {
         "name": "Leland Lake — access published by the managing agency",
@@ -55401,7 +55460,10 @@
     "checkedAt": "2026-09-04T19:41:07.659Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Rainbow trout",
+      "Trout"
+    ],
     "publicAccess": [
       {
         "name": "Tarboo Lake — access published by the managing agency",
@@ -55679,7 +55741,13 @@
     "checkedAt": "2026-09-04T19:41:08.730Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Rainbow trout",
+      "Sunfish",
+      "Trout",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Lake Alice — access published by the managing agency",
@@ -56019,7 +56087,15 @@
     "checkedAt": "2026-09-04T19:41:09.550Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Brown bullhead",
+      "Rainbow trout",
+      "Yellow perch",
+      "Trout",
+      "Perch",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Beaver Lake — access published by the managing agency",
@@ -56129,9 +56205,23 @@
       "Flounder",
       "Crappie",
       "Trout",
-      "Bream"
+      "Bream",
+      "Smallmouth bass",
+      "Rainbow trout",
+      "Spotted bass",
+      "Lake trout",
+      "Walleye",
+      "Catfish",
+      "Sturgeon",
+      "Snapper"
     ],
-    "publicAccess": [],
+    "publicAccess": [
+      {
+        "name": "Fish River — access published by the managing agency",
+        "type": "boat_launch_and_fishing_pier",
+        "officiallyPublished": true
+      }
+    ],
     "currentNotices": [
       "Anglers should be aware of a fish consumption advisory for largemouth bass harvested from the Fish River."
     ],
@@ -56378,7 +56468,15 @@
     "checkedAt": "2026-09-04T19:41:10.490Z",
     "nextReviewAt": "2026-11-03",
     "status": "current_with_same_day_rule_check_required",
-    "speciesContext": [],
+    "speciesContext": [
+      "Largemouth bass",
+      "Rainbow trout",
+      "Yellow perch",
+      "Sunfish",
+      "Trout",
+      "Perch",
+      "Bass"
+    ],
     "publicAccess": [
       {
         "name": "Lake Desire — access published by the managing agency",

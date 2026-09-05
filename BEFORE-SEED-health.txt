@@ -1,13 +1,13 @@
 
   HOW OLD IS THE INFORMATION?
   ------------------------------------------------------------------
-  under 30 days                                1019 records
-  30 to 90 days                                5 records
+  under 30 days                                1025 records
+  30 to 90 days                                13 records
   90 to 180 days                               0 records
   over 180 days                                0 records
   never recorded                               0 records
   past their own review date                   88 records
-  never read by a person                       997 records
+  never read by a person                       1011 records
 
   ANY DUPLICATES?
   ------------------------------------------------------------------
@@ -26,19 +26,19 @@
 
   WHAT CAN THE CATALOGUE ANSWER?
   ------------------------------------------------------------------
-  managing agency named                        1014 of 1024  (99%)
-  official regulations url                     1024 of 1024  (100%)
-  at least one published access                814 of 1024  (79%)
-  at least one current notice                  748 of 1024  (73%)
-  species context                              778 of 1024  (76%)
-  region named                                 523 of 1024  (51%)
-  gauge or tide station bound                  734 of 1024  (72%)
-  weather station bound                        730 of 1024  (71%)
-  human reviewed at least once                 27 of 1024  (3%)
+  managing agency named                        1028 of 1038  (99%)
+  official regulations url                     1038 of 1038  (100%)
+  at least one published access                841 of 1038  (81%)
+  at least one current notice                  757 of 1038  (73%)
+  species context                              817 of 1038  (79%)
+  region named                                 523 of 1038  (50%)
+  gauge or tide station bound                  744 of 1038  (72%)
+  weather station bound                        740 of 1038  (71%)
+  human reviewed at least once                 27 of 1038  (3%)
 
   WHERE IS IT READING FROM?
   ------------------------------------------------------------------
-  government                                   1014 records
+  government                                   1028 records
   untrusted                                    5 records
   authority                                    5 records
   sources that are neither an agency nor a named authority:
@@ -50,11 +50,11 @@
 
   SHAPE
   ------------------------------------------------------------------
-  records                                      1024
+  records                                      1038
   jurisdictions                                63
-  water classes                                lake 359, river 298, reservoir 228, marine 139
+  water classes                                lake 367, river 300, reservoir 231, marine 140
   targets queued for seeding                   0
   records staged, not yet seeded               0
 
-  report: reports\health-2026-09-04T19-18-28.md
+  report: reports\health-2026-09-05T01-10-09.md
 
