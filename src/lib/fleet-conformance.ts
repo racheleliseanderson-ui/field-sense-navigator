@@ -308,7 +308,12 @@ export const FLEET_SAMPLES: FleetSample[] = [
     packet: {
       ...envelope("species-presentation", "HTH-SP-001", "rig"),
       water: { waterType: "inshore", waterClass: "inshore", selectedSpecies: "Striped bass" },
-      conditions: { waterType: "inshore", tempF: 60, season: "late_summer", tideMovement: "ebbing" },
+      conditions: {
+        waterType: "inshore",
+        tempF: 60,
+        season: "late_summer",
+        tideMovement: "ebbing",
+      },
       species: {
         id: "morone_saxatilis",
         scientificName: "Morone saxatilis",
