@@ -15,12 +15,12 @@ const ROOT = resolve(__dirname, "..");
 const DEST_PATH = resolve(ROOT, "src/data/destinations.json");
 const OUT_PATH = resolve(ROOT, "public/live/closures.json");
 
-const UA =
-  "Mozilla/5.0 (compatible; HoneyHoleIntelligence/0.6; closure language scan)";
+const UA = "Mozilla/5.0 (compatible; HoneyHoleIntelligence/0.6; closure language scan)";
 const TIMEOUT_MS = 9000;
 const CONCURRENCY = 4;
 
-const HIT = /\b(closed|closure|closures|temporarily closed|emergency closure|emergency rule|launch closed|ramp closed|pier closed|area closed|ice[- ]up|unsafe ice)\b/i;
+const HIT =
+  /\b(closed|closure|closures|temporarily closed|emergency closure|emergency rule|launch closed|ramp closed|pier closed|area closed|ice[- ]up|unsafe ice)\b/i;
 const NEGATE = /\bno(?:\s+current)?\s+closures\b|\bnot closed\b|\bclosures?:\s*none\b/i;
 
 function stripHtml(html) {

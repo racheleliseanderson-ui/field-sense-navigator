@@ -10,7 +10,14 @@
  *
  * No network calls happen at import time.
  */
-import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync, readdirSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  appendFileSync,
+  readdirSync,
+} from "node:fs";
 import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -58,7 +65,9 @@ export function readCatalogSources() {
   const sources = [{ path: PATHS.destinations, records: base }];
 
   if (existsSync(PATHS.destinationShards)) {
-    const names = readdirSync(PATHS.destinationShards).filter((n) => n.endsWith(".json")).sort();
+    const names = readdirSync(PATHS.destinationShards)
+      .filter((n) => n.endsWith(".json"))
+      .sort();
     for (const name of names) {
       const path = join(PATHS.destinationShards, name);
       const records = readJson(path, []);
@@ -90,39 +99,87 @@ export function readCatalog() {
  */
 export const GOV_HOSTS = new Set([
   // agency hosts on non-.gov TLDs that ARE the agency
-  "myfwc.com", "myodfw.com", "myfwp.mt.gov", "agfc.com", "azgfd.com", "ndow.org",
-  "mdwfp.com", "ksoutdoors.com", "wildlifedepartment.com", "georgiawildlife.com",
-  "outdooralabama.com", "vtfishandwildlife.com", "fishandboat.com",
-  "floridastateparks.org", "parksandrecreation.idaho.gov", "cpw.state.co.us",
-  "dnr.state.mn.us", "wildlife.state.nm.us", "ifishillinois.org",
+  "myfwc.com",
+  "myodfw.com",
+  "myfwp.mt.gov",
+  "agfc.com",
+  "azgfd.com",
+  "ndow.org",
+  "mdwfp.com",
+  "ksoutdoors.com",
+  "wildlifedepartment.com",
+  "georgiawildlife.com",
+  "outdooralabama.com",
+  "vtfishandwildlife.com",
+  "fishandboat.com",
+  "floridastateparks.org",
+  "parksandrecreation.idaho.gov",
+  "cpw.state.co.us",
+  "dnr.state.mn.us",
+  "wildlife.state.nm.us",
+  "ifishillinois.org",
   // Canadian federal / provincial portals
-  "ontario.ca", "quebec.ca", "saskatchewan.ca", "novascotia.ca", "yukon.ca",
-  "bcparks.ca", "albertaparks.ca", "ontarioparks.ca", "parkscanadahistory.com",
-  "princeedwardisland.ca", "albertaregulations.ca",
+  "ontario.ca",
+  "quebec.ca",
+  "saskatchewan.ca",
+  "novascotia.ca",
+  "yukon.ca",
+  "bcparks.ca",
+  "albertaparks.ca",
+  "ontarioparks.ca",
+  "parkscanadahistory.com",
+  "princeedwardisland.ca",
+  "albertaregulations.ca",
   "envrbrportal.crm.saskatchewan.ca",
   // City and county governments that publish their own water access, on .org
   // or a vanity domain rather than .gov. A municipality is government; the
   // domain it chose does not change that.
-  "auroragov.org", "pinellascounty.org", "rivcoparks.org", "countyofsb.org",
-  "monocounty.org", "crystalriverfl.org", "ocean.floridamarine.org",
+  "auroragov.org",
+  "pinellascounty.org",
+  "rivcoparks.org",
+  "countyofsb.org",
+  "monocounty.org",
+  "crystalriverfl.org",
+  "ocean.floridamarine.org",
 ]);
 
 /** Named public authorities, districts and conservation bodies. Not government TLDs. */
 export const AUTHORITY_HOSTS = new Set([
-  "ncwildlife.org", "coastalgadnr.org", "castaiclake.com", "bbmwd.com",
-  "mwdh2o.com", "corpslakes.erdc.dren.mil",
+  "ncwildlife.org",
+  "coastalgadnr.org",
+  "castaiclake.com",
+  "bbmwd.com",
+  "mwdh2o.com",
+  "corpslakes.erdc.dren.mil",
 ]);
 
 /** Hosts that describe water they have no standing to describe. */
-const DENY_HOST_RE =
-  /(^|\.)(visit[a-z-]*|[a-z-]*tourism[a-z-]*|[a-z-]*cvb|chamber[a-z-]*)\./i;
+const DENY_HOST_RE = /(^|\.)(visit[a-z-]*|[a-z-]*tourism[a-z-]*|[a-z-]*cvb|chamber[a-z-]*)\./i;
 const DENY_HOSTS = new Set([
-  "tripadvisor.com", "yelp.com", "wikipedia.org", "fishbrain.com", "onxmaps.com",
-  "facebook.com", "instagram.com", "x.com", "twitter.com", "reddit.com",
-  "pinterest.com", "youtube.com", "tiktok.com", "alltrails.com", "google.com",
-  "lakelubbers.com", "fishingbooker.com", "hugedomains.com", "afternic.com",
-  "portaransas.org", "portisabelsouthpadre.com", "visitcorpuschristi.com",
-  "destinfwb.com", "navarrebeachpier.com",
+  "tripadvisor.com",
+  "yelp.com",
+  "wikipedia.org",
+  "fishbrain.com",
+  "onxmaps.com",
+  "facebook.com",
+  "instagram.com",
+  "x.com",
+  "twitter.com",
+  "reddit.com",
+  "pinterest.com",
+  "youtube.com",
+  "tiktok.com",
+  "alltrails.com",
+  "google.com",
+  "lakelubbers.com",
+  "fishingbooker.com",
+  "hugedomains.com",
+  "afternic.com",
+  "portaransas.org",
+  "portisabelsouthpadre.com",
+  "visitcorpuschristi.com",
+  "destinfwb.com",
+  "navarrebeachpier.com",
 ]);
 
 /**
@@ -135,14 +192,27 @@ const DENY_HOSTS = new Set([
  * for evidence that the host serves only that state.
  */
 export const MULTI_STATE_HOSTS = new Set([
-  "blm.gov", "nps.gov", "fs.usda.gov", "fws.gov", "usbr.gov", "usace.army.mil",
-  "noaa.gov", "epa.gov", "usgs.gov", "recreation.gov", "corpslakes.erdc.dren.mil",
-  "canada.ca", "dfo-mpo.gc.ca", "pac.dfo-mpo.gc.ca",
+  "blm.gov",
+  "nps.gov",
+  "fs.usda.gov",
+  "fws.gov",
+  "usbr.gov",
+  "usace.army.mil",
+  "noaa.gov",
+  "epa.gov",
+  "usgs.gov",
+  "recreation.gov",
+  "corpslakes.erdc.dren.mil",
+  "canada.ca",
+  "dfo-mpo.gc.ca",
+  "pac.dfo-mpo.gc.ca",
 ]);
 
 /** True when a host serves many jurisdictions and cannot imply one. */
 export function isMultiStateHost(host) {
-  const bare = String(host ?? "").replace(/^www\d*\./, "").toLowerCase();
+  const bare = String(host ?? "")
+    .replace(/^www\d*\./, "")
+    .toLowerCase();
   if (MULTI_STATE_HOSTS.has(bare)) return true;
   for (const listed of MULTI_STATE_HOSTS) if (bare.endsWith(`.${listed}`)) return true;
   return false;
@@ -172,9 +242,9 @@ export function trustTier(url) {
   if (/\.gov$/.test(bare)) return "government";
   if (/\.mil$/.test(bare)) return "government";
   if (/\.state\.[a-z]{2}\.us$/.test(bare)) return "government";
-  if (/(^|\.)gov\.[a-z]{2}\.ca$/.test(bare)) return "government";      // gov.mb.ca, gov.nl.ca
+  if (/(^|\.)gov\.[a-z]{2}\.ca$/.test(bare)) return "government"; // gov.mb.ca, gov.nl.ca
   if (/(^|\.)gov\.bc\.ca$/.test(bare)) return "government";
-  if (/\.gc\.ca$/.test(bare)) return "government";                      // federal Canada
+  if (/\.gc\.ca$/.test(bare)) return "government"; // federal Canada
   if (/\.gouv\.qc\.ca$/.test(bare)) return "government";
   if (/(^|\.)gnb\.ca$/.test(bare)) return "government";
   if (/\.gov\.[a-z]{2}$/.test(bare)) return "government";
@@ -204,14 +274,76 @@ export const isTrusted = (url) => trustTier(url) !== "untrusted";
  * appear on the page.
  */
 export const CLASS_WORDS = new Set([
-  "the", "a", "an", "and", "of", "at", "on", "in", "by", "north", "south", "east",
-  "west", "upper", "lower", "middle", "big", "little", "old", "new",
-  "lake", "lakes", "river", "rivers", "creek", "crick", "brook", "stream",
-  "reservoir", "pond", "ponds", "bayou", "bay", "harbor", "harbour", "slough",
-  "fork", "branch", "run", "spring", "springs", "sound", "strait", "channel",
-  "canal", "flowage", "impoundment", "basin", "arm", "inlet", "cove", "lagoon",
-  "marsh", "swamp", "wash", "draw", "gulch", "estuary", "delta", "pool", "pit",
-  "pits", "quarry", "wma", "sra", "state", "park", "unit", "area", "access",
+  "the",
+  "a",
+  "an",
+  "and",
+  "of",
+  "at",
+  "on",
+  "in",
+  "by",
+  "north",
+  "south",
+  "east",
+  "west",
+  "upper",
+  "lower",
+  "middle",
+  "big",
+  "little",
+  "old",
+  "new",
+  "lake",
+  "lakes",
+  "river",
+  "rivers",
+  "creek",
+  "crick",
+  "brook",
+  "stream",
+  "reservoir",
+  "pond",
+  "ponds",
+  "bayou",
+  "bay",
+  "harbor",
+  "harbour",
+  "slough",
+  "fork",
+  "branch",
+  "run",
+  "spring",
+  "springs",
+  "sound",
+  "strait",
+  "channel",
+  "canal",
+  "flowage",
+  "impoundment",
+  "basin",
+  "arm",
+  "inlet",
+  "cove",
+  "lagoon",
+  "marsh",
+  "swamp",
+  "wash",
+  "draw",
+  "gulch",
+  "estuary",
+  "delta",
+  "pool",
+  "pit",
+  "pits",
+  "quarry",
+  "wma",
+  "sra",
+  "state",
+  "park",
+  "unit",
+  "area",
+  "access",
 ]);
 
 export const plain = (s) =>
@@ -250,7 +382,9 @@ export function pageNamesWater(pageText, waterbody, { title = "" } = {}) {
 
 /** The whole phrase, in order, somewhere on the page. Strongest signal. */
 export function pageCarriesPhrase(pageText, waterbody) {
-  const phrase = plain(waterbody).replace(/[^a-z0-9]+/g, "\\s+").trim();
+  const phrase = plain(waterbody)
+    .replace(/[^a-z0-9]+/g, "\\s+")
+    .trim();
   if (!phrase) return false;
   return new RegExp(`\\b${phrase}\\b`).test(plain(String(pageText).slice(0, 200_000)));
 }
@@ -335,13 +469,15 @@ export function links(html, baseUrl) {
 
 /** Sentences, for notice extraction. Kept whole -- agency wording is reproduced. */
 export function sentences(text) {
-  return String(text)
-    .split(/(?<=[.!?])\s+|\n+/)
-    .map((s) => s.replace(/\s+/g, " ").trim())
-    // A heading is not a sentence. "Planning Advisory Committee" contains the
-    // word advisory and states nothing, so a floor on both length and word
-    // count keeps navigation labels out of the notices a reader is shown.
-    .filter((s) => s.length >= 40 && s.length <= 320 && s.split(/\s+/).length >= 6);
+  return (
+    String(text)
+      .split(/(?<=[.!?])\s+|\n+/)
+      .map((s) => s.replace(/\s+/g, " ").trim())
+      // A heading is not a sentence. "Planning Advisory Committee" contains the
+      // word advisory and states nothing, so a floor on both length and word
+      // count keeps navigation labels out of the notices a reader is shown.
+      .filter((s) => s.length >= 40 && s.length <= 320 && s.split(/\s+/).length >= 6)
+  );
 }
 
 /* ── fetch ──────────────────────────────────────────────────────────────── */
@@ -356,7 +492,13 @@ const SOFT_404_RE =
  */
 export async function fetchPage(url, { timeoutMs = 15_000, retries = 1 } = {}) {
   const fail = (reason, status = 0, finalUrl = url) => ({
-    ok: false, status, url: finalUrl, html: "", text: "", title: "", reason,
+    ok: false,
+    status,
+    url: finalUrl,
+    html: "",
+    text: "",
+    title: "",
+    reason,
   });
 
   for (let attempt = 0; attempt <= retries; attempt += 1) {
@@ -383,9 +525,18 @@ export async function fetchPage(url, { timeoutMs = 15_000, retries = 1 } = {}) {
       if (text.length < 200) return fail("page_empty", res.status, finalUrl);
       if (SOFT_404_RE.test(text.slice(0, 4000))) return fail("soft_404", res.status, finalUrl);
 
-      return { ok: true, status: res.status, url: finalUrl, html, text, title: pageTitle(html), reason: null };
+      return {
+        ok: true,
+        status: res.status,
+        url: finalUrl,
+        html,
+        text,
+        title: pageTitle(html),
+        reason: null,
+      };
     } catch (err) {
-      const reason = err?.name === "TimeoutError" ? "timeout" : `network_${err?.message || "error"}`;
+      const reason =
+        err?.name === "TimeoutError" ? "timeout" : `network_${err?.message || "error"}`;
       if (attempt === retries) return fail(reason);
       await sleep(900 * (attempt + 1));
     }
@@ -400,17 +551,20 @@ export async function pooled(items, concurrency, worker) {
   const list = [...items];
   const out = new Array(list.length);
   let cursor = 0;
-  const lanes = Array.from({ length: Math.max(1, Math.min(concurrency, list.length || 1)) }, async () => {
-    for (;;) {
-      const i = cursor++;
-      if (i >= list.length) return;
-      try {
-        out[i] = await worker(list[i], i);
-      } catch (err) {
-        out[i] = { error: String(err?.message || err) };
+  const lanes = Array.from(
+    { length: Math.max(1, Math.min(concurrency, list.length || 1)) },
+    async () => {
+      for (;;) {
+        const i = cursor++;
+        if (i >= list.length) return;
+        try {
+          out[i] = await worker(list[i], i);
+        } catch (err) {
+          out[i] = { error: String(err?.message || err) };
+        }
       }
-    }
-  });
+    },
+  );
   await Promise.all(lanes);
   return out;
 }

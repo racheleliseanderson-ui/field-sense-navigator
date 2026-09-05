@@ -91,7 +91,9 @@ test("selectRecords honors critical, skip-slow, and only-slow", () => {
     { status: "unmatched", siteId: null, state: "Colorado", agency: null },
   ];
   assert.deepEqual(
-    selectRecords(records, { mode: "critical", skipSlow: true, onlySlow: false }).map((r) => r.siteId),
+    selectRecords(records, { mode: "critical", skipSlow: true, onlySlow: false }).map(
+      (r) => r.siteId,
+    ),
     ["1"],
   );
   assert.deepEqual(
@@ -144,14 +146,14 @@ test("carry-forward keeps the last agency observation and prints the miss", () =
 
 test("a fossil IV value is not treated as current; a still-fresh prior wins", () => {
   const prev = {
-    "12117700": {
+    12117700: {
       siteId: "12117700",
       agency: "USGS",
       readings: [{ label: "Gage height", value: "5.12", unit: "ft", observedAt: FRESH }],
     },
   };
   const next = {
-    "12117700": {
+    12117700: {
       siteId: "12117700",
       agency: "USGS",
       readings: [
@@ -181,7 +183,14 @@ test("merge keeps stations the current pass did not fetch", () => {
     B: {
       siteId: "B",
       agency: "USBR",
-      readings: [{ label: "Reservoir elevation", value: "9", unit: "ft", observedAt: "2026-08-18T00:00:00Z" }],
+      readings: [
+        {
+          label: "Reservoir elevation",
+          value: "9",
+          unit: "ft",
+          observedAt: "2026-08-18T00:00:00Z",
+        },
+      ],
     },
   };
   const next = {
@@ -377,7 +386,14 @@ test("rebuildStats counts only current observations; fossils are stale-only", ()
     BNK: {
       siteId: "BNK",
       agency: "USBR",
-      readings: [{ label: "Reservoir elevation", value: "1566", unit: "ft", observedAt: "2026-08-18T00:00:00Z" }],
+      readings: [
+        {
+          label: "Reservoir elevation",
+          value: "1566",
+          unit: "ft",
+          observedAt: "2026-08-18T00:00:00Z",
+        },
+      ],
     },
     "rise:341": {
       siteId: "rise:341",
@@ -441,12 +457,12 @@ test("a fossil IV miss does not page — it is printed, not a hard error", () =>
     },
     NOW,
   );
-  const errors = collectErrors({ "14056500": fossil }, {});
+  const errors = collectErrors({ 14056500: fossil }, {});
   const status = buildStatus({
     payload: {
       ingestedAt: "now",
       cadenceMinutes: 30,
-      stats: rebuildStats({ "14056500": fossil }, {}, 1),
+      stats: rebuildStats({ 14056500: fossil }, {}, 1),
       doctrine: "x",
     },
     opts: { mode: "all", onlySlow: false },

@@ -34,16 +34,41 @@
  *   node scripts/pipeline/discover.mjs --dry
  */
 import {
-  PATHS, readCatalog, readJson, writeJson, hostOf, trustTier, isTrusted,
-  waterKey, plain, pooled, argv, ok, drop, note, writeReport, appendRun, today,
-  declaredSitemaps, sitemapLocs, isSitemapIndex, fetchXml, robotsAllows,
-  isMultiStateHost, fetchPage, links,
+  PATHS,
+  readCatalog,
+  readJson,
+  writeJson,
+  hostOf,
+  trustTier,
+  isTrusted,
+  waterKey,
+  plain,
+  pooled,
+  argv,
+  ok,
+  drop,
+  note,
+  writeReport,
+  appendRun,
+  today,
+  declaredSitemaps,
+  sitemapLocs,
+  isSitemapIndex,
+  fetchXml,
+  robotsAllows,
+  isMultiStateHost,
+  fetchPage,
+  links,
 } from "./lib.mjs";
 
 const args = argv();
 const DRY = Boolean(args.dry);
 const ONLY_STATE = args.state ? plain(args.state) : null;
-const ONLY_HOST = args.host ? String(args.host).replace(/^www\./, "").toLowerCase() : null;
+const ONLY_HOST = args.host
+  ? String(args.host)
+      .replace(/^www\./, "")
+      .toLowerCase()
+  : null;
 const LIMIT = Number(args.limit) || 600;
 const PER_HOST = Number(args["per-host"]) || 40;
 const CONCURRENCY = Math.max(1, Math.min(4, Number(args.concurrency ?? 3)));
@@ -61,23 +86,102 @@ const MAX_URLS_PER_HOST = 80_000;
  * Bass, Crappie, Rulemaking -- looks like a lake.
  */
 const WATER_CLASS_TOKENS = new Set([
-  "lake", "lakes", "river", "rivers", "creek", "creeks", "reservoir", "reservoirs",
-  "pond", "ponds", "bayou", "bay", "bays", "harbor", "harbour", "slough", "fork",
-  "spring", "springs", "flowage", "sound", "marsh", "brook", "lagoon", "inlet",
-  "impoundment", "cove", "channel",
+  "lake",
+  "lakes",
+  "river",
+  "rivers",
+  "creek",
+  "creeks",
+  "reservoir",
+  "reservoirs",
+  "pond",
+  "ponds",
+  "bayou",
+  "bay",
+  "bays",
+  "harbor",
+  "harbour",
+  "slough",
+  "fork",
+  "spring",
+  "springs",
+  "flowage",
+  "sound",
+  "marsh",
+  "brook",
+  "lagoon",
+  "inlet",
+  "impoundment",
+  "cove",
+  "channel",
 ]);
 
 /** Slugs that are a topic, a species, a document or an application. */
 const NOT_A_WATER_TOKENS = new Set([
-  "index", "search", "map", "maps", "list", "all", "about", "contact", "news",
-  "regulation", "regulations", "license", "licence", "licenses", "report",
-  "reports", "form", "forms", "faq", "help", "calendar", "directory", "home",
-  "default", "privacy", "accessibility", "sitemap", "rulemaking", "commercial",
-  "recreational", "attractors", "hatchery", "hatcheries", "stocking", "forecast",
-  "education", "safety", "outreach", "volunteer", "events", "media", "magazine",
-  "bass", "crappie", "bream", "catfish", "striper", "stripers", "panfish",
-  "trout", "salmon", "walleye", "snook", "tarpon", "redfish", "sunfish", "pike",
-  "musky", "muskie", "shad", "bluegill", "flounder", "grouper", "snapper",
+  "index",
+  "search",
+  "map",
+  "maps",
+  "list",
+  "all",
+  "about",
+  "contact",
+  "news",
+  "regulation",
+  "regulations",
+  "license",
+  "licence",
+  "licenses",
+  "report",
+  "reports",
+  "form",
+  "forms",
+  "faq",
+  "help",
+  "calendar",
+  "directory",
+  "home",
+  "default",
+  "privacy",
+  "accessibility",
+  "sitemap",
+  "rulemaking",
+  "commercial",
+  "recreational",
+  "attractors",
+  "hatchery",
+  "hatcheries",
+  "stocking",
+  "forecast",
+  "education",
+  "safety",
+  "outreach",
+  "volunteer",
+  "events",
+  "media",
+  "magazine",
+  "bass",
+  "crappie",
+  "bream",
+  "catfish",
+  "striper",
+  "stripers",
+  "panfish",
+  "trout",
+  "salmon",
+  "walleye",
+  "snook",
+  "tarpon",
+  "redfish",
+  "sunfish",
+  "pike",
+  "musky",
+  "muskie",
+  "shad",
+  "bluegill",
+  "flounder",
+  "grouper",
+  "snapper",
 ]);
 
 const slugTokens = (slug) =>
@@ -175,16 +279,18 @@ function familiesFor(records, host) {
       tally.set(prefix, entry);
     }
   }
-  return [...tally.values()]
-    .filter((f) => f.n >= minSupport && f.prefix !== "/")
-    .map((f) => {
-      const [state, n] = [...f.states.entries()].sort((a, b) => b[1] - a[1])[0];
-      return { prefix: f.prefix, support: f.n, state, stateShare: n / f.n };
-    })
-    // A family spanning jurisdictions cannot tell us which state a new record
-    // belongs to, and a guessed jurisdiction is a wrong record.
-    .filter((f) => f.stateShare >= 0.8)
-    .sort((a, b) => b.support - a.support);
+  return (
+    [...tally.values()]
+      .filter((f) => f.n >= minSupport && f.prefix !== "/")
+      .map((f) => {
+        const [state, n] = [...f.states.entries()].sort((a, b) => b[1] - a[1])[0];
+        return { prefix: f.prefix, support: f.n, state, stateShare: n / f.n };
+      })
+      // A family spanning jurisdictions cannot tell us which state a new record
+      // belongs to, and a guessed jurisdiction is a wrong record.
+      .filter((f) => f.stateShare >= 0.8)
+      .sort((a, b) => b.support - a.support)
+  );
 }
 
 /**
@@ -295,11 +401,21 @@ const targets = readJson(PATHS.seedTargets, []) ?? [];
 
 const known = new Set(records.map((r) => waterKey(r.waterbody, r.state)));
 const knownUrls = new Set(
-  records.map((r) => String(r.officialSourceUrl ?? "").replace(/\/$/, "").toLowerCase()),
+  records.map((r) =>
+    String(r.officialSourceUrl ?? "")
+      .replace(/\/$/, "")
+      .toLowerCase(),
+  ),
 );
 const queued = new Set(targets.map((t) => waterKey(t.waterbody, t.state)));
 const queuedUrls = new Set(
-  targets.map((t) => String(t.url ?? "").replace(/\/$/, "").toLowerCase()).filter(Boolean),
+  targets
+    .map((t) =>
+      String(t.url ?? "")
+        .replace(/\/$/, "")
+        .toLowerCase(),
+    )
+    .filter(Boolean),
 );
 
 /* hosts, from the catalog */
@@ -336,7 +452,9 @@ console.log(
   `discover: ${hosts.length} agency hosts, ${records.length} records held, ${targets.length} already queued`,
 );
 if (!hosts.length) {
-  console.log("discover: no host matched. Try --host= or add a page to scripts/data/discovery-sources.json.");
+  console.log(
+    "discover: no host matched. Try --host= or add a page to scripts/data/discovery-sources.json.",
+  );
   process.exit(0);
 }
 
@@ -442,7 +560,9 @@ for (let i = 0; found.length < LIMIT; i += 1) {
 }
 
 console.log("");
-console.log(`discover: ${found.length} new candidate waters across ${perHost.size} of ${hosts.length} hosts`);
+console.log(
+  `discover: ${found.length} new candidate waters across ${perHost.size} of ${hosts.length} hosts`,
+);
 
 const byState = found.reduce((acc, f) => ({ ...acc, [f.state]: (acc[f.state] ?? 0) + 1 }), {});
 const reportPath = writeReport("discovery", [

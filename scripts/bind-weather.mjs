@@ -30,9 +30,7 @@ import { fileURLToPath } from "node:url";
  */
 const LOCATION_DECIMALS = 3;
 const coarsen = (v) =>
-  typeof v === "number" && Number.isFinite(v)
-    ? Number(v.toFixed(LOCATION_DECIMALS))
-    : null;
+  typeof v === "number" && Number.isFinite(v) ? Number(v.toFixed(LOCATION_DECIMALS)) : null;
 const coarsenLocations = (rows) => {
   for (const row of rows) {
     row.lat = coarsen(row.lat);
@@ -40,7 +38,6 @@ const coarsenLocations = (rows) => {
   }
   return rows;
 };
-
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -54,9 +51,19 @@ const CONTACT =
   process.env.AGENCY_CONTACT_URL || "https://northernlanternhouse.com/customer-support";
 const UA = `HookTheHorizon-FieldSense/0.6 (+https://waterways.hookthehorizon.blog; contact ${CONTACT})`;
 const PROVINCES = new Set([
-  "Alberta", "British Columbia", "Manitoba", "New Brunswick",
-  "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia",
-  "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon",
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Northwest Territories",
+  "Nova Scotia",
+  "Nunavut",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Yukon",
 ]);
 
 const nwsCache = new Map();
@@ -112,11 +119,7 @@ async function main() {
   }
 
   const need = bindings.records.filter(
-    (r) =>
-      r.lat != null &&
-      r.lon != null &&
-      !PROVINCES.has(r.state) &&
-      !r.nwsStationId,
+    (r) => r.lat != null && r.lon != null && !PROVINCES.has(r.state) && !r.nwsStationId,
   );
   console.error(`nws   binding ${need.length} US waters`);
   const queue = [...need];

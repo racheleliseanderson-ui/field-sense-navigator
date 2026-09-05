@@ -4,9 +4,10 @@
  * This repository owns its build. It assembles the full plugin set and the
  * resolved options for local development and for production builds — Tailwind,
  * TanStack Start (with server-only import protection),
- * Nitro on build, React Fast Refresh, `VITE_*` env inlining, the `@` -> `src`
- * alias and React/TanStack deduping — with no third-party build service,
- * sandbox hooks, telemetry or devtools source injection in the pipeline.
+ * Nitro on build, React Fast Refresh, `VITE_*` env inlining, build identity
+ * stamping, the `@` -> `src` alias and React/TanStack deduping — with no
+ * third-party build service, sandbox hooks, telemetry or devtools source
+ * injection in the pipeline.
  *
  * Keep this file boring. It is deliberately a thin, readable assembly so the
  * build stays inspectable and owned by this repository.
@@ -25,11 +26,38 @@ export interface AppViteConfigOptions {
   nitro?: false | Record<string, unknown>;
   /** `false` skips inlining `VITE_*` vars into `import.meta.env`. */
   envDefine?: false;
+  /** `false` skips the `__BUILD_*` identity constants. */
+  buildStamp?: false;
   /** Extra plugins, appended after the base set. */
   plugins?: PluginOption[];
 }
 
 const SRC_DIR = fileURLToPath(new URL("./src", import.meta.url));
+
+/**
+ * Build identity.
+ *
+ * A deployed application that cannot say which commit it is has to be
+ * diagnosed by guesswork: a reader reports something the code no longer does,
+ * and there is no way to tell whether they are on the current build, a cached
+ * shell from three deploys ago, or a preview. These constants are inlined at
+ * build time and surfaced by `src/lib/build-info.ts` and `/api/version`.
+ *
+ * The sha comes from `scripts/build-id.mjs`, which `scripts/stamp-sw.mjs`
+ * also reads — the service worker's cache key and the version endpoint have to
+ * agree about which build this is, and they run in different processes.
+ *
+ * FLEET PATTERN. Same constant names in every Hook app that has this file.
+ */
+async function buildIdentity(): Promise<Record<string, string>> {
+  const { buildSha, buildRef, buildEnv } = await import("./scripts/build-id.mjs");
+  return {
+    __BUILD_SHA__: JSON.stringify(buildSha()),
+    __BUILD_REF__: JSON.stringify(buildRef()),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    __BUILD_ENV__: JSON.stringify(buildEnv()),
+  };
+}
 
 /** React/TanStack singletons that must not be duplicated across the graph. */
 const DEDUPE = [
@@ -81,6 +109,7 @@ export function defineConfig(options: AppViteConfigOptions = {}) {
     plugins.push(react(options.react as Parameters<typeof react>[0]));
 
     const define: Record<string, string> = {};
+    if (options.buildStamp !== false) Object.assign(define, await buildIdentity());
     if (options.envDefine !== false) {
       for (const [key, value] of Object.entries(loadEnv(mode, process.cwd(), "VITE_"))) {
         define[`import.meta.env.${key}`] = JSON.stringify(value);

@@ -10,20 +10,42 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
-  trustTier, isTrusted, waterTokens, waterKey, pageNamesWater, pageCarriesPhrase,
-  pageReadsAsWater, stripHtml, sentences, sitemapLocs, isSitemapIndex, mainText,
+  trustTier,
+  isTrusted,
+  waterTokens,
+  waterKey,
+  pageNamesWater,
+  pageCarriesPhrase,
+  pageReadsAsWater,
+  stripHtml,
+  sentences,
+  sitemapLocs,
+  isSitemapIndex,
+  mainText,
   isMultiStateHost,
 } from "./lib.mjs";
 import {
-  publishedName, stripDesignation, chooseWaterbodyName, waterTypeFrom,
-  accessFrom, noticesFrom, speciesFrom, tagsFrom, boilerplateFilter,
-  namesADocumentOrPlace, refuseAsWaterbodyName,
+  publishedName,
+  stripDesignation,
+  chooseWaterbodyName,
+  waterTypeFrom,
+  accessFrom,
+  noticesFrom,
+  speciesFrom,
+  tagsFrom,
+  boilerplateFilter,
+  namesADocumentOrPlace,
+  refuseAsWaterbodyName,
 } from "./extract.mjs";
 
 test("trust: agencies are believed, tourism boards are not", () => {
   assert.equal(trustTier("https://wdfw.wa.gov/fishing/x"), "government");
   assert.equal(trustTier("https://myfwc.com/fishing/x"), "government");
-  assert.equal(trustTier("https://gis.myfwc.com/x"), "government", "a subdomain of an agency is the agency");
+  assert.equal(
+    trustTier("https://gis.myfwc.com/x"),
+    "government",
+    "a subdomain of an agency is the agency",
+  );
   assert.equal(trustTier("https://www2.gov.bc.ca/x"), "government");
   assert.equal(trustTier("https://mffp.gouv.qc.ca/x"), "government");
   assert.equal(trustTier("https://pinellascounty.org/x"), "government", "a county is government");
@@ -67,7 +89,10 @@ test("published name: site furniture is cut, the water is kept", () => {
     "Caddo Lake",
   );
   assert.equal(stripDesignation("Caddo Lake State Park"), "Caddo Lake");
-  assert.equal(stripDesignation("Lake Casa Blanca International State Park"), "Lake Casa Blanca International");
+  assert.equal(
+    stripDesignation("Lake Casa Blanca International State Park"),
+    "Lake Casa Blanca International",
+  );
   assert.equal(stripDesignation("Flathead Lake"), "Flathead Lake", "a real name is left alone");
 });
 
@@ -91,23 +116,36 @@ test("water class comes from the published name", () => {
   assert.equal(waterTypeFrom("Flaming Gorge Reservoir"), "reservoir");
   assert.equal(waterTypeFrom("Devils River"), "river");
   assert.equal(waterTypeFrom("Barnegat Bay"), "marine");
-  assert.equal(waterTypeFrom("Somewhere Meadow", ""), null, "an undeclared class is null, not a guess");
+  assert.equal(
+    waterTypeFrom("Somewhere Meadow", ""),
+    null,
+    "an undeclared class is null, not a guess",
+  );
 });
 
 test("access: only what the page published, and named where it said a name", () => {
-  const named = accessFrom("Kenmore Boat Launch\nSeward Park Fishing Pier\nsome prose about the lake", "Lake Washington");
+  const named = accessFrom(
+    "Kenmore Boat Launch\nSeward Park Fishing Pier\nsome prose about the lake",
+    "Lake Washington",
+  );
   assert.equal(named.length, 2);
   assert.equal(named[0].name, "Kenmore Boat Launch");
   assert.equal(named[0].type, "boat_launch");
   assert.equal(named[1].type, "fishing_pier");
   assert.ok(named.every((a) => a.officiallyPublished === true));
 
-  const summary = accessFrom("The park has a boat ramp and bank fishing along the shoreline.", "Some Lake");
+  const summary = accessFrom(
+    "The park has a boat ramp and bank fishing along the shoreline.",
+    "Some Lake",
+  );
   assert.equal(summary.length, 1);
   assert.equal(summary[0].type, "boat_launch_and_shore_access");
 
-  assert.deepEqual(accessFrom("A quiet page with no facilities mentioned at all.", "Some Lake"), [],
-    "no access mentioned is an empty list, never an invented ramp");
+  assert.deepEqual(
+    accessFrom("A quiet page with no facilities mentioned at all.", "Some Lake"),
+    [],
+    "no access mentioned is an empty list, never an invented ramp",
+  );
 });
 
 test("notices: the agency's wording, and never a denial of a closure", () => {
@@ -123,7 +161,11 @@ test("notices: the agency's wording, and never a denial of a closure", () => {
 });
 
 test("species: only species the page names", () => {
-  const vocabulary = ["Largemouth bass", "Yellow perch", "Species limited by alkaline conditions; confirm current tables"];
+  const vocabulary = [
+    "Largemouth bass",
+    "Yellow perch",
+    "Species limited by alkaline conditions; confirm current tables",
+  ];
   const found = speciesFrom("Anglers catch largemouth bass here.", vocabulary);
   assert.deepEqual(found, ["Largemouth bass"]);
   assert.deepEqual(speciesFrom("A page about trails.", vocabulary), []);
@@ -145,7 +187,9 @@ test("html: scripts and styles never reach the text", () => {
 });
 
 test("sentences: fragments and boilerplate lengths are excluded", () => {
-  const out = sentences("Hi. The north boat ramp is closed for construction until spring of next year.");
+  const out = sentences(
+    "Hi. The north boat ramp is closed for construction until spring of next year.",
+  );
   assert.equal(out.length, 1);
 });
 
@@ -158,12 +202,18 @@ test("sitemaps: an index is told apart from a page list", () => {
 
 test("a management unit is filed under the water, not the unit", () => {
   const page = "Banks Lake Wildlife Area Unit provides shore fishing access on Banks Lake.";
-  assert.equal(chooseWaterbodyName("Banks Lake Wildlife Area Unit", "Banks Lake Wildlife Area Unit", page), "Banks Lake");
+  assert.equal(
+    chooseWaterbodyName("Banks Lake Wildlife Area Unit", "Banks Lake Wildlife Area Unit", page),
+    "Banks Lake",
+  );
 });
 
 test("a provisional slug name is corrected by the published one", () => {
   const page = "Lake Corpus Christi State Park sits on Lake Corpus Christi, open for fishing.";
-  assert.equal(chooseWaterbodyName("Corpus Christi", "Lake Corpus Christi State Park", page), "Lake Corpus Christi");
+  assert.equal(
+    chooseWaterbodyName("Corpus Christi", "Lake Corpus Christi State Park", page),
+    "Lake Corpus Christi",
+  );
 });
 
 test("a banner on every page of a site is furniture, not a notice", () => {
@@ -180,8 +230,15 @@ test("a banner on every page of a site is furniture, not a notice", () => {
 
 test("boilerplate is not guessed at from a handful of pages", () => {
   const notice = "The ramp is closed.";
-  const pages = [{ host: "a.gov", notices: [notice] }, { host: "a.gov", notices: [notice] }];
-  assert.equal(boilerplateFilter(pages)("a.gov", notice), false, "two pages is not evidence of a template");
+  const pages = [
+    { host: "a.gov", notices: [notice] },
+    { host: "a.gov", notices: [notice] },
+  ];
+  assert.equal(
+    boilerplateFilter(pages)("a.gov", notice),
+    false,
+    "two pages is not evidence of a template",
+  );
 });
 
 test("a committee name is not a notice, however many times it says advisory", () => {
@@ -196,7 +253,10 @@ test("a committee name is not a notice, however many times it says advisory", ()
 
 test("a species that is also an ordinary word is not read out of a permit notice", () => {
   const vocabulary = ["Permit", "Steelhead"];
-  const found = speciesFrom("A permit is required to park here. Steelhead run in autumn.", vocabulary);
+  const found = speciesFrom(
+    "A permit is required to park here. Steelhead run in autumn.",
+    vocabulary,
+  );
   assert.deepEqual(found, ["Steelhead"]);
 });
 
@@ -242,10 +302,19 @@ test("a plan, a road and a mountain range are not waters", () => {
 });
 
 test("a headline is not a waterbody, however many water words it contains", () => {
-  assert.equal(refuseAsWaterbodyName("Convention Center Expansion Ruled Legally Sound"), "reads_as_a_sentence");
+  assert.equal(
+    refuseAsWaterbodyName("Convention Center Expansion Ruled Legally Sound"),
+    "reads_as_a_sentence",
+  );
   assert.equal(refuseAsWaterbodyName("Save the Bay Center"), "document_road_or_building");
   assert.equal(refuseAsWaterbodyName("Fish Hatchery Creek Facility"), "document_road_or_building");
-  for (const good of ["Grant Lake", "North Fork American River", "Lake Casa Blanca", "Sam Rayburn Reservoir", "Devils River"]) {
+  for (const good of [
+    "Grant Lake",
+    "North Fork American River",
+    "Lake Casa Blanca",
+    "Sam Rayburn Reservoir",
+    "Devils River",
+  ]) {
     assert.equal(refuseAsWaterbodyName(good), null, `${good} should be allowed`);
   }
 });

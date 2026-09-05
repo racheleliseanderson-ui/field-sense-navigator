@@ -22,17 +22,55 @@ const UA = `HookTheHorizon-FieldSense/0.6 (+https://waterways.hookthehorizon.blo
 const MATCH_FLOOR = 0.75;
 
 const STATE_CODE = {
-  Alabama: "al", Alaska: "ak", Arizona: "az", Arkansas: "ar", California: "ca",
-  Colorado: "co", Connecticut: "ct", Delaware: "de", Florida: "fl", Georgia: "ga",
-  Hawaii: "hi", Idaho: "id", Illinois: "il", Indiana: "in", Iowa: "ia",
-  Kansas: "ks", Kentucky: "ky", Louisiana: "la", Maine: "me", Maryland: "md",
-  Massachusetts: "ma", Michigan: "mi", Minnesota: "mn", Mississippi: "ms",
-  Missouri: "mo", Montana: "mt", Nebraska: "ne", Nevada: "nv",
-  "New Hampshire": "nh", "New Jersey": "nj", "New Mexico": "nm", "New York": "ny",
-  "North Carolina": "nc", "North Dakota": "nd", Ohio: "oh", Oklahoma: "ok",
-  Oregon: "or", Pennsylvania: "pa", "Rhode Island": "ri", "South Carolina": "sc",
-  "South Dakota": "sd", Tennessee: "tn", Texas: "tx", Utah: "ut", Vermont: "vt",
-  Virginia: "va", Washington: "wa", "West Virginia": "wv", Wisconsin: "wi",
+  Alabama: "al",
+  Alaska: "ak",
+  Arizona: "az",
+  Arkansas: "ar",
+  California: "ca",
+  Colorado: "co",
+  Connecticut: "ct",
+  Delaware: "de",
+  Florida: "fl",
+  Georgia: "ga",
+  Hawaii: "hi",
+  Idaho: "id",
+  Illinois: "il",
+  Indiana: "in",
+  Iowa: "ia",
+  Kansas: "ks",
+  Kentucky: "ky",
+  Louisiana: "la",
+  Maine: "me",
+  Maryland: "md",
+  Massachusetts: "ma",
+  Michigan: "mi",
+  Minnesota: "mn",
+  Mississippi: "ms",
+  Missouri: "mo",
+  Montana: "mt",
+  Nebraska: "ne",
+  Nevada: "nv",
+  "New Hampshire": "nh",
+  "New Jersey": "nj",
+  "New Mexico": "nm",
+  "New York": "ny",
+  "North Carolina": "nc",
+  "North Dakota": "nd",
+  Ohio: "oh",
+  Oklahoma: "ok",
+  Oregon: "or",
+  Pennsylvania: "pa",
+  "Rhode Island": "ri",
+  "South Carolina": "sc",
+  "South Dakota": "sd",
+  Tennessee: "tn",
+  Texas: "tx",
+  Utah: "ut",
+  Vermont: "vt",
+  Virginia: "va",
+  Washington: "wa",
+  "West Virginia": "wv",
+  Wisconsin: "wi",
   Wyoming: "wy",
 };
 
@@ -129,8 +167,9 @@ async function main() {
       if (!d || SEARCH_SKIP.has(d.id)) continue;
       const sites = await usgsNameSearch(STATE_CODE[row.state], d.waterbody);
       if (!sites.length) continue;
-      const hits = bestMatches(d.waterbody, d.waterType, sites, MATCH_FLOOR)
-        .filter((h) => !BAD_SITE.test(h.row.name));
+      const hits = bestMatches(d.waterbody, d.waterType, sites, MATCH_FLOOR).filter(
+        (h) => !BAD_SITE.test(h.row.name),
+      );
       const picked = pickUnique(d.waterbody, hits);
       if (!picked) continue;
       const extra =
@@ -147,7 +186,9 @@ async function main() {
       row.source = "name-match";
       row.note = `Matched on published name via USGS site search (score ${picked.score.toFixed(2)}).${extra}`;
       recovered += 1;
-      console.error(`hit   ${d.id} ${d.waterbody.slice(0, 40)} → ${picked.row.id} ${picked.row.name}`);
+      console.error(
+        `hit   ${d.id} ${d.waterbody.slice(0, 40)} → ${picked.row.id} ${picked.row.name}`,
+      );
     }
   }
   await Promise.all(Array.from({ length: 4 }, worker));

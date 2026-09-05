@@ -87,6 +87,17 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/*
+ * The frame carries tabindex="0" so a keyboard can scroll a wide plate, which
+ * means the focus has to be visible — in brass, like every other deliberate
+ * mark in this instrument, rather than the browser's default ring on a ground
+ * it was not chosen for.
+ */
+.hthp-plate__frame:focus-visible {
+  outline: 2px solid var(--brass, #c8a24a);
+  outline-offset: 2px;
+}
+
 .hthp-plate__legend {
   display: grid;
   gap: 0.5rem;

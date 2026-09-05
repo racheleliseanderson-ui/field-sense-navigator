@@ -29,10 +29,7 @@ test("stage and flow use 48 hours; reservoir elevation uses 7 days", () => {
 
 test("a 15-minute streamflow is current; a 1990 IV value is not", () => {
   assert.equal(
-    classifyReading(
-      { label: "Streamflow", observedAt: "2026-08-19T22:15:00Z" },
-      NOW,
-    ).freshness,
+    classifyReading({ label: "Streamflow", observedAt: "2026-08-19T22:15:00Z" }, NOW).freshness,
     "fresh",
   );
   assert.equal(
@@ -49,17 +46,13 @@ test("a 15-minute streamflow is current; a 1990 IV value is not", () => {
 
 test("yesterday's reservoir elevation is current; a 10-day elevation is not", () => {
   assert.equal(
-    classifyReading(
-      { label: "Reservoir elevation", observedAt: "2026-08-18T00:00:00Z" },
-      NOW,
-    ).freshness,
+    classifyReading({ label: "Reservoir elevation", observedAt: "2026-08-18T00:00:00Z" }, NOW)
+      .freshness,
     "fresh",
   );
   assert.equal(
-    classifyReading(
-      { label: "Reservoir elevation", observedAt: "2026-08-09T00:00:00Z" },
-      NOW,
-    ).freshness,
+    classifyReading({ label: "Reservoir elevation", observedAt: "2026-08-09T00:00:00Z" }, NOW)
+      .freshness,
     "stale",
   );
 });
@@ -81,7 +74,12 @@ test("partition keeps only fresh values in readings", () => {
   const { readings, retainedReadings } = partitionReadings(
     [
       { label: "Gage height", value: "4.75", unit: "ft", observedAt: "2026-08-19T21:15:00-06:00" },
-      { label: "Streamflow", value: "6.00", unit: "ft³/s", observedAt: "1990-09-30T23:45:00.000-07:00" },
+      {
+        label: "Streamflow",
+        value: "6.00",
+        unit: "ft³/s",
+        observedAt: "1990-09-30T23:45:00.000-07:00",
+      },
     ],
     NOW,
   );

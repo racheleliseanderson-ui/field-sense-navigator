@@ -75,16 +75,22 @@ async function notifyGithub(text) {
     "User-Agent": "field-sense-ingest-notify",
   };
   const query = new URL("https://api.github.com/search/issues");
-  query.searchParams.set("q", `repo:${owner}/${name} is:issue is:open in:title "Live ingest health"`);
+  query.searchParams.set(
+    "q",
+    `repo:${owner}/${name} is:issue is:open in:title "Live ingest health"`,
+  );
   const found = await fetch(query, { headers }).then((r) => r.json());
   const existing = found.items?.[0];
   const body = `## Live ingest health\n\n\`\`\`\n${text}\n\`\`\`\n`;
   if (existing) {
-    await fetch(`https://api.github.com/repos/${owner}/${name}/issues/${existing.number}/comments`, {
-      method: "POST",
-      headers: { ...headers, "Content-Type": "application/json" },
-      body: JSON.stringify({ body }),
-    });
+    await fetch(
+      `https://api.github.com/repos/${owner}/${name}/issues/${existing.number}/comments`,
+      {
+        method: "POST",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify({ body }),
+      },
+    );
     return;
   }
   await fetch(`https://api.github.com/repos/${owner}/${name}/issues`, {

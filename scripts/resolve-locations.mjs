@@ -30,35 +30,112 @@ const UA = `HookTheHorizon-FieldSense/0.6 (+https://waterways.hookthehorizon.blo
 const RETRY_MISSES = process.argv.includes("--retry-misses");
 
 const PROVINCES = new Set([
-  "Alberta", "British Columbia", "Manitoba", "New Brunswick",
-  "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia",
-  "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon",
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Northwest Territories",
+  "Nova Scotia",
+  "Nunavut",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Yukon",
 ]);
 
 const STATE_ABBR = {
-  Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA",
-  Colorado: "CO", Connecticut: "CT", Delaware: "DE", Florida: "FL", Georgia: "GA",
-  Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA",
-  Kansas: "KS", Kentucky: "KY", Louisiana: "LA", Maine: "ME", Maryland: "MD",
-  Massachusetts: "MA", Michigan: "MI", Minnesota: "MN", Mississippi: "MS",
-  Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV",
-  "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
-  "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK",
-  Oregon: "OR", Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC",
-  "South Dakota": "SD", Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT",
-  Virginia: "VA", Washington: "WA", "West Virginia": "WV", Wisconsin: "WI",
+  Alabama: "AL",
+  Alaska: "AK",
+  Arizona: "AZ",
+  Arkansas: "AR",
+  California: "CA",
+  Colorado: "CO",
+  Connecticut: "CT",
+  Delaware: "DE",
+  Florida: "FL",
+  Georgia: "GA",
+  Hawaii: "HI",
+  Idaho: "ID",
+  Illinois: "IL",
+  Indiana: "IN",
+  Iowa: "IA",
+  Kansas: "KS",
+  Kentucky: "KY",
+  Louisiana: "LA",
+  Maine: "ME",
+  Maryland: "MD",
+  Massachusetts: "MA",
+  Michigan: "MI",
+  Minnesota: "MN",
+  Mississippi: "MS",
+  Missouri: "MO",
+  Montana: "MT",
+  Nebraska: "NE",
+  Nevada: "NV",
+  "New Hampshire": "NH",
+  "New Jersey": "NJ",
+  "New Mexico": "NM",
+  "New York": "NY",
+  "North Carolina": "NC",
+  "North Dakota": "ND",
+  Ohio: "OH",
+  Oklahoma: "OK",
+  Oregon: "OR",
+  Pennsylvania: "PA",
+  "Rhode Island": "RI",
+  "South Carolina": "SC",
+  "South Dakota": "SD",
+  Tennessee: "TN",
+  Texas: "TX",
+  Utah: "UT",
+  Vermont: "VT",
+  Virginia: "VA",
+  Washington: "WA",
+  "West Virginia": "WV",
+  Wisconsin: "WI",
   Wyoming: "WY",
-  Alberta: "AB", "British Columbia": "BC", Manitoba: "MB", "New Brunswick": "NB",
-  "Newfoundland and Labrador": "NL", "Northwest Territories": "NT",
-  "Nova Scotia": "NS", Nunavut: "NU", Ontario: "ON",
-  "Prince Edward Island": "PE", Quebec: "QC", Saskatchewan: "SK", Yukon: "YT",
+  Alberta: "AB",
+  "British Columbia": "BC",
+  Manitoba: "MB",
+  "New Brunswick": "NB",
+  "Newfoundland and Labrador": "NL",
+  "Northwest Territories": "NT",
+  "Nova Scotia": "NS",
+  Nunavut: "NU",
+  Ontario: "ON",
+  "Prince Edward Island": "PE",
+  Quebec: "QC",
+  Saskatchewan: "SK",
+  Yukon: "YT",
 };
 
 const HYDRO_KEY = new Set(["water", "waterway", "natural"]);
 const HYDRO_VAL = new Set([
-  "lake", "reservoir", "pond", "basin", "river", "stream", "canal", "rapids",
-  "bay", "lagoon", "harbour", "harbor", "fjord", "strait", "wetland", "water",
-  "oxbow", "dock", "beach", "cape", "reef", "shoal", "flowline",
+  "lake",
+  "reservoir",
+  "pond",
+  "basin",
+  "river",
+  "stream",
+  "canal",
+  "rapids",
+  "bay",
+  "lagoon",
+  "harbour",
+  "harbor",
+  "fjord",
+  "strait",
+  "wetland",
+  "water",
+  "oxbow",
+  "dock",
+  "beach",
+  "cape",
+  "reef",
+  "shoal",
+  "flowline",
 ]);
 
 /** Search names that the gazetteer actually publishes. Never a neighbor water. */
@@ -111,7 +188,9 @@ function variants(d) {
   }
   const out = [];
   const push = (s) => {
-    const t = String(s || "").replace(/\s+/g, " ").trim();
+    const t = String(s || "")
+      .replace(/\s+/g, " ")
+      .trim();
     if (t && !out.includes(t)) out.push(t);
   };
   push(cleaned);
@@ -192,7 +271,10 @@ function pick(features, state, waterType) {
   const inState = features.filter((f) => stateMatches(f.properties?.state, state));
   const hydro = inState.filter((f) => isHydro(f.properties ?? {}));
   if (hydro.length) return { feat: hydro[0], kind: "hydro" };
-  if ((waterType === "marine" || waterType === "lake" || waterType === "reservoir") && inState.length) {
+  if (
+    (waterType === "marine" || waterType === "lake" || waterType === "reservoir") &&
+    inState.length
+  ) {
     return { feat: inState[0], kind: "place" };
   }
   // Distinctive named water: accept a hydro hit whose country matches even if
@@ -281,7 +363,10 @@ async function locateOne(d) {
       const feats = await photon(q);
       const picked = pick(feats, d.state, d.waterType);
       if (picked) return rowFrom(d, picked, q);
-      const tagged = await photon(`${name} ${d.state}`, d.waterType === "river" ? "waterway" : "water");
+      const tagged = await photon(
+        `${name} ${d.state}`,
+        d.waterType === "river" ? "waterway" : "water",
+      );
       const pickedTag = pick(tagged, d.state, d.waterType);
       if (pickedTag) return rowFrom(d, pickedTag, q);
     } catch {
@@ -360,9 +445,7 @@ async function main() {
   const fresh = [];
   const flush = () => {
     const byId = new Map([...prior, ...fresh.map((r) => [r.destinationId, r])]);
-    const records = destinations.map(
-      (d) => byId.get(d.id) ?? miss(d, "", "Pending."),
-    );
+    const records = destinations.map((d) => byId.get(d.id) ?? miss(d, "", "Pending."));
     const located = records.filter((r) => r.status === "located");
     const payload = {
       schema: "0.6.0",
@@ -389,7 +472,9 @@ async function main() {
     fresh.push(row);
     if ((idx + 1) % 10 === 0) {
       flush();
-      console.error(`geo   ${prior.size + fresh.length}/${destinations.length} · last ${row.status} ${d.waterbody}`);
+      console.error(
+        `geo   ${prior.size + fresh.length}/${destinations.length} · last ${row.status} ${d.waterbody}`,
+      );
     }
     return row;
   });

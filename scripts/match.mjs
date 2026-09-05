@@ -96,8 +96,10 @@ export const GENERIC = new Set([
 export const TYPE_HINT = {
   lake: /\blake\b|\blk\b|\blac\b|\bpond\b|\breservoir\b|\bres\b|\bbay\b|\bharbor\b|\bharbour\b|\bsound\b/,
   reservoir: /\breservoir\b|\blake\b|\blk\b|\blac\b|\bres\b/,
-  river: /\briver\b|\briviere\b|\brivière\b|\br\b|\brv\b|\bcreek\b|\bc\b|\bfork\b|\bstream\b|\bcanal\b|\bbrook\b|\bslough\b/,
-  marine: /\bbay\b|\binlet\b|\bsound\b|\bharbor\b|\bharbour\b|\bgulf\b|\bocean\b|\btide\b|\blagoon\b|\bpass\b|\bchannel\b|\bstrait\b/,
+  river:
+    /\briver\b|\briviere\b|\brivière\b|\br\b|\brv\b|\bcreek\b|\bc\b|\bfork\b|\bstream\b|\bcanal\b|\bbrook\b|\bslough\b/,
+  marine:
+    /\bbay\b|\binlet\b|\bsound\b|\bharbor\b|\bharbour\b|\bgulf\b|\bocean\b|\btide\b|\blagoon\b|\bpass\b|\bchannel\b|\bstrait\b/,
 };
 
 const LAKE_FAMILY = new Set(["lake", "lakes", "lk", "lac", "pond", "reservoir", "res"]);
@@ -260,7 +262,13 @@ export function nameScore(water, station, opts = {}) {
     if (/\btrib(?:utary)?\b/.test(subject)) continue;
 
     const lead = primaryFeature(station);
-    if (!distinctive.every((t) => new RegExp(`\\b${t}\\b`).test(lead) || (joined.length >= 8 && lead.replace(/ /g, "").includes(joined)))) {
+    if (
+      !distinctive.every(
+        (t) =>
+          new RegExp(`\\b${t}\\b`).test(lead) ||
+          (joined.length >= 8 && lead.replace(/ /g, "").includes(joined)),
+      )
+    ) {
       continue;
     }
     if (typeWord && LAKE_FAMILY.has(typeWord) && !opts.relaxType) {
@@ -341,7 +349,9 @@ export function pickUnique(water, hits) {
   const top = hits[0].score;
   let pool = hits.filter((h) => Math.abs(h.score - top) < 0.001);
   const primary = phrases(water)[0] ?? "";
-  const primaryToks = tokens(waterCore(primary)).filter((t) => !GENERIC.has(t) && !GENERIC_GEO.has(t));
+  const primaryToks = tokens(waterCore(primary)).filter(
+    (t) => !GENERIC.has(t) && !GENERIC_GEO.has(t),
+  );
   if (primaryToks.length && pool.length > 1) {
     const narrowed = pool.filter((h) => {
       const sub = stationSubject(h.row.name);
@@ -363,11 +373,7 @@ export function pickUnique(water, hits) {
     .slice(1)
     .flatMap((p) =>
       tokens(p).filter(
-        (t) =>
-          !GENERIC.has(t) &&
-          !GENERIC_GEO.has(t) &&
-          !isModifierToken(t) &&
-          !REACH_NOISE.has(t),
+        (t) => !GENERIC.has(t) && !GENERIC_GEO.has(t) && !isModifierToken(t) && !REACH_NOISE.has(t),
       ),
     );
   if (requiredReach.length) {

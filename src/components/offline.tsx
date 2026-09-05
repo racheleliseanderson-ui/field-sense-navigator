@@ -31,8 +31,14 @@ export function ServiceWorkerRegistrar() {
   useEffect(() => {
     if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
     /* A service worker on a plain-http origin is either impossible or a
-       development footgun. Neither is worth a try/catch in production. */
-    if (window.location.protocol !== "https:" && window.location.hostname !== "localhost") return;
+       development footgun. Neither is worth a try/catch in production.
+       `127.0.0.1` and `[::1]` are secure contexts exactly as `localhost` is,
+       and leaving them out meant the offline path could not be exercised
+       against a local build — which is where it should be tested, not in
+       production. */
+    const { protocol, hostname } = window.location;
+    const localSecure = ["localhost", "127.0.0.1", "[::1]", "::1"].includes(hostname);
+    if (protocol !== "https:" && !localSecure) return;
     const register = () => {
       navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(() => {
         /* No offline support in this browser. Everything still works online. */

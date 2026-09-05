@@ -499,7 +499,17 @@ export function PlanViewBoard({
         </p>
       </header>
 
-      <div className="overflow-x-auto">
+      {/*
+       * The schematic is wider than a phone and scrolls sideways. Nothing
+       * inside it is tabbable, so the container itself has to be, or a
+       * keyboard-only reader can never see the far bank.
+       */}
+      <div
+        className="overflow-x-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--brass,#c8a24a)]"
+        tabIndex={0}
+        role="group"
+        aria-label={`${schematic.title} — scrollable schematic`}
+      >
         <svg
           viewBox={`0 0 ${W} ${H}`}
           className="h-auto w-full min-w-[560px]"

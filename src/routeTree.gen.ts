@@ -18,6 +18,8 @@ import { Route as PipelineRouteImport } from './routes/pipeline'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as ReadingRouteImport } from './routes/reading'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
+import { Route as ApiHealthRouteImport } from './routes/api.health'
+import { Route as ApiVersionRouteImport } from './routes/api.version'
 import { Route as PacketIdRouteImport } from './routes/packet.$id'
 import { Route as WaterIdRouteImport } from './routes/water.$id'
 
@@ -66,6 +68,16 @@ const WatchlistRoute = WatchlistRouteImport.update({
   path: '/watchlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVersionRoute = ApiVersionRouteImport.update({
+  id: '/api/version',
+  path: '/api/version',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PacketIdRoute = PacketIdRouteImport.update({
   id: '/packet/$id',
   path: '/packet/$id',
@@ -87,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/plan': typeof PlanRoute
   '/reading': typeof ReadingRoute
   '/watchlist': typeof WatchlistRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/version': typeof ApiVersionRoute
   '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
@@ -100,6 +114,8 @@ export interface FileRoutesByTo {
   '/plan': typeof PlanRoute
   '/reading': typeof ReadingRoute
   '/watchlist': typeof WatchlistRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/version': typeof ApiVersionRoute
   '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
@@ -114,6 +130,8 @@ export interface FileRoutesById {
   '/plan': typeof PlanRoute
   '/reading': typeof ReadingRoute
   '/watchlist': typeof WatchlistRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/version': typeof ApiVersionRoute
   '/packet/$id': typeof PacketIdRoute
   '/water/$id': typeof WaterIdRoute
 }
@@ -129,6 +147,8 @@ export interface FileRouteTypes {
     | '/plan'
     | '/reading'
     | '/watchlist'
+    | '/api/health'
+    | '/api/version'
     | '/packet/$id'
     | '/water/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +162,8 @@ export interface FileRouteTypes {
     | '/plan'
     | '/reading'
     | '/watchlist'
+    | '/api/health'
+    | '/api/version'
     | '/packet/$id'
     | '/water/$id'
   id:
@@ -155,6 +177,8 @@ export interface FileRouteTypes {
     | '/plan'
     | '/reading'
     | '/watchlist'
+    | '/api/health'
+    | '/api/version'
     | '/packet/$id'
     | '/water/$id'
   fileRoutesById: FileRoutesById
@@ -169,6 +193,8 @@ export interface RootRouteChildren {
   PlanRoute: typeof PlanRoute
   ReadingRoute: typeof ReadingRoute
   WatchlistRoute: typeof WatchlistRoute
+  ApiHealthRoute: typeof ApiHealthRoute
+  ApiVersionRoute: typeof ApiVersionRoute
   PacketIdRoute: typeof PacketIdRoute
   WaterIdRoute: typeof WaterIdRoute
 }
@@ -238,6 +264,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/version': {
+      id: '/api/version'
+      path: '/api/version'
+      fullPath: '/api/version'
+      preLoaderRoute: typeof ApiVersionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/packet/$id': {
       id: '/packet/$id'
       path: '/packet/$id'
@@ -265,6 +305,8 @@ const rootRouteChildren: RootRouteChildren = {
   PlanRoute: PlanRoute,
   ReadingRoute: ReadingRoute,
   WatchlistRoute: WatchlistRoute,
+  ApiHealthRoute: ApiHealthRoute,
+  ApiVersionRoute: ApiVersionRoute,
   PacketIdRoute: PacketIdRoute,
   WaterIdRoute: WaterIdRoute,
 }

@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/apply-plan-carefully-overlay.mjs && node scripts/assert-catalog.mjs && node scripts/build-sitemap.mjs && vite build",
+    "build": "node scripts/apply-plan-carefully-overlay.mjs && node scripts/assert-catalog.mjs && node scripts/build-sitemap.mjs && vite build && node scripts/stamp-sw.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build && npm run assert:output",
+    "assert:output": "node scripts/assert-build-output.mjs",
     "format": "prettier --write .",
     "resolve:stations": "node scripts/resolve-stations.mjs",
     "resolve:names": "node scripts/name-search-unmatched.mjs",
@@ -18,7 +21,6 @@
     "ingest:critical": "node scripts/ingest-live.mjs --mode=critical --skip-slow --merge",
     "test": "node --test 'scripts/**/*.test.mjs' && bun test src",
     "test:unit": "bun test src",
-    "test:a11y": "node scripts/a11y-audit.mjs",
     "scan:closures": "node scripts/scan-closures.mjs",
     "assert:catalog": "node scripts/assert-catalog.mjs",
     "build:sitemap": "node scripts/build-sitemap.mjs",
@@ -29,7 +31,8 @@
     "waters:refresh": "node scripts/pipeline/refresh.mjs",
     "waters:health": "node scripts/pipeline/health.mjs",
     "waters:count": "node scripts/pipeline/catalog-count.mjs",
-    "test:pipeline": "node --test scripts/pipeline/*.test.mjs"
+    "test:pipeline": "node --test scripts/pipeline/*.test.mjs",
+    "test:smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

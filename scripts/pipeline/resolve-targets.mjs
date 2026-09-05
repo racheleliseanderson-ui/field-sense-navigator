@@ -30,15 +30,42 @@
  *   node scripts/pipeline/resolve-targets.mjs --dry --limit=5
  */
 import {
-  PATHS, readCatalog, readJson, writeJson, hostOf, trustTier, waterKey, plain,
-  fetchPage, robotsAllows, pooled, argv, ok, drop, note, writeReport, appendRun,
-  today, addDays, pageNamesWater, pageCarriesPhrase, pageReadsAsWater, sleep, mainText,
+  PATHS,
+  readCatalog,
+  readJson,
+  writeJson,
+  hostOf,
+  trustTier,
+  waterKey,
+  plain,
+  fetchPage,
+  robotsAllows,
+  pooled,
+  argv,
+  ok,
+  drop,
+  note,
+  writeReport,
+  appendRun,
+  today,
+  addDays,
+  pageNamesWater,
+  pageCarriesPhrase,
+  pageReadsAsWater,
+  sleep,
+  mainText,
   isMultiStateHost,
 } from "./lib.mjs";
 import { agencyIndex } from "./agencies.mjs";
 import {
-  publishedName, waterTypeFrom, accessFrom, noticesFrom, speciesFrom, tagsFrom,
-  chooseWaterbodyName, boilerplateFilter,
+  publishedName,
+  waterTypeFrom,
+  accessFrom,
+  noticesFrom,
+  speciesFrom,
+  tagsFrom,
+  chooseWaterbodyName,
+  boilerplateFilter,
 } from "./extract.mjs";
 
 const args = argv();
@@ -62,7 +89,11 @@ const records = readCatalog();
 const index = agencyIndex();
 const knownKeys = new Set(records.map((r) => waterKey(r.waterbody, r.state)));
 const knownUrls = new Set(
-  records.map((r) => String(r.officialSourceUrl ?? "").replace(/\/$/, "").toLowerCase()),
+  records.map((r) =>
+    String(r.officialSourceUrl ?? "")
+      .replace(/\/$/, "")
+      .toLowerCase(),
+  ),
 );
 
 let targets = (readJson(PATHS.seedTargets, []) ?? []).filter((t) => t && t.waterbody && t.state);
@@ -72,7 +103,9 @@ targets = targets.slice(0, LIMIT === Infinity ? targets.length : LIMIT);
 
 console.log(`resolve: ${targets.length} target${targets.length === 1 ? "" : "s"} to prove`);
 if (!targets.length) {
-  console.log("resolve: nothing queued. Run discover.mjs, or add names to scripts/data/seed-targets.json.");
+  console.log(
+    "resolve: nothing queued. Run discover.mjs, or add names to scripts/data/seed-targets.json.",
+  );
   process.exit(0);
 }
 
@@ -104,7 +137,10 @@ const familiesByState = (() => {
   for (const [key, bucket] of map) {
     map.set(
       key,
-      [...bucket.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([p]) => p),
+      [...bucket.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([p]) => p),
     );
   }
   return map;
@@ -139,7 +175,9 @@ const hostStates = (() => {
 const singleStateHost = (host) => hostStates.get(host) ?? null;
 
 const slugsFor = (name) => {
-  const base = plain(name).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const base = plain(name)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
   const noClass = base.replace(/^lake-/, "").replace(/-lake$/, "");
   return [...new Set([base, base.replace(/-/g, "_"), noClass].filter(Boolean))];
 };
@@ -148,7 +186,8 @@ function candidateUrls(target) {
   if (target.url) return [target.url];
   const prefixes = familiesByState.get(plain(target.state)) ?? [];
   const out = [];
-  for (const prefix of prefixes) for (const slug of slugsFor(target.waterbody)) out.push(`${prefix}${slug}`);
+  for (const prefix of prefixes)
+    for (const slug of slugsFor(target.waterbody)) out.push(`${prefix}${slug}`);
   return out.slice(0, 8);
 }
 
@@ -330,7 +369,10 @@ const dropped = results.filter((r) => r && !r.record);
 /* Strip the agency's site-wide banners, which only look like notices until you
    see them on every page the same agency served in this run. */
 const isFurniture = boilerplateFilter(
-  proved.map((r) => ({ host: hostOf(r.record.officialSourceUrl), notices: r.record.currentNotices })),
+  proved.map((r) => ({
+    host: hostOf(r.record.officialSourceUrl),
+    notices: r.record.currentNotices,
+  })),
 );
 let furnitureRemoved = 0;
 for (const r of proved) {
@@ -341,7 +383,9 @@ for (const r of proved) {
   r.record.currentNotices = kept;
 }
 if (furnitureRemoved) {
-  note(`${furnitureRemoved} site-wide banner lines dropped — they appear on every page that agency served`);
+  note(
+    `${furnitureRemoved} site-wide banner lines dropped — they appear on every page that agency served`,
+  );
 }
 
 /* one water can be proved twice in one run only if two targets name it */
@@ -357,7 +401,10 @@ for (const r of proved) {
 console.log("");
 console.log(`resolve: ${deduped.length} proved, ${dropped.length} dropped`);
 
-const reasons = dropped.reduce((acc, d) => ({ ...acc, [d.dropped]: (acc[d.dropped] ?? 0) + 1 }), {});
+const reasons = dropped.reduce(
+  (acc, d) => ({ ...acc, [d.dropped]: (acc[d.dropped] ?? 0) + 1 }),
+  {},
+);
 const reportPath = writeReport("resolve-targets", [
   `# Target resolution ${new Date().toISOString()}`,
   "",
@@ -385,27 +432,41 @@ const reportPath = writeReport("resolve-targets", [
   "",
   "## Dropped, in detail",
   "",
-  ...dropped.map((d) => `- ${d.target.waterbody} (${d.target.state}) — ${d.dropped}${d.target.url ? `\n  ${d.target.url}` : ""}`),
+  ...dropped.map(
+    (d) =>
+      `- ${d.target.waterbody} (${d.target.state}) — ${d.dropped}${d.target.url ? `\n  ${d.target.url}` : ""}`,
+  ),
 ]);
 note(`report: ${reportPath.slice(reportPath.lastIndexOf("reports"))}`);
 
 if (DRY) {
   console.log("resolve: --dry, nothing staged");
 } else {
-  writeJson(PATHS.stagedSeeds, deduped.map((r) => r.record));
+  writeJson(
+    PATHS.stagedSeeds,
+    deduped.map((r) => r.record),
+  );
   // Mark the queue so a re-run does not re-fetch what this run settled.
   const settled = new Map();
   for (const r of proved) settled.set(`${r.target.waterbody}::${r.target.state}`, "resolved");
-  for (const d of dropped) settled.set(`${d.target.waterbody}::${d.target.state}`, `dropped:${d.dropped}`);
+  for (const d of dropped)
+    settled.set(`${d.target.waterbody}::${d.target.state}`, `dropped:${d.dropped}`);
   const queue = (readJson(PATHS.seedTargets, []) ?? []).map((t) => {
     const verdict = settled.get(`${t.waterbody}::${t.state}`);
     if (!verdict) return t;
     return verdict === "resolved"
       ? { ...t, status: "resolved", resolvedAt: today() }
-      : { ...t, status: "dropped", droppedReason: verdict.slice("dropped:".length), droppedAt: today() };
+      : {
+          ...t,
+          status: "dropped",
+          droppedReason: verdict.slice("dropped:".length),
+          droppedAt: today(),
+        };
   });
   writeJson(PATHS.seedTargets, queue);
-  console.log(`resolve: staged ${deduped.length} record${deduped.length === 1 ? "" : "s"} in scripts/data/staged-seeds.json`);
+  console.log(
+    `resolve: staged ${deduped.length} record${deduped.length === 1 ? "" : "s"} in scripts/data/staged-seeds.json`,
+  );
 }
 
 appendRun("resolve-targets", {

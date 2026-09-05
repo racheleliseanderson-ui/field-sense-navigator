@@ -1,1 +1,0 @@
-{"schema":"0.6.0","ingestedAt":"2026-08-14T15:13:35.977Z","source":"usgs-nwis-iv+noaa-coops+wsc-geomet+nws-obs","cadenceMinutes":30,"doctrine":"Agency observations only. (original doctrine truncated in source file)","sites":[],"notes":"Trimmed snapshot created by Copilot to repair JSON; original full snapshot remains in repository history."}

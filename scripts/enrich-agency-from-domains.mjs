@@ -25,24 +25,51 @@ const DATA = join(__dirname, "../src/data/destinations.json");
 
 /** @type {Record<string, [string, string | null]>} */
 const DOMAIN_AGENCY = {
-  "tpwd.texas.gov": ["Texas Parks and Wildlife Department", "https://tpwd.texas.gov/regulations/outdoor-annual/"],
-  "wdfw.wa.gov": ["Washington Department of Fish and Wildlife", "https://www.wdfw.wa.gov/fishing/regulations"],
+  "tpwd.texas.gov": [
+    "Texas Parks and Wildlife Department",
+    "https://tpwd.texas.gov/regulations/outdoor-annual/",
+  ],
+  "wdfw.wa.gov": [
+    "Washington Department of Fish and Wildlife",
+    "https://www.wdfw.wa.gov/fishing/regulations",
+  ],
   "myfwp.mt.gov": ["Montana Fish, Wildlife & Parks", "https://fwp.mt.gov/fish"],
   "fwp.mt.gov": ["Montana Fish, Wildlife & Parks", "https://fwp.mt.gov/fish"],
-  "dnr.state.mn.us": ["Minnesota Department of Natural Resources", "https://www.dnr.state.mn.us/regulations/fishing/index.html"],
+  "dnr.state.mn.us": [
+    "Minnesota Department of Natural Resources",
+    "https://www.dnr.state.mn.us/regulations/fishing/index.html",
+  ],
   "fs.usda.gov": ["USDA Forest Service", null],
-  "cpw.state.co.us": ["Colorado Parks and Wildlife", "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"],
+  "cpw.state.co.us": [
+    "Colorado Parks and Wildlife",
+    "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
+  ],
   "idfg.idaho.gov": ["Idaho Department of Fish and Game", "https://idfg.idaho.gov/rules"],
   "floridastateparks.org": ["Florida State Parks", null],
   "myfwc.com": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
-  "michigan.gov": ["Michigan Department of Natural Resources", "https://www.michigan.gov/dnr/things-to-do/fishing"],
-  "wildlife.ca.gov": ["California Department of Fish and Wildlife", "https://wildlife.ca.gov/Fishing"],
-  "ontario.ca": ["Ontario Ministry of Natural Resources and Forestry", "https://www.ontario.ca/page/fishing"],
+  "michigan.gov": [
+    "Michigan Department of Natural Resources",
+    "https://www.michigan.gov/dnr/things-to-do/fishing",
+  ],
+  "wildlife.ca.gov": [
+    "California Department of Fish and Wildlife",
+    "https://wildlife.ca.gov/Fishing",
+  ],
+  "ontario.ca": [
+    "Ontario Ministry of Natural Resources and Forestry",
+    "https://www.ontario.ca/page/fishing",
+  ],
   "nps.gov": ["National Park Service", null],
   "www2.gov.bc.ca": ["British Columbia Ministry of Water, Land and Resource Stewardship", null],
   "mffp.gouv.qc.ca": ["Ministère des Forêts, de la Faune et des Parcs (Québec)", null],
-  "dnr.wisconsin.gov": ["Wisconsin Department of Natural Resources", "https://dnr.wisconsin.gov/topic/Fishing"],
-  "dec.ny.gov": ["New York State Department of Environmental Conservation", "https://www.dec.ny.gov/outdoor/fishing.html"],
+  "dnr.wisconsin.gov": [
+    "Wisconsin Department of Natural Resources",
+    "https://dnr.wisconsin.gov/topic/Fishing",
+  ],
+  "dec.ny.gov": [
+    "New York State Department of Environmental Conservation",
+    "https://www.dec.ny.gov/outdoor/fishing.html",
+  ],
   "albertaregulations.ca": ["Alberta Environment and Parks", null],
   "maine.gov": ["Maine Department of Inland Fisheries and Wildlife", null],
   "mass.gov": ["Massachusetts Division of Fisheries and Wildlife", null],

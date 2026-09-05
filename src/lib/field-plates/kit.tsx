@@ -324,7 +324,24 @@ export function Plate({
         )}
         {caption ? <p className="hthp-plate__caption">{caption}</p> : null}
       </figcaption>
-      <div ref={frameRef} className="hthp-plate__frame">
+      {/*
+       * Focusable on purpose.
+       *
+       * A wide plate scrolls sideways rather than shrinking (see
+       * `.hthp-plate__frame` in field-plates.css). A scroll container whose
+       * contents are a drawing holds nothing tabbable, so without a tabindex
+       * the right-hand half of every wide plate is unreachable by keyboard
+       * and by switch access — axe reports it as `scrollable-region-focusable`
+       * and it is a real WCAG 2.1 AA failure, not a lint nit. The label is the
+       * plate's own title so a screen reader announces which drawing this is.
+       */}
+      <div
+        ref={frameRef}
+        className="hthp-plate__frame"
+        tabIndex={0}
+        role="group"
+        aria-label={title}
+      >
         {children}
       </div>
       {legend ? <div className="hthp-plate__legend">{legend}</div> : null}

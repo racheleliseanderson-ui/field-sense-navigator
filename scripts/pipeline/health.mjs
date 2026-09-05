@@ -11,8 +11,19 @@
  *   node scripts/pipeline/health.mjs --links --batch=80
  */
 import {
-  PATHS, readCatalog, readJson, hostOf, trustTier, waterKey, plain, fetchPage,
-  pooled, argv, writeReport, appendRun, today,
+  PATHS,
+  readCatalog,
+  readJson,
+  hostOf,
+  trustTier,
+  waterKey,
+  plain,
+  fetchPage,
+  pooled,
+  argv,
+  writeReport,
+  appendRun,
+  today,
 } from "./lib.mjs";
 
 const args = argv();
@@ -31,7 +42,13 @@ const line = (label, value) => `${label.padEnd(44)} ${value}`;
 const pct = (n) => `${((n / Math.max(1, catalog.length)) * 100).toFixed(0)}%`;
 
 /* ── 1. how old is the evidence ─────────────────────────────────────────── */
-const buckets = { "under 30 days": 0, "30 to 90 days": 0, "90 to 180 days": 0, "over 180 days": 0, "never recorded": 0 };
+const buckets = {
+  "under 30 days": 0,
+  "30 to 90 days": 0,
+  "90 to 180 days": 0,
+  "over 180 days": 0,
+  "never recorded": 0,
+};
 for (const r of catalog) {
   const age = ageDays(r.lastVerified ?? r.checkedAt);
   if (age === null || Number.isNaN(age)) buckets["never recorded"] += 1;
@@ -50,7 +67,9 @@ const byId = new Map();
 for (const r of catalog) {
   const wk = waterKey(r.waterbody, r.state);
   byWater.set(wk, [...(byWater.get(wk) ?? []), r]);
-  const url = String(r.officialSourceUrl ?? "").replace(/\/$/, "").toLowerCase();
+  const url = String(r.officialSourceUrl ?? "")
+    .replace(/\/$/, "")
+    .toLowerCase();
   if (url) byUrl.set(url, [...(byUrl.get(url) ?? []), r]);
   byId.set(r.id, [...(byId.get(r.id) ?? []), r]);
 }
@@ -58,7 +77,9 @@ const dupWaters = [...byWater.values()].filter((g) => g.length > 1);
 const dupIds = [...byId.values()].filter((g) => g.length > 1);
 // A shared official page is normal when an agency publishes one directory for
 // many waters, so it is reported as a note rather than as a fault.
-const sharedPages = [...byUrl.entries()].filter(([, g]) => g.length > 1).sort((a, b) => b[1].length - a[1].length);
+const sharedPages = [...byUrl.entries()]
+  .filter(([, g]) => g.length > 1)
+  .sort((a, b) => b[1].length - a[1].length);
 
 /* ── 3. what can it actually answer ─────────────────────────────────────── */
 const has = (fn) => catalog.filter(fn).length;
@@ -82,10 +103,12 @@ const byTier = catalog.reduce((acc, r) => {
 }, {});
 
 /* ── 5. shape ───────────────────────────────────────────────────────────── */
-const byState = [...catalog.reduce((m, r) => m.set(r.state, (m.get(r.state) ?? 0) + 1), new Map())]
-  .sort((a, b) => b[1] - a[1]);
-const byType = [...catalog.reduce((m, r) => m.set(r.waterType, (m.get(r.waterType) ?? 0) + 1), new Map())]
-  .sort((a, b) => b[1] - a[1]);
+const byState = [
+  ...catalog.reduce((m, r) => m.set(r.state, (m.get(r.state) ?? 0) + 1), new Map()),
+].sort((a, b) => b[1] - a[1]);
+const byType = [
+  ...catalog.reduce((m, r) => m.set(r.waterType, (m.get(r.waterType) ?? 0) + 1), new Map()),
+].sort((a, b) => b[1] - a[1]);
 const queued = (readJson(PATHS.seedTargets, []) ?? []).filter((t) => t.status === "queued").length;
 const staged = (readJson(PATHS.stagedSeeds, []) ?? []).length;
 
@@ -122,7 +145,10 @@ say("  ANY DUPLICATES?");
 say("  " + "-".repeat(66));
 say("  " + line("same water, same jurisdiction, twice", `${dupWaters.length}`));
 say("  " + line("duplicate record ids", `${dupIds.length}`));
-say("  " + line("official pages cited by 2+ records", `${sharedPages.length} (normal for directories)`));
+say(
+  "  " +
+    line("official pages cited by 2+ records", `${sharedPages.length} (normal for directories)`),
+);
 for (const g of dupWaters.slice(0, 10)) {
   say(`    ${g.map((r) => r.id).join(" / ")}  ${g[0].waterbody} (${g[0].state})`);
 }
@@ -130,7 +156,8 @@ say("");
 
 say("  WHAT CAN THE CATALOGUE ANSWER?");
 say("  " + "-".repeat(66));
-for (const [label, n] of Object.entries(coverage)) say("  " + line(label, `${n} of ${catalog.length}  (${pct(n)})`));
+for (const [label, n] of Object.entries(coverage))
+  say("  " + line(label, `${n} of ${catalog.length}  (${pct(n)})`));
 say("");
 
 say("  WHERE IS IT READING FROM?");
@@ -138,7 +165,8 @@ say("  " + "-".repeat(66));
 for (const [tier, n] of Object.entries(byTier)) say("  " + line(tier, `${n} records`));
 if (untrusted.length) {
   say("  sources that are neither an agency nor a named authority:");
-  for (const r of untrusted.slice(0, 20)) say(`    ${r.id}  ${r.waterbody} (${r.state}) — ${hostOf(r.officialSourceUrl)}`);
+  for (const r of untrusted.slice(0, 20))
+    say(`    ${r.id}  ${r.waterbody} (${r.state}) — ${hostOf(r.officialSourceUrl)}`);
 }
 say("");
 
@@ -152,7 +180,8 @@ say("  " + line("records staged, not yet seeded", String(staged)));
 if (CHECK_LINKS) {
   say("  " + line("official pages checked", String(Math.min(BATCH, catalog.length))));
   say("  " + line("pages that did not load", String(deadLinks.length)));
-  for (const d of deadLinks.slice(0, 25)) say(`    ${d.record.id}  ${d.record.waterbody} — ${d.reason}`);
+  for (const d of deadLinks.slice(0, 25))
+    say(`    ${d.record.id}  ${d.record.waterbody} — ${d.reason}`);
 }
 say("");
 
@@ -174,7 +203,9 @@ const reportPath = writeReport("health", [
   "## Duplicates",
   "",
   ...(dupWaters.length
-    ? dupWaters.map((g) => `- ${g.map((r) => r.id).join(" / ")} — ${g[0].waterbody} (${g[0].state})`)
+    ? dupWaters.map(
+        (g) => `- ${g.map((r) => r.id).join(" / ")} — ${g[0].waterbody} (${g[0].state})`,
+      )
     : ["- none"]),
   "",
   "## Sources that are neither an agency nor a named authority",
@@ -185,14 +216,26 @@ const reportPath = writeReport("health", [
   "",
   "## Records past their review date",
   "",
-  ...overdue.slice(0, 200).map((r) => `- ${r.id} ${r.waterbody} (${r.state}) — due ${r.nextReviewAt}`),
+  ...overdue
+    .slice(0, 200)
+    .map((r) => `- ${r.id} ${r.waterbody} (${r.state}) — due ${r.nextReviewAt}`),
   ...(overdue.length > 200 ? [`- ...and ${overdue.length - 200} more`] : []),
   "",
   "## Jurisdictions",
   "",
   ...byState.map(([state, n]) => `- ${state}: ${n}`),
   ...(CHECK_LINKS
-    ? ["", "## Official pages that did not load", "", ...(deadLinks.length ? deadLinks.map((d) => `- ${d.record.id} ${d.record.waterbody} — ${d.reason} — ${d.record.officialSourceUrl}`) : ["- none"])]
+    ? [
+        "",
+        "## Official pages that did not load",
+        "",
+        ...(deadLinks.length
+          ? deadLinks.map(
+              (d) =>
+                `- ${d.record.id} ${d.record.waterbody} — ${d.reason} — ${d.record.officialSourceUrl}`,
+            )
+          : ["- none"]),
+      ]
     : []),
 ]);
 console.log(`  report: ${reportPath.slice(reportPath.lastIndexOf("reports"))}`);

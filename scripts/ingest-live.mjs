@@ -47,10 +47,10 @@ const USGS_PARAMS = {
   "00060": { label: "Streamflow", unit: "ft³/s" },
   "00065": { label: "Gage height", unit: "ft" },
   "00010": { label: "Water temperature", unit: "°C" },
-  "62614": { label: "Lake or reservoir elevation", unit: "ft" },
-  "62615": { label: "Lake or reservoir elevation (NAVD88)", unit: "ft" },
+  62614: { label: "Lake or reservoir elevation", unit: "ft" },
+  62615: { label: "Lake or reservoir elevation (NAVD88)", unit: "ft" },
   "00062": { label: "Reservoir elevation", unit: "ft" },
-  "72020": { label: "Reservoir storage", unit: "ac-ft" },
+  72020: { label: "Reservoir storage", unit: "ac-ft" },
 };
 const BATCH = 40;
 const USBR_TIMEOUT_MS = 90_000;
@@ -93,7 +93,9 @@ async function loadPriorSnapshot() {
     /* placeholder on main is not a prior */
   }
   try {
-    const res = await fetch(PRIOR_URL, { headers: { "User-Agent": UA, Accept: "application/json" } });
+    const res = await fetch(PRIOR_URL, {
+      headers: { "User-Agent": UA, Accept: "application/json" },
+    });
     if (!res.ok) return null;
     const json = await res.json();
     return json?.stations ? json : null;
@@ -315,8 +317,20 @@ async function cdecStation(siteId, siteName) {
     const readings = [];
     const elev = pick((r) => r.SENSOR_NUM === 6 || /ELE/i.test(r.sensorType ?? ""));
     const store = pick((r) => r.SENSOR_NUM === 15 || /STOR/i.test(r.sensorType ?? ""));
-    if (elev) readings.push({ label: "Reservoir elevation", value: elev.value, unit: "ft", observedAt: elev.at });
-    if (store) readings.push({ label: "Reservoir storage", value: store.value, unit: "ac-ft", observedAt: store.at });
+    if (elev)
+      readings.push({
+        label: "Reservoir elevation",
+        value: elev.value,
+        unit: "ft",
+        observedAt: elev.at,
+      });
+    if (store)
+      readings.push({
+        label: "Reservoir storage",
+        value: store.value,
+        unit: "ac-ft",
+        observedAt: store.at,
+      });
     return emptyStation(siteId, "CDEC", { siteName, readings });
   } catch (err) {
     return emptyStation(siteId, "CDEC", { siteName, error: String(err.message ?? err) });
@@ -371,7 +385,10 @@ async function usbrStation(siteId, siteName) {
       });
       if (!res.ok) throw new Error(`USBR Hydromet ${res.status}`);
       const text = await res.text();
-      const lines = text.split("\n").map((l) => l.trim()).filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
+      const lines = text
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => /^\d{2}\/\d{2}\/\d{4},/.test(l));
       for (let i = lines.length - 1; i >= 0; i -= 1) {
         const [d, v] = lines[i].split(",");
         const n = Number(String(v).trim());
@@ -439,12 +456,22 @@ async function main() {
 
   const usgsIds = [...new Set(selected.filter((r) => r.agency === "USGS").map((r) => r.siteId))];
   const noaaRows = [
-    ...new Map(selected.filter((r) => r.agency === "NOAA-COOPS").map((r) => [r.siteId, r])).values(),
+    ...new Map(
+      selected.filter((r) => r.agency === "NOAA-COOPS").map((r) => [r.siteId, r]),
+    ).values(),
   ];
-  const wscRows = [...new Map(selected.filter((r) => r.agency === "WSC").map((r) => [r.siteId, r])).values()];
-  const usbrRows = [...new Map(selected.filter((r) => r.agency === "USBR").map((r) => [r.siteId, r])).values()];
-  const usaceRows = [...new Map(selected.filter((r) => r.agency === "USACE").map((r) => [r.siteId, r])).values()];
-  const cdecRows = [...new Map(selected.filter((r) => r.agency === "CDEC").map((r) => [r.siteId, r])).values()];
+  const wscRows = [
+    ...new Map(selected.filter((r) => r.agency === "WSC").map((r) => [r.siteId, r])).values(),
+  ];
+  const usbrRows = [
+    ...new Map(selected.filter((r) => r.agency === "USBR").map((r) => [r.siteId, r])).values(),
+  ];
+  const usaceRows = [
+    ...new Map(selected.filter((r) => r.agency === "USACE").map((r) => [r.siteId, r])).values(),
+  ];
+  const cdecRows = [
+    ...new Map(selected.filter((r) => r.agency === "CDEC").map((r) => [r.siteId, r])).values(),
+  ];
 
   byAgency.USGS.bound = usgsIds.length;
   byAgency["NOAA-COOPS"].bound = noaaRows.length;
@@ -489,7 +516,8 @@ async function main() {
 
   const usbrResults = await poolMap(usbrRows, 1, (r) => usbrStation(r.siteId, r.siteName));
   for (const row of usbrResults) stations[row.siteId] = row;
-  if (usbrRows.length) console.error(`usbr  ${usbrRows.length} stations (serial, ${USBR_TIMEOUT_MS / 1000}s timeout)`);
+  if (usbrRows.length)
+    console.error(`usbr  ${usbrRows.length} stations (serial, ${USBR_TIMEOUT_MS / 1000}s timeout)`);
 
   const usaceResults = await poolMap(usaceRows, 3, (r) => usaceStation(r.siteId, r.siteName));
   for (const row of usaceResults) stations[row.siteId] = row;
@@ -499,11 +527,7 @@ async function main() {
   for (const row of cdecResults) stations[row.siteId] = row;
   if (cdecRows.length) console.error(`cdec  ${cdecRows.length} stations`);
 
-  const nwsSource = opts.onlySlow
-    ? []
-    : opts.mode === "critical"
-      ? selected
-      : bindings.records;
+  const nwsSource = opts.onlySlow ? [] : opts.mode === "critical" ? selected : bindings.records;
   const nwsIds = [...new Set(nwsSource.map((r) => r.nwsStationId).filter(Boolean))];
   const observations = {};
   if (nwsIds.length) {

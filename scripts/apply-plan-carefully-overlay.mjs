@@ -49,4 +49,6 @@ for (const row of dest) {
 }
 
 writeFileSync(destPath, JSON.stringify(dest, null, 2) + "\n");
-console.log(`apply-plan-carefully-overlay: merged ${n} records from ${overlay.length} overlay rows`);
+console.log(
+  `apply-plan-carefully-overlay: merged ${n} records from ${overlay.length} overlay rows`,
+);

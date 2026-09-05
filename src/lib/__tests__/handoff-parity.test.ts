@@ -235,8 +235,7 @@ function withoutDeliberateAdditions(value: unknown): unknown {
     const leaf = parts.pop() as string;
     let node: unknown = clone;
     for (const part of parts) {
-      node =
-        node && typeof node === "object" ? (node as Record<string, unknown>)[part] : undefined;
+      node = node && typeof node === "object" ? (node as Record<string, unknown>)[part] : undefined;
     }
     if (node && typeof node === "object") delete (node as Record<string, unknown>)[leaf];
   }

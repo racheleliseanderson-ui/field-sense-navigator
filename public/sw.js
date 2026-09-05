@@ -22,9 +22,26 @@
  *   - Hashed build assets are cache first. They never change in place.
  *   - Server functions and anything under /api/ are network only. Live data
  *     that is out of date is worse than live data that is missing.
+ *
+ * ── Why BUILD_ID is stamped, and what went wrong without it ──────────────
+ *
+ * VERSION used to be the literal string "fsn-v1", so this file was
+ * byte-identical on every deploy. A browser only treats a worker as new when
+ * its bytes change, so `install` ran exactly once in a reader's lifetime: on
+ * their first visit. Every deploy after that left the offline shell frozen at
+ * whatever the catalogue looked like the day they first opened the app —
+ * online they got the current build, offline they got July. For a field
+ * instrument whose whole promise is that it works at the ramp with no signal,
+ * that is the worst possible half of the app to freeze.
+ *
+ * `scripts/stamp-sw.mjs` now replaces the token below with the build id after
+ * every production build, so a deploy is what expires an offline shell.
+ * The literal below is the development value and is never shipped: the build
+ * asserts the stamp landed.
  */
 
-const VERSION = "fsn-v1";
+/** Replaced at build time by scripts/stamp-sw.mjs. */
+const BUILD_ID = "__BUILD_ID__";
 
 /** The surfaces worth having with no signal, prefetched on install. */
 const OFFLINE_ROUTES = ["/", "/explore", "/reading", "/plan", "/watchlist", "/boundary"];
@@ -38,8 +55,22 @@ const OFFLINE_PAGE = `<!doctype html><meta charset="utf-8"><meta name="viewport"
 <p style="max-width:34rem;color:#93a3ae">Open the navigator once with a connection and the water-reading pages, the plan view and your watchlist are available without one. Live gauge, flow and forecast readings are never cached — an old river level shown as a current one is worse than no river level.</p>
 </body>`;
 
-const SHELL = `${VERSION}-shell`;
-const ASSETS = `${VERSION}-assets`;
+/*
+ * Two caches with two different lifetimes, on purpose.
+ *
+ * SHELL holds rendered HTML, which goes out of date the moment a record
+ * changes, so it is keyed on the build and a deploy discards it.
+ *
+ * ASSETS holds hashed build files, whose URLs already carry their version — a
+ * hit is correct forever, and re-keying it per build would make every deploy
+ * re-download the whole catalogue chunk over whatever signal a reader has at
+ * the ramp. It is pruned by size instead of by version.
+ */
+const SHELL = `fsn-shell-${BUILD_ID}`;
+const ASSETS = "fsn-assets";
+
+/** How many hashed files to keep. Comfortably more than one build needs. */
+const ASSET_CACHE_LIMIT = 160;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -49,7 +80,7 @@ self.addEventListener("install", (event) => {
          yet, which is a better outcome than an install that fails whole. */
       await Promise.allSettled(
         OFFLINE_ROUTES.map(async (route) => {
-          const res = await fetch(route, { credentials: "same-origin" });
+          const res = await fetch(route, { credentials: "same-origin", cache: "reload" });
           if (res.ok) await cache.put(route, res.clone());
         }),
       );
@@ -62,18 +93,39 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      await Promise.all(keys.filter((k) => !k.startsWith(VERSION)).map((k) => caches.delete(k)));
+      await Promise.all(
+        keys
+          .filter((k) => k !== SHELL && k !== ASSETS)
+          .filter((k) => k.startsWith("fsn-") || k.startsWith("fsn-v"))
+          .map((k) => caches.delete(k)),
+      );
+      await pruneAssets();
       await self.clients.claim();
     })(),
   );
 });
+
+/**
+ * Keep the hashed-asset cache bounded.
+ *
+ * `cache.keys()` returns insertion order, so the oldest entries are the ones
+ * least likely to belong to a build anybody is still running. Without this the
+ * cache grows by a whole build every deploy and never sheds one, which on this
+ * app is several megabytes a time.
+ */
+async function pruneAssets() {
+  const cache = await caches.open(ASSETS);
+  const keys = await cache.keys();
+  const excess = keys.length - ASSET_CACHE_LIMIT;
+  if (excess > 0) await Promise.all(keys.slice(0, excess).map((k) => cache.delete(k)));
+}
 
 function isBuildAsset(url) {
   return (
     url.origin === self.location.origin &&
     (url.pathname.startsWith("/_build/") ||
       url.pathname.startsWith("/assets/") ||
-      /\.(?:css|js|woff2?|png|jpe?g|svg|ico|webmanifest)$/.test(url.pathname))
+      /\.(?:css|js|woff2?|png|jpe?g|webp|svg|ico|webmanifest)$/.test(url.pathname))
   );
 }
 
@@ -87,6 +139,11 @@ self.addEventListener("fetch", (event) => {
   /* Live data is never cached. Stale readings are worse than no readings, and
      "unavailable" has to keep meaning unavailable. */
   if (url.pathname.startsWith("/api/") || url.searchParams.has("_serverFn")) return;
+
+  /* The worker's own file and the published live snapshot must always come
+     from the network, or a reader can be pinned to an old worker for as long
+     as the cache survives. */
+  if (url.pathname === "/sw.js" || url.pathname.startsWith("/live/")) return;
 
   if (req.mode === "navigate") {
     event.respondWith(

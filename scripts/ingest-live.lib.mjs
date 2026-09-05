@@ -104,9 +104,7 @@ export function carryForward(prevStations = {}, nextStations = {}, now = Date.no
       };
       continue;
     }
-    const retained = next.retainedReadings.length
-      ? next.retainedReadings
-      : prev.retainedReadings;
+    const retained = next.retainedReadings.length ? next.retainedReadings : prev.retainedReadings;
     out[id] = {
       ...next,
       readings: [],

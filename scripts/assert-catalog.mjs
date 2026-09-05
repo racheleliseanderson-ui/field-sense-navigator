@@ -29,10 +29,7 @@ try {
         .filter((name) => name.endsWith(".json"))
         .sort()
     : [];
-  records = [
-    ...base,
-    ...shardFiles.flatMap((name) => readArray(join(shardDir, name))),
-  ];
+  records = [...base, ...shardFiles.flatMap((name) => readArray(join(shardDir, name)))];
 } catch (err) {
   console.error("assert-catalog: catalog is not valid", err);
   process.exit(1);

@@ -37,9 +37,7 @@ import { bestMatches, pickUnique, searchQueries } from "./match.mjs";
  */
 const LOCATION_DECIMALS = 3;
 const coarsen = (v) =>
-  typeof v === "number" && Number.isFinite(v)
-    ? Number(v.toFixed(LOCATION_DECIMALS))
-    : null;
+  typeof v === "number" && Number.isFinite(v) ? Number(v.toFixed(LOCATION_DECIMALS)) : null;
 const coarsenLocations = (rows) => {
   for (const row of rows) {
     row.lat = coarsen(row.lat);
@@ -47,7 +45,6 @@ const coarsenLocations = (rows) => {
   }
   return rows;
 };
-
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -65,17 +62,55 @@ const UA = `HookTheHorizon-FieldSense/0.5 (+https://waterways.hookthehorizon.blo
 const MATCH_FLOOR = 0.75;
 
 const STATE_CODE = {
-  Alabama: "al", Alaska: "ak", Arizona: "az", Arkansas: "ar", California: "ca",
-  Colorado: "co", Connecticut: "ct", Delaware: "de", Florida: "fl", Georgia: "ga",
-  Hawaii: "hi", Idaho: "id", Illinois: "il", Indiana: "in", Iowa: "ia",
-  Kansas: "ks", Kentucky: "ky", Louisiana: "la", Maine: "me", Maryland: "md",
-  Massachusetts: "ma", Michigan: "mi", Minnesota: "mn", Mississippi: "ms",
-  Missouri: "mo", Montana: "mt", Nebraska: "ne", Nevada: "nv",
-  "New Hampshire": "nh", "New Jersey": "nj", "New Mexico": "nm", "New York": "ny",
-  "North Carolina": "nc", "North Dakota": "nd", Ohio: "oh", Oklahoma: "ok",
-  Oregon: "or", Pennsylvania: "pa", "Rhode Island": "ri", "South Carolina": "sc",
-  "South Dakota": "sd", Tennessee: "tn", Texas: "tx", Utah: "ut", Vermont: "vt",
-  Virginia: "va", Washington: "wa", "West Virginia": "wv", Wisconsin: "wi",
+  Alabama: "al",
+  Alaska: "ak",
+  Arizona: "az",
+  Arkansas: "ar",
+  California: "ca",
+  Colorado: "co",
+  Connecticut: "ct",
+  Delaware: "de",
+  Florida: "fl",
+  Georgia: "ga",
+  Hawaii: "hi",
+  Idaho: "id",
+  Illinois: "il",
+  Indiana: "in",
+  Iowa: "ia",
+  Kansas: "ks",
+  Kentucky: "ky",
+  Louisiana: "la",
+  Maine: "me",
+  Maryland: "md",
+  Massachusetts: "ma",
+  Michigan: "mi",
+  Minnesota: "mn",
+  Mississippi: "ms",
+  Missouri: "mo",
+  Montana: "mt",
+  Nebraska: "ne",
+  Nevada: "nv",
+  "New Hampshire": "nh",
+  "New Jersey": "nj",
+  "New Mexico": "nm",
+  "New York": "ny",
+  "North Carolina": "nc",
+  "North Dakota": "nd",
+  Ohio: "oh",
+  Oklahoma: "ok",
+  Oregon: "or",
+  Pennsylvania: "pa",
+  "Rhode Island": "ri",
+  "South Carolina": "sc",
+  "South Dakota": "sd",
+  Tennessee: "tn",
+  Texas: "tx",
+  Utah: "ut",
+  Vermont: "vt",
+  Virginia: "va",
+  Washington: "wa",
+  "West Virginia": "wv",
+  Wisconsin: "wi",
   Wyoming: "wy",
 };
 
@@ -334,9 +369,7 @@ function matchOrAmbiguous(d, sites, agency, missNote, opts = {}) {
 async function main() {
   const destinations = JSON.parse(readFileSync(DEST_PATH, "utf8"));
   const overridesFile = JSON.parse(readFileSync(OVERRIDE_PATH, "utf8"));
-  const overrideById = new Map(
-    (overridesFile.records ?? []).map((r) => [r.destinationId, r]),
-  );
+  const overrideById = new Map((overridesFile.records ?? []).map((r) => [r.destinationId, r]));
   for (const d of destinations) {
     if (overrideById.has(d.id)) continue;
     if (d.usgsSiteId) {
@@ -386,9 +419,7 @@ async function main() {
     wscByProv.get(s.prov).push(s);
   }
 
-  for (const [state, rows] of [...byState.entries()].sort((a, b) =>
-    a[0].localeCompare(b[0]),
-  )) {
+  for (const [state, rows] of [...byState.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
     const isProvince = Boolean(PROV_CODE[state]);
     const usgsCode = STATE_CODE[state];
 
@@ -445,9 +476,7 @@ async function main() {
       }
 
       const marineCandidate =
-        d.waterType === "marine" ||
-        MARINE_NAME.test(d.waterbody) ||
-        GREAT_LAKES.test(d.waterbody);
+        d.waterType === "marine" || MARINE_NAME.test(d.waterbody) || GREAT_LAKES.test(d.waterbody);
       if (marineCandidate && noaa.length) {
         const abbr = STATE_ABBR[state];
         const great = GREAT_LAKES.test(d.waterbody);
@@ -524,12 +553,7 @@ async function main() {
       if (!d || DENY_AUTO.has(d.id)) continue;
       const sites = await usgsNameSearch(STATE_CODE[row.state], d.waterbody);
       if (!sites.length) continue;
-      const hit = matchOrAmbiguous(
-        d,
-        sites,
-        "USGS",
-        row.note,
-      );
+      const hit = matchOrAmbiguous(d, sites, "USGS", row.note);
       if (hit.status === "matched") {
         Object.assign(row, hit);
         named += 1;

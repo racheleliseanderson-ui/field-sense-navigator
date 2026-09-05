@@ -2,7 +2,30 @@ node_modules
 dist
 .output
 .vinxi
+.vercel
 pnpm-lock.yaml
 package-lock.json
 bun.lock
 routeTree.gen.ts
+
+# The catalog and its derived files. These are DATA, written by the pipeline
+# scripts and by hand-reviewed PRs, and they are the largest files in the
+# repository. Reformatting src/data/destinations.json rewrites 2.3 MB in one
+# commit, buries the actual record change in a whole-file diff, and makes every
+# future catalog PR conflict. `npm run format` must never touch them.
+src/data/**
+public/live/**
+scripts/data/**
+
+# Timestamped pipeline run records. Written by the launchers, never edited.
+reports/**
+
+# Quarantine — nothing here is a working file.
+_to_delete/
+
+# Prose. These documents are hand-wrapped on purpose and prettier's markdown
+# printer actively damages them: it re-pads every table cell to the widest one
+# (so a one-word edit rewrites the whole table) and it strips the two-space
+# indent that continues a wrapped list item, which breaks the list. The doctrine
+# in AGENTS.project.md is meant to be read in a diff. Leave it alone.
+**/*.md

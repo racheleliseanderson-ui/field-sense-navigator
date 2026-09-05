@@ -1,0 +1,114 @@
+name: CI
+
+# The code plane's gate.
+#
+# Five workflows in this directory guard the DATA — ingest, station resolution,
+# closure scanning, catalog replication. Until this file existed, nothing at all
+# guarded the code: `npm run lint` had been failing on 430 errors with nobody to
+# tell, `tsc` was in no script, and production was the first environment in
+# which the built application was ever run.
+#
+# It uses bun because Vercel does (`installCommand: bun install`,
+# `buildCommand: bun run build` in vercel.json). A CI that installs with a
+# different package manager than the host is testing a tree the host will never
+# build.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, lint, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Formatting
+        run: bunx prettier --check .
+
+      - name: Unit tests
+        run: bun test src
+
+      - name: Pipeline and ingest tests
+        run: node --test 'scripts/**/*.test.mjs'
+
+      - name: Catalog invariants
+        run: node scripts/assert-catalog.mjs
+
+      - name: Production build
+        run: bun run build
+
+      - name: Emitted build invariants
+        run: node scripts/assert-build-output.mjs
+
+      - name: Upload the emitted build
+        uses: actions/upload-artifact@v4
+        with:
+          name: vercel-output
+          path: |
+            .vercel/output/config.json
+            .vercel/output/nitro.json
+            .vercel/output/static/sw.js
+            .vercel/output/static/manifest.webmanifest
+          retention-days: 7
+          if-no-files-found: error
+
+  smoke:
+    name: Browser smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium
+        run: bunx playwright-core install --with-deps chromium
+
+      - name: Production build
+        run: bun run build
+
+      # Every route rendered in a real browser at a phone viewport: no
+      # uncaught error, no console error, no failed same-origin request, a
+      # title and an h1 on each. Then the machine endpoints, axe-core on the
+      # three densest surfaces, and the offline path with the radio cut.
+      - name: Smoke
+        run: node scripts/smoke.mjs

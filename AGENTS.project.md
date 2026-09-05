@@ -167,10 +167,74 @@ Follow `docs/enrichment-2026-08-19.md`. Apply source-backed field updates only. 
 
 ## Build
 
-The Vite plugin assembly lives in `vite.base.config.ts` in this repository — Tailwind, tsconfig paths, TanStack Start, Nitro, React, `VITE_*` inlining and the `@` alias. `vite.config.ts` carries only this project's options (the `src/server.ts` SSR entry and the pinned `vercel` Nitro preset). There is no third-party build service in the pipeline. Change either file only alongside a verified `npm run build` on Vercel.
+The Vite plugin assembly lives in `vite.base.config.ts` in this repository — Tailwind, tsconfig paths, TanStack Start, Nitro, React, `VITE_*` inlining, build identity and the `@` alias. `vite.config.ts` carries only this project's options (the `src/server.ts` SSR entry and the pinned `vercel` Nitro preset). There is no third-party build service in the pipeline. Change either file only alongside a verified `npm run build` on Vercel.
 
 ```sh
 npm i
 npm run dev
 npm run build
+npm run verify   # typecheck, lint, tests, build, emitted-build invariants
 ```
+
+## The gates
+
+`.github/workflows/ci.yml` runs the whole of `npm run verify` plus a browser
+smoke test on every push and pull request. Before it existed, five workflows
+guarded the data plane and nothing at all guarded the code: `npm run lint` had
+been failing on 430 errors with nobody to tell, `tsc` appeared in no script, and
+production was the first environment in which the built application was ever
+run. Keep it green; it is the only thing standing between a bad merge and the
+public domain.
+
+| Gate | What it catches |
+| --- | --- |
+| `npm run typecheck` | `tsc --noEmit`. The strict flags in `tsconfig.json` are load-bearing — `noUncheckedIndexedAccess` is what found the nullable `region` that took out search. |
+| `npm run lint` | eslint, prettier-as-a-rule. Zero errors is the standard; the react-refresh warnings are accepted. |
+| `prettier --check .` | `.prettierignore` excludes `src/data/**` and `**/*.md` for cause — see the comments in that file before adding anything back. |
+| `bun test src` | The engines: catalog shape, intelligence, access, water-reading, handoff parity, the packet codec. |
+| `node --test scripts/**/*.test.mjs` | The pipeline and ingest libraries. |
+| `assert-catalog.mjs` | The catalog going in. |
+| `assert-build-output.mjs` | The build coming out: Build Output API v3, Nitro preset `vercel`, a Node server function, a stamped service worker, the installable surface, and a client-payload ceiling. |
+| `scripts/smoke.mjs` | Every route rendered in a real browser at a phone viewport — no uncaught error, no console error, no failed same-origin request, a title and an `h1` on each — then `/api/health`, `/api/version`, axe-core on the three densest surfaces, and the offline path with the radio cut. |
+
+## The lockfile Vercel actually uses
+
+`vercel.json` installs with **bun**, so `bun.lock` is what pins production and
+it is committed. It was not, which meant every Vercel deploy re-resolved the
+semver ranges in `package.json` from scratch: a patch release of any of ninety
+dependencies could change the live site with no commit behind it, and no way to
+tell afterwards which tree had been built. `package-lock.json` stays for the
+`npm i` path in this file, but it is not the one that ships — if the two drift,
+`bun.lock` is what is running.
+
+## Build identity
+
+Every build stamps its commit into the bundle (`vite.base.config.ts` →
+`src/lib/build-info.ts`) and into the emitted service worker
+(`scripts/stamp-sw.mjs`). `scripts/build-id.mjs` is the one place the id is
+derived, because those two run in different processes and have to agree.
+
+- `/api/health` — `application/json`, 200 healthy / 503 degraded, `no-store`.
+  This is what an uptime probe should watch. `/health` is the same report as a
+  page for a person.
+- `/api/version` — commit, branch, build time, environment, schema version,
+  record count. The first question in any production investigation.
+
+**The service worker must be stamped.** `public/sw.js` carries a literal
+`__BUILD_ID__` and the build replaces it. It used to carry a constant
+`"fsn-v1"`, which meant the file was byte-identical on every deploy, so the
+browser never saw a new worker, `install` never ran again after a reader's
+first visit, and the offline shell stayed frozen at whatever the catalogue was
+that day. Online it looked fine. At a ramp with no signal it was months old.
+`assert-build-output.mjs` fails the build if the token survives.
+
+## Security headers
+
+`vercel.json` sets CSP, `nosniff`, `Referrer-Policy`, `Permissions-Policy`,
+`Cross-Origin-Opener-Policy` and HSTS on every response. The CSP allows no
+external script host at all; `script-src` keeps `'unsafe-inline'` only because
+the theme and field-mode boot scripts and TanStack Start's hydration payload
+are inline. `geolocation=()` is doctrine as much as hardening — this instrument
+publishes no coordinates and asks for no location. Adding a third-party
+embed, font host or analytics script means changing this header deliberately,
+which is the point.

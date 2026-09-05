@@ -16,8 +16,17 @@
  *   node scripts/pipeline/seed-destinations.mjs --dry
  */
 import {
-  PATHS, readCatalogSources, readJson, writeJson, waterKey, argv, ok, drop, note,
-  writeReport, appendRun,
+  PATHS,
+  readCatalogSources,
+  readJson,
+  writeJson,
+  waterKey,
+  argv,
+  ok,
+  drop,
+  note,
+  writeReport,
+  appendRun,
 } from "./lib.mjs";
 
 const args = argv();
@@ -38,13 +47,22 @@ if (!staged.length) {
 
 const knownKeys = new Set(catalog.map((r) => waterKey(r.waterbody, r.state)));
 const knownUrls = new Set(
-  catalog.map((r) => String(r.officialSourceUrl ?? "").replace(/\/$/, "").toLowerCase()),
+  catalog.map((r) =>
+    String(r.officialSourceUrl ?? "")
+      .replace(/\/$/, "")
+      .toLowerCase(),
+  ),
 );
 
 /** ids are HHI-DEST-###, zero padded to the width already in use. */
 const width = Math.max(
   3,
-  ...catalog.map((r) => String(r.id ?? "").split("-").pop()?.length ?? 3),
+  ...catalog.map(
+    (r) =>
+      String(r.id ?? "")
+        .split("-")
+        .pop()?.length ?? 3,
+  ),
 );
 let next = Math.max(0, ...catalog.map((r) => Number(String(r.id ?? "").replace(/\D/g, "")) || 0));
 const nextId = () => {
@@ -57,7 +75,9 @@ const refused = [];
 
 for (const record of staged) {
   const key = waterKey(record.waterbody, record.state);
-  const url = String(record.officialSourceUrl ?? "").replace(/\/$/, "").toLowerCase();
+  const url = String(record.officialSourceUrl ?? "")
+    .replace(/\/$/, "")
+    .toLowerCase();
 
   if (!record.waterbody || !record.state || !record.waterType || !record.officialSourceUrl) {
     refused.push({ record, reason: "missing_required_field" });
@@ -110,7 +130,9 @@ const reportPath = writeReport("seed", [
   "",
   "## Added",
   "",
-  ...added.map((r) => `- ${r.id} — ${r.waterbody} (${r.state}, ${r.waterType}) — ${r.officialSourceUrl}`),
+  ...added.map(
+    (r) => `- ${r.id} — ${r.waterbody} (${r.state}, ${r.waterType}) — ${r.officialSourceUrl}`,
+  ),
   "",
   "## Refused",
   "",
@@ -123,9 +145,16 @@ if (DRY) {
 } else if (added.length) {
   writeJson(PATHS.destinations, [...base, ...added]);
   writeJson(PATHS.stagedSeeds, []);
-  console.log(`seed: the catalog now holds ${catalog.length + added.length} records (${base.length + added.length} in destinations.json)`);
+  console.log(
+    `seed: the catalog now holds ${catalog.length + added.length} records (${base.length + added.length} in destinations.json)`,
+  );
 } else {
   console.log("seed: nothing to add");
 }
 
-appendRun("seed", { before: catalog.length, added: added.length, refused: refused.length, dry: DRY });
+appendRun("seed", {
+  before: catalog.length,
+  added: added.length,
+  refused: refused.length,
+  dry: DRY,
+});

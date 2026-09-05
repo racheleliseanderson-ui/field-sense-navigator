@@ -27,6 +27,23 @@ const STATUS_URL =
 const CLOSURES_URL =
   "https://raw.githubusercontent.com/racheleliseanderson-ui/field-sense-navigator/live-snapshot/closures.json";
 
+/*
+ * There is deliberately no second source for any of these three.
+ *
+ * Each loader used to fall back to a relative "/live/snapshot.json". That was
+ * dead code twice over: Node's fetch cannot parse a relative URL, so the call
+ * always threw before reaching the network, and the file that shipped at that
+ * path was a 344-byte stub with an empty site list. It read like a safety net
+ * and caught nothing.
+ *
+ * A bundled copy could not be a safety net anyway. The freshness gate is on
+ * the OBSERVATION time, so a committed reading is stale the day it lands and
+ * would be rejected on arrival — and a fallback that can only ever serve an
+ * out-of-date river level is precisely the thing this instrument refuses to
+ * do. Unreachable means null, null means the surface says the reading is
+ * unavailable, and unavailable keeps meaning unavailable.
+ */
+
 export interface Reading {
   label: string;
   value: string;
@@ -189,16 +206,14 @@ async function fetchJson<T>(
 async function loadSnapshot(): Promise<LiveSnapshot | null> {
   const now = Date.now();
   if (now - snapshotCache.at < 60_000) return snapshotCache.data;
-  for (const url of [SNAPSHOT_URL, "/live/snapshot.json"]) {
-    try {
-      const data = await fetchJson<LiveSnapshot>(url);
-      if (data?.ingestedAt && data.stations) {
-        snapshotCache = { at: now, data };
-        return data;
-      }
-    } catch {
-      /* try the next source */
+  try {
+    const data = await fetchJson<LiveSnapshot>(SNAPSHOT_URL);
+    if (data?.ingestedAt && data.stations) {
+      snapshotCache = { at: now, data };
+      return data;
     }
+  } catch {
+    /* published snapshot unreachable — fall through to null and say so */
   }
   snapshotCache = { at: now, data: null };
   return null;
@@ -207,16 +222,14 @@ async function loadSnapshot(): Promise<LiveSnapshot | null> {
 async function loadStatus(): Promise<IngestStatus | null> {
   const now = Date.now();
   if (now - statusCache.at < 60_000) return statusCache.data;
-  for (const url of [STATUS_URL, "/live/status.json"]) {
-    try {
-      const data = await fetchJson<IngestStatus>(url);
-      if (data?.ingestedAt && data.schema) {
-        statusCache = { at: now, data };
-        return data;
-      }
-    } catch {
-      /* try the next source */
+  try {
+    const data = await fetchJson<IngestStatus>(STATUS_URL);
+    if (data?.ingestedAt && data.schema) {
+      statusCache = { at: now, data };
+      return data;
     }
+  } catch {
+    /* published status unreachable — /pipeline reports the gap honestly */
   }
   statusCache = { at: now, data: null };
   return null;
@@ -225,16 +238,14 @@ async function loadStatus(): Promise<IngestStatus | null> {
 async function loadClosures(): Promise<ClosureFile | null> {
   const now = Date.now();
   if (now - closureCache.at < 60_000) return closureCache.data;
-  for (const url of [CLOSURES_URL, "/live/closures.json"]) {
-    try {
-      const data = await fetchJson<ClosureFile>(url);
-      if (data?.scannedAt && data.records) {
-        closureCache = { at: now, data };
-        return data;
-      }
-    } catch {
-      /* try next */
+  try {
+    const data = await fetchJson<ClosureFile>(CLOSURES_URL);
+    if (data?.scannedAt && data.records) {
+      closureCache = { at: now, data };
+      return data;
     }
+  } catch {
+    /* published closures unreachable — no closure line is shown at all */
   }
   closureCache = { at: now, data: null };
   return null;

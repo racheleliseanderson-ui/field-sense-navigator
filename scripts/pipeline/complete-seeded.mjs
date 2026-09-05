@@ -51,12 +51,43 @@ const ALL_SEEDED = Boolean(args["all-seeded"]);
 const MAX_CHILD_SITEMAPS = 24;
 const MAX_URLS_PER_HOST = 60_000;
 const SOURCE_RE = /\.(?:pdf|jpe?g|png|gif|zip|xlsx?|docx?|csv)$/i;
-const SKIP_PATH_RE = /\/(news|press|media|events?|calendar|grants?|careers|jobs|about|contact|privacy|sitemap)\//i;
+const SKIP_PATH_RE =
+  /\/(news|press|media|events?|calendar|grants?|careers|jobs|about|contact|privacy|sitemap)\//i;
 const CLASS_WORDS = new Set([
-  "lake", "river", "creek", "reservoir", "pond", "bay", "bayou", "sound", "harbor",
-  "harbour", "inlet", "slough", "fork", "spring", "springs", "flowage", "marsh",
-  "brook", "lagoon", "channel", "impoundment", "the", "of", "at", "on", "in",
-  "public", "corridor", "waters", "water", "area", "unit", "state", "park",
+  "lake",
+  "river",
+  "creek",
+  "reservoir",
+  "pond",
+  "bay",
+  "bayou",
+  "sound",
+  "harbor",
+  "harbour",
+  "inlet",
+  "slough",
+  "fork",
+  "spring",
+  "springs",
+  "flowage",
+  "marsh",
+  "brook",
+  "lagoon",
+  "channel",
+  "impoundment",
+  "the",
+  "of",
+  "at",
+  "on",
+  "in",
+  "public",
+  "corridor",
+  "waters",
+  "water",
+  "area",
+  "unit",
+  "state",
+  "park",
 ]);
 
 const sources = readCatalogSources();
@@ -70,13 +101,13 @@ const seededAge = (record) => {
   return Number.isFinite(t) ? Math.floor((now - t) / dayMs) : Infinity;
 };
 const incomplete = (record) =>
-  !(record.publicAccess ?? []).length ||
-  !(record.speciesContext ?? []).length;
+  !(record.publicAccess ?? []).length || !(record.speciesContext ?? []).length;
 
-let queue = catalog.filter((record) =>
-  record?.seededBy === "field-sense-pipeline" &&
-  incomplete(record) &&
-  (ALL_SEEDED || seededAge(record) <= DAYS),
+let queue = catalog.filter(
+  (record) =>
+    record?.seededBy === "field-sense-pipeline" &&
+    incomplete(record) &&
+    (ALL_SEEDED || seededAge(record) <= DAYS),
 );
 queue = queue.slice(0, LIMIT);
 
@@ -133,11 +164,16 @@ function candidateScore(url, record) {
   const hit = tokens.filter((token) => new RegExp(`\\b${token}\\b`).test(path)).length;
   const need = Math.min(2, tokens.length);
   if (hit < need) return -1;
-  const phrase = plain(record.waterbody).replace(/[^a-z0-9]+/g, " ").trim();
+  const phrase = plain(record.waterbody)
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
   return hit * 10 + (phrase && path.includes(phrase) ? 20 : 0) - parsed.pathname.length / 200;
 }
 
-const norm = (value) => plain(value).replace(/[^a-z0-9]+/g, " ").trim();
+const norm = (value) =>
+  plain(value)
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
 function mergeStrings(existing, found, cap) {
   const out = [...(existing ?? [])];
@@ -252,7 +288,9 @@ await pooled(queue, CONCURRENCY, async (record) => {
     // primary officialSourceUrl, which refresh.mjs owns.
   });
   detailRows.push({ record, used });
-  ok(`${record.waterbody} (${record.state}) — +supplemental official evidence from ${used.length} page(s)`);
+  ok(
+    `${record.waterbody} (${record.state}) — +supplemental official evidence from ${used.length} page(s)`,
+  );
 });
 
 const reportPath = writeReport("complete-seeded", [
@@ -268,14 +306,18 @@ const reportPath = writeReport("complete-seeded", [
   "",
   "## Improved records",
   "",
-  ...detailRows.filter((row) => row.used.length).flatMap((row) => [
-    `- ${row.record.id} ${row.record.waterbody} (${row.record.state})`,
-    ...row.used.map((hit) => `  - +${hit.access} access, +${hit.species} species — ${hit.url}`),
-  ]),
+  ...detailRows
+    .filter((row) => row.used.length)
+    .flatMap((row) => [
+      `- ${row.record.id} ${row.record.waterbody} (${row.record.state})`,
+      ...row.used.map((hit) => `  - +${hit.access} access, +${hit.species} species — ${hit.url}`),
+    ]),
   "",
   "## No additional evidence found",
   "",
-  ...detailRows.filter((row) => !row.used.length).map((row) => `- ${row.record.id} ${row.record.waterbody} (${row.record.state})`),
+  ...detailRows
+    .filter((row) => !row.used.length)
+    .map((row) => `- ${row.record.id} ${row.record.waterbody} (${row.record.state})`),
 ]);
 note(`report: ${reportPath.slice(reportPath.lastIndexOf("reports"))}`);
 
@@ -283,10 +325,15 @@ if (!DRY && updates.size) {
   let files = 0;
   for (const source of sources) {
     if (!source.records.some((record) => updates.has(record.id))) continue;
-    writeJson(source.path, source.records.map((record) => updates.get(record.id) ?? record));
+    writeJson(
+      source.path,
+      source.records.map((record) => updates.get(record.id) ?? record),
+    );
     files += 1;
   }
-  console.log(`complete-seeded: ${updates.size} record(s) improved across ${files} catalog file(s)`);
+  console.log(
+    `complete-seeded: ${updates.size} record(s) improved across ${files} catalog file(s)`,
+  );
 } else if (DRY) {
   console.log("complete-seeded: dry run; catalog not written");
 }

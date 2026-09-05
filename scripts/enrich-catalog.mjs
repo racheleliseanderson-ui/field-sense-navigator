@@ -32,88 +32,226 @@ const DATA = join(__dirname, "../src/data/destinations.json");
  * @type {Record<string, [string, string | null]>}
  */
 const DOMAIN_AGENCY = {
-  "tpwd.texas.gov": ["Texas Parks and Wildlife Department", "https://tpwd.texas.gov/regulations/outdoor-annual/"],
-  "wdfw.wa.gov": ["Washington Department of Fish and Wildlife", "https://www.wdfw.wa.gov/fishing/regulations"],
+  "tpwd.texas.gov": [
+    "Texas Parks and Wildlife Department",
+    "https://tpwd.texas.gov/regulations/outdoor-annual/",
+  ],
+  "wdfw.wa.gov": [
+    "Washington Department of Fish and Wildlife",
+    "https://www.wdfw.wa.gov/fishing/regulations",
+  ],
   "myfwp.mt.gov": ["Montana Fish, Wildlife & Parks", "https://fwp.mt.gov/fish"],
   "fwp.mt.gov": ["Montana Fish, Wildlife & Parks", "https://fwp.mt.gov/fish"],
-  "dnr.state.mn.us": ["Minnesota Department of Natural Resources", "https://www.dnr.state.mn.us/regulations/fishing/index.html"],
+  "dnr.state.mn.us": [
+    "Minnesota Department of Natural Resources",
+    "https://www.dnr.state.mn.us/regulations/fishing/index.html",
+  ],
   "fs.usda.gov": ["USDA Forest Service", null],
-  "cpw.state.co.us": ["Colorado Parks and Wildlife", "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"],
+  "cpw.state.co.us": [
+    "Colorado Parks and Wildlife",
+    "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
+  ],
   "idfg.idaho.gov": ["Idaho Department of Fish and Game", "https://idfg.idaho.gov/rules"],
   "floridastateparks.org": ["Florida State Parks", "https://myfwc.com/fishing/"],
   "myfwc.com": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
-  "gis.myfwc.com": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
-  "ocean.floridamarine.org": ["Florida Fish and Wildlife Conservation Commission", "https://myfwc.com/fishing/"],
-  "wildlife.ca.gov": ["California Department of Fish and Wildlife", "https://wildlife.ca.gov/Fishing"],
+  "gis.myfwc.com": [
+    "Florida Fish and Wildlife Conservation Commission",
+    "https://myfwc.com/fishing/",
+  ],
+  "ocean.floridamarine.org": [
+    "Florida Fish and Wildlife Conservation Commission",
+    "https://myfwc.com/fishing/",
+  ],
+  "wildlife.ca.gov": [
+    "California Department of Fish and Wildlife",
+    "https://wildlife.ca.gov/Fishing",
+  ],
   "nps.gov": ["National Park Service", null],
-  "mffp.gouv.qc.ca": ["Ministère des Forêts, de la Faune et des Parcs (Québec)", "https://www.quebec.ca/tourisme-loisirs-sport/activites-sportives-et-de-plein-air/peche-sportive"],
-  "dnr.wisconsin.gov": ["Wisconsin Department of Natural Resources", "https://dnr.wisconsin.gov/topic/Fishing"],
-  "dec.ny.gov": ["New York State Department of Environmental Conservation", "https://www.dec.ny.gov/outdoor/fishing.html"],
-  "albertaregulations.ca": ["Alberta Environment and Parks", "https://albertaregulations.ca/fishingregs/"],
-  "wlf.louisiana.gov": ["Louisiana Department of Wildlife and Fisheries", "https://www.wlf.louisiana.gov/page/seasons-regulations"],
-  "ohiodnr.gov": ["Ohio Department of Natural Resources", "https://ohiodnr.gov/rules-and-regulations/recreation-rules/fishing-rules"],
-  "parksandrecreation.idaho.gov": ["Idaho Department of Parks and Recreation", "https://idfg.idaho.gov/rules"],
+  "mffp.gouv.qc.ca": [
+    "Ministère des Forêts, de la Faune et des Parcs (Québec)",
+    "https://www.quebec.ca/tourisme-loisirs-sport/activites-sportives-et-de-plein-air/peche-sportive",
+  ],
+  "dnr.wisconsin.gov": [
+    "Wisconsin Department of Natural Resources",
+    "https://dnr.wisconsin.gov/topic/Fishing",
+  ],
+  "dec.ny.gov": [
+    "New York State Department of Environmental Conservation",
+    "https://www.dec.ny.gov/outdoor/fishing.html",
+  ],
+  "albertaregulations.ca": [
+    "Alberta Environment and Parks",
+    "https://albertaregulations.ca/fishingregs/",
+  ],
+  "wlf.louisiana.gov": [
+    "Louisiana Department of Wildlife and Fisheries",
+    "https://www.wlf.louisiana.gov/page/seasons-regulations",
+  ],
+  "ohiodnr.gov": [
+    "Ohio Department of Natural Resources",
+    "https://ohiodnr.gov/rules-and-regulations/recreation-rules/fishing-rules",
+  ],
+  "parksandrecreation.idaho.gov": [
+    "Idaho Department of Parks and Recreation",
+    "https://idfg.idaho.gov/rules",
+  ],
   "dep.nj.gov": ["New Jersey Department of Environmental Protection", "https://dep.nj.gov/njfw/"],
-  "dnr.sc.gov": ["South Carolina Department of Natural Resources", "https://www.dnr.sc.gov/regulations.html"],
-  "outdooralabama.com": ["Alabama Department of Conservation and Natural Resources", "https://www.outdooralabama.com/fishing"],
-  "dwr.virginia.gov": ["Virginia Department of Wildlife Resources", "https://dwr.virginia.gov/fishing/regulations/"],
-  "dnr.maryland.gov": ["Maryland Department of Natural Resources", "https://dnr.maryland.gov/fisheries/pages/regulations/index.aspx"],
-  "adfg.alaska.gov": ["Alaska Department of Fish and Game", "https://www.adfg.alaska.gov/index.cfm?adfg=fishregulations.main"],
+  "dnr.sc.gov": [
+    "South Carolina Department of Natural Resources",
+    "https://www.dnr.sc.gov/regulations.html",
+  ],
+  "outdooralabama.com": [
+    "Alabama Department of Conservation and Natural Resources",
+    "https://www.outdooralabama.com/fishing",
+  ],
+  "dwr.virginia.gov": [
+    "Virginia Department of Wildlife Resources",
+    "https://dwr.virginia.gov/fishing/regulations/",
+  ],
+  "dnr.maryland.gov": [
+    "Maryland Department of Natural Resources",
+    "https://dnr.maryland.gov/fisheries/pages/regulations/index.aspx",
+  ],
+  "adfg.alaska.gov": [
+    "Alaska Department of Fish and Game",
+    "https://www.adfg.alaska.gov/index.cfm?adfg=fishregulations.main",
+  ],
   "myodfw.com": ["Oregon Department of Fish and Wildlife", "https://myodfw.com/fishing"],
-  "fishandboat.com": ["Pennsylvania Fish and Boat Commission", "https://www.pa.gov/agencies/fishandboat/fishing/regulations"],
-  "dnr.illinois.gov": ["Illinois Department of Natural Resources", "https://www.ifishillinois.org/"],
+  "fishandboat.com": [
+    "Pennsylvania Fish and Boat Commission",
+    "https://www.pa.gov/agencies/fishandboat/fishing/regulations",
+  ],
+  "dnr.illinois.gov": [
+    "Illinois Department of Natural Resources",
+    "https://www.ifishillinois.org/",
+  ],
   "parks.ca.gov": ["California State Parks", "https://wildlife.ca.gov/Fishing"],
-  "wildlife.nh.gov": ["New Hampshire Fish and Game Department", "https://www.wildlife.nh.gov/fishing-new-hampshire"],
-  "georgiawildlife.com": ["Georgia Department of Natural Resources", "https://georgiawildlife.com/fishing/angler-resources"],
-  "ncwildlife.gov": ["North Carolina Wildlife Resources Commission", "https://www.ncwildlife.gov/fishing"],
+  "wildlife.nh.gov": [
+    "New Hampshire Fish and Game Department",
+    "https://www.wildlife.nh.gov/fishing-new-hampshire",
+  ],
+  "georgiawildlife.com": [
+    "Georgia Department of Natural Resources",
+    "https://georgiawildlife.com/fishing/angler-resources",
+  ],
+  "ncwildlife.gov": [
+    "North Carolina Wildlife Resources Commission",
+    "https://www.ncwildlife.gov/fishing",
+  ],
 
-  "fw.ky.gov": ["Kentucky Department of Fish and Wildlife Resources", "https://fw.ky.gov/Fish/Pages/default.aspx"],
-  "mdwfp.com": ["Mississippi Department of Wildlife, Fisheries, and Parks", "https://www.mdwfp.com/fishing-boating/"],
+  "fw.ky.gov": [
+    "Kentucky Department of Fish and Wildlife Resources",
+    "https://fw.ky.gov/Fish/Pages/default.aspx",
+  ],
+  "mdwfp.com": [
+    "Mississippi Department of Wildlife, Fisheries, and Parks",
+    "https://www.mdwfp.com/fishing-boating/",
+  ],
   "agfc.com": ["Arkansas Game and Fish Commission", "https://www.agfc.com/fishing/"],
   "mdc.mo.gov": ["Missouri Department of Conservation", "https://mdc.mo.gov/fishing"],
-  "wildlifedepartment.com": ["Oklahoma Department of Wildlife Conservation", "https://www.wildlifedepartment.com/fishing"],
+  "wildlifedepartment.com": [
+    "Oklahoma Department of Wildlife Conservation",
+    "https://www.wildlifedepartment.com/fishing",
+  ],
   "ksoutdoors.com": ["Kansas Department of Wildlife and Parks", "https://ksoutdoors.com/Fishing"],
-  "outdoornebraska.gov": ["Nebraska Game and Parks Commission", "https://outdoornebraska.gov/fishing/"],
+  "outdoornebraska.gov": [
+    "Nebraska Game and Parks Commission",
+    "https://outdoornebraska.gov/fishing/",
+  ],
   "iowadnr.gov": ["Iowa Department of Natural Resources", "https://www.iowadnr.gov/Fishing"],
   "gfp.sd.gov": ["South Dakota Game, Fish and Parks", "https://gfp.sd.gov/fishing/"],
   "gf.nd.gov": ["North Dakota Game and Fish Department", "https://gf.nd.gov/fishing"],
   "wgfd.wyo.gov": ["Wyoming Game and Fish Department", "https://wgfd.wyo.gov/fishing-boating"],
-  "wildlife.utah.gov": ["Utah Division of Wildlife Resources", "https://wildlife.utah.gov/guidebooks"],
+  "wildlife.utah.gov": [
+    "Utah Division of Wildlife Resources",
+    "https://wildlife.utah.gov/guidebooks",
+  ],
   "ndow.org": ["Nevada Department of Wildlife", "https://www.ndow.org/fish/"],
-  "wildlife.state.nm.us": ["New Mexico Department of Game and Fish", "https://www.wildlife.state.nm.us/fishing/"],
+  "wildlife.state.nm.us": [
+    "New Mexico Department of Game and Fish",
+    "https://www.wildlife.state.nm.us/fishing/",
+  ],
   "azgfd.com": ["Arizona Game and Fish Department", "https://www.azgfd.com/fishing/"],
   "wvdnr.gov": ["West Virginia Division of Natural Resources", "https://wvdnr.gov/fishing/"],
-  "vtfishandwildlife.com": ["Vermont Fish & Wildlife Department", "https://vtfishandwildlife.com/fish"],
-  "dnrec.delaware.gov": ["Delaware Department of Natural Resources and Environmental Control", "https://dnrec.delaware.gov/fish-wildlife/fishing/"],
-  "dlnr.hawaii.gov": ["Hawaiʻi Department of Land and Natural Resources — Division of Aquatic Resources", "https://dlnr.hawaii.gov/dar/fishing/"],
-  "dem.ri.gov": ["Rhode Island Department of Environmental Management", "https://dem.ri.gov/natural-resources-bureau/fish-wildlife/freshwater-fisheries"],
+  "vtfishandwildlife.com": [
+    "Vermont Fish & Wildlife Department",
+    "https://vtfishandwildlife.com/fish",
+  ],
+  "dnrec.delaware.gov": [
+    "Delaware Department of Natural Resources and Environmental Control",
+    "https://dnrec.delaware.gov/fish-wildlife/fishing/",
+  ],
+  "dlnr.hawaii.gov": [
+    "Hawaiʻi Department of Land and Natural Resources — Division of Aquatic Resources",
+    "https://dlnr.hawaii.gov/dar/fishing/",
+  ],
+  "dem.ri.gov": [
+    "Rhode Island Department of Environmental Management",
+    "https://dem.ri.gov/natural-resources-bureau/fish-wildlife/freshwater-fisheries",
+  ],
 
-  "envrbrportal.crm.saskatchewan.ca": ["Saskatchewan Ministry of Environment", "https://envrbrportal.crm.saskatchewan.ca/fishing-guide/"],
-  "enr.gov.nt.ca": ["Northwest Territories Environment and Climate Change", "https://www.enr.gov.nt.ca/en/services/sport-fishing"],
-  "pac.dfo-mpo.gc.ca": ["Fisheries and Oceans Canada — Pacific Region", "https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/index-eng.html"],
+  "envrbrportal.crm.saskatchewan.ca": [
+    "Saskatchewan Ministry of Environment",
+    "https://envrbrportal.crm.saskatchewan.ca/fishing-guide/",
+  ],
+  "enr.gov.nt.ca": [
+    "Northwest Territories Environment and Climate Change",
+    "https://www.enr.gov.nt.ca/en/services/sport-fishing",
+  ],
+  "pac.dfo-mpo.gc.ca": [
+    "Fisheries and Oceans Canada — Pacific Region",
+    "https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/index-eng.html",
+  ],
 
   "usbr.gov": ["U.S. Bureau of Reclamation", null],
   "blm.gov": ["U.S. Bureau of Land Management", null],
   "fws.gov": ["U.S. Fish and Wildlife Service", null],
   "corpslakes.erdc.dren.mil": ["U.S. Army Corps of Engineers", null],
 
-  "larimer.gov": ["Larimer County Natural Resources", "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"],
+  "larimer.gov": [
+    "Larimer County Natural Resources",
+    "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
+  ],
   "monocounty.org": ["Mono County, California", "https://wildlife.ca.gov/Fishing"],
-  "parks.ny.gov": ["New York State Office of Parks, Recreation and Historic Preservation", "https://www.dec.ny.gov/outdoor/fishing.html"],
-  "auroragov.org": ["City of Aurora, Colorado", "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"],
-  "bouldercolorado.gov": ["City of Boulder Parks and Recreation", "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx"],
+  "parks.ny.gov": [
+    "New York State Office of Parks, Recreation and Historic Preservation",
+    "https://www.dec.ny.gov/outdoor/fishing.html",
+  ],
+  "auroragov.org": [
+    "City of Aurora, Colorado",
+    "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
+  ],
+  "bouldercolorado.gov": [
+    "City of Boulder Parks and Recreation",
+    "https://cpw.state.co.us/thingstodo/Pages/Fishing.aspx",
+  ],
   "parks.wa.gov": ["Washington State Parks", "https://www.wdfw.wa.gov/fishing/regulations"],
-  "pinellascounty.org": ["Pinellas County Parks and Conservation Resources", "https://myfwc.com/fishing/"],
+  "pinellascounty.org": [
+    "Pinellas County Parks and Conservation Resources",
+    "https://myfwc.com/fishing/",
+  ],
   "jacksonville.gov": ["City of Jacksonville Parks and Recreation", "https://myfwc.com/fishing/"],
   "crystalriverfl.org": ["City of Crystal River, Florida", "https://myfwc.com/fishing/"],
-  "miamidade.gov": ["Miami-Dade County Parks, Recreation and Open Spaces", "https://myfwc.com/fishing/"],
+  "miamidade.gov": [
+    "Miami-Dade County Parks, Recreation and Open Spaces",
+    "https://myfwc.com/fishing/",
+  ],
   "water.ca.gov": ["California Department of Water Resources", "https://wildlife.ca.gov/Fishing"],
   "sandiego.gov": ["City of San Diego Parks and Recreation", "https://wildlife.ca.gov/Fishing"],
   "bbmwd.com": ["Big Bear Municipal Water District", "https://wildlife.ca.gov/Fishing"],
-  "mwdh2o.com": ["Metropolitan Water District of Southern California", "https://wildlife.ca.gov/Fishing"],
-  "rivcoparks.org": ["Riverside County Regional Park and Open-Space District", "https://wildlife.ca.gov/Fishing"],
+  "mwdh2o.com": [
+    "Metropolitan Water District of Southern California",
+    "https://wildlife.ca.gov/Fishing",
+  ],
+  "rivcoparks.org": [
+    "Riverside County Regional Park and Open-Space District",
+    "https://wildlife.ca.gov/Fishing",
+  ],
   "countyofsb.org": ["County of Santa Barbara Parks", "https://wildlife.ca.gov/Fishing"],
-  "castaiclake.com": ["Los Angeles County Department of Parks and Recreation", "https://wildlife.ca.gov/Fishing"],
+  "castaiclake.com": [
+    "Los Angeles County Department of Parks and Recreation",
+    "https://wildlife.ca.gov/Fishing",
+  ],
 };
 
 /**
@@ -430,12 +568,14 @@ const STATE_REGS = {
   "Nova Scotia": "https://novascotia.ca/fish/sportfishing/",
   Nunavut: "https://www.gov.nu.ca/en/environment/sport-fishing",
   Ontario: "https://www.ontario.ca/page/fishing",
-  "Prince Edward Island": "https://www.princeedwardisland.ca/en/information/land-and-environment/angling-resources-and-information-centre",
-  Quebec: "https://www.quebec.ca/tourisme-loisirs-sport/activites-sportives-et-de-plein-air/peche-sportive",
-  Saskatchewan: "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/hunting-trapping-and-angling/angling",
+  "Prince Edward Island":
+    "https://www.princeedwardisland.ca/en/information/land-and-environment/angling-resources-and-information-centre",
+  Quebec:
+    "https://www.quebec.ca/tourisme-loisirs-sport/activites-sportives-et-de-plein-air/peche-sportive",
+  Saskatchewan:
+    "https://www.saskatchewan.ca/residents/parks-culture-heritage-and-sport/hunting-trapping-and-angling/angling",
   Yukon: "https://yukon.ca/en/fishing-licences-and-regulations",
 };
-
 
 const PORTAL_AGENCIES = new Set(
   Object.values(PATH_AGENCY).flatMap((rules) => rules.map((r) => r.agency)),
@@ -678,7 +818,8 @@ for (const r of data) {
   const agency = (r.managingAgency || "").toLowerCase();
   if (agency.includes("state park")) tags.add("state_park");
   if (agency.includes("national park")) tags.add("national_park");
-  if (agency.includes("forest service") || agency.includes("usda forest")) tags.add("national_forest");
+  if (agency.includes("forest service") || agency.includes("usda forest"))
+    tags.add("national_forest");
   if (agency.includes("bureau of land") || agency.includes("blm")) tags.add("blm");
   if (agency.includes("army corps") || agency.includes("corps of engineers")) tags.add("usace");
   if (agency.includes("bureau of reclamation")) tags.add("usbr");
@@ -688,10 +829,18 @@ for (const r of data) {
     .join(" ")
     .toLowerCase();
   if (accessText.includes("pier")) tags.add("pier");
-  if (accessText.includes("ramp") || accessText.includes("boat_launch") || accessText.includes("boat launch")) {
+  if (
+    accessText.includes("ramp") ||
+    accessText.includes("boat_launch") ||
+    accessText.includes("boat launch")
+  ) {
     tags.add("boat_ramp");
   }
-  if (accessText.includes("shore") || accessText.includes("bank") || accessText.includes("wading")) {
+  if (
+    accessText.includes("shore") ||
+    accessText.includes("bank") ||
+    accessText.includes("wading")
+  ) {
     tags.add("shore_access");
   }
   if (tags.size) {

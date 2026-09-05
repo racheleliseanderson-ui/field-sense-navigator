@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { NAMED_WATER_COUNT, destinations, reviewOverdue } from "@/lib/catalog";
+import { NAMED_WATER_COUNT, SCHEMA_VERSION, destinations, reviewOverdue } from "@/lib/catalog";
 import { bindingsFile } from "@/lib/bindings";
+import { BUILD, BUILD_ID } from "@/lib/build-info";
 import { withIdentity } from "@/lib/seo";
 
 /**
@@ -15,6 +16,11 @@ import { withIdentity } from "@/lib/seo";
  * A monitor should match on "status": "ok". Any of the invariants below
  * failing flips it to "degraded" — the page still returns, because a
  * health endpoint that 500s tells you less than one that explains.
+ *
+ * This is the page a PERSON opens. `/api/health` is the same report as
+ * `application/json` with a moving HTTP status, and that is the one an uptime
+ * probe should watch — parsing markup for a heartbeat is how a monitor ends up
+ * reporting on the shape of a `<pre>` tag.
  */
 export const Route = createFileRoute("/health")({
   head: () =>
@@ -41,6 +47,8 @@ function Health() {
 
   const body = {
     status: ok ? "ok" : "degraded",
+    build: { id: BUILD_ID, sha: BUILD.short, env: BUILD.env, builtAt: BUILD.builtAt },
+    schemaVersion: SCHEMA_VERSION,
     records: NAMED_WATER_COUNT,
     bindings: { matched, total: bindingsFile.stats.records },
     bindingsGeneratedAt: bindingsFile.generatedAt,
@@ -51,6 +59,16 @@ function Health() {
   return (
     <main className="min-h-dvh bg-background p-6">
       <h1 className="sr-only">Field Sense Navigator health</h1>
+      <p className="data mb-4 text-xs text-muted-foreground">
+        Machine-readable JSON with a moving status code:{" "}
+        <a className="underline" href="/api/health">
+          /api/health
+        </a>{" "}
+        ·{" "}
+        <a className="underline" href="/api/version">
+          /api/version
+        </a>
+      </p>
       <pre
         className="data overflow-x-auto text-xs text-foreground"
         tabIndex={0}

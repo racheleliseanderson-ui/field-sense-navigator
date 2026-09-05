@@ -30,8 +30,18 @@
  *   node scripts/pipeline/repair-seeded.mjs --from-id=524
  */
 import {
-  PATHS, readCatalogSources, writeJson, hostOf, isMultiStateHost, waterKey,
-  argv, ok, drop, note, writeReport, appendRun,
+  PATHS,
+  readCatalogSources,
+  writeJson,
+  hostOf,
+  isMultiStateHost,
+  waterKey,
+  argv,
+  ok,
+  drop,
+  note,
+  writeReport,
+  appendRun,
 } from "./lib.mjs";
 import { stripDesignation, refuseAsWaterbodyName, waterTypeFrom, tagsFrom } from "./extract.mjs";
 
@@ -53,7 +63,9 @@ const catalog = sources.flatMap((s) => s.records);
 const inScope = catalog.filter((r) => idNum(r) >= FROM);
 const untouched = catalog.filter((r) => idNum(r) < FROM);
 
-console.log(`repair: ${inScope.length} seeded records in scope (ids >= ${FROM}); ${untouched.length} left alone`);
+console.log(
+  `repair: ${inScope.length} seeded records in scope (ids >= ${FROM}); ${untouched.length} left alone`,
+);
 
 /* Names already held, so a corrected name cannot create a duplicate. */
 const heldKeys = new Set(untouched.map((r) => waterKey(r.waterbody, r.state)));
@@ -107,11 +119,19 @@ for (const record of inScope) {
     tags: tagsFrom(waterType, record.publicAccess ?? [], (record.currentNotices ?? []).join(" ")),
   };
   verdicts.set(record.id, fixed);
-  renamed.push({ from: record.waterbody, to: corrected, id: record.id, was: record.waterType, now: waterType });
+  renamed.push({
+    from: record.waterbody,
+    to: corrected,
+    id: record.id,
+    was: record.waterType,
+    now: waterType,
+  });
 }
 
-for (const r of renamed) ok(`${r.id}  ${r.from}  ->  ${r.to}${r.was !== r.now ? `  (${r.was} -> ${r.now})` : ""}`);
-for (const r of removed) drop(`${r.record.id}  ${r.record.waterbody} (${r.record.state}) — ${r.reason}`);
+for (const r of renamed)
+  ok(`${r.id}  ${r.from}  ->  ${r.to}${r.was !== r.now ? `  (${r.was} -> ${r.now})` : ""}`);
+for (const r of removed)
+  drop(`${r.record.id}  ${r.record.waterbody} (${r.record.state}) — ${r.reason}`);
 
 const kept = inScope.length - removed.length;
 console.log("");
@@ -134,14 +154,22 @@ const reportPath = writeReport("repair-seeded", [
   "",
   "## Why records were removed",
   "",
-  ...Object.entries(byReason).sort((a, b) => b[1] - a[1]).map(([k, n]) => `- ${k}: ${n}`),
+  ...Object.entries(byReason)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, n]) => `- ${k}: ${n}`),
   "",
-  ...removed.map((r) => `- ${r.record.id} ${r.record.waterbody} (${r.record.state}) — ${r.reason}\n  ${r.record.officialSourceUrl}`),
+  ...removed.map(
+    (r) =>
+      `- ${r.record.id} ${r.record.waterbody} (${r.record.state}) — ${r.reason}\n  ${r.record.officialSourceUrl}`,
+  ),
   "",
   "## Renamed",
   "",
   ...(renamed.length
-    ? renamed.map((r) => `- ${r.id} — "${r.from}" -> "${r.to}"${r.was !== r.now ? ` (${r.was} -> ${r.now})` : ""}`)
+    ? renamed.map(
+        (r) =>
+          `- ${r.id} — "${r.from}" -> "${r.to}"${r.was !== r.now ? ` (${r.was} -> ${r.now})` : ""}`,
+      )
     : ["- none"]),
 ]);
 note(`report: ${reportPath.slice(reportPath.lastIndexOf("reports"))}`);
@@ -163,4 +191,11 @@ if (DRY) {
   console.log(`repair: ${files} catalog file${files === 1 ? "" : "s"} rewritten`);
 }
 
-appendRun("repair-seeded", { from: FROM, scope: inScope.length, kept, renamed: renamed.length, removed: removed.length, dry: DRY });
+appendRun("repair-seeded", {
+  from: FROM,
+  scope: inScope.length,
+  kept,
+  renamed: renamed.length,
+  removed: removed.length,
+  dry: DRY,
+});

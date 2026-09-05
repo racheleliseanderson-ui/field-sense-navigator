@@ -44,7 +44,10 @@ const IGNORE_COOLDOWN = Boolean(args["ignore-cooldown"]);
 
 const discoverPath = fileURLToPath(new URL("./discover.mjs", import.meta.url));
 const progressPath = fileURLToPath(new URL("../data/discovery-progress.json", import.meta.url));
-const progress = readJson(progressPath, { schema: 1, jurisdictions: {} }) ?? { schema: 1, jurisdictions: {} };
+const progress = readJson(progressPath, { schema: 1, jurisdictions: {} }) ?? {
+  schema: 1,
+  jurisdictions: {},
+};
 progress.jurisdictions ??= {};
 
 function queueStats() {
@@ -84,18 +87,21 @@ let priorities = [...counts.entries()]
   })
   // First: jurisdictions not scanned recently. Within that pool, least-covered
   // still wins. A recent zero-yield state therefore cannot monopolize every run.
-  .sort((a, b) =>
-    Number(a.cooling) - Number(b.cooling) ||
-    a.records - b.records ||
-    a.scannedAt - b.scannedAt ||
-    a.state.localeCompare(b.state),
+  .sort(
+    (a, b) =>
+      Number(a.cooling) - Number(b.cooling) ||
+      a.records - b.records ||
+      a.scannedAt - b.scannedAt ||
+      a.state.localeCompare(b.state),
   );
 
 if (ONLY_STATE) priorities = priorities.filter((row) => row.state === ONLY_STATE);
 priorities = priorities.slice(0, MAX_JURISDICTIONS);
 
 if (!priorities.length) {
-  console.error(`balanced-discover: no catalog jurisdiction matched ${ONLY_STATE ?? "the request"}`);
+  console.error(
+    `balanced-discover: no catalog jurisdiction matched ${ONLY_STATE ?? "the request"}`,
+  );
   process.exit(1);
 }
 
@@ -104,13 +110,17 @@ let pendingNow = beforeQueue.pending;
 let queuedThisRun = 0;
 const rows = [];
 
-console.log(`balanced-discover: catalog ${catalog.length} waters across ${counts.size} jurisdictions`);
+console.log(
+  `balanced-discover: catalog ${catalog.length} waters across ${counts.size} jurisdictions`,
+);
 console.log(`balanced-discover: target ${TARGET} new questions, max ${PER_STATE} per jurisdiction`);
 console.log(`balanced-discover: ${beforeQueue.pending} unresolved question(s) already queued`);
 console.log("");
 console.log("Least-covered jurisdictions not scanned recently are asked first:");
 for (const row of priorities.slice(0, 12)) {
-  console.log(`  ${String(row.records).padStart(4)}  ${row.state}${row.cooling ? "  (cooldown fallback)" : ""}`);
+  console.log(
+    `  ${String(row.records).padStart(4)}  ${row.state}${row.cooling ? "  (cooldown fallback)" : ""}`,
+  );
 }
 console.log("");
 
@@ -130,7 +140,9 @@ for (const row of priorities) {
   if (DRY) childArgs.push("--dry");
 
   console.log("================================================================");
-  console.log(` ${row.state}: ${row.records} catalog record(s); asking for up to ${limit} new candidate(s)`);
+  console.log(
+    ` ${row.state}: ${row.records} catalog record(s); asking for up to ${limit} new candidate(s)`,
+  );
   console.log("================================================================");
 
   const result = spawnSync(process.execPath, childArgs, {
@@ -162,9 +174,13 @@ for (const row of priorities) {
   }
 
   if ((result.status ?? 1) !== 0) {
-    console.error(`balanced-discover: ${row.state} discovery exited ${result.status}; continuing to the next jurisdiction`);
+    console.error(
+      `balanced-discover: ${row.state} discovery exited ${result.status}; continuing to the next jurisdiction`,
+    );
   } else if (!DRY) {
-    console.log(`balanced-discover: ${row.state} added ${delta} unresolved candidate(s); run total ${queuedThisRun}/${TARGET}`);
+    console.log(
+      `balanced-discover: ${row.state} added ${delta} unresolved candidate(s); run total ${queuedThisRun}/${TARGET}`,
+    );
   }
   console.log("");
 }
@@ -174,9 +190,16 @@ const failed = rows.filter((row) => row.exitCode !== 0);
 const noYield = rows.filter((row) => row.exitCode === 0 && row.queued === 0);
 
 console.log("================================================================");
-console.log(`balanced-discover: ${queuedThisRun} new candidate(s) queued from ${rows.length} jurisdiction(s)`);
-console.log(`balanced-discover: ${afterQueue.pending} unresolved candidate(s) now waiting for resolve-targets.mjs`);
-if (failed.length) console.log(`balanced-discover: ${failed.length} jurisdiction scan(s) returned an error; see report`);
+console.log(
+  `balanced-discover: ${queuedThisRun} new candidate(s) queued from ${rows.length} jurisdiction(s)`,
+);
+console.log(
+  `balanced-discover: ${afterQueue.pending} unresolved candidate(s) now waiting for resolve-targets.mjs`,
+);
+if (failed.length)
+  console.log(
+    `balanced-discover: ${failed.length} jurisdiction scan(s) returned an error; see report`,
+  );
 console.log("================================================================");
 
 const reportPath = writeReport("balanced-discovery", [
@@ -198,8 +221,9 @@ const reportPath = writeReport("balanced-discovery", [
   "",
   "## Jurisdictions",
   "",
-  ...rows.map((row) =>
-    `- ${row.state}: ${row.existing} existing; ${row.queued} newly queued; exit ${row.exitCode}`,
+  ...rows.map(
+    (row) =>
+      `- ${row.state}: ${row.existing} existing; ${row.queued} newly queued; exit ${row.exitCode}`,
   ),
   "",
   "## Zero-yield scans",

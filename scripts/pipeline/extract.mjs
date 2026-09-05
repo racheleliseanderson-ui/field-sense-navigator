@@ -34,14 +34,20 @@ export function firstHeading(html) {
 export function publishedName(html, title) {
   const h1 = firstHeading(html);
   const candidate = h1 && h1.length >= 4 && h1.length <= 90 ? h1 : String(title ?? "");
-  const trimmed = candidate.replace(TITLE_TAIL_RE, "").replace(/\s*[|·—–]\s*$/, "").trim();
+  const trimmed = candidate
+    .replace(TITLE_TAIL_RE, "")
+    .replace(/\s*[|·—–]\s*$/, "")
+    .trim();
   return trimmed.length >= 4 && trimmed.length <= 90 ? trimmed : null;
 }
 
 /* ── water class ────────────────────────────────────────────────────────── */
 const TYPE_RULES = [
   [/\b(reservoir|impoundment|flowage)\b/i, "reservoir"],
-  [/\b(bay|harbor|harbour|sound|inlet|strait|estuary|gulf|seashore|coast|coastal|marine|surf|jetty|channel)\b/i, "marine"],
+  [
+    /\b(bay|harbor|harbour|sound|inlet|strait|estuary|gulf|seashore|coast|coastal|marine|surf|jetty|channel)\b/i,
+    "marine",
+  ],
   [/\b(river|creek|brook|stream|fork|bayou|slough|run|branch)\b/i, "river"],
   [/\b(lake|pond|lagoon|pool)\b/i, "lake"],
 ];
@@ -66,8 +72,14 @@ export function waterTypeFrom(name, pageText = "") {
 const FACILITY_RULES = [
   { re: /\b(boat ramps?|boat launch(?:es)?|launch ramps?|public ramps?)\b/i, kind: "boat_launch" },
   { re: /\b(fishing piers?|fishing jett(?:y|ies)|public piers?|wharf)\b/i, kind: "fishing_pier" },
-  { re: /\b(kayak launch|canoe launch|hand launch|car[- ]top launch|paddle(?:craft)? launch)\b/i, kind: "hand_launch" },
-  { re: /\b(bank fishing|shore fishing|shoreline access|bank access|walk[- ]in access|shore access)\b/i, kind: "shore_access" },
+  {
+    re: /\b(kayak launch|canoe launch|hand launch|car[- ]top launch|paddle(?:craft)? launch)\b/i,
+    kind: "hand_launch",
+  },
+  {
+    re: /\b(bank fishing|shore fishing|shoreline access|bank access|walk[- ]in access|shore access)\b/i,
+    kind: "shore_access",
+  },
 ];
 
 const TYPE_FOR_KINDS = (kinds) => {
@@ -112,7 +124,9 @@ export function accessFrom(pageText, name) {
     const key = plain(clean);
     if (seen.has(key)) continue;
     const kinds = FACILITY_RULES.filter((r) => r.re.test(clean)).map((r) => r.kind);
-    const type = TYPE_FOR_KINDS(kinds) ?? (/\b(landing|marina|ramp|launch)\b/i.test(clean) ? "boat_launch" : "shore_access");
+    const type =
+      TYPE_FOR_KINDS(kinds) ??
+      (/\b(landing|marina|ramp|launch)\b/i.test(clean) ? "boat_launch" : "shore_access");
     seen.add(key);
     named.push({ name: clean, type, officiallyPublished: true });
     if (named.length >= 6) break;
@@ -122,7 +136,9 @@ export function accessFrom(pageText, name) {
   const kinds = FACILITY_RULES.filter((r) => r.re.test(pageText)).map((r) => r.kind);
   const type = TYPE_FOR_KINDS(kinds);
   if (!type) return [];
-  return [{ name: `${name} — access published by the managing agency`, type, officiallyPublished: true }];
+  return [
+    { name: `${name} — access published by the managing agency`, type, officiallyPublished: true },
+  ];
 }
 
 /* ── notices ────────────────────────────────────────────────────────────── */
@@ -171,8 +187,20 @@ export function noticesFrom(pageText, { limit = 5 } = {}) {
  * name ("Round pompano"), never on their own.
  */
 const AMBIGUOUS_ALONE = new Set([
-  "permit", "jack", "ray", "drum", "sole", "char", "skate", "grunt", "runner",
-  "hind", "scad", "porgy", "chub", "dolly",
+  "permit",
+  "jack",
+  "ray",
+  "drum",
+  "sole",
+  "char",
+  "skate",
+  "grunt",
+  "runner",
+  "hind",
+  "scad",
+  "porgy",
+  "chub",
+  "dolly",
 ]);
 
 /** Editorial phrases in the catalog's species field are not species names. */
@@ -286,7 +314,9 @@ const hasWaterClassWord = (name) => TYPE_RULES.some(([re]) => re.test(String(nam
 export function chooseWaterbodyName(targetName, published, pageText) {
   const hay = plain(pageText);
   const usedOnPage = (name) => {
-    const phrase = plain(name).replace(/[^a-z0-9]+/g, "\\s+").trim();
+    const phrase = plain(name)
+      .replace(/[^a-z0-9]+/g, "\\s+")
+      .trim();
     return Boolean(phrase) && new RegExp(`\\b${phrase}\\b`).test(hay);
   };
 
@@ -309,7 +339,6 @@ export function chooseWaterbodyName(targetName, published, pageText) {
   }
   return null;
 }
-
 
 /* ── site furniture is not a notice about this water ────────────────────── */
 /**

@@ -66,10 +66,7 @@ for (const row of records) {
 }
 
 copyFileSync(BASE_PATH, BACKUP_PATH);
-writeFileSync(
-  BASE_PATH,
-  `${JSON.stringify({ ...base, records }, null, 2)}\n`,
-);
+writeFileSync(BASE_PATH, `${JSON.stringify({ ...base, records }, null, 2)}\n`);
 console.error(
   `resolver overrides assembled ${records.length} records (${base.records.length} base + ${shardRecords.length} shard)`,
 );

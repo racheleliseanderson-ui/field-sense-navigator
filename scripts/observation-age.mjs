@@ -17,9 +17,7 @@ export const STALE_WINDOW_NOTE =
 
 export function freshnessKind(label = "") {
   const l = String(label).toLowerCase();
-  if (
-    /reservoir|lake or reservoir|storage|reservoir stage|reservoir elevation/.test(l)
-  ) {
+  if (/reservoir|lake or reservoir|storage|reservoir stage|reservoir elevation/.test(l)) {
     return "daily";
   }
   return "live";
